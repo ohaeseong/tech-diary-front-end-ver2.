@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.1.2",
     "@emotion/styled": "^11.0.0",
     "@types/jest": "^26.0.16",
     "axios": "^0.21.0",

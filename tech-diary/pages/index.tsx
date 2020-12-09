@@ -5,9 +5,12 @@ import { MainTemplate } from 'components/template/MainTemplate';
 function IndexPage() {
   return (
     <>
-    <MainTemplate>
-      
-    </MainTemplate>
+      <Head>
+        <title>Main page</title>
+      </Head>
+      <MainTemplate>
+        
+      </MainTemplate>
     </>
   );
 };

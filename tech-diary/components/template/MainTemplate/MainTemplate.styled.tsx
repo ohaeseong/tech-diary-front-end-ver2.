@@ -1,7 +1,5 @@
 /** @jsx */
-import { css } from '@emotion/core';
 import styled from '@emotion/styled';
-
 
 export const Template = styled.div`
     label: template;
@@ -13,6 +11,11 @@ export const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
+`;
+
+export const MainContents = styled.div`
+    label: main_contents;
+    height: 100rem;
 `;
 
 // export const 

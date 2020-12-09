@@ -1,3 +1,4 @@
+import { wrapper } from "store";
 
 
 type Props = {
@@ -9,4 +10,4 @@ function MyApp({ Component, pageProps }: Props) {
     return <Component {...pageProps}/>
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

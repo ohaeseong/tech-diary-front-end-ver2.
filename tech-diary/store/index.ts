@@ -19,4 +19,4 @@ const makeStore: MakeStore<RootState> = (_: Context) => {
     return store;
 }
 
-export const wrapper = createWrapper<RootState>(makeStore, { debug: env.isDevelop });
+export const wrapper = createWrapper<RootState>(makeStore, { debug: env.isDevelop as any });
