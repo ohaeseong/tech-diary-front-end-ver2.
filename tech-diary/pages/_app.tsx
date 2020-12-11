@@ -1,3 +1,5 @@
+import '../styles/reset.css';
+
 import { wrapper } from "store";
 
 

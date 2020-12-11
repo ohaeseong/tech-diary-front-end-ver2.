@@ -1,0 +1,136 @@
+/** @jsx jsx */
+import { jsx, css } from '@emotion/react';
+import styled from '@emotion/styled';
+import { useEffect, useState, useCallback } from 'react';
+import { Category } from '../Category';
+import NavBarItem from './NavBarItem';
+import Link from 'next/link';
+import { color, gradation } from 'styles/color';
+
+const NavBarWrap = styled.div`
+    label: nav;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+
+const NavBarBanner = styled.div<{ gradation: string }>`
+    label: nav_bar_banner;
+    width: 100%;
+    height: 35rem;
+    text-align: center;
+    line-height: 20rem;
+    ${props => { 
+        return css`
+        ${props.gradation}
+    `}}
+    
+`;
+
+const NavBarContent = styled.div<{ isScroll: boolean }>`
+    label: nav_bar_content;
+    position: fixed;
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    flex-direction: row;
+    transition: 0.3s ease-in-out;
+
+    ${(props) => props.isScroll && `
+        background-color: ${color.gray_0};
+        z-index: 100;
+        box-shadow: 0 2px 6px 0 ${color.shadow};
+    `}
+`;
+
+const LogoWrap = styled.a<{ isScroll: boolean }>`
+    label: logo_wrap;
+    width: 8rem;
+    margin-left: 10rem;
+    text-align: center;
+    line-height: 5rem;
+    font-size: 1.5rem;
+    color: ${color.gray_1};
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+
+    ${(props) => props.isScroll && `
+        color: ${color.black};
+    `}
+`;
+
+const AccountButtonWrap = styled.div`
+    label: account_button_wrap;
+    display: flex;
+    flex-direction: row;
+    margin: 1.5rem 10rem auto auto;
+`;
+
+const AccountButton = styled.span<{ isScroll: boolean }>`
+    label: login_button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 100%;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: 0.3s ease-in-out;
+    font-size: 1rem;
+    color: ${color.gray_1};
+
+    &:hover {
+        transition: 0.2s ease-in-out;
+
+        ${(props) => props.isScroll? `
+            color: ${color.gray_3};
+        `: `
+            color: ${color.gray_2};
+        `}
+    }
+
+    ${(props) => props.isScroll && `
+        color: ${color.black};
+    `}
+`;
+
+type Props = {
+    gradationEffect: string;
+}
+
+function NavBar({ gradationEffect }: Props) {
+    const [isScroll, setIsScroll] = useState(false);
+
+    const handleIsScrollEvent = useCallback(() => {
+        if (100 < window.scrollY) {
+            setIsScroll(true);
+        } else {
+            setIsScroll(false);
+        }
+    }, [isScroll]);
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleIsScrollEvent);
+    }, []);
+
+    return (
+        <NavBarWrap>
+            <NavBarBanner gradation={gradationEffect}/>
+            <NavBarContent isScroll={isScroll}>
+                <Link href={'/'}>
+                    <LogoWrap isScroll={isScroll}>Tech</LogoWrap>
+                </Link>
+                <NavBarItem href={'/blog'} isScroll={isScroll}>Blog</NavBarItem>
+                <NavBarItem href={'/portfolio'} isScroll={isScroll}>Portfolio</NavBarItem>
+                <AccountButtonWrap>
+                    <AccountButton isScroll={isScroll}>Log in</AccountButton>
+                    <AccountButton isScroll={isScroll}>Sign in</AccountButton>
+                </AccountButtonWrap>
+            </NavBarContent>
+            <Category/>
+        </NavBarWrap>
+    );
+}
+
+export default NavBar;

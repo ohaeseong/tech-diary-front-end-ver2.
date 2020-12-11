@@ -15,7 +15,11 @@ export const Container = styled.div`
 
 export const MainContents = styled.div`
     label: main_contents;
-    height: 100rem;
+    width: 100%;
+    height: 200rem;
+    display: flex;
+    align-content: center;
+    background-color: #F4F6F7;
 `;
 
 // export const 
