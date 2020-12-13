@@ -5,7 +5,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Category } from '../Category';
 import NavBarItem from './NavBarItem';
 import Link from 'next/link';
-import { color, gradation } from 'styles/color';
+// import { color, gradation } from 'styles/color';
 
 const NavBarWrap = styled.div`
     label: nav;
@@ -67,7 +67,7 @@ const AccountButtonWrap = styled.div`
     margin: 1.5rem 10rem auto auto;
 `;
 
-const AccountButton = styled.span<{ isScroll: boolean }>`
+const AccountButton = styled.a<{ isScroll: boolean }>`
     label: login_button;
     display: flex;
     align-items: center;
@@ -124,8 +124,12 @@ function NavBar({ gradationEffect }: Props) {
                 <NavBarItem href={'/blog'} isScroll={isScroll}>Blog</NavBarItem>
                 <NavBarItem href={'/portfolio'} isScroll={isScroll}>Portfolio</NavBarItem>
                 <AccountButtonWrap>
-                    <AccountButton isScroll={isScroll}>Log in</AccountButton>
-                    <AccountButton isScroll={isScroll}>Sign in</AccountButton>
+                    <Link href={'/login'}>
+                        <AccountButton isScroll={isScroll}>Log in</AccountButton>
+                    </Link>
+                    <Link href={'/signup'}>
+                        <AccountButton isScroll={isScroll}>Sign up</AccountButton>
+                    </Link>
                 </AccountButtonWrap>
             </NavBarContent>
             <Category/>
