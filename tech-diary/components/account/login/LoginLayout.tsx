@@ -1,7 +1,10 @@
 
+/** @jsx jsx */
+
+import { ThemeProvider, jsx } from '@emotion/react';
 import styled from '@emotion/styled';
-// import { color } from 'styles/color';
-// import wave from '../../../public/wave/app';
+import { useState } from 'react';
+import { dark, light } from 'styles/color';
 
 const LoginTemplate = styled.div`
     label: login_template;
@@ -10,18 +13,22 @@ const LoginTemplate = styled.div`
 
     border: 1px solid black;
 
-    background-color: ${props => props.theme.colors.gary_0};
+    color: ${props => props.theme.colors.primary};
 `;
 
-// const 
-
-
-
 function LoginLayout() {
+    const [themeMode, setThemeMode] = useState('light');
+
+
+    const theme = themeMode === 'light' ? light : dark;
+
+
     return (
-        <LoginTemplate>
-            {/* <script src={'/wave/app.js'}></script> */}
-        </LoginTemplate>
+        <ThemeProvider theme={light}>
+            <LoginTemplate>
+
+            </LoginTemplate>
+        </ThemeProvider>
     )
 }
 
