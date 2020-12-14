@@ -16,6 +16,21 @@ export const bounce = keyframes`
   }
 `;
 
+export const fadein = keyframes`
+  from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+
+    0% {
+      transform: translateY(-3rem);
+    }
+    100% {
+      transform: none;
+    }
+`;
 export const flicker = keyframes`
   0% {
     opacity: 1;

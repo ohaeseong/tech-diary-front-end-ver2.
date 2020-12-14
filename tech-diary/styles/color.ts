@@ -1,7 +1,6 @@
 
 
-export const light = {
-    colors: {
+export const color = {
       white: '#ffffff',
       black: '#484848',
       gray_0: '#ECF0F1',
@@ -16,7 +15,7 @@ export const light = {
       info: '#6488ff',
       shadow: 'rgba(0, 0, 0, 0.16)',
       facebook: '#4196e4',
-    }
+      light_purple: '#F7F6FD',
   };
 
 export const dark = {

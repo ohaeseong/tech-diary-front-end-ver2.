@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginLayout from 'components/account/login/LoginLayout';
+import LoginLayout from 'container/account/LoginLayout';
 import Head from 'next/head';
 
 function Login() {

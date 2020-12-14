@@ -1,14 +1,14 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/react';
+
+import {  css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useEffect, useState, useCallback } from 'react';
 import { Category } from '../Category';
 import NavBarItem from './NavBarItem';
 import Link from 'next/link';
-// import { color, gradation } from 'styles/color';
+import { color } from 'styles/color';
 
 const NavBarWrap = styled.div`
-    label: nav;
+    label: nav_bar_wrap;
     position: absolute;
     width: 100%;
     display: flex;

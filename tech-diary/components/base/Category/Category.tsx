@@ -1,7 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import styled from '@emotion/styled';
-import CategoryItem from './CategoryItem';
+
+import styled from '@emotion/styled';import CategoryItem from './CategoryItem';
 import { color } from 'styles/color';
 
 const CategoryWrap = styled.div`

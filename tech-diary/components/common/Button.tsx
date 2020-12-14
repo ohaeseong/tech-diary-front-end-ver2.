@@ -1,30 +1,23 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import  styled  from '@emotion/styled';
-import Link from 'next/link';
-
 
 import React, { ReactNode } from 'react';
+import { color } from 'styles/color';
 
-const Btn = styled.button<{ size?: string, margin?: string }>`
+const Btn = styled.button<{ size?: string, margin?: string, width?: string, height?: string }>`
     label: button;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 0;
     outline: 0;
-    margin: 1rem 0.5rem;
-    background-color: transparent;
-    color: #E0DDDC;
+    margin: 0.8rem 0.5rem;
+    background-color: ${color.gray_5};
+    color: ${color.light_purple};
+    padding: 0.5rem 1rem;
     transform: 0.3s ease-in-out;
     font-family: 'Spoqa Han Sans';
-    font-weight: 300;
-
-    &:hover {
-        cursor: pointer;
-        transform: 0.3s ease-in-out;
-        border-bottom: 0.15rem solid #E0DDDC;
-    }
+    cursor: pointer;
 
     ${props => {
         if (props.size === 'sm') {
@@ -42,6 +35,14 @@ const Btn = styled.button<{ size?: string, margin?: string }>`
         return css`font-size: 1rem;`;
     }}
 
+    ${props => props.width && `
+        width: ${props.width};
+    `}
+
+    ${props => props.height && `
+        height: ${props.height};
+    `}
+
     ${props => props.margin && `
         margin: ${props.margin};
     `}
@@ -52,17 +53,28 @@ type Props = {
     size?: string;
     margin?: string;
     children: ReactNode;
+    width?: string;
+    height?: string;
+    onClick?: () => void;
 }
 
-function LinkButton({ 
+function Button({ 
         size = 'default',
         margin = '',
-        children, }: Props) {
+        children,
+        width,
+        height,
+        onClick }: Props) {
+
     return(
-        <Btn size={size} margin={margin}>
+        <Btn size={size} 
+             margin={margin} 
+             width={width} 
+             height={height}
+             onClick={onClick}>
             {children}
         </Btn>
     );
 }
 
-export default LinkButton;
+export default Button;
