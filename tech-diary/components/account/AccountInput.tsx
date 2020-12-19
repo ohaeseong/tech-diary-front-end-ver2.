@@ -14,13 +14,22 @@ const Input = styled.input`
 
 type Props = {
     isPw?: boolean,
-    explanation: string,
+    explanation?: string,
     onChange?: (e: ChangeEvent<any>) =>  void;
     name: string,
     value: string,
+    handleKeyPress?: (e: React.KeyboardEvent) => void;
 }
 
-function AccountInput({ isPw, explanation, onChange, name, value}: Props) {
+function AccountInput({ 
+     isPw,
+     explanation, 
+     onChange, 
+     name, 
+     value,
+     handleKeyPress,
+    }: Props) {
+        
     return(
         <>
             { isPw 
@@ -28,11 +37,13 @@ function AccountInput({ isPw, explanation, onChange, name, value}: Props) {
                          type={'password'}
                          onChange={onChange}
                          name={name}
-                         value={value}/>
+                         value={value}
+                         onKeyDown={handleKeyPress}/>
                 : <Input placeholder={explanation} 
                          onChange={onChange}
                          name={name}
-                         value={value}/>
+                         value={value}
+                         onKeyDown={handleKeyPress}/>
             }
         </>
     );

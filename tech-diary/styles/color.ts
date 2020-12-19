@@ -42,4 +42,10 @@ export const dark = {
     crazy_orange_i: `background: #D38312;background: -webkit-linear-gradient(to right, #A83279, #D38312);background: linear-gradient(to right, #A83279, #D38312);`,
     cheer_up_emo_kid: `background: #556270;background: -webkit-linear-gradient(to right, #FF6B6B, #556270); background: linear-gradient(to right, #FF6B6B, #556270);`,
     man_of_steel: `background: #780206; background: -webkit-linear-gradient(to right, #061161, #780206);background: linear-gradient(to right, #061161, #780206);`,
+    shroom_haze: `background: #5C258D; background: -webkit-linear-gradient(to right, #4389A2, #5C258D); background: linear-gradient(to right, #4389A2, #5C258D);`,
+    electric_violet: `background: #4776E6; background: -webkit-linear-gradient(to right, #8E54E9, #4776E6); background: linear-gradient(to right, #8E54E9, #4776E6);`,
+    purple_paradise: `background: #1D2B64; background: -webkit-linear-gradient(to right, #F8CDDA, #1D2B64); background: linear-gradient(to right, #F8CDDA, #1D2B64);`,
+    rose_water: `background: #E55D87; background: -webkit-linear-gradient(to right, #5FC3E4, #E55D87); background: linear-gradient(to right, #5FC3E4, #E55D87);`,
+    king_yna: `background: #1a2a6c; background: -webkit-linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c); background: linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c);`,
+    jshine: `background: #12c2e9; background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9); background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);`,
   };

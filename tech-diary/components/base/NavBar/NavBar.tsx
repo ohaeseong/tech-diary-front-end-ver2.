@@ -6,6 +6,7 @@ import { Category } from '../Category';
 import NavBarItem from './NavBarItem';
 import Link from 'next/link';
 import { color } from 'styles/color';
+import { getStorage, removeStorage } from 'libs/storage';
 
 const NavBarWrap = styled.div`
     label: nav_bar_wrap;
@@ -101,6 +102,7 @@ type Props = {
 
 function NavBar({ gradationEffect }: Props) {
     const [isScroll, setIsScroll] = useState(false);
+    const [isToken, setIsToken] = useState(false);
 
     const handleIsScrollEvent = useCallback(() => {
         if (100 < window.scrollY) {
@@ -110,9 +112,23 @@ function NavBar({ gradationEffect }: Props) {
         }
     }, [isScroll]);
 
+    const onLogout = () => {
+        removeStorage('tech-token');
+    };
+
     useEffect(() => {
         window.addEventListener('scroll', handleIsScrollEvent);
     }, []);
+
+    useEffect(() => {
+        let token = getStorage('tech-token');
+
+        if (token) {
+            setIsToken(true);
+        } else {
+            setIsToken(false);
+        }
+    }, [isToken]);
 
     return (
         <NavBarWrap>
@@ -123,14 +139,22 @@ function NavBar({ gradationEffect }: Props) {
                 </Link>
                 <NavBarItem href={'/blog'} isScroll={isScroll}>Blog</NavBarItem>
                 <NavBarItem href={'/portfolio'} isScroll={isScroll}>Portfolio</NavBarItem>
-                <AccountButtonWrap>
-                    <Link href={'/login'}>
-                        <AccountButton isScroll={isScroll}>Log in</AccountButton>
-                    </Link>
-                    <Link href={'/signup'}>
-                        <AccountButton isScroll={isScroll}>Sign up</AccountButton>
-                    </Link>
-                </AccountButtonWrap>
+                {
+                    isToken ? 
+                    <AccountButtonWrap>
+                        <Link href={'/login'}>
+                            <AccountButton isScroll={isScroll} onClick={onLogout}>Log out</AccountButton>
+                        </Link>
+                    </AccountButtonWrap>
+                    : <AccountButtonWrap>
+                        <Link href={'/login'}>
+                            <AccountButton isScroll={isScroll}>Log in</AccountButton>
+                        </Link>
+                        <Link href={'/signup'}>
+                            <AccountButton isScroll={isScroll}>Sign up</AccountButton>
+                        </Link>
+                    </AccountButtonWrap>
+                }
             </NavBarContent>
             <Category/>
         </NavBarWrap>

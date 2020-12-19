@@ -7,10 +7,12 @@ import Button from 'components/common/Button';
 import AccountInput from '../AccountInput';
 import ButtonGroup from 'components/common/ButtonGroup';
 import Link from 'next/link';
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import useForm from 'libs/hooks/useForm';
+import { RootState } from 'store/modules';
+import { useRouter } from 'next/dist/client/router';
 
 const LoginBoxWrap = styled.div`
     label: login_box_wrap;
@@ -38,18 +40,19 @@ const LoginHalfWrap = styled.div<{ isImage: boolean }>`
     `}
 `;
 
-const LoginWelcomTextWrap = styled.div`
+const LoginTextWrap = styled.div`
     label: login_welcom_text_wrap;
     width: 100%;
     height: 5rem;
     margin-bottom: 1rem;
 
     & > * {
-        margin-top: 0.5rem;
+        margin-top: 1rem;
+
     }
 `;
 
-const LoginWelcomText = styled.div<{ fontSize: string }>`
+const LoginText = styled.div<{ fontSize: string, color?: string }>`
     label: login_welcom_text;
     display: flex;
     flex-direction: column;
@@ -70,7 +73,11 @@ const LoginWelcomText = styled.div<{ fontSize: string }>`
                 font-size: 1rem;
             `;
         }
-    }}
+    }};
+
+    ${(props) => props.color && `
+        color: ${props.color};
+    `};
 `;
 
 const WrapForAnimation = styled.div`
@@ -108,12 +115,15 @@ type createLoginForm = {
 }
 
 function LoginBox() {
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
+
     const [form, onChange] = useForm<createLoginForm>({
         memberId: '',
         pw: ''
     });
-    
-    const dispatch = useDispatch();
+
 
     const onLogin = useCallback(() => {
         const { memberId, pw } = form;
@@ -123,23 +133,31 @@ function LoginBox() {
             payload: {
                 memberId,
                 pw,
+                successCB: () => {
+                    router.back();
+                },
             },
         });
 
     }, [dispatch, form]);
 
+    const handleKeypress = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            onLogin();
+        }
+    };
 
     return (
         <LoginBoxWrap>
             <LoginHalfWrap isImage={true}>
-                <LoginWelcomTextWrap>
-                    <LoginWelcomText fontSize={'title'}>
-                        Welcom to Login!
-                    </LoginWelcomText>
-                    <LoginWelcomText fontSize={'description'}>
-                        this is description
-                    </LoginWelcomText>
-                </LoginWelcomTextWrap>
+                <LoginTextWrap>
+                    <LoginText fontSize={'title'}>
+                        Welcom to Tech-Blog!
+                    </LoginText>
+                    <LoginText fontSize={'description'}>
+                        Write your post!
+                    </LoginText>
+                </LoginTextWrap>
                 <WrapForAnimation>
                     <Image src={'/image/loginTemplateImage.png'} 
                             alt={'login_template_image'}
@@ -149,21 +167,26 @@ function LoginBox() {
                 </WrapForAnimation>
             </LoginHalfWrap>
             <LoginHalfWrap isImage={false}>
-                <LoginWelcomTextWrap>
-                    <LoginWelcomText fontSize={'title'}>
+                <LoginTextWrap>
+                    <LoginText fontSize={'title'}>
                         로그인을 해주세요!
-                    </LoginWelcomText>
-                </LoginWelcomTextWrap>
+                    </LoginText>
+                    <LoginText fontSize={'description'} color={color.error}>
+                        {errorMsg}
+                    </LoginText>
+                </LoginTextWrap>
                 <WrapForAnimation>
                     <AccountInput explanation={'input your ID!'} 
                                   onChange={onChange}
                                   name={'memberId'}
-                                  value={form.memberId}/>
+                                  value={form.memberId}
+                                  handleKeyPress={handleKeypress}/>
                     <AccountInput explanation={'input your PW!'} 
                                   isPw={true} 
                                   onChange={onChange}
                                   name={'pw'}
-                                  value={form.pw}/>
+                                  value={form.pw}
+                                  handleKeyPress={handleKeypress}/>
                 </WrapForAnimation>
                 <WrapForAnimation>
                     <ButtonGroup sortDirection={'column'}>

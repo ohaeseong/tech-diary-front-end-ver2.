@@ -8,7 +8,6 @@ const AccountTemplateBackground = styled.div<{ gradation: any }>`
     display: flex;
     width: 100%;
     height: 100vh;
-
     align-items: center;
     justify-content: center;
 
