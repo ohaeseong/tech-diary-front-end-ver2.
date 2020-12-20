@@ -1,18 +1,20 @@
 import styled from '@emotion/styled';
-import { color } from 'styles/color';
-import { fadein } from 'styles/animation';
+import { RootState } from 'store/modules';
+import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import { css } from '@emotion/react';
+import Link from 'next/link';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as axios from 'axios';
+
+import { color } from 'styles/color';
+import { fadein } from 'styles/animation';
 import Button from 'components/common/Button';
 import AccountInput from '../AccountInput';
 import ButtonGroup from 'components/common/ButtonGroup';
-import Link from 'next/link';
-import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import useForm from 'libs/hooks/useForm';
-import { RootState } from 'store/modules';
-import { useRouter } from 'next/dist/client/router';
 
 const LoginBoxWrap = styled.div`
     label: login_box_wrap;
@@ -141,6 +143,18 @@ function LoginBox() {
 
     }, [dispatch, form]);
 
+    const onLoginWithGithub = (async () => {
+        const response = await axios.get('https://github.com/login/oauth/authorize', {
+            params: {
+                client_id: '38450a3f2fd57007603a',
+                redirect_url: 'http://localhost:3000'
+            }
+        });
+
+        console.log(response);
+        
+    });
+
     const handleKeypress = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             onLogin();
@@ -196,7 +210,8 @@ function LoginBox() {
                             Log in
                         </Button>
                         <Button
-                            width={'20rem'}>
+                            width={'20rem'}
+                            onClick={onLoginWithGithub}>
                             Log in with GitHub
                         </Button>
                     </ButtonGroup>

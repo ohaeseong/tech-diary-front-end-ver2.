@@ -10,6 +10,13 @@ class authRepository {
         })
         .catch((error) => error.response);
     }
+
+    public async loginWithGithub(req: AuthLogin) {
+        return axios.post(`${server.host}/auth/login/with-github`, {
+            // code: 
+        })
+        .catch((error) => error.response);
+    }
 }
 
 export default new authRepository();
