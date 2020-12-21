@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { AuthLogin } from 'store/types/auth.types';
+import { AuthLogin, GitHubLoginRequest } from 'store/types/auth.types';
+// import {  } from 'store/'
 
 class authRepository {
     public async authLogInReq(req: AuthLogin) {
@@ -11,9 +12,9 @@ class authRepository {
         .catch((error) => error.response);
     }
 
-    public async loginWithGithub(req: AuthLogin) {
+    public async loginWithGithub(req: GitHubLoginRequest) {
         return axios.post(`${server.host}/auth/login/with-github`, {
-            // code: 
+            code: req.code,
         })
         .catch((error) => error.response);
     }

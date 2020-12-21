@@ -1,11 +1,11 @@
 
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
+
 import { color } from 'styles/color';
 
 const LinkWrap = styled.a<{ isScroll: boolean }>`
-    label: nav_item_wrap;
     display: block;
     font-size: 1rem;
     padding: 2rem 1rem;
@@ -21,7 +21,7 @@ const LinkWrap = styled.a<{ isScroll: boolean }>`
 
     &:hover {
         transition: 0.3s ease-in-out;
-        color: #E5E7E9;
+        color: ${color.white};
 
         ${(props) => props.isScroll? `
             color: ${color.gray_3};

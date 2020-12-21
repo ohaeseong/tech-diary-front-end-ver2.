@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
+
 import { color } from 'styles/color';
 
 const Input = styled.input`
-    label: account_input;
     width: 20rem;
     height: 2rem;
     padding-left: 0.5rem;

@@ -2,7 +2,7 @@
 
 export const color = {
       white: '#ffffff',
-      black: '#484848',
+      black: '#000000',
       gray_0: '#ECF0F1',
       gray_1: '#E5E7E9',
       gray_2: '#BDC3C7',
@@ -16,6 +16,7 @@ export const color = {
       shadow: 'rgba(0, 0, 0, 0.16)',
       facebook: '#4196e4',
       light_purple: '#F7F6FD',
+      purple: '#6155a6',
   };
 
 export const dark = {

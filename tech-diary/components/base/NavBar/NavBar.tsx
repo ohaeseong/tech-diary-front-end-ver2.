@@ -1,15 +1,15 @@
 
-import {  css } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useEffect, useState, useCallback } from 'react';
+import Link from 'next/link';
+import React, { useEffect, useState, useCallback } from 'react';
+
 import { Category } from '../Category';
 import NavBarItem from './NavBarItem';
-import Link from 'next/link';
 import { color } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
 
 const NavBarWrap = styled.div`
-    label: nav_bar_wrap;
     position: absolute;
     width: 100%;
     display: flex;
@@ -17,7 +17,6 @@ const NavBarWrap = styled.div`
 `;
 
 const NavBarBanner = styled.div<{ gradation: string }>`
-    label: nav_bar_banner;
     width: 100%;
     height: 35rem;
     text-align: center;
@@ -26,11 +25,9 @@ const NavBarBanner = styled.div<{ gradation: string }>`
         return css`
         ${props.gradation}
     `}}
-    
 `;
 
 const NavBarContent = styled.div<{ isScroll: boolean }>`
-    label: nav_bar_content;
     position: fixed;
     width: 100%;
     height: 5rem;
@@ -39,14 +36,13 @@ const NavBarContent = styled.div<{ isScroll: boolean }>`
     transition: 0.3s ease-in-out;
 
     ${(props) => props.isScroll && `
-        background-color: ${color.gray_0};
+        background-color: ${color.white};
         z-index: 100;
         box-shadow: 0 2px 6px 0 ${color.shadow};
     `}
 `;
 
 const LogoWrap = styled.a<{ isScroll: boolean }>`
-    label: logo_wrap;
     width: 8rem;
     margin-left: 10rem;
     text-align: center;
@@ -62,14 +58,12 @@ const LogoWrap = styled.a<{ isScroll: boolean }>`
 `;
 
 const AccountButtonWrap = styled.div`
-    label: account_button_wrap;
     display: flex;
     flex-direction: row;
     margin: 1.5rem 10rem auto auto;
 `;
 
 const AccountButton = styled.a<{ isScroll: boolean }>`
-    label: login_button;
     display: flex;
     align-items: center;
     justify-content: center;

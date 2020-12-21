@@ -1,11 +1,10 @@
 
 import styled from '@emotion/styled';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/dist/client/router';
 
 const CategoryItemWrap = styled.div<{ selected: boolean }>`
-    label: category_item_wrap;
     display: inline-block;
     height: 100%;
     font-size: 1.2rem;

@@ -1,9 +1,8 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import styled from '@emotion/styled';
 
 
 const ButtonGroupWrap = styled.div<{ sortDirection: string }>`
-    label: button_group_wrap;
     display: flex;
     flex-direction: row;
     align-items: center;

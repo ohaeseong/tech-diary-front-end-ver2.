@@ -3,3 +3,8 @@ export type AuthLogin = {
     pw: string,
     successCB?: () => {},
 }
+
+export type GitHubLoginRequest = {
+    code: string,
+    successCB?: () => {},
+}

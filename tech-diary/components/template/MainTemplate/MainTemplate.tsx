@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 
 import * as T from './MainTemplate.styled';
 import { NavBar } from 'components/base/NavBar';

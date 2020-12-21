@@ -1,9 +1,11 @@
 
-import styled from '@emotion/styled';import CategoryItem from './CategoryItem';
+import styled from '@emotion/styled';
+import React from 'react';
+
+import CategoryItem from './CategoryItem';
 import { color } from 'styles/color';
 
 const CategoryWrap = styled.div`
-    label: category_wrap;
     display: flex;
     flex-direction: row;
     justify-content: center;

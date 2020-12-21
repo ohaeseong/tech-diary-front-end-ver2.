@@ -4,9 +4,8 @@ import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import { css } from '@emotion/react';
 import Link from 'next/link';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as axios from 'axios';
 
 import { color } from 'styles/color';
 import { fadein } from 'styles/animation';
@@ -17,7 +16,6 @@ import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import useForm from 'libs/hooks/useForm';
 
 const LoginBoxWrap = styled.div`
-    label: login_box_wrap;
     display: flex;
     flex-direction: row;
     width: 70rem;
@@ -28,7 +26,6 @@ const LoginBoxWrap = styled.div`
 `;
 
 const LoginHalfWrap = styled.div<{ isImage: boolean }>`
-    label: login_half_wrap;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,7 +40,6 @@ const LoginHalfWrap = styled.div<{ isImage: boolean }>`
 `;
 
 const LoginTextWrap = styled.div`
-    label: login_welcom_text_wrap;
     width: 100%;
     height: 5rem;
     margin-bottom: 1rem;
@@ -55,7 +51,6 @@ const LoginTextWrap = styled.div`
 `;
 
 const LoginText = styled.div<{ fontSize: string, color?: string }>`
-    label: login_welcom_text;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -83,14 +78,12 @@ const LoginText = styled.div<{ fontSize: string, color?: string }>`
 `;
 
 const WrapForAnimation = styled.div`
-    label: wrap_for_animation;
     display: flex;
     flex-direction: column;
     animation: ${fadein} 2s;
 `;
 
 const LinkWrap = styled.div`
-    label: link_wrap;
     display: flex;
     flex-direction: row;
     margin-right: 7rem;
@@ -101,7 +94,6 @@ const LinkWrap = styled.div`
 `;
 
 const LinkText = styled.a`
-    label: link_text;
     color: ${color.gray_4};
     cursor: pointer;
     transition: 0.2s ease-in-out;
@@ -144,15 +136,11 @@ function LoginBox() {
     }, [dispatch, form]);
 
     const onLoginWithGithub = (async () => {
-        const response = await axios.get('https://github.com/login/oauth/authorize', {
-            params: {
-                client_id: '38450a3f2fd57007603a',
-                redirect_url: 'http://localhost:3000'
-            }
-        });
+        const GIT_HUB_LOGIN_URL = 'https://github.com/login/oauth/authorize?';
+        const CLIENT_ID = '38450a3f2fd57007603a';
+        const REDIRECT_URI = 'http://localhost:3000/login/github-callback';
 
-        console.log(response);
-        
+        window.location.href = `${GIT_HUB_LOGIN_URL}client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
     });
 
     const handleKeypress = (event: React.KeyboardEvent) => {

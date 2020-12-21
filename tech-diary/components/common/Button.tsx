@@ -1,11 +1,10 @@
 import { css } from '@emotion/react';
 import  styled  from '@emotion/styled';
-
 import React, { ReactNode } from 'react';
+
 import { color } from 'styles/color';
 
 const Btn = styled.button<{ size?: string, margin?: string, width?: string, height?: string }>`
-    label: button;
     display: flex;
     align-items: center;
     justify-content: center;
