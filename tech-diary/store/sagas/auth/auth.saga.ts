@@ -1,7 +1,7 @@
 import { all, call, fork, put, takeLatest } from "redux-saga/effects";
 import authRepo from './auth.repository';
 import { AUTH_LOGIN_REQUEST, onAuthLogin, setLoginErrorMsg } from '../../modules/auth'
-import { GITHUB_AUTH_LOGIN_REQUEST, onGithubAuthLogin } from '../../modules/github_auth';
+import { GITHUB_AUTH_LOGIN_REQUEST, onGithubAuthLogin } from '../../modules/github.auth';
 import { setStorage } from 'libs/storage';
 
 function* executeCallback(cb?: () => void) {

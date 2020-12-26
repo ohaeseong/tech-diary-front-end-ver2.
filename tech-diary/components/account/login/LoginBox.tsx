@@ -86,6 +86,7 @@ const WrapForAnimation = styled.div`
 const LinkWrap = styled.div`
     display: flex;
     flex-direction: row;
+    
     margin-right: 7rem;
 
     & > * {

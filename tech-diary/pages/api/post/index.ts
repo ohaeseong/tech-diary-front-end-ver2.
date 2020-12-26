@@ -1,18 +1,32 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
-export const getPostListData = (req: NextApiRequest, res: NextApiResponse) => {
+import { server } from 'config/config';
+
+export const getPostListData = (category: string, page: string) => {
+
     try {
+        const result = axios.get(`${server.host}/post`, {
+            params: {
+                category: category,
+                page: page,
+            },
+        });
 
+        console.log(result);
+        
 
-
-        res.status(200).json({
-
+        return JSON.stringify({
+            status: 200,
+            message: 'post list lookup success',
+            data: {
+                posts: result,
+            }
         });
     } catch (error) {
-        res.status(500).json({
+       return JSON.stringify({
             status: 500,
-            message: 'server error!',
-        });
+            message: 'post list lookup success',
+       });
     }
 };

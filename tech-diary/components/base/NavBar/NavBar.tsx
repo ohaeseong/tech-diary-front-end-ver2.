@@ -10,7 +10,6 @@ import { color } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
 
 const NavBarWrap = styled.div`
-    position: absolute;
     width: 100%;
     display: flex;
     flex-direction: column;

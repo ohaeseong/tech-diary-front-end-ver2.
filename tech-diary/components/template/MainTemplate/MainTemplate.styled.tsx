@@ -9,13 +9,14 @@ export const Template = styled.div`
 export const Container = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 `;
 
 export const MainContents = styled.div`
     width: 100%;
-    height: 200rem;
+    min-height: 100rem;
     display: flex;
+    flex-direction: column;
     align-content: center;
     background-color: ${color.gray_0};
 `;

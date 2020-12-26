@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
-import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github_auth';
+import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
 import Loading from 'components/common/Loading';
 
 function GithubLoginCallback() {
