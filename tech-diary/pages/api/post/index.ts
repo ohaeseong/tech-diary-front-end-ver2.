@@ -13,9 +13,6 @@ export const getPostListData = (category: string, page: string) => {
             },
         });
 
-        console.log(result);
-        
-
         return JSON.stringify({
             status: 200,
             message: 'post list lookup success',

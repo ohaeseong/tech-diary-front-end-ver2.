@@ -5,11 +5,24 @@ import { Post } from 'store/types/post.types';
 
 const PostLayoutTemplate = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 60%;
+    width: 80%;
     height: 100%;
-    margin: 10rem auto;
+    margin: 3rem auto;
+`;
+
+const ContentsHeader = styled.div`
+    width: 100%;
+    height: 3rem;
+
+    font-size: 2rem;
+    line-height: 50px;
+    padding-left: 20px;
+    margin-bottom: 1rem;
+
+    /* border: 1px solid black; */
 `;
 
 type Props = {
@@ -19,6 +32,9 @@ type Props = {
 function PostLayout({ posts }: Props) {
     return (
         <PostLayoutTemplate>
+            <ContentsHeader>
+                All
+            </ContentsHeader>
             <PostList posts={posts}/>
         </PostLayoutTemplate>
     );
