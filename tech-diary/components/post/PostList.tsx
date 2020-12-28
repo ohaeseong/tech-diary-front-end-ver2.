@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import post, { GET_POST_LIST_REQUEST } from 'store/modules/post';
 import { Post } from 'store/types/post.types';
-import PostItem from './Postitem';
+import PostItem from './PostItem';
 
 const PostListTemplate = styled.div`
     width: 100%;
@@ -16,7 +16,7 @@ const PostListTemplate = styled.div`
 `;
 
 type Props = {
-    posts: Array<Post>,
+    posts: Post[],
 }
 
 function PostList({ posts }: Props) {
@@ -25,7 +25,7 @@ function PostList({ posts }: Props) {
         <PostListTemplate>
             { 
                 posts.map((i, item) => {
-                    return <PostItem item={item}/>
+                    return <PostItem key={item.id} item={item}/>
                 })
             }
         </PostListTemplate>

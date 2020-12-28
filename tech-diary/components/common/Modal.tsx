@@ -1,12 +1,5 @@
 
-import styled from '@emotion/styled';
-
-const ModalWrap = styled.div`
-
-
-    
-
-`;
+// import styled from '@emotion/styled';
 
 function Modal() {
     return (

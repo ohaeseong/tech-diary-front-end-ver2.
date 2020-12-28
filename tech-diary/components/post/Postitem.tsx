@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import Image from 'next/image';
+import React from 'react';
 
-import { Post } from 'store/types/post.types';
+// import { Post } from 'store/types/post.types';
 import { color } from 'styles/color';
 
 const PostItemWrap = styled.div`
@@ -36,28 +36,49 @@ const Thumbnail = styled.img`
     height: auto;
 `;
 
-type Props = {
-    item: Post;
-}
+const PostContentsWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 10rem;
+    border: 1px solid black;
+`;
 
-function PostItem({ item }: Props) {
-    const {
-            id,
-            title,
-            category, 
-            contents, 
-            create_time,
-            thumbnail_address,
-        } = item;
+const PostContents = styled.div`
+    width: 100%;
+    height: 7rem;
+    border: 1px solid black;
+`;
 
-        console.log(thumbnail_address);
-        
+const PostBottomWrap = styled.div`
+    width: 100%;
+    height: 3rem;
+    border: 1px solid black;
+`;
+
+// type Props = {
+//     item: Post;
+// }
+
+function PostItem() {
+    // const {
+    //         id,
+    //         title,
+    //         category, 
+    //         contents, 
+    //         create_time,
+    //         thumbnail_address,
+    //     } = item;
 
     return (
         <PostItemWrap>
             <ThumbnailWrap>
                 <Thumbnail src={'/image/loginTemplateImage.png'} alt={'thumbnail'}/>
             </ThumbnailWrap>
+            <PostContentsWrap>
+                <PostContents/>
+                <PostBottomWrap/>
+            </PostContentsWrap>
         </PostItemWrap>
     );
 }

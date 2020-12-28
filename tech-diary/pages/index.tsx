@@ -28,9 +28,6 @@ function IndexPage({ posts }: Props) {
 IndexPage.getInitialProps = async (_: NextPageContext) => {
   const response = await axios.get(`${server.host}/post/?page=0&category=blog`);
   const posts = response.data.data;
-  
-  console.log(posts);
-  
 
   return posts;
 };
