@@ -16,6 +16,7 @@
             "labelFormat": "[local]"
           }
       ]
-    ]
+    ],
+    "plugins": [["@emotion/babel-plugin", { "ssr": true }]]
   }
   

@@ -8,28 +8,27 @@ import PostLayout from 'container/Post/PostLayout';
 import { server } from 'config/config';
 
 type Props = {
-  posts: Array<any>,
-}
+	posts: Array<any>;
+};
 
 function IndexPage({ posts }: Props) {
-
-  return (
-    <>
-      <Head>
-        <title>Main page</title>
-      </Head>
-      <MainTemplate>
-        <PostLayout posts={posts}/>
-      </MainTemplate>
-    </>
-  );
-};
+	return (
+		<>
+			<Head>
+				<title>Main page</title>
+			</Head>
+			<MainTemplate>
+				<PostLayout posts={posts} />
+			</MainTemplate>
+		</>
+	);
+}
 
 IndexPage.getInitialProps = async (_: NextPageContext) => {
-  const response = await axios.get(`${server.host}/post/?page=0&category=blog`);
-  const posts = response.data.data;
+	const response = await axios.get(`${server.host}/post/?page=0&category=blog`);
+	const posts = response.data.data;
 
-  return posts;
+	return posts;
 };
 
- export default IndexPage;
+export default IndexPage;

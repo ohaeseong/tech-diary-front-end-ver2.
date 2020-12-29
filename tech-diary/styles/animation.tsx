@@ -1,5 +1,4 @@
-
-import { keyframes } from '@emotion/react'
+import { keyframes } from '@emotion/react';
 
 export const bounce = keyframes`
   from, 20%, 53%, 80%, to {

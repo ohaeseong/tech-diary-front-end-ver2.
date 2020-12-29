@@ -6,27 +6,24 @@ import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
 import Loading from 'components/common/Loading';
 
 function GithubLoginCallback() {
-    const router = useRouter();
-    const dispatch = useDispatch();
+	const router = useRouter();
+	const dispatch = useDispatch();
 
-    useEffect(() => {
+	useEffect(() => {
+		if (router.query.code) {
+			dispatch({
+				type: GITHUB_AUTH_LOGIN_REQUEST,
+				payload: {
+					code: router.query.code,
+					successCB: () => {
+						window.location.href = 'http://localhost:3000';
+					},
+				},
+			});
+		}
+	}, [dispatch, router.query.code]);
 
-        if (router.query.code) {
-            dispatch({
-                type: GITHUB_AUTH_LOGIN_REQUEST,
-                payload: {
-                    code: router.query.code,
-                    successCB: () => {
-                        window.location.href = 'http://localhost:3000';
-                    }
-                },
-            });
-        }
-    }, [dispatch, router.query.code]);
-
-    return (
-        <Loading/>
-    );
-};
+	return <Loading />;
+}
 
 export default GithubLoginCallback;

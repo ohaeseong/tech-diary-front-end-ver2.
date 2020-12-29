@@ -1,11 +1,7 @@
-
 // import styled from '@emotion/styled';
 
 function Modal() {
-    return (
-        <>
-        </>
-    );
+	return <></>;
 }
 
 export default Modal;

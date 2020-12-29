@@ -1,16 +1,17 @@
 module.exports = {
-    moduleDirectories: ['node_modules', '.'],
-    moduleNameMapper: {
-        '^/(.*)/': "<rootDir>/$1",
-    },
-    preset: 'ts-jest',
-    globals: {
-        "ts-jest": {
-          "tsConfig": '<rootDir>/tsconfig.json'
-        }
-    },
+	moduleDirectories: ['node_modules', '.'],
+	testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+	moduleNameMapper: {
+		'^/(.*)/': '<rootDir>/$1',
+	},
+	preset: 'ts-jest',
+	globals: {
+		'ts-jest': {
+			tsConfig: 'tsconfig.test.json',
+		},
+	},
 
-    transform: {
-        "\\.tsx?$": "ts-jest",
-    },
+	transform: {
+		'\\.tsx?$': 'ts-jest',
+	},
 };
