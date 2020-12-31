@@ -1,14 +1,16 @@
-/** @jsx */
+/* eslint-disable camelcase */
 import React from 'react';
-import { jsx, css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { FaCommentAlt } from 'react-icons/fa';
+import { FcLike } from 'react-icons/fc';
 
-import { Post } from 'store/types/post.types';
 import { color } from 'styles/color';
+import { Post } from 'store/types/post.types';
+import { css } from '@emotion/react';
 
 const PostItemWrap = styled.div`
 	width: 100%;
-	height: 20rem;
+	height: 22rem;
 
 	border-radius: 7px;
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
@@ -42,20 +44,80 @@ const PostContentsWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	height: 10rem;
-	border: 1px solid black;
+	height: 12rem;
+	/* border: 1px solid black; */
 `;
 
-const PostContents = styled.div`
-	width: 100%;
-	height: 7rem;
-	border: 1px solid black;
+const PostContent = styled.div<{ type: string }>`
+	line-height: 2rem;
+	padding: 0.1rem 1rem;
+	overflow: hidden;
+	white-space: normal;
+	word-break: break-all;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+
+	/* border: 1px solid black; */
+
+	${(props) => {
+		if (props.type === 'title') {
+			return css`
+				height: 2rem;
+				font-size: 0.9rem;
+				font-weight: 500;
+				padding-top: 5px;
+				-webkit-line-clamp: 1;
+			`;
+		}
+
+		if (props.type === 'contents') {
+			return css`
+				font-size: 0.5rem;
+				height: 4rem;
+				line-height: 1rem;
+				color: ${color.gray_5};
+				-webkit-line-clamp: 4;
+			`;
+		}
+
+		if (props.type === 'info') {
+			return css`
+				font-size: 0.5rem;
+				height: 1.5rem;
+				/* padding-top: 0.5rem; */
+				color: ${color.gray_3};
+			`;
+		}
+
+		return null;
+	}}
 `;
 
 const PostBottomWrap = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 	width: 100%;
 	height: 3rem;
-	border: 1px solid black;
+	/* border: 1px solid black; */
+
+	& > * {
+		margin: 0.8rem;
+		font-size: 0.1rem;
+	}
+`;
+
+const IconWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+
+	& > * {
+		padding: 0.3rem;
+	}
 `;
 
 type Props = {
@@ -63,7 +125,9 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { title, category, contents, create_time, thumbnail_address } = item;
+	const { title, category, contents, create_time, thumbnail_address, writer } = item;
+	const date = new Date(create_time);
+	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
 	return (
 		<PostItemWrap>
@@ -71,13 +135,19 @@ function PostItem({ item }: Props) {
 				<Thumbnail src="/image/loginTemplateImage.png" alt="thumbnail" />
 			</ThumbnailWrap>
 			<PostContentsWrap>
-				{title}
-				{category}
-				{contents}
-				{create_time}
-				{thumbnail_address}
-				<PostContents />
-				<PostBottomWrap />
+				<PostContent type="title">{title}</PostContent>
+				<PostContent type="contents">{contents}</PostContent>
+				<PostContent type="info">{`${dateFormat} - ${writer}`}</PostContent>
+				<PostBottomWrap>
+					<IconWrap>
+						<FaCommentAlt size="15" color="#126CED" />
+						11122
+					</IconWrap>
+					<IconWrap>
+						<FcLike size="15" />
+						1123
+					</IconWrap>
+				</PostBottomWrap>
 			</PostContentsWrap>
 		</PostItemWrap>
 	);

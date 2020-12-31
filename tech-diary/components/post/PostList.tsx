@@ -10,7 +10,7 @@ import PostItem from './PostItem';
 const PostListTemplate = styled.div`
 	width: 100%;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(16rem, auto));
+	grid-template-columns: repeat(auto-fit, minmax(18rem, auto));
 	grid-template-rows: repeat(auto-fit, 1fr);
 	column-gap: 2rem;
 	row-gap: 2rem;
@@ -21,6 +21,7 @@ type Props = {
 };
 
 function PostList({ posts }: Props) {
+
 	return (
 		<PostListTemplate>
 			{posts.map((item) => {

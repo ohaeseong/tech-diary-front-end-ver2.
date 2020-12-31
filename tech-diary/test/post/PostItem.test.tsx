@@ -1,10 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { createSerializer } from '@emotion/jest';
+import { createSerializer, matchers } from '@emotion/jest';
 
 import PostItem from 'components/post/PostItem';
 import { Post } from 'store/types/post.types';
 
+expect.extend(matchers);
 expect.addSnapshotSerializer(createSerializer());
 
 describe('<PostItem/>', () => {

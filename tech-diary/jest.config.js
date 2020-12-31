@@ -10,8 +10,8 @@ module.exports = {
 			tsConfig: 'tsconfig.test.json',
 		},
 	},
-
 	transform: {
 		'\\.tsx?$': 'ts-jest',
 	},
+	snapshotSerializers: ['@emotion/jest/serializer'],
 };

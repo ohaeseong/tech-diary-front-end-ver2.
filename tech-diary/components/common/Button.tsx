@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 
 import { color } from 'styles/color';
 
-const Btn = styled.button<{ size?: string; margin?: string; width?: string; height?: string }>`
+const Btn = styled.button<{ size?: string; margin?: string; width?: string; height?: string, color?: string }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -53,6 +53,12 @@ const Btn = styled.button<{ size?: string; margin?: string; width?: string; heig
 		`
         margin: ${props.margin};
     `}
+
+	${(props) =>
+		props.color &&
+		`
+        background-color: ${props.color};
+    `}
 `;
 
 type Props = {
@@ -61,12 +67,13 @@ type Props = {
 	children: ReactNode;
 	width?: string;
 	height?: string;
+	color?: string;
 	onClick?: () => void;
 };
 
-function Button({ size = 'default', margin = '', children, width, height, onClick }: Props) {
+function Button({ size = 'default', margin = '', children, width, height, onClick, color }: Props) {
 	return (
-		<Btn size={size} margin={margin} width={width} height={height} onClick={onClick}>
+		<Btn size={size} margin={margin} width={width} height={height} onClick={onClick} color={color}>
 			{children}
 		</Btn>
 	);
