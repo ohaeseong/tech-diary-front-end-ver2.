@@ -7,6 +7,7 @@ import { color } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
 import { Category } from '../Category';
 import NavBarItem from './NavBarItem';
+import { CategoryItemProps } from '../Category/Category';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -100,9 +101,10 @@ const AccountButton = styled.a<{ isScroll: boolean }>`
 
 type Props = {
 	gradationEffect: string;
+	categorys: Array<CategoryItemProps>;
 };
 
-function NavBar({ gradationEffect }: Props) {
+function NavBar({ gradationEffect, categorys }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
 
@@ -139,7 +141,7 @@ function NavBar({ gradationEffect }: Props) {
 				<Link href="/">
 					<LogoWrap isScroll={isScroll}>Tech</LogoWrap>
 				</Link>
-				<NavBarItem href="/blog" isScroll={isScroll}>
+				<NavBarItem href="/" isScroll={isScroll}>
 					Blog
 				</NavBarItem>
 				<NavBarItem href="/portfolio" isScroll={isScroll}>
@@ -164,7 +166,7 @@ function NavBar({ gradationEffect }: Props) {
 					</AccountButtonWrap>
 				)}
 			</NavBarContent>
-			<Category />
+			<Category categorys={categorys} />
 		</NavBarWrap>
 	);
 }

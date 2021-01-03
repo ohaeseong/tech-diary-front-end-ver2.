@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const MainContents = styled.div`
 	width: 100%;
-	min-height: 100rem;
+	min-height: 10rem;
 	display: flex;
 	flex-direction: column;
 	align-content: center;

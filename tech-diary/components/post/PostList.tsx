@@ -10,10 +10,20 @@ import PostItem from './PostItem';
 const PostListTemplate = styled.div`
 	width: 100%;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(18rem, auto));
-	grid-template-rows: repeat(auto-fit, 1fr);
+	grid-template-columns: repeat(auto-fit, minmax(16rem, auto));
+	grid-template-rows: repeat(auto-fit, 5);
 	column-gap: 2rem;
 	row-gap: 2rem;
+`;
+
+const NonePost = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-size: 2rem;
 `;
 
 type Props = {
@@ -24,9 +34,17 @@ function PostList({ posts }: Props) {
 
 	return (
 		<PostListTemplate>
-			{posts.map((item) => {
-				return <PostItem key={item.id} item={item} />;
-			})}
+			{posts.length !== 0 ? (
+				posts.map((item) => {
+					return <PostItem key={item.id} item={item} />;
+				})
+			) : (
+				<NonePost>
+					None post
+					<br />
+					Please write your story!
+				</NonePost>
+			)}
 		</PostListTemplate>
 	);
 }

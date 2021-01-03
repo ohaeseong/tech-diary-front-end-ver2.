@@ -84,7 +84,7 @@ const PostContent = styled.div<{ type: string }>`
 			return css`
 				font-size: 0.5rem;
 				height: 1.5rem;
-				/* padding-top: 0.5rem; */
+				padding-top: 0.5rem;
 				color: ${color.gray_3};
 			`;
 		}
@@ -100,6 +100,7 @@ const PostBottomWrap = styled.div`
 	justify-content: space-between;
 	width: 100%;
 	height: 3rem;
+	/* margin-top: 0.5rem */
 	/* border: 1px solid black; */
 
 	& > * {
@@ -125,27 +126,28 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { title, category, contents, create_time, thumbnail_address, writer } = item;
-	const date = new Date(create_time);
+	const { title, contents, createTime, thumbnailAddress, memberId, commentList, like } = item;
+	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
 
 	return (
 		<PostItemWrap>
 			<ThumbnailWrap>
-				<Thumbnail src="/image/loginTemplateImage.png" alt="thumbnail" />
+				<Thumbnail src={thumbnailSrc} alt="thumbnail" />
 			</ThumbnailWrap>
 			<PostContentsWrap>
 				<PostContent type="title">{title}</PostContent>
 				<PostContent type="contents">{contents}</PostContent>
-				<PostContent type="info">{`${dateFormat} - ${writer}`}</PostContent>
+				<PostContent type="info">{`${dateFormat} / ${memberId}`}</PostContent>
 				<PostBottomWrap>
 					<IconWrap>
 						<FaCommentAlt size="15" color="#126CED" />
-						11122
+						{commentList}
 					</IconWrap>
 					<IconWrap>
 						<FcLike size="15" />
-						1123
+						{like}
 					</IconWrap>
 				</PostBottomWrap>
 			</PostContentsWrap>

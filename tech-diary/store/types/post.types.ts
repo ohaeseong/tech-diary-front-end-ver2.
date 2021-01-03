@@ -13,9 +13,11 @@ export type Post = {
 	id: string;
 	title: string;
 	contents: string;
-	writer: string;
-	thumbnail_address: string;
+	memberId: string;
+	thumbnailAddress: string;
 	series?: string;
 	category: string;
-	create_time: string;
+	createTime: string;
+	commentList: number;
+	like: number;
 };

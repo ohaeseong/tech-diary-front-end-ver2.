@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { color } from 'styles/color';
 import CategoryItem from './CategoryItem';
@@ -18,16 +18,27 @@ const CategoryWrap = styled.div`
 	}
 `;
 
-function Category() {
-	return (
-		<CategoryWrap>
-			<CategoryItem href="/">All</CategoryItem>
-			<CategoryItem href="/front-end">Front-end</CategoryItem>
-			<CategoryItem href="/back-end">Back-end</CategoryItem>
-			<CategoryItem href="/database">Database</CategoryItem>
-			<CategoryItem href="/other">other</CategoryItem>
-		</CategoryWrap>
-	);
+export type CategoryItemProps = {
+	href: string;
+	name: string;
+};
+
+type Props = {
+	categorys: Array<CategoryItemProps>;
+};
+
+function Category({ categorys }: Props) {
+	const [categoryList, setCategoryList] = useState([]);
+
+	useEffect(() => {
+		const categoryItems: any = categorys.map((item: CategoryItemProps, i) => {
+			return <CategoryItem href={item.href}>item.name</CategoryItem>;
+		});
+
+		setCategoryList(categoryItems);
+	}, [categorys]);
+
+	return <CategoryWrap>{categoryList}</CategoryWrap>;
 }
 
 export default Category;
