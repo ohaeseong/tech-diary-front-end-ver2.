@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 
 import { color } from 'styles/color';
-import CategoryItem from './CategoryItem';
+import CategoryItem from 'components/base/Category/CategoryItem';
 
 const CategoryWrap = styled.div`
 	display: flex;
@@ -32,13 +32,17 @@ function Category({ categorys }: Props) {
 
 	useEffect(() => {
 		const categoryItems: any = categorys.map((item: CategoryItemProps, i) => {
-			return <CategoryItem href={item.href}>item.name</CategoryItem>;
+			return (
+				<CategoryItem key={item.name} href={item.href}>
+					{item.name}
+				</CategoryItem>
+			);
 		});
 
 		setCategoryList(categoryItems);
 	}, [categorys]);
 
-	return <CategoryWrap>{categoryList}</CategoryWrap>;
+	return categoryList.length !== 0 ? <CategoryWrap>{categoryList}</CategoryWrap> : null;
 }
 
 export default Category;

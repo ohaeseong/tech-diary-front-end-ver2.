@@ -9,7 +9,7 @@ const LinkWrap = styled.a<{ isScroll: boolean }>`
 	font-size: 1rem;
 	padding: 2rem 1rem;
 	font-family: 'Spoqa Han Sans';
-	color: ${color.gray_1};
+	color: ${color.gray_0};
 	cursor: pointer;
 	margin-left: 1.5rem;
 	transition: 0.3s ease-in-out;

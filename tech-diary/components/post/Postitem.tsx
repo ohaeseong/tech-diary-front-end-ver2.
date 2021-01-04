@@ -57,8 +57,6 @@ const PostContent = styled.div<{ type: string }>`
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 
-	/* border: 1px solid black; */
-
 	${(props) => {
 		if (props.type === 'title') {
 			return css`

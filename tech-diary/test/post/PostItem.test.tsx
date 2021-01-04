@@ -15,8 +15,8 @@ describe('<PostItem/>', () => {
 			title: 'Test Title',
 			category: 'test',
 			contents: 'test contents',
-			create_time: '2020-12-01',
-			thumbnail_address: '',
+			createTime: '2020-12-01',
+			thumbnailAddress: '',
 		} as Post;
 		const utils = render(<PostItem item={item} />);
 		expect(utils.container).toMatchSnapshot();

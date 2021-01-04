@@ -5,9 +5,9 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import { color } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
-import { Category } from '../Category';
-import NavBarItem from './NavBarItem';
-import { CategoryItemProps } from '../Category/Category';
+import categorys from 'resource/category';
+import NavBarItem from 'components/base/NavBar/NavBarItem';
+import { Category } from 'components/base/Category';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -50,7 +50,7 @@ const LogoWrap = styled.a<{ isScroll: boolean }>`
 	text-align: center;
 	line-height: 5rem;
 	font-size: 1.5rem;
-	color: ${color.gray_1};
+	color: ${color.gray_0};
 	cursor: pointer;
 	transition: 0.3s ease-in-out;
 
@@ -77,7 +77,7 @@ const AccountButton = styled.a<{ isScroll: boolean }>`
 	padding: 0.5rem;
 	transition: 0.3s ease-in-out;
 	font-size: 1rem;
-	color: ${color.gray_1};
+	color: ${color.gray_0};
 
 	&:hover {
 		transition: 0.2s ease-in-out;
@@ -101,10 +101,9 @@ const AccountButton = styled.a<{ isScroll: boolean }>`
 
 type Props = {
 	gradationEffect: string;
-	categorys: Array<CategoryItemProps>;
 };
 
-function NavBar({ gradationEffect, categorys }: Props) {
+function NavBar({ gradationEffect }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
 

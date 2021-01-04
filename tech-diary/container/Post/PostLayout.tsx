@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 import PostList from 'components/post/PostList';
 import { Post } from 'store/types/post.types';
+import { useRouter } from 'next/router';
 
 const PostLayoutTemplate = styled.div`
 	display: flex;
@@ -29,9 +30,31 @@ type Props = {
 };
 
 function PostLayout({ posts }: Props) {
+	const router = useRouter();
+	let headName = '';
+
+	switch (router.pathname) {
+		case '/blog/front-end':
+			headName = 'Front-End';
+			break;
+		case '/blog/back-end':
+			headName = 'Back-End';
+			break;
+		case '/blog/database':
+			headName = 'Database';
+			break;
+		case '/blog/other':
+			headName = 'Other';
+			break;
+
+		default:
+			headName = 'All';
+			break;
+	}
+
 	return (
 		<PostLayoutTemplate>
-			<ContentsHeader>All</ContentsHeader>
+			<ContentsHeader>{headName}</ContentsHeader>
 			<PostList posts={posts} />
 		</PostLayoutTemplate>
 	);

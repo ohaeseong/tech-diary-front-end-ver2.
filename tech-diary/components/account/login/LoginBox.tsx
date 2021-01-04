@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
@@ -13,14 +13,14 @@ import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import useForm from 'libs/hooks/useForm';
-import AccountInput from '../AccountInput';
+import AccountInput from 'components/account/AccountInput';
 
-const LoginBoxWrap = styled.div`
+const LoginBoxWrap = styled.div<{ theme: any }>`
 	display: flex;
 	flex-direction: row;
 	width: 70rem;
 	height: 40rem;
-	background-color: ${color.white};
+	background-color: ${(props) => props.theme.white};
 	box-shadow: 0 2px 6px 0 ${color.shadow};
 	animation: ${fadein} 2s;
 `;
@@ -96,6 +96,7 @@ const LinkWrap = styled.div`
 
 	& > * {
 		margin-right: 0.1rem;
+		margin-bottom: 1rem;
 	}
 `;
 
@@ -117,7 +118,9 @@ type createLoginForm = {
 function LoginBox() {
 	const dispatch = useDispatch();
 	const router = useRouter();
+	const theme = useTheme();
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
+
 
 	const [form, onChange] = useForm<createLoginForm>({
 		memberId: '',
@@ -154,7 +157,7 @@ function LoginBox() {
 	};
 
 	return (
-		<LoginBoxWrap>
+		<LoginBoxWrap theme={theme}>
 			<LoginHalfWrap isImage>
 				<LoginTextWrap>
 					<LoginText fontSize="title">Welcom to Tech-Blog!</LoginText>
@@ -199,6 +202,11 @@ function LoginBox() {
 					</ButtonGroup>
 				</WrapForAnimation>
 				<WrapForAnimation>
+					<LinkWrap>
+						<Link href="/">
+							<LinkText>Home</LinkText>
+						</Link>
+					</LinkWrap>
 					<LinkWrap>
 						<Link href="/signup">
 							<LinkText>Sign up/</LinkText>
