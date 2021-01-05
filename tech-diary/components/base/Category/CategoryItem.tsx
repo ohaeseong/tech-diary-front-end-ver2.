@@ -10,12 +10,13 @@ const CategoryItemWrap = styled.div<{ selected: boolean }>`
 	text-align: center;
 	line-height: 3rem;
 	transition: 0.3s ease-in-out;
+	color: ${(props) => props.theme.black};
 	cursor: pointer;
 
 	&::after {
 		display: block;
 		content: '';
-		border-bottom: solid 3px #f08080;
+		border-bottom: solid 3px ${(props) => props.theme.neon_1};
 		transform: scaleX(0);
 		transition: transform 250ms ease-in-out;
 	}

@@ -1,9 +1,12 @@
-import { css } from '@emotion/react';
+import { css, ThemeProvider, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import React, { useEffect, useState, useCallback } from 'react';
+import Switch from 'react-switch';
+import { RiMoonClearFill } from 'react-icons/ri';
+import { FaSun } from 'react-icons/fa';
 
-import { color } from 'styles/color';
+import { color, ThemeType } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
 import categorys from 'resource/category';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
@@ -15,14 +18,14 @@ const NavBarWrap = styled.div`
 	flex-direction: column;
 `;
 
-const NavBarBanner = styled.div<{ gradation: string }>`
+const NavBarBanner = styled.div`
 	width: 100%;
 	height: 35rem;
 	text-align: center;
 	line-height: 20rem;
 	${(props) => {
 		return css`
-			${props.gradation}
+			${props.theme.gradation}
 		`;
 	}}
 `;
@@ -38,7 +41,7 @@ const NavBarContent = styled.div<{ isScroll: boolean }>`
 	${(props) =>
 		props.isScroll &&
 		`
-        background-color: ${color.white};
+        background-color: ${props.theme.white};
         z-index: 100;
         box-shadow: 0 2px 6px 0 ${color.shadow};
     `}
@@ -50,21 +53,21 @@ const LogoWrap = styled.a<{ isScroll: boolean }>`
 	text-align: center;
 	line-height: 5rem;
 	font-size: 1.5rem;
-	color: ${color.gray_0};
+	color: white;
 	cursor: pointer;
 	transition: 0.3s ease-in-out;
 
 	${(props) =>
 		props.isScroll &&
 		`
-        color: ${color.black};
+		color: ${props.theme.black};
     `}
 `;
 
 const AccountButtonWrap = styled.div`
 	display: flex;
 	flex-direction: row;
-	margin: 1.5rem 10rem auto auto;
+	margin: 1.5rem 5rem auto auto;
 `;
 
 const AccountButton = styled.a<{ isScroll: boolean }>`
@@ -85,26 +88,46 @@ const AccountButton = styled.a<{ isScroll: boolean }>`
 		${(props) =>
 			props.isScroll
 				? `
-            color: ${color.gray_3};
+            color: ${props.theme.gray_3};
         `
 				: `
-            color: ${color.gray_2};
+            color: ${props.theme.gray_2};
         `}
 	}
 
 	${(props) =>
 		props.isScroll &&
 		`
-        color: ${color.black};
+        color: ${props.theme.black};
     `}
 `;
 
+const SwitchWrap = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 5rem;
+	height: 100%;
+	margin-right: 2.5rem;
+`;
+
+const IconWrap = styled.div`
+	display: flex;
+	width: 100%;
+	height: 100%;
+
+	align-items: center;
+	justify-content: center;
+`;
+
 type Props = {
-	gradationEffect: string;
+	isDark: boolean;
+	handleIsDarkState: any;
 };
 
-function NavBar({ gradationEffect }: Props) {
+function NavBar({ isDark, handleIsDarkState }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
+	const theme = useTheme();
 	const [isToken, setIsToken] = useState(false);
 
 	const handleIsScrollEvent = useCallback(() => {
@@ -121,6 +144,10 @@ function NavBar({ gradationEffect }: Props) {
 
 	useEffect(() => {
 		window.addEventListener('scroll', handleIsScrollEvent);
+
+		return () => {
+			window.removeEventListener('scroll', handleIsScrollEvent);
+		};
 	}, [handleIsScrollEvent]);
 
 	useEffect(() => {
@@ -134,39 +161,59 @@ function NavBar({ gradationEffect }: Props) {
 	}, [isToken]);
 
 	return (
-		<NavBarWrap>
-			<NavBarBanner gradation={gradationEffect} />
-			<NavBarContent isScroll={isScroll}>
-				<Link href="/">
-					<LogoWrap isScroll={isScroll}>Tech</LogoWrap>
-				</Link>
-				<NavBarItem href="/" isScroll={isScroll}>
-					Blog
-				</NavBarItem>
-				<NavBarItem href="/portfolio" isScroll={isScroll}>
-					Portfolio
-				</NavBarItem>
-				{isToken ? (
-					<AccountButtonWrap>
-						<Link href="/login">
-							<AccountButton isScroll={isScroll} onClick={onLogout}>
-								Log out
-							</AccountButton>
-						</Link>
-					</AccountButtonWrap>
-				) : (
-					<AccountButtonWrap>
-						<Link href="/login">
-							<AccountButton isScroll={isScroll}>Log in</AccountButton>
-						</Link>
-						<Link href="/signup">
-							<AccountButton isScroll={isScroll}>Sign up</AccountButton>
-						</Link>
-					</AccountButtonWrap>
-				)}
-			</NavBarContent>
-			<Category categorys={categorys} />
-		</NavBarWrap>
+		<ThemeProvider theme={theme}>
+			<NavBarWrap>
+				<NavBarBanner />
+				<NavBarContent isScroll={isScroll}>
+					<Link href="/">
+						<LogoWrap isScroll={isScroll}>Tech</LogoWrap>
+					</Link>
+					<NavBarItem href="/" isScroll={isScroll}>
+						Blog
+					</NavBarItem>
+					<NavBarItem href="/portfolio" isScroll={isScroll}>
+						Portfolio
+					</NavBarItem>
+					{isToken ? (
+						<AccountButtonWrap>
+							<Link href="/login">
+								<AccountButton isScroll={isScroll} onClick={onLogout}>
+									Log out
+								</AccountButton>
+							</Link>
+						</AccountButtonWrap>
+					) : (
+						<AccountButtonWrap>
+							<Link href="/login">
+								<AccountButton isScroll={isScroll}>Log in</AccountButton>
+							</Link>
+							<Link href="/signup">
+								<AccountButton isScroll={isScroll}>Sign up</AccountButton>
+							</Link>
+						</AccountButtonWrap>
+					)}
+					<SwitchWrap>
+						<Switch
+							checked={isDark}
+							onChange={() => handleIsDarkState()}
+							checkedIcon={
+								<IconWrap>
+									<FaSun color="#F5B7B1" />
+								</IconWrap>
+							}
+							uncheckedIcon={
+								<IconWrap>
+									<RiMoonClearFill color="#F4D03F" />
+								</IconWrap>
+							}
+							onColor={color.neon_0}
+							offColor={color.black}
+						/>
+					</SwitchWrap>
+				</NavBarContent>
+				<Category categorys={categorys} />
+			</NavBarWrap>
+		</ThemeProvider>
 	);
 }
 

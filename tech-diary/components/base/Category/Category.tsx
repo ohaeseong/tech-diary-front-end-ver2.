@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { color } from 'styles/color';
 import CategoryItem from 'components/base/Category/CategoryItem';
+import { useTheme } from '@emotion/react';
 
 const CategoryWrap = styled.div`
 	display: flex;
@@ -11,7 +12,7 @@ const CategoryWrap = styled.div`
 
 	width: 100%;
 	height: 3rem;
-	background-color: ${color.white};
+	background-color: ${(props) => props.theme.white};
 
 	& > * {
 		margin: 0rem 3rem;
@@ -29,6 +30,7 @@ type Props = {
 
 function Category({ categorys }: Props) {
 	const [categoryList, setCategoryList] = useState([]);
+	const theme = useTheme();
 
 	useEffect(() => {
 		const categoryItems: any = categorys.map((item: CategoryItemProps, i) => {

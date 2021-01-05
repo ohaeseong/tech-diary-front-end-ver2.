@@ -1,20 +1,15 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import randomGradation from 'libs/randomGradation';
 import React, { ReactNode } from 'react';
+import { color } from 'styles/color';
 
-const AccountTemplateBackground = styled.div<{ gradation: any }>`
+const AccountTemplateBackground = styled.div`
 	display: flex;
 	width: 100%;
 	height: 100vh;
 	align-items: center;
 	justify-content: center;
-
-	${(props) => {
-		return css`
-			${props.gradation}
-		`;
-	}}
+	${color.gradation};
 `;
 
 type Props = {
@@ -22,9 +17,7 @@ type Props = {
 };
 
 function AccountPageTemplate({ children }: Props) {
-	const gradationEffect = randomGradation();
-
-	return <AccountTemplateBackground gradation={gradationEffect}>{children}</AccountTemplateBackground>;
+	return <AccountTemplateBackground>{children}</AccountTemplateBackground>;
 }
 
 export default AccountPageTemplate;

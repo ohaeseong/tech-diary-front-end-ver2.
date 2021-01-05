@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { color } from 'styles/color';
+import { color, ThemeType } from 'styles/color';
 
 export const Template = styled.div`
 	position: relavive;
@@ -13,9 +13,9 @@ export const Container = styled.div`
 
 export const MainContents = styled.div`
 	width: 100%;
-	min-height: 10rem;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-content: center;
-	background-color: ${color.gray_0};
+	background-color: ${(props) => props.theme.gray_0};
 `;

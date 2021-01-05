@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { FaCommentAlt } from 'react-icons/fa';
 import { FcLike } from 'react-icons/fc';
 
-import { color } from 'styles/color';
 import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 
@@ -16,7 +15,7 @@ const PostItemWrap = styled.div`
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
 	transition: 0.2s ease-in-out;
 
-	background-color: ${color.white};
+	background-color: ${(props) => props.theme.white};
 
 	&:hover {
 		cursor: pointer;
@@ -56,6 +55,9 @@ const PostContent = styled.div<{ type: string }>`
 	word-break: break-all;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
+	color: ${(props) => props.theme.black};
+
+	/* border: 1px solid black; */
 
 	${(props) => {
 		if (props.type === 'title') {
@@ -73,7 +75,7 @@ const PostContent = styled.div<{ type: string }>`
 				font-size: 0.5rem;
 				height: 4rem;
 				line-height: 1rem;
-				color: ${color.gray_5};
+				color: ${props.theme.gray_5};
 				-webkit-line-clamp: 4;
 			`;
 		}
@@ -83,7 +85,7 @@ const PostContent = styled.div<{ type: string }>`
 				font-size: 0.5rem;
 				height: 1.5rem;
 				padding-top: 0.5rem;
-				color: ${color.gray_3};
+				color: ${props.theme.gray_3};
 			`;
 		}
 
@@ -113,6 +115,7 @@ const IconWrap = styled.div`
 	align-items: center;
 	justify-content: center;
 	height: 100%;
+	color: ${(props) => props.theme.black};
 
 	& > * {
 		padding: 0.3rem;

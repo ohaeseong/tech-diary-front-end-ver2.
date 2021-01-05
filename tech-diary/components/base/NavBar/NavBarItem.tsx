@@ -14,25 +14,25 @@ const LinkWrap = styled.a<{ isScroll: boolean }>`
 	margin-left: 1.5rem;
 	transition: 0.3s ease-in-out;
 
-	${(props) =>
-		props.isScroll &&
-		`
-        color: ${color.black};
-    `}
-
 	&:hover {
 		transition: 0.3s ease-in-out;
-		color: ${color.white};
+		color: ${props => props.theme.white};
 
 		${(props) =>
 			props.isScroll
 				? `
-            color: ${color.gray_3};
+            color: ${props.theme.gray_3};
         `
 				: `
-            color: ${color.gray_2};
+            color: ${props.theme.gray_2};
         `}
 	}
+
+	${(props) =>
+		props.isScroll &&
+		`
+        color: ${props.theme.black};
+    `}
 `;
 
 type Props = {

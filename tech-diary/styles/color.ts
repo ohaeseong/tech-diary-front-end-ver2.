@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export const color = {
 	white: '#ffffff',
 	black: '#000000',
@@ -8,33 +9,53 @@ export const color = {
 	gray_4: '#707070',
 	gray_5: '#566270',
 	success: '#75d701',
-	error: '#f67676',
+	neon_0: '#9900FF',
+	neon_1: '#f67676',
 	warning: '#eca95c',
 	info: '#6488ff',
 	shadow: 'rgba(0, 0, 0, 0.16)',
 	facebook: '#4196e4',
 	light_purple: '#F7F6FD',
 	purple: '#6155a6',
+	gradation: `background: #1a2a6c; background: -webkit-linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c); background: linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c);`,
 };
 
 export const dark = {
-	colors: {
-		white: '#000000',
-		black: '#ffffff',
-		gray_0: '#ECF0F1',
-		gray_1: '#E5E7E9',
-		gray_2: '#B3B6B7',
-		gray_3: '#BDC3C7',
-		gray_4: '#909497',
-		gray_5: '#707070',
-		gray_6: '#566270',
-		success: '#75d701',
-		error: '#f67676',
-		warning: '#eca95c',
-		info: '#6488ff',
-		shadow: 'rgba(0, 0, 0, 0.16)',
-		facebook: '#4196e4',
-	},
+	white: '#323333',
+	black: '#ffffff',
+	gray_0: '#161717',
+	gray_1: '#B0B2B2',
+	gray_2: '#D5DCDE',
+	gray_3: '#C7C8C8',
+	gray_4: '#D9DADA',
+	gray_5: '#ECEDED',
+	success: '#75d701',
+	neon_0: '#9900FF',
+	neon_1: '#9900FF',
+	warning: '#eca95c',
+	info: '#6488ff',
+	shadow: 'rgba(0, 0, 0, 0.16)',
+	facebook: '#4196e4',
+	gradation: `background: #360033; background: -webkit-linear-gradient(to right, #0b8793, #360033); background: linear-gradient(to right, #0b8793, #360033);
+	;
+`,
+};
+
+export type ThemeType = {
+	white: string;
+	black: string;
+	gray_0: string;
+	gray_1: string;
+	gray_2: string;
+	gray_3: string;
+	gray_4: string;
+	gray_5: string;
+	success: string;
+	error: string;
+	warning: string;
+	info: string;
+	shadow: string;
+	facebook: string;
 };
 
 export const gradation = {

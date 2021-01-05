@@ -23,6 +23,8 @@ const ContentsHeader = styled.div`
 	line-height: 50px;
 	padding-left: 20px;
 	margin-bottom: 1rem;
+
+	color: ${(props) => props.theme.black};
 `;
 
 type Props = {

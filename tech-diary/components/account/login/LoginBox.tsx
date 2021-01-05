@@ -1,5 +1,7 @@
+/** @tsx */
+
 import React, { useCallback } from 'react';
-import { css, useTheme } from '@emotion/react';
+import { css, ThemeProvider, useTheme, jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
@@ -15,7 +17,7 @@ import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import useForm from 'libs/hooks/useForm';
 import AccountInput from 'components/account/AccountInput';
 
-const LoginBoxWrap = styled.div<{ theme: any }>`
+const LoginBoxWrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 70rem;
@@ -121,7 +123,6 @@ function LoginBox() {
 	const theme = useTheme();
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
 
-
 	const [form, onChange] = useForm<createLoginForm>({
 		memberId: '',
 		pw: '',
@@ -157,7 +158,7 @@ function LoginBox() {
 	};
 
 	return (
-		<LoginBoxWrap theme={theme}>
+		<LoginBoxWrap>
 			<LoginHalfWrap isImage>
 				<LoginTextWrap>
 					<LoginText fontSize="title">Welcom to Tech-Blog!</LoginText>
