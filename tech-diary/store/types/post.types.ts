@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 export type getPostList = {
-	page: string;
+	limit: string;
 	category: string;
+	kinds?: string;
 	successCB?: () => null;
 };
 

@@ -1,18 +1,22 @@
 import { createAsyncAction, ActionType, createReducer, createAction } from 'typesafe-actions';
 import { AxiosError } from 'axios';
-import { getPostList, PostList } from '../types/post.types';
+import { getPostList, Post, PostList } from '../types/post.types';
 
 type PostListState = {
 	loading?: boolean;
 	isPostGetSuccess: boolean;
+	kinds?: string;
 	successCB: () => null;
 	getPostListErrorMsg: string;
+	postData: Post[];
 };
 
 const initialState: PostListState = {
 	loading: false,
 	isPostGetSuccess: false,
 	getPostListErrorMsg: '',
+	kinds: '',
+	postData: [],
 	successCB: () => null,
 };
 
@@ -39,12 +43,14 @@ export default createReducer<PostListState, PostListAction>(initialState, {
 	[GET_POST_LIST_REQUEST]: (state) => ({
 		...state,
 		loading: true,
+		postData: [],
 	}),
 
-	[GET_POST_LIST_SUCCESS]: (state) => ({
+	[GET_POST_LIST_SUCCESS]: (state, action) => ({
 		...state,
 		loading: false,
 		isPostGetSuccess: true,
+		postData: action.payload.posts,
 	}),
 
 	[GET_POST_LIST_FAILURE]: (state) => ({

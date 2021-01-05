@@ -120,6 +120,24 @@ const IconWrap = styled.div`
 	justify-content: center;
 `;
 
+const ProfileWrap = styled.div`
+	width: 3rem;
+	height: 3rem;
+	/* border: 1px solid white; */
+	margin: auto 5rem auto auto;
+
+	&:hover {
+		cursor: pointer;
+	}
+`;
+
+const ProfileImage = styled.img`
+	width: 100%;
+	height: 100%;
+	/* border: 1px solid white; */
+	border-radius: 50%;
+`;
+
 type Props = {
 	isDark: boolean;
 	handleIsDarkState: any;
@@ -175,13 +193,9 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 						Portfolio
 					</NavBarItem>
 					{isToken ? (
-						<AccountButtonWrap>
-							<Link href="/login">
-								<AccountButton isScroll={isScroll} onClick={onLogout}>
-									Log out
-								</AccountButton>
-							</Link>
-						</AccountButtonWrap>
+						<ProfileWrap>
+							<ProfileImage src="/image/user.png"/>
+						</ProfileWrap>
 					) : (
 						<AccountButtonWrap>
 							<Link href="/login">

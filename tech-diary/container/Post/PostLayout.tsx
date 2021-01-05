@@ -34,6 +34,7 @@ type Props = {
 function PostLayout({ posts }: Props) {
 	const router = useRouter();
 	let headName = '';
+	const kinds = router.pathname.split('/');
 
 	switch (router.pathname) {
 		case '/blog/front-end':
@@ -57,7 +58,7 @@ function PostLayout({ posts }: Props) {
 	return (
 		<PostLayoutTemplate>
 			<ContentsHeader>{headName}</ContentsHeader>
-			<PostList posts={posts} />
+			<PostList posts={posts} category="blog" kinds={kinds[2]} />
 		</PostLayoutTemplate>
 	);
 }

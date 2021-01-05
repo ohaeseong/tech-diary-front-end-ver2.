@@ -25,7 +25,7 @@ function BackEndPage({ posts }: Props) {
 }
 
 BackEndPage.getInitialProps = async (_: NextPageContext) => {
-	const response = await axios.get(`${server.host}/post/?page=0&category=blog&kinds=back-end`);
+	const response = await axios.get(`${server.host}/post/?limit=10&category=blog&kinds=back-end`);
 	const posts = response.data.data;
 
 	return posts;

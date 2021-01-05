@@ -171,7 +171,7 @@ function LoginBox() {
 			<LoginHalfWrap isImage={false}>
 				<LoginTextWrap>
 					<LoginText fontSize="title">로그인을 해주세요!</LoginText>
-					<LoginText fontSize="description" color={color.error}>
+					<LoginText fontSize="description" color={color.neon_1}>
 						{errorMsg}
 					</LoginText>
 				</LoginTextWrap>

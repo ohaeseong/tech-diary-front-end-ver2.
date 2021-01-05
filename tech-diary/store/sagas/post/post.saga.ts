@@ -9,11 +9,12 @@ function* executeCallback(cb?: () => void) {
 }
 
 function* onRequestGetPostList(action: ReturnType<typeof onPostListGet.request>) {
-	const { category, page, successCB } = action.payload;
+	const { category, limit, successCB, kinds } = action.payload;
 
 	const { status, data } = yield call(postRepo.getPostListReq, {
 		category,
-		page,
+		limit,
+		kinds,
 	});
 
 	if (status === 400) {
@@ -29,10 +30,10 @@ function* onRequestGetPostList(action: ReturnType<typeof onPostListGet.request>)
 	yield executeCallback(successCB);
 }
 
-export default function* postSagas() {
-	yield all([fork(watchonRequestGetPostList)]);
-}
-
 function* watchonRequestGetPostList() {
 	yield takeLatest(GET_POST_LIST_REQUEST, onRequestGetPostList);
+}
+
+export default function* postSagas() {
+	yield all([fork(watchonRequestGetPostList)]);
 }

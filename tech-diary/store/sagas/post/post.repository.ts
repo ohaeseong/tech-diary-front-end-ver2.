@@ -8,7 +8,8 @@ class postRepository {
 			.get(`${server.host}/post`, {
 				params: {
 					category: req.category,
-					page: req.page,
+					limit: req.limit,
+					kinds: req.kinds,
 				},
 			})
 			.catch((error) => error.response);

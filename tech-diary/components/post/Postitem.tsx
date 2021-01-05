@@ -13,13 +13,12 @@ const PostItemWrap = styled.div`
 
 	border-radius: 7px;
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
-	transition: 0.2s ease-in-out;
+	transition: 0.3s ease-in-out;
 
 	background-color: ${(props) => props.theme.white};
 
 	&:hover {
-		cursor: pointer;
-		transform: translate(0, -20px);
+		transform: translate(0, -10px);
 	}
 `;
 
@@ -32,6 +31,10 @@ const ThumbnailWrap = styled.div`
 	overflow: hidden;
 
 	border-radius: 7px 7px 0px 0px;
+
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const Thumbnail = styled.img`
@@ -44,7 +47,6 @@ const PostContentsWrap = styled.div`
 	flex-direction: column;
 	width: 100%;
 	height: 12rem;
-	/* border: 1px solid black; */
 `;
 
 const PostContent = styled.div<{ type: string }>`
@@ -57,8 +59,6 @@ const PostContent = styled.div<{ type: string }>`
 	-webkit-box-orient: vertical;
 	color: ${(props) => props.theme.black};
 
-	/* border: 1px solid black; */
-
 	${(props) => {
 		if (props.type === 'title') {
 			return css`
@@ -67,6 +67,10 @@ const PostContent = styled.div<{ type: string }>`
 				font-weight: 500;
 				padding-top: 5px;
 				-webkit-line-clamp: 1;
+
+				&:hover {
+					cursor: pointer;
+				}
 			`;
 		}
 
@@ -77,20 +81,51 @@ const PostContent = styled.div<{ type: string }>`
 				line-height: 1rem;
 				color: ${props.theme.gray_5};
 				-webkit-line-clamp: 4;
+
+				&:hover {
+					cursor: pointer;
+				}
 			`;
 		}
 
 		if (props.type === 'info') {
 			return css`
-				font-size: 0.5rem;
-				height: 1.5rem;
-				padding-top: 0.5rem;
-				color: ${props.theme.gray_3};
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
 			`;
 		}
 
 		return null;
 	}}
+`;
+
+const PostInfo = styled.div`
+	font-size: 0.5rem;
+	height: 1.5rem;
+	padding-top: 0.5rem;
+	color: ${(props) => props.theme.gray_3};
+
+	&:hover {
+		cursor: pointer;
+	}
+`;
+
+const UserProfile = styled.img`
+	width: 1.8rem;
+	height: 1.8rem;
+	margin-top: 0.5rem;
+	/* border: 1px solid white; */
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: ${(props) => props.theme.white};
+
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const PostBottomWrap = styled.div`
@@ -100,8 +135,6 @@ const PostBottomWrap = styled.div`
 	justify-content: space-between;
 	width: 100%;
 	height: 3rem;
-	/* margin-top: 0.5rem */
-	/* border: 1px solid black; */
 
 	& > * {
 		margin: 0.8rem;
@@ -132,6 +165,10 @@ function PostItem({ item }: Props) {
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
 
+	const loadUserPage = () => {
+		window.location.href = 'http://localhost:3000/login';
+	};
+
 	return (
 		<PostItemWrap>
 			<ThumbnailWrap>
@@ -140,7 +177,10 @@ function PostItem({ item }: Props) {
 			<PostContentsWrap>
 				<PostContent type="title">{title}</PostContent>
 				<PostContent type="contents">{contents}</PostContent>
-				<PostContent type="info">{`${dateFormat} / ${memberId}`}</PostContent>
+				<PostContent type="info">
+					<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
+					<UserProfile src="/image/user.png" onClick={loadUserPage}/>
+				</PostContent>
 				<PostBottomWrap>
 					<IconWrap>
 						<FaCommentAlt size="15" color="#126CED" />

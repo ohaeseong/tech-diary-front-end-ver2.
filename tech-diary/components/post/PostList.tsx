@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { useDispatch } from 'react-redux';
-
 import post, { GET_POST_LIST_REQUEST } from 'store/modules/post';
 import { Post } from 'store/types/post.types';
 import PostItem from 'components/post/PostItem';
-import { color } from 'styles/color';
+import usePost from 'libs/hooks/usePost';
+import Loading from 'components/common/Loading';
+import SkeletonLoading from 'components/common/SkeletonLoading';
 
 const PostListTemplate = styled.div`
 	width: 100%;
@@ -25,54 +24,70 @@ const NonePost = styled.div`
 	align-items: center;
 	text-align: center;
 	font-size: 2rem;
-`;
 
-const SkeletonWrap = styled.div`
-	width: 270px;
-	display: flex;
-	flex-direction: column;
-	padding: 0.5rem;
-	background-color: ${color.gray_2};
-	border-radius: 5px;
-
-	& > * {
-		margin-bottom: 0.5rem;
-	}
-`;
-
-const SkeletonTemplate = styled.div`
-	width: 100%;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(16rem, auto));
-	grid-template-rows: repeat(auto-fit, 5);
-	column-gap: 2rem;
-	row-gap: 2rem;
+	color: ${(props) => props.theme.black};
 `;
 
 type Props = {
 	posts: Post[];
+	category: string;
+	kinds: string;
 };
 
-function PostList({ posts }: Props) {
+function PostList({ posts, category, kinds }: Props) {
+	const [postList, setPostList] = useState(posts);
+	const [isEarlyData, setIsEarlyData] = useState(true);
+	const { postData, setLimit, limit, loading } = usePost(category, kinds);
+
+	const handlePostData = useCallback(() => {
+		const { innerHeight } = window;
+		const { scrollHeight } = document.body;
+
+		const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+
+		if (scrollHeight - innerHeight - scrollTop < 100) {
+			if (postData.length + 10 < limit) {
+				return;
+			}
+			setLimit(limit + 10);
+
+			setPostList(postData);
+		}
+	}, [limit, postData, setLimit]);
+
+	useEffect(() => {
+		window.addEventListener('scroll', handlePostData);
+
+		return () => {
+			window.removeEventListener('scroll', handlePostData);
+		};
+	}, [handlePostData]);
+
+	useEffect(() => {
+		if (postData.length !== 0) {
+			setIsEarlyData(false);
+		}
+	}, [postData.length]);
+
 	return (
-		<PostListTemplate>
-			{posts.length !== 0 ? (
-				posts.map((item) => {
-					return <PostItem key={item.id} item={item} />;
-				})
-			) : (
-				<SkeletonTheme color={color.gray_0} highlightColor={color.gray_1}>
-					<SkeletonTemplate>
-						<SkeletonWrap>
-							<Skeleton width={250} height={70} />
-							<Skeleton width={200} height={30} />
-							<Skeleton width={220} height={70} />
-							<Skeleton width={250} height={30} />
-						</SkeletonWrap>
-					</SkeletonTemplate>
-				</SkeletonTheme>
-			)}
-		</PostListTemplate>
+		<>
+			<PostListTemplate>
+				{isEarlyData && posts.length !== 0
+					? posts.map((item) => {
+							return <PostItem key={item.id} item={item} />;
+					  })
+					: postList.map((item) => {
+							return <PostItem key={item.id} item={item} />;
+					  })}
+				{posts.length === 0 ? (
+					<NonePost>
+						None Post <br /> Please write your story!{' '}
+					</NonePost>
+				) : (
+					<></>
+				)}
+			</PostListTemplate>
+		</>
 	);
 }
 
