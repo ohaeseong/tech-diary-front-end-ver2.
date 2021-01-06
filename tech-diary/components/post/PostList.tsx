@@ -1,19 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import post, { GET_POST_LIST_REQUEST } from 'store/modules/post';
 import { Post } from 'store/types/post.types';
 import PostItem from 'components/post/PostItem';
 import usePost from 'libs/hooks/usePost';
-import Loading from 'components/common/Loading';
 import SkeletonLoading from 'components/common/SkeletonLoading';
+import { mediaQuery } from 'components/layout/responsive';
 
 const PostListTemplate = styled.div`
-	width: 100%;
 	display: grid;
+	width: 100%;
 	grid-template-columns: repeat(auto-fit, minmax(16rem, auto));
-	grid-template-rows: repeat(auto-fit, 5);
+	grid-template-rows: repeat(auto-fit, 1fr);
 	column-gap: 2rem;
 	row-gap: 2rem;
+	${mediaQuery.over} {
+		grid-template-columns: repeat(5, minmax(16rem, auto));
+	}
 `;
 
 const NonePost = styled.div`
@@ -22,8 +24,12 @@ const NonePost = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	text-align: center;
 	font-size: 2rem;
+	text-align: center;
+
+	${mediaQuery.over} {
+		grid-template-columns: repeat(5, minmax(16rem, auto));
+	}
 
 	color: ${(props) => props.theme.black};
 `;
@@ -79,14 +85,14 @@ function PostList({ posts, category, kinds }: Props) {
 					: postList.map((item) => {
 							return <PostItem key={item.id} item={item} />;
 					  })}
-				{posts.length === 0 ? (
-					<NonePost>
-						None Post <br /> Please write your story!{' '}
-					</NonePost>
-				) : (
-					<></>
-				)}
 			</PostListTemplate>
+			{posts.length === 0 ? (
+				<NonePost>
+					None Post <br /> Please write your story!{' '}
+				</NonePost>
+			) : (
+				<></>
+			)}
 		</>
 	);
 }

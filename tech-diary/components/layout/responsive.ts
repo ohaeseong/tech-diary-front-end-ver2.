@@ -3,6 +3,7 @@ export const breakPoints = {
 	md: 768,
 	lg: 992,
 	xl: 1200,
+	over: 1900,
 };
 
 export const mediaQuery = {
@@ -10,4 +11,5 @@ export const mediaQuery = {
 	md: `@media (min-width: ${breakPoints.md}px) and (max-width:${breakPoints.lg}px)`,
 	lg: `@media (min-width: ${breakPoints.lg}px) and (max-width:${breakPoints.xl}px)`,
 	xl: `@media (min-width: ${breakPoints.xl}px)`,
+	over: `@media (min-width: ${breakPoints.over}px)`,
 };

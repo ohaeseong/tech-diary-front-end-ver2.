@@ -5,11 +5,11 @@ import { color } from 'styles/color';
 
 const MenuItemWrap = styled.div<{ height: number }>`
 	overflow: hidden;
-	width: 5rem;
+	width: 8rem;
 	background-color: white;
 	border: 1px solid ${(props) => props.theme.gray_2};
 	transition: 0.3s ease-in-out;
-	margin-top: 0.1rem;
+	margin-top: 0.5rem;
 
 	${(props) => {
 		if (props.height) {

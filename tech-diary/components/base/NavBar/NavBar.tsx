@@ -12,6 +12,7 @@ import categorys from 'resource/category';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
 import { Category } from 'components/base/Category';
 import MenuSlider from 'components/common/MenuSlider';
+import MenuItem from 'components/common/MenuItem';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -124,34 +125,20 @@ const IconWrap = styled.div`
 const ProfileWrap = styled.div`
 	width: 2.5rem;
 	height: 2.5rem;
-	/* border: 1px solid white; */
+
 	margin: auto 5rem auto auto;
-
-	&:hover {
-		cursor: pointer;
-	}
 `;
 
-const MenuItem = styled.p`
-	width: 100%;
-
-	margin: 0;
-	height: 20px;
-	text-align: center;
-	border-bottom: 0.5px solid ${color.gray_2};
-	background-color: ${(props) => props.theme.white};
-
-	font-size: 0.8rem;
-	line-height: 1.3rem;
-
-	color: ${(props) => props.theme.black};
-`;
 
 const ProfileImage = styled.img`
 	width: 100%;
 	height: 100%;
-	/* border: 1px solid white; */
+
 	border-radius: 50%;
+
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 type Props = {
@@ -164,17 +151,18 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 	const theme = useTheme();
 	const [isToken, setIsToken] = useState(false);
 	const [height, setHeight] = useState(0);
+	const profileMenuHeight = 123;
 
 	const menuToggle = useCallback(() => {
-		if (height === 125) {
+		if (height === profileMenuHeight) {
 			setHeight(0);
 		} else {
-			setHeight(125);
+			setHeight(profileMenuHeight);
 		}
 	}, [height]);
 
 	const closeMenu = useCallback(() => {
-		if (height === 125) {
+		if (height === profileMenuHeight) {
 			setHeight(0);
 		}
 	}, [height]);
@@ -234,11 +222,9 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 						<ProfileWrap>
 							<ProfileImage src="/image/user.png" onClick={menuToggle} />
 							<MenuSlider height={height}>
-								<MenuItem></MenuItem>
-								<MenuItem />
-								<MenuItem />
-								<MenuItem />
-								<MenuItem />
+								<MenuItem>내 정보</MenuItem>
+								<MenuItem>임시글 보러가기</MenuItem>
+								<MenuItem>북마크한 글 보러가기</MenuItem>
 								<MenuItem onClick={onLogout}>Log out</MenuItem>
 							</MenuSlider>
 						</ProfileWrap>
