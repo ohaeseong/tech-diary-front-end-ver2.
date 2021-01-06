@@ -11,6 +11,7 @@ import { getStorage, removeStorage } from 'libs/storage';
 import categorys from 'resource/category';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
 import { Category } from 'components/base/Category';
+import MenuSlider from 'components/common/MenuSlider';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -121,14 +122,29 @@ const IconWrap = styled.div`
 `;
 
 const ProfileWrap = styled.div`
-	width: 3rem;
-	height: 3rem;
+	width: 2.5rem;
+	height: 2.5rem;
 	/* border: 1px solid white; */
 	margin: auto 5rem auto auto;
 
 	&:hover {
 		cursor: pointer;
 	}
+`;
+
+const MenuItem = styled.p`
+	width: 100%;
+
+	margin: 0;
+	height: 20px;
+	text-align: center;
+	border-bottom: 0.5px solid ${color.gray_2};
+	background-color: ${(props) => props.theme.white};
+
+	font-size: 0.8rem;
+	line-height: 1.3rem;
+
+	color: ${(props) => props.theme.black};
 `;
 
 const ProfileImage = styled.img`
@@ -147,6 +163,21 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const theme = useTheme();
 	const [isToken, setIsToken] = useState(false);
+	const [height, setHeight] = useState(0);
+
+	const menuToggle = useCallback(() => {
+		if (height === 125) {
+			setHeight(0);
+		} else {
+			setHeight(125);
+		}
+	}, [height]);
+
+	const closeMenu = useCallback(() => {
+		if (height === 125) {
+			setHeight(0);
+		}
+	}, [height]);
 
 	const handleIsScrollEvent = useCallback(() => {
 		if (window.scrollY > 100) {
@@ -158,6 +189,7 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 
 	const onLogout = () => {
 		removeStorage('tech-token');
+		window.location.reload();
 	};
 
 	useEffect(() => {
@@ -178,6 +210,12 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 		}
 	}, [isToken]);
 
+	useEffect(() => {
+		document.body.addEventListener('click', closeMenu);
+
+		return () => document.body.removeEventListener('click', closeMenu);
+	}, [closeMenu]);
+
 	return (
 		<ThemeProvider theme={theme}>
 			<NavBarWrap>
@@ -194,7 +232,15 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 					</NavBarItem>
 					{isToken ? (
 						<ProfileWrap>
-							<ProfileImage src="/image/user.png"/>
+							<ProfileImage src="/image/user.png" onClick={menuToggle} />
+							<MenuSlider height={height}>
+								<MenuItem></MenuItem>
+								<MenuItem />
+								<MenuItem />
+								<MenuItem />
+								<MenuItem />
+								<MenuItem onClick={onLogout}>Log out</MenuItem>
+							</MenuSlider>
 						</ProfileWrap>
 					) : (
 						<AccountButtonWrap>
