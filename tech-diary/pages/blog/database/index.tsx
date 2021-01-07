@@ -25,7 +25,7 @@ function DatabasePage({ posts }: Props) {
 }
 
 DatabasePage.getInitialProps = async (_: NextPageContext) => {
-	const response = await axios.get(`${server.host}/post/?limit=10&category=blog&kinds=database`);
+	const response = await axios.get(`${server.host}/post/?limit=30&category=blog&kinds=database`);
 	const posts = response.data.data;
 
 	return posts;

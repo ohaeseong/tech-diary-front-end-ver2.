@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
-import { color } from 'styles/color';
 
 const MenuItemWrap = styled.div<{ height: number }>`
 	overflow: hidden;

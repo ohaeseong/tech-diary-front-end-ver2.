@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import PostList from 'components/post/PostList';
 import { Post } from 'store/types/post.types';
 import { useRouter } from 'next/router';
+import { mediaQuery } from 'components/layout/responsive';
 
 const PostLayoutTemplate = styled.div`
 	display: flex;
@@ -13,6 +14,7 @@ const PostLayoutTemplate = styled.div`
 	width: 80%;
 	height: 100%;
 	margin: 3rem auto;
+	place-items: center;
 `;
 
 const ContentsHeader = styled.div`
@@ -57,7 +59,7 @@ function PostLayout({ posts }: Props) {
 
 	return (
 		<PostLayoutTemplate>
-			<ContentsHeader>{headName}</ContentsHeader>
+			{posts.length > 0 ? <ContentsHeader>{headName}</ContentsHeader> : <></>}
 			<PostList posts={posts} category="blog" kinds={kinds[2]} />
 		</PostLayoutTemplate>
 	);

@@ -160,10 +160,11 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { title, contents, createTime, thumbnailAddress, memberId, commentList, like } = item;
+	const { title, contents, createTime, thumbnailAddress, memberId, commentList, like, member } = item;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
+	const profileImage = member.profileImage || '/image/user.png';
 
 	const loadUserPage = () => {
 		window.location.href = 'http://localhost:3000/login';
@@ -179,7 +180,7 @@ function PostItem({ item }: Props) {
 				<PostContent type="contents">{contents}</PostContent>
 				<PostContent type="info">
 					<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
-					<UserProfile src="/image/user.png" onClick={loadUserPage}/>
+					<UserProfile src={profileImage} onClick={loadUserPage} />
 				</PostContent>
 				<PostBottomWrap>
 					<IconWrap>

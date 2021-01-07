@@ -25,7 +25,7 @@ function FrontEndPage({ posts }: Props) {
 }
 
 FrontEndPage.getInitialProps = async (_: NextPageContext) => {
-	const response = await axios.get(`${server.host}/post/?limit=10&category=blog&kinds=front-end`);
+	const response = await axios.get(`${server.host}/post/?limit=30&category=blog&kinds=front-end`);
 	const posts = response.data.data;
 
 	return posts;

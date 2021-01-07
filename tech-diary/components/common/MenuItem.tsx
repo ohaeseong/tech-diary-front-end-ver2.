@@ -8,7 +8,6 @@ const MenuItemWrap = styled.p`
 	margin: 0;
 	height: 30px;
 	padding-left: 10px;
-	border-bottom: 0.5px solid ${color.gray_2};
 	background-color: ${(props) => props.theme.white};
 
 	font-size: 0.8rem;

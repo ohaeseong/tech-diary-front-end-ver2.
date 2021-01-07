@@ -25,7 +25,7 @@ function OtherPage({ posts }: Props) {
 }
 
 OtherPage.getInitialProps = async (_: NextPageContext) => {
-	const response = await axios.get(`${server.host}/post/?limit=10&category=blog&kinds=etc`);
+	const response = await axios.get(`${server.host}/post/?limit=30&category=blog&kinds=etc`);
 	const posts = response.data.data;
 
 	return posts;

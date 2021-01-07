@@ -13,8 +13,9 @@ const PostListTemplate = styled.div`
 	grid-template-rows: repeat(auto-fit, 1fr);
 	column-gap: 2rem;
 	row-gap: 2rem;
+	place-items: center;
 	${mediaQuery.over} {
-		grid-template-columns: repeat(5, minmax(16rem, auto));
+		grid-template-columns: repeat(5, auto);
 	}
 `;
 
@@ -26,10 +27,6 @@ const NonePost = styled.div`
 	align-items: center;
 	font-size: 2rem;
 	text-align: center;
-
-	${mediaQuery.over} {
-		grid-template-columns: repeat(5, minmax(16rem, auto));
-	}
 
 	color: ${(props) => props.theme.black};
 `;

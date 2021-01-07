@@ -5,6 +5,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Switch from 'react-switch';
 import { RiMoonClearFill } from 'react-icons/ri';
 import { FaSun } from 'react-icons/fa';
+import jwt from 'jsonwebtoken';
 
 import { color, ThemeType } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
@@ -147,11 +148,13 @@ type Props = {
 };
 
 function NavBar({ isDark, handleIsDarkState }: Props) {
-	const [isScroll, setIsScroll] = useState(false);
 	const theme = useTheme();
+
+	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
 	const [height, setHeight] = useState(0);
-	const profileMenuHeight = 123;
+	const [profileImage, setProfileImage] = useState('/image/user.png');
+	const profileMenuHeight = 120;
 
 	const menuToggle = useCallback(() => {
 		if (height === profileMenuHeight) {
@@ -190,9 +193,11 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 
 	useEffect(() => {
 		const token = getStorage('tech-token');
+		const tokenDecoded = jwt.decode(token);
 
 		if (token) {
 			setIsToken(true);
+			setProfileImage(tokenDecoded.profileImage);
 		} else {
 			setIsToken(false);
 		}
@@ -220,7 +225,7 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 					</NavBarItem>
 					{isToken ? (
 						<ProfileWrap>
-							<ProfileImage src="/image/user.png" onClick={menuToggle} />
+							<ProfileImage src={profileImage} onClick={menuToggle} />
 							<MenuSlider height={height}>
 								<MenuItem>내 정보</MenuItem>
 								<MenuItem>임시글 보러가기</MenuItem>

@@ -21,4 +21,12 @@ export type Post = {
 	createTime: string;
 	commentList: number;
 	like: number;
+	member: Member;
 };
+
+export type Member = {
+	memberId: string;
+	memberName: string;
+	profileImage: string;
+	accessLevel?: number;
+}
