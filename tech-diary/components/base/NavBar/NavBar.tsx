@@ -1,4 +1,3 @@
-import { css, ThemeProvider, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import React, { useEffect, useState, useCallback } from 'react';
@@ -7,11 +6,9 @@ import { RiMoonClearFill } from 'react-icons/ri';
 import { FaSun } from 'react-icons/fa';
 import jwt from 'jsonwebtoken';
 
-import { color, ThemeType } from 'styles/color';
+import { color } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
-import categorys from 'resource/category';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
-import { Category } from 'components/base/Category';
 import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
 
@@ -19,18 +16,6 @@ const NavBarWrap = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-`;
-
-const NavBarBanner = styled.div`
-	width: 100%;
-	height: 35rem;
-	text-align: center;
-	line-height: 20rem;
-	${(props) => {
-		return css`
-			${props.theme.gradation}
-		`;
-	}}
 `;
 
 const NavBarContent = styled.div<{ isScroll: boolean }>`
@@ -130,7 +115,6 @@ const ProfileWrap = styled.div`
 	margin: auto 5rem auto auto;
 `;
 
-
 const ProfileImage = styled.img`
 	width: 100%;
 	height: 100%;
@@ -148,8 +132,6 @@ type Props = {
 };
 
 function NavBar({ isDark, handleIsDarkState }: Props) {
-	const theme = useTheme();
-
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
 	const [height, setHeight] = useState(0);
@@ -210,61 +192,57 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 	}, [closeMenu]);
 
 	return (
-		<ThemeProvider theme={theme}>
-			<NavBarWrap>
-				<NavBarBanner />
-				<NavBarContent isScroll={isScroll}>
-					<Link href="/">
-						<LogoWrap isScroll={isScroll}>Tech</LogoWrap>
-					</Link>
-					<NavBarItem href="/" isScroll={isScroll}>
-						Blog
-					</NavBarItem>
-					<NavBarItem href="/portfolio" isScroll={isScroll}>
-						Portfolio
-					</NavBarItem>
-					{isToken ? (
-						<ProfileWrap>
-							<ProfileImage src={profileImage} onClick={menuToggle} />
-							<MenuSlider height={height}>
-								<MenuItem>내 정보</MenuItem>
-								<MenuItem>임시글 보러가기</MenuItem>
-								<MenuItem>북마크한 글 보러가기</MenuItem>
-								<MenuItem onClick={onLogout}>Log out</MenuItem>
-							</MenuSlider>
-						</ProfileWrap>
-					) : (
-						<AccountButtonWrap>
-							<Link href="/login">
-								<AccountButton isScroll={isScroll}>Log in</AccountButton>
-							</Link>
-							<Link href="/signup">
-								<AccountButton isScroll={isScroll}>Sign up</AccountButton>
-							</Link>
-						</AccountButtonWrap>
-					)}
-					<SwitchWrap>
-						<Switch
-							checked={isDark}
-							onChange={() => handleIsDarkState()}
-							checkedIcon={
-								<IconWrap>
-									<FaSun color="#F5B7B1" />
-								</IconWrap>
-							}
-							uncheckedIcon={
-								<IconWrap>
-									<RiMoonClearFill color="#F4D03F" />
-								</IconWrap>
-							}
-							onColor={color.neon_0}
-							offColor={color.black}
-						/>
-					</SwitchWrap>
-				</NavBarContent>
-				<Category categorys={categorys} />
-			</NavBarWrap>
-		</ThemeProvider>
+		<NavBarWrap>
+			<NavBarContent isScroll={isScroll}>
+				<Link href="/">
+					<LogoWrap isScroll={isScroll}>Tech</LogoWrap>
+				</Link>
+				<NavBarItem href="/" isScroll={isScroll}>
+					Blog
+				</NavBarItem>
+				<NavBarItem href="/portfolio" isScroll={isScroll}>
+					Portfolio
+				</NavBarItem>
+				{isToken ? (
+					<ProfileWrap>
+						<ProfileImage src={profileImage} onClick={menuToggle} />
+						<MenuSlider height={height}>
+							<MenuItem>내 정보</MenuItem>
+							<MenuItem>임시글 보러가기</MenuItem>
+							<MenuItem>북마크한 글 보러가기</MenuItem>
+							<MenuItem onClick={onLogout}>Log out</MenuItem>
+						</MenuSlider>
+					</ProfileWrap>
+				) : (
+					<AccountButtonWrap>
+						<Link href="/login">
+							<AccountButton isScroll={isScroll}>Log in</AccountButton>
+						</Link>
+						<Link href="/signup">
+							<AccountButton isScroll={isScroll}>Sign up</AccountButton>
+						</Link>
+					</AccountButtonWrap>
+				)}
+				<SwitchWrap>
+					<Switch
+						checked={isDark}
+						onChange={() => handleIsDarkState()}
+						checkedIcon={
+							<IconWrap>
+								<FaSun color="#F5B7B1" />
+							</IconWrap>
+						}
+						uncheckedIcon={
+							<IconWrap>
+								<RiMoonClearFill color="#F4D03F" />
+							</IconWrap>
+						}
+						onColor={color.neon_0}
+						offColor={color.black}
+					/>
+				</SwitchWrap>
+			</NavBarContent>
+		</NavBarWrap>
 	);
 }
 

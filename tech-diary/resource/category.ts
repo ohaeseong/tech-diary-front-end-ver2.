@@ -1,3 +1,5 @@
+// blog 카테고리 아이템을 리스트로 추가 밑 삭제  할 수 있습니다.
+
 const categoryItems = [
 	{
 		href: '/',

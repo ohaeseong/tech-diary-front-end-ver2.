@@ -16,6 +16,7 @@ function IndexPage({ posts }: Props) {
 		<>
 			<Head>
 				<title>Main page</title>
+				<meta name="description" content="인덱스 페이지입니다." />
 			</Head>
 			<MainTemplate>
 				<PostLayout posts={posts} />

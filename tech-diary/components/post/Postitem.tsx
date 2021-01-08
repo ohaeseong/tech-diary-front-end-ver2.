@@ -6,6 +6,7 @@ import { FcLike } from 'react-icons/fc';
 
 import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
+import Link from 'next/link';
 
 const PostItemWrap = styled.div`
 	width: 100%;
@@ -160,7 +161,7 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { title, contents, createTime, thumbnailAddress, memberId, commentList, like, member } = item;
+	const { id, title, contents, createTime, thumbnailAddress, memberId, commentList, like, member } = item;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
@@ -170,30 +171,36 @@ function PostItem({ item }: Props) {
 		window.location.href = 'http://localhost:3000/login';
 	};
 
+	const loadDetailPage = () => {
+		console.log(id);
+	};
+
 	return (
-		<PostItemWrap>
-			<ThumbnailWrap>
-				<Thumbnail src={thumbnailSrc} alt="thumbnail" />
-			</ThumbnailWrap>
-			<PostContentsWrap>
-				<PostContent type="title">{title}</PostContent>
-				<PostContent type="contents">{contents}</PostContent>
-				<PostContent type="info">
-					<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
-					<UserProfile src={profileImage} onClick={loadUserPage} />
-				</PostContent>
-				<PostBottomWrap>
-					<IconWrap>
-						<FaCommentAlt size="15" color="#126CED" />
-						{commentList}
-					</IconWrap>
-					<IconWrap>
-						<FcLike size="15" />
-						{like}
-					</IconWrap>
-				</PostBottomWrap>
-			</PostContentsWrap>
-		</PostItemWrap>
+		<Link href={`http://localhost:3000/blog/detail/${id}`}>
+			<PostItemWrap onClick={loadDetailPage}>
+				<ThumbnailWrap>
+					<Thumbnail src={thumbnailSrc} alt="thumbnail" />
+				</ThumbnailWrap>
+				<PostContentsWrap>
+					<PostContent type="title">{title}</PostContent>
+					<PostContent type="contents">{contents}</PostContent>
+					<PostContent type="info">
+						<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
+						<UserProfile src={profileImage} onClick={loadUserPage} />
+					</PostContent>
+					<PostBottomWrap>
+						<IconWrap>
+							<FaCommentAlt size="15" color="#126CED" />
+							{commentList}
+						</IconWrap>
+						<IconWrap>
+							<FcLike size="15" />
+							{like}
+						</IconWrap>
+					</PostBottomWrap>
+				</PostContentsWrap>
+			</PostItemWrap>
+		</Link>
 	);
 }
 

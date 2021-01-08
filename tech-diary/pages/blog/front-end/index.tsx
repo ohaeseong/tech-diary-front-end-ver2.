@@ -15,7 +15,8 @@ function FrontEndPage({ posts }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Main page</title>
+				<title>Blog front-end page</title>
+				<meta name="description" content="블로그 category front-end 페이지입니다." />
 			</Head>
 			<MainTemplate>
 				<PostLayout posts={posts} />

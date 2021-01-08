@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import PostList from 'components/post/PostList';
 import { Post } from 'store/types/post.types';
 import { useRouter } from 'next/router';
-import { mediaQuery } from 'components/layout/responsive';
 
 const PostLayoutTemplate = styled.div`
 	display: flex;

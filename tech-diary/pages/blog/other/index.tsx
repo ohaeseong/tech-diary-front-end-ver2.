@@ -15,7 +15,8 @@ function OtherPage({ posts }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Main page</title>
+				<title>Blog other page</title>
+				<meta name="description" content="블로그 category other 페이지입니다." />
 			</Head>
 			<MainTemplate>
 				<PostLayout posts={posts} />
