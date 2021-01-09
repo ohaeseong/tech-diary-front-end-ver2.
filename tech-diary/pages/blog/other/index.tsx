@@ -3,7 +3,7 @@ import Head from 'next/head';
 import axios from 'axios';
 import { NextPageContext } from 'next';
 
-import { MainTemplate } from 'components/template/MainTemplate';
+import MainTemplate from 'components/template/mainTemplate/MainTemplate';
 import PostLayout from 'container/Post/PostLayout';
 import { server } from 'config/config';
 

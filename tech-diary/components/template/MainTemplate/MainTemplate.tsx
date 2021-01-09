@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
+import styled from '@emotion/styled';
 
-import * as T from 'components/template/MainTemplate/MainTemplate.styled';
 import { NavBar } from 'components/base/NavBar';
 import { ThemeProvider } from '@emotion/react';
 import { color, dark } from 'styles/color';
@@ -10,11 +10,31 @@ import categorys from 'resource/category';
 import { Category } from 'components/base/Category';
 import GradientBanner from 'components/common/GradientBanner';
 
+export const Template = styled.div`
+	position: relavive;
+`;
+
+export const Container = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+`;
+
+export const MainContents = styled.div`
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	background-color: ${(props) => props.theme.gray_0};
+`;
+
 type Props = {
 	children: ReactNode;
+	isNav: boolean;
 };
 
-function MainTemplate({ children }: Props) {
+function MainTemplate({ children, isNav }: Props) {
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
 
 	const themeMode = theme === 'light';
@@ -24,17 +44,28 @@ function MainTemplate({ children }: Props) {
 	}
 
 	return (
-		<T.Template>
-			<T.Container>
+		<Template>
+			<Container>
 				<ThemeProvider theme={themeMode ? dark : color}>
-					<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} />
-					<GradientBanner />
-					<Category categorys={categorys} />
-					<T.MainContents>{children}</T.MainContents>
+					{isNav ? (
+						<>
+							<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} />
+							<GradientBanner />
+							<Category categorys={categorys} />
+						</>
+					) : (
+						<></>
+					)}
+					<MainContents>{children}</MainContents>
 				</ThemeProvider>
-			</T.Container>
-		</T.Template>
+			</Container>
+		</Template>
 	);
 }
+
+MainTemplate.defaultProps = {
+	// eslint-disable-next-line react/default-props-match-prop-types
+	isNav: true,
+};
 
 export default MainTemplate;

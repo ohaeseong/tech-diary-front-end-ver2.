@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { MainTemplate } from 'components/template/MainTemplate';
 import Head from 'next/head';
+import PostDetailLayout from 'container/PostDetail/PostDetailLayout';
+import MainTemplate from 'components/template/mainTemplate/MainTemplate';
 
 function DetailPage() {
-	console.log('test');
-
 	return (
 		<>
 			<Head>
 				<title>Blog detail page</title>
 				<meta name="description" content="블로그 상세조회 페이지입니다." />
 			</Head>
+			<MainTemplate isNav={false}>
+				<PostDetailLayout />
+			</MainTemplate>
 		</>
 	);
 }

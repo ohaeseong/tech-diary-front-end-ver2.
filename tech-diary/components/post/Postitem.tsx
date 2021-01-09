@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 const PostItemWrap = styled.div`
 	width: 100%;
-	height: 22rem;
+	height: 24rem;
 
 	border-radius: 7px;
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
@@ -28,7 +28,7 @@ const ThumbnailWrap = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	height: 10rem;
+	height: 12rem;
 	overflow: hidden;
 
 	border-radius: 7px 7px 0px 0px;
@@ -171,36 +171,36 @@ function PostItem({ item }: Props) {
 		window.location.href = 'http://localhost:3000/login';
 	};
 
-	const loadDetailPage = () => {
-		console.log(id);
-	};
-
 	return (
-		<Link href={`http://localhost:3000/blog/detail/${id}`}>
-			<PostItemWrap onClick={loadDetailPage}>
+		<PostItemWrap>
+			<Link href={`http://localhost:3000/blog/detail/${id}`}>
 				<ThumbnailWrap>
 					<Thumbnail src={thumbnailSrc} alt="thumbnail" />
 				</ThumbnailWrap>
-				<PostContentsWrap>
+			</Link>
+			<PostContentsWrap>
+				<Link href={`http://localhost:3000/blog/detail/${id}`}>
 					<PostContent type="title">{title}</PostContent>
+				</Link>
+				<Link href={`http://localhost:3000/blog/detail/${id}`}>
 					<PostContent type="contents">{contents}</PostContent>
-					<PostContent type="info">
-						<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
-						<UserProfile src={profileImage} onClick={loadUserPage} />
-					</PostContent>
-					<PostBottomWrap>
-						<IconWrap>
-							<FaCommentAlt size="15" color="#126CED" />
-							{commentList}
-						</IconWrap>
-						<IconWrap>
-							<FcLike size="15" />
-							{like}
-						</IconWrap>
-					</PostBottomWrap>
-				</PostContentsWrap>
-			</PostItemWrap>
-		</Link>
+				</Link>
+				<PostContent type="info">
+					<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
+					<UserProfile src={profileImage} onClick={loadUserPage} />
+				</PostContent>
+				<PostBottomWrap>
+					<IconWrap>
+						<FaCommentAlt size="15" color="#126CED" />
+						{commentList}
+					</IconWrap>
+					<IconWrap>
+						<FcLike size="15" />
+						{like}
+					</IconWrap>
+				</PostBottomWrap>
+			</PostContentsWrap>
+		</PostItemWrap>
 	);
 }
 

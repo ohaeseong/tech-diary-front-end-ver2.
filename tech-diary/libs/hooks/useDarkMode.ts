@@ -26,7 +26,7 @@ export default function useDarkMode() {
 			window.localStorage.setItem('theme', 'light');
 		}
 		setComponentMounted(true);
-	}, [setTheme]);
+	}, []);
 
 	return [theme, toggleTheme, componentMounted];
 }
