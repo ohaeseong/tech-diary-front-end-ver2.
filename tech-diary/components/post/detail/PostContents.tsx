@@ -1,21 +1,24 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import MarkdwonRenderer from 'components/common/MarkdownRenderer';
-import ReactMarkdown from 'react-markdown';
 
 const ContentsWrap = styled.div`
-	width: 100%auto;
+	width: 100%;
 	min-height: 30rem;
+	/* margin-top: 1rem; */
+	padding: 1rem;
 
-	border: 1px solid black;
-
-	font-size: 1.5rem;
+	color: ${(props) => props.theme.black};
 `;
 
-function PostContents() {
+type Props = {
+	children: string;
+};
+
+function PostContents({ children }: Props) {
 	return (
 		<ContentsWrap>
-			<ReactMarkdown>## Hello, *world*!</ReactMarkdown>
+			<MarkdwonRenderer>{children}</MarkdwonRenderer>
 		</ContentsWrap>
 	);
 }

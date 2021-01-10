@@ -34,7 +34,9 @@ export type PostDetail = {
 	category: string;
 	createTime: string;
 	commentData: Comment[];
-	tagList: Tag[];
+	tagList: {
+		tagData: Tag[];
+	};
 	like: number;
 	member: Member;
 };

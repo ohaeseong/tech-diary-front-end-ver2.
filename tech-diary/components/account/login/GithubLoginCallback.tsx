@@ -16,12 +16,12 @@ function GithubLoginCallback() {
 				payload: {
 					code: router.query.code,
 					successCB: () => {
-						window.location.href = 'http://localhost:3000';
+						router.push('http://localhost:3000');
 					},
 				},
 			});
 		}
-	}, [dispatch, router.query.code]);
+	}, [dispatch, router, router.query.code]);
 
 	return <Loading />;
 }
