@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 
 import { color } from 'styles/color';
 
-const LinkWrap = styled.a<{ isScroll: boolean }>`
+const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean }>`
 	display: block;
 	font-size: 1rem;
 	padding: 2rem 1rem;
@@ -16,7 +16,7 @@ const LinkWrap = styled.a<{ isScroll: boolean }>`
 
 	&:hover {
 		transition: 0.3s ease-in-out;
-		color: ${props => props.theme.white};
+		color: ${(props) => props.theme.white};
 
 		${(props) =>
 			props.isScroll
@@ -32,6 +32,12 @@ const LinkWrap = styled.a<{ isScroll: boolean }>`
 		props.isScroll &&
 		`
         color: ${props.theme.black};
+	`}
+
+	${(props) =>
+		props.isMain === false &&
+		`
+        color: ${props.theme.black};
     `}
 `;
 
@@ -39,12 +45,15 @@ type Props = {
 	href: string;
 	children: ReactNode | string;
 	isScroll: boolean;
+	isMain?: boolean;
 };
 
-function NavBarItem({ href, children, isScroll }: Props) {
+function NavBarItem({ href, children, isScroll, isMain }: Props) {
 	return (
 		<Link href={href}>
-			<LinkWrap isScroll={isScroll}>{children}</LinkWrap>
+			<LinkWrap isScroll={isScroll} isMain={isMain}>
+				{children}
+			</LinkWrap>
 		</Link>
 	);
 }

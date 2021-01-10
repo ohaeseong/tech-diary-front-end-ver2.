@@ -8,7 +8,7 @@ import { mediaQuery } from 'components/layout/responsive';
 
 const PostListTemplate = styled.div`
 	display: grid;
-	width: 80%;
+	width: 100%;
 	grid-template-columns: repeat(auto-fit, minmax(16rem, auto));
 	grid-template-rows: repeat(auto-fit, 1fr);
 	column-gap: 2rem;

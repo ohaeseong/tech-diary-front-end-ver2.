@@ -4,8 +4,6 @@ import { color } from 'styles/color';
 
 const MenuItemWrap = styled.p`
 	width: 100%;
-
-	margin: 0;
 	height: 30px;
 	padding-left: 10px;
 	background-color: ${(props) => props.theme.white};

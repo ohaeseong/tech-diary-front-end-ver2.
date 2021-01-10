@@ -18,7 +18,7 @@ const NavBarWrap = styled.div`
 	flex-direction: column;
 `;
 
-const NavBarContent = styled.div<{ isScroll: boolean }>`
+const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 	position: fixed;
 	width: 100%;
 	height: 5rem;
@@ -32,10 +32,18 @@ const NavBarContent = styled.div<{ isScroll: boolean }>`
         background-color: ${props.theme.white};
         z-index: 100;
         box-shadow: 0 2px 6px 0 ${color.shadow};
+	`}
+
+	${(props) =>
+		props.isMain === false &&
+		`
+        background-color: ${props.theme.white};
+        z-index: 100;
+		box-shadow: 0 2px 6px 0 ${color.shadow};
     `}
 `;
 
-const LogoWrap = styled.a<{ isScroll: boolean }>`
+const LogoWrap = styled.a<{ isScroll: boolean; isMain?: boolean }>`
 	width: 8rem;
 	margin-left: 10rem;
 	text-align: center;
@@ -49,6 +57,12 @@ const LogoWrap = styled.a<{ isScroll: boolean }>`
 		props.isScroll &&
 		`
 		color: ${props.theme.black};
+	`}
+
+	${(props) =>
+		props.isMain === false &&
+		`
+       	color: ${props.theme.black};
     `}
 `;
 
@@ -58,7 +72,7 @@ const AccountButtonWrap = styled.div`
 	margin: 1.5rem 5rem auto auto;
 `;
 
-const AccountButton = styled.a<{ isScroll: boolean }>`
+const AccountButton = styled.a<{ isScroll: boolean; isMain?: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -87,6 +101,12 @@ const AccountButton = styled.a<{ isScroll: boolean }>`
 		props.isScroll &&
 		`
         color: ${props.theme.black};
+	`}
+
+	${(props) =>
+		props.isMain === false &&
+		`
+       	color: ${props.theme.black};
     `}
 `;
 
@@ -129,9 +149,10 @@ const ProfileImage = styled.img`
 type Props = {
 	isDark: boolean;
 	handleIsDarkState: any;
+	isMain?: boolean;
 };
 
-function NavBar({ isDark, handleIsDarkState }: Props) {
+function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
 	const [height, setHeight] = useState(0);
@@ -193,14 +214,16 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 
 	return (
 		<NavBarWrap>
-			<NavBarContent isScroll={isScroll}>
+			<NavBarContent isScroll={isScroll} isMain={isMain}>
 				<Link href="/">
-					<LogoWrap isScroll={isScroll}>Tech</LogoWrap>
+					<LogoWrap isScroll={isScroll} isMain={isMain}>
+						Tech
+					</LogoWrap>
 				</Link>
-				<NavBarItem href="/" isScroll={isScroll}>
+				<NavBarItem href="/" isScroll={isScroll} isMain={isMain}>
 					Blog
 				</NavBarItem>
-				<NavBarItem href="/portfolio" isScroll={isScroll}>
+				<NavBarItem href="/portfolio" isScroll={isScroll} isMain={isMain}>
 					Portfolio
 				</NavBarItem>
 				{isToken ? (
@@ -210,16 +233,20 @@ function NavBar({ isDark, handleIsDarkState }: Props) {
 							<MenuItem>내 정보</MenuItem>
 							<MenuItem>임시글 보러가기</MenuItem>
 							<MenuItem>북마크한 글 보러가기</MenuItem>
-							<MenuItem onClick={onLogout}>Log out</MenuItem>
+							<MenuItem onClick={onLogout}>로그아웃</MenuItem>
 						</MenuSlider>
 					</ProfileWrap>
 				) : (
 					<AccountButtonWrap>
 						<Link href="/login">
-							<AccountButton isScroll={isScroll}>Log in</AccountButton>
+							<AccountButton isScroll={isScroll} isMain={isMain}>
+								Log in
+							</AccountButton>
 						</Link>
 						<Link href="/signup">
-							<AccountButton isScroll={isScroll}>Sign up</AccountButton>
+							<AccountButton isScroll={isScroll} isMain={isMain}>
+								Sign up
+							</AccountButton>
 						</Link>
 					</AccountButtonWrap>
 				)}
