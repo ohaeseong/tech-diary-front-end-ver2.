@@ -3,8 +3,10 @@ import styled from '@emotion/styled';
 import { PostDetail } from 'store/types/post.types';
 import PostInfo from './PostInfo';
 import PostContents from './PostContents';
+import PostLikeOption from './PostLikeOption';
 
 const SinglePostTemplate = styled.div`
+	/* position: relative; */
 	display: flex;
 	justify-content: center;
 	width: 100%;
@@ -19,6 +21,7 @@ const SinglePostContentsWrap = styled.div`
 	width: 50rem;
 	min-height: 100vh;
 	flex-direction: column;
+	margin-left: 3rem;
 	background-color: ${(props) => props.theme.white_1};
 `;
 
@@ -47,17 +50,18 @@ type Props = {
 };
 
 function SinglePost({ data }: Props) {
-	const { title, tagList, createTime, member, contents } = data;
-	console.log(contents);
-	
+	const { title, tagList, createTime, member, contents, thumbnailAddress } = data;
+
 	return (
 		<SinglePostTemplate>
+			<PostLikeOption />
 			<SinglePostContentsWrap>
-				<Thumbnail />
+				{thumbnailAddress ? <Thumbnail src={thumbnailAddress} alt="sigle_post_thumbnail" /> : <></>}
 				<Title>{title}</Title>
 				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
-				<PostContents>{contents}</PostContents>
+				<PostContents markdown={contents} />
 			</SinglePostContentsWrap>
+
 		</SinglePostTemplate>
 	);
 }

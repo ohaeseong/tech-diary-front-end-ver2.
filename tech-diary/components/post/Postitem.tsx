@@ -24,6 +24,7 @@ const PostItemWrap = styled.div`
 `;
 
 const ThumbnailWrap = styled.div`
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -39,8 +40,13 @@ const ThumbnailWrap = styled.div`
 `;
 
 const Thumbnail = styled.img`
+	position: absolute;
+	top: 0px;
+	left: 0px;
 	width: 100%;
-	height: auto;
+	height: 100%;
+
+	object-fit: cover;
 `;
 
 const PostContentsWrap = styled.div`
@@ -117,6 +123,7 @@ const UserProfile = styled.img`
 	height: 1.8rem;
 	margin-top: 0.5rem;
 	/* border: 1px solid white; */
+	object-fit: cover;
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
@@ -168,7 +175,7 @@ function PostItem({ item }: Props) {
 	const profileImage = member.profileImage || '/image/user.png';
 
 	const loadUserPage = () => {
-		window.location.href = 'http://localhost:3000/login';
+		// window.location.href = 'http://localhost:3000/login';
 	};
 
 	return (
@@ -187,7 +194,7 @@ function PostItem({ item }: Props) {
 				</Link>
 				<PostContent type="info">
 					<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
-					<UserProfile src={profileImage} onClick={loadUserPage} />
+					<UserProfile src={profileImage} alt="profile_image" />
 				</PostContent>
 				<PostBottomWrap>
 					<IconWrap>

@@ -11,8 +11,6 @@ const PostInfoWrap = styled.div`
 	padding: 1rem;
 	width: 100%;
 	margin-bottom: 1rem;
-
-	/* border-bottom: 1px solid ${(props) => props.theme.gray_2}; */
 `;
 
 const PostInfoHeader = styled.div`
@@ -52,6 +50,7 @@ const ProfileImage = styled.img`
 	height: 2rem;
 	border-radius: 50%;
 	margin-right: 1rem;
+	object-fit: cover;
 
 	&:hover {
 		cursor: pointer;
@@ -74,19 +73,23 @@ function PostInfo({ tagData, member, createTime }: Props) {
 			<PostInfoHeader>
 				<UserInfoWrap>
 					<Link href="http://localhost:3000/">
-						<ProfileImage src={profileImage} />
+						<ProfileImage src={profileImage} alt="profile_image" />
 					</Link>
 					<Link href="http://localhost:3000/">
 						<InfoTxt isLink>{memberId}</InfoTxt>
 					</Link>
 				</UserInfoWrap>
-				<InfoTxt isLink={false}>{dateFormat}</InfoTxt>
+				<div>{dateFormat}</div>
 			</PostInfoHeader>
-			<TagGroup>
-				{tagData.map((item) => {
-					return <TagItem key={item.idx} tagName={item.tagName} />;
-				})}
-			</TagGroup>
+			{tagData.length !== 0 ? (
+				<TagGroup>
+					{tagData.map((item) => {
+						return <TagItem key={item.idx} tagName={item.tagName} />;
+					})}{' '}
+				</TagGroup>
+			) : (
+				<></>
+			)}
 		</PostInfoWrap>
 	);
 }

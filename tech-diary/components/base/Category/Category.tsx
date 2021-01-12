@@ -9,9 +9,10 @@ const CategoryWrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	flex-wrap: wrap;
 
 	width: 100%;
-	height: 3rem;
+	min-height: 3rem;
 	background-color: ${(props) => props.theme.white};
 
 	& > * {

@@ -38,4 +38,4 @@ function MenuSlider({ children, height }: Props) {
 	);
 }
 
-export default MenuSlider;
+export default React.memo(MenuSlider);

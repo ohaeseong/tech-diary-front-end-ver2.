@@ -27,4 +27,4 @@ function MenuItem({ children, onClick }: Props) {
 	return <MenuItemWrap onClick={onClick}>{children}</MenuItemWrap>;
 }
 
-export default MenuItem;
+export default React.memo(MenuItem);

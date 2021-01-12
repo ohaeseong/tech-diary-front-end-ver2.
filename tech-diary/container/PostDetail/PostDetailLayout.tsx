@@ -6,6 +6,7 @@ import { Post, PostDetail } from 'store/types/post.types';
 import { NavBar } from 'components/base/NavBar';
 import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
+import PostLikeOption from 'components/post/detail/PostLikeOption';
 
 type Props = {
 	post: PostDetail;

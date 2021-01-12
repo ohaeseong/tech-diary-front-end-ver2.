@@ -1,5 +1,6 @@
 import React, { ReactChild } from 'react';
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 const TagItemWrap = styled.a`
 	padding: 0.5rem 1rem;
@@ -21,7 +22,11 @@ type Props = {
 };
 
 function TagItem({ tagName }: Props) {
-	return <TagItemWrap>{tagName}</TagItemWrap>;
+	return (
+		<Link href="http://localhost:3000">
+			<TagItemWrap>{tagName}</TagItemWrap>
+		</Link>
+	);
 }
 
 export default TagItem;

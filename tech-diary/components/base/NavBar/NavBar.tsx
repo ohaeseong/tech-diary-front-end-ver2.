@@ -11,6 +11,7 @@ import { getStorage, removeStorage } from 'libs/storage';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
 import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
+import { mediaQuery } from 'components/layout/responsive';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -29,85 +30,24 @@ const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 	${(props) =>
 		props.isScroll &&
 		`
+		z-index: 100;
         background-color: ${props.theme.white};
-        z-index: 100;
         box-shadow: 0 2px 6px 0 ${color.shadow};
 	`}
 
 	${(props) =>
 		props.isMain === false &&
 		`
+		z-index: 100;
         background-color: ${props.theme.white};
-        z-index: 100;
 		box-shadow: 0 2px 6px 0 ${color.shadow};
-    `}
-`;
-
-const LogoWrap = styled.a<{ isScroll: boolean; isMain?: boolean }>`
-	width: 8rem;
-	margin-left: 10rem;
-	text-align: center;
-	line-height: 5rem;
-	font-size: 1.5rem;
-	color: white;
-	cursor: pointer;
-	transition: 0.3s ease-in-out;
-
-	${(props) =>
-		props.isScroll &&
-		`
-		color: ${props.theme.black};
-	`}
-
-	${(props) =>
-		props.isMain === false &&
-		`
-       	color: ${props.theme.black};
     `}
 `;
 
 const AccountButtonWrap = styled.div`
 	display: flex;
 	flex-direction: row;
-	margin: 1.5rem 5rem auto auto;
-`;
-
-const AccountButton = styled.a<{ isScroll: boolean; isMain?: boolean }>`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 5rem;
-	height: 100%;
-	cursor: pointer;
-	padding: 0.5rem;
-	transition: 0.3s ease-in-out;
-	font-size: 1rem;
-	color: ${color.gray_0};
-
-	&:hover {
-		transition: 0.2s ease-in-out;
-
-		${(props) =>
-			props.isScroll
-				? `
-            color: ${props.theme.gray_3};
-        `
-				: `
-            color: ${props.theme.gray_2};
-        `}
-	}
-
-	${(props) =>
-		props.isScroll &&
-		`
-        color: ${props.theme.black};
-	`}
-
-	${(props) =>
-		props.isMain === false &&
-		`
-       	color: ${props.theme.black};
-    `}
+	margin: 0rem 5rem auto auto;
 `;
 
 const SwitchWrap = styled.div`
@@ -174,12 +114,16 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	}, [height]);
 
 	const handleIsScrollEvent = useCallback(() => {
+		if (!isMain) {
+			return;
+		}
+
 		if (window.scrollY > 100) {
 			setIsScroll(true);
 		} else {
 			setIsScroll(false);
 		}
-	}, []);
+	}, [isMain]);
 
 	const onLogout = () => {
 		removeStorage('tech-token');
@@ -216,9 +160,9 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		<NavBarWrap>
 			<NavBarContent isScroll={isScroll} isMain={isMain}>
 				<Link href="/">
-					<LogoWrap isScroll={isScroll} isMain={isMain}>
+					<NavBarItem href="/" type="logo" isScroll={isScroll} isMain={isMain}>
 						Tech
-					</LogoWrap>
+					</NavBarItem>
 				</Link>
 				<NavBarItem href="/" isScroll={isScroll} isMain={isMain}>
 					Blog
@@ -228,7 +172,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 				</NavBarItem>
 				{isToken ? (
 					<ProfileWrap>
-						<ProfileImage src={profileImage} onClick={menuToggle} />
+						<ProfileImage src={profileImage} onClick={menuToggle} alt="profile_image" />
 						<MenuSlider height={height}>
 							<MenuItem>내 정보</MenuItem>
 							<MenuItem>임시글 보러가기</MenuItem>
@@ -238,16 +182,12 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 					</ProfileWrap>
 				) : (
 					<AccountButtonWrap>
-						<Link href="/login">
-							<AccountButton isScroll={isScroll} isMain={isMain}>
-								Log in
-							</AccountButton>
-						</Link>
-						<Link href="/signup">
-							<AccountButton isScroll={isScroll} isMain={isMain}>
-								Sign up
-							</AccountButton>
-						</Link>
+						<NavBarItem href="/login" isScroll={isScroll} isMain={isMain}>
+							Log in
+						</NavBarItem>
+						<NavBarItem href="/signup" isScroll={isScroll} isMain={isMain}>
+							Sign up
+						</NavBarItem>
 					</AccountButtonWrap>
 				)}
 				<SwitchWrap>
@@ -273,4 +213,4 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	);
 }
 
-export default NavBar;
+export default React.memo(NavBar);

@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 
 import { color } from 'styles/color';
 
-const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean }>`
+const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }>`
 	display: block;
 	font-size: 1rem;
 	padding: 2rem 1rem;
@@ -29,9 +29,12 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean }>`
 	}
 
 	${(props) =>
-		props.isScroll &&
+		props.type === 'logo' &&
 		`
-        color: ${props.theme.black};
+		margin-left: 10rem;
+		font-size: 1.7rem;
+		padding: 1.7rem 1rem;
+		color: ${color.gray_0};
 	`}
 
 	${(props) =>
@@ -39,6 +42,13 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean }>`
 		`
         color: ${props.theme.black};
     `}
+
+
+	${(props) =>
+		props.isScroll &&
+		`
+        color: ${props.theme.black};
+	`}
 `;
 
 type Props = {
@@ -46,16 +56,17 @@ type Props = {
 	children: ReactNode | string;
 	isScroll: boolean;
 	isMain?: boolean;
+	type?: string;
 };
 
-function NavBarItem({ href, children, isScroll, isMain }: Props) {
+function NavBarItem({ href, children, isScroll, isMain, type }: Props) {
 	return (
 		<Link href={href}>
-			<LinkWrap isScroll={isScroll} isMain={isMain}>
+			<LinkWrap isScroll={isScroll} isMain={isMain} type={type}>
 				{children}
 			</LinkWrap>
 		</Link>
 	);
 }
 
-export default NavBarItem;
+export default React.memo(NavBarItem);

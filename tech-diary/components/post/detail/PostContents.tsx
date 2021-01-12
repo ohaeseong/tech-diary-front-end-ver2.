@@ -7,18 +7,16 @@ const ContentsWrap = styled.div`
 	min-height: 30rem;
 	/* margin-top: 1rem; */
 	padding: 1rem;
-
-	color: ${(props) => props.theme.black};
 `;
 
 type Props = {
-	children: string;
+	markdown: string;
 };
 
-function PostContents({ children }: Props) {
+function PostContents({ markdown }: Props) {
 	return (
 		<ContentsWrap>
-			<MarkdwonRenderer>{children}</MarkdwonRenderer>
+			<MarkdwonRenderer markdown={markdown} />
 		</ContentsWrap>
 	);
 }

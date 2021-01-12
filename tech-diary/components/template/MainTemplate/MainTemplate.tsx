@@ -49,7 +49,7 @@ function MainTemplate({ children, isNav }: Props) {
 				<ThemeProvider theme={themeMode ? dark : color}>
 					{isNav ? (
 						<>
-							<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} />
+							<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain />
 							<GradientBanner />
 							<Category categorys={categorys} />
 						</>

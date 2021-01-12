@@ -17,7 +17,7 @@ function DetailPage({ post }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Blog detail page</title>
+				<title>{post.title}</title>
 				<meta name="description" content="블로그 상세조회 페이지입니다." />
 			</Head>
 			<PostDetailLayout post={post} />
