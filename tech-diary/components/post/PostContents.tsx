@@ -21,4 +21,4 @@ function PostContents({ markdown }: Props) {
 	);
 }
 
-export default PostContents;
+export default React.memo(PostContents);

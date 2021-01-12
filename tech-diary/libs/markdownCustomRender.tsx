@@ -71,7 +71,7 @@ export function ImageMarkdownRender(children: { value: React.ReactNode }) {
 }
 
 const ListStyle = styled.li`
-	color: black;
+		color: ${(props) => props.theme.black};
 `;
 
 export function ListMarkdownRander(children: { children: React.ReactNode }) {
@@ -81,7 +81,7 @@ export function ListMarkdownRander(children: { children: React.ReactNode }) {
 const UlStyle = styled.ul`
 	padding-left: 2rem;
 	list-style-type: disc;
-	color: black;
+	color: ${(props) => props.theme.black};
 `;
 
 export function UlMarkdownRander(children: { children: React.ReactNode }) {
@@ -92,7 +92,7 @@ const OlStyle = styled.ol`
 	list-style-type: decimal;
 	padding-left: 2rem;
 	margin: 1rem auto;
-	color: black;
+	color: ${(props) => props.theme.black};
 `;
 
 export function OlMarkdownRander(children: { children: React.ReactNode }) {

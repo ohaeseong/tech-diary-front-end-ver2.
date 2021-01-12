@@ -1,12 +1,12 @@
 import React from 'react';
 import { ThemeProvider } from '@emotion/react';
 
-import SinglePost from 'components/post/detail/SinglePost';
+import SinglePost from 'components/post/SinglePost';
 import { Post, PostDetail } from 'store/types/post.types';
 import { NavBar } from 'components/base/NavBar';
 import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
-import PostLikeOption from 'components/post/detail/PostLikeOption';
+import PostLikeOption from 'components/post/PostLikeOption';
 
 type Props = {
 	post: PostDetail;

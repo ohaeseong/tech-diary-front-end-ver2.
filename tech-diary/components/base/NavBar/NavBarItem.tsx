@@ -29,15 +29,6 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }
 	}
 
 	${(props) =>
-		props.type === 'logo' &&
-		`
-		margin-left: 10rem;
-		font-size: 1.7rem;
-		padding: 1.7rem 1rem;
-		color: ${color.gray_0};
-	`}
-
-	${(props) =>
 		props.isMain === false &&
 		`
         color: ${props.theme.black};
@@ -52,16 +43,16 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }
 `;
 
 type Props = {
-	href: string;
+	url: string;
 	children: ReactNode | string;
 	isScroll: boolean;
 	isMain?: boolean;
 	type?: string;
 };
 
-function NavBarItem({ href, children, isScroll, isMain, type }: Props) {
+function NavBarItem({ url, children, isScroll, isMain, type }: Props) {
 	return (
-		<Link href={href}>
+		<Link href={url}>
 			<LinkWrap isScroll={isScroll} isMain={isMain} type={type}>
 				{children}
 			</LinkWrap>

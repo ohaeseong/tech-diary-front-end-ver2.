@@ -86,6 +86,31 @@ const ProfileImage = styled.img`
 	}
 `;
 
+const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
+	display: block;
+	font-size: 1rem;
+	color: ${color.gray_0};
+	padding: 2rem 1rem;
+	font-family: 'Spoqa Han Sans';
+	margin-left: 10rem;
+	font-size: 1.7rem;
+	padding: 1.7rem 1rem;
+	cursor: pointer;
+	transition: 0.3s ease-in-out;
+
+	${(props) =>
+		props.isScroll &&
+		`
+        color: ${props.theme.black};
+	`}
+
+	${(props) =>
+		props.isMain === false &&
+		`
+        color: ${props.theme.black};
+	`}
+`;
+
 type Props = {
 	isDark: boolean;
 	handleIsDarkState: any;
@@ -160,14 +185,14 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		<NavBarWrap>
 			<NavBarContent isScroll={isScroll} isMain={isMain}>
 				<Link href="/">
-					<NavBarItem href="/" type="logo" isScroll={isScroll} isMain={isMain}>
+					<Logo isScroll={isScroll} isMain={isMain}>
 						Tech
-					</NavBarItem>
+					</Logo>
 				</Link>
-				<NavBarItem href="/" isScroll={isScroll} isMain={isMain}>
+				<NavBarItem url="/" isScroll={isScroll} isMain={isMain}>
 					Blog
 				</NavBarItem>
-				<NavBarItem href="/portfolio" isScroll={isScroll} isMain={isMain}>
+				<NavBarItem url="/portfolio" isScroll={isScroll} isMain={isMain}>
 					Portfolio
 				</NavBarItem>
 				{isToken ? (
@@ -182,10 +207,10 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 					</ProfileWrap>
 				) : (
 					<AccountButtonWrap>
-						<NavBarItem href="/login" isScroll={isScroll} isMain={isMain}>
+						<NavBarItem url="/login" isScroll={isScroll} isMain={isMain}>
 							Log in
 						</NavBarItem>
-						<NavBarItem href="/signup" isScroll={isScroll} isMain={isMain}>
+						<NavBarItem url="/signup" isScroll={isScroll} isMain={isMain}>
 							Sign up
 						</NavBarItem>
 					</AccountButtonWrap>
@@ -213,4 +238,4 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	);
 }
 
-export default React.memo(NavBar);
+export default NavBar;

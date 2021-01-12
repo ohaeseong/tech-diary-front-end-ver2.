@@ -50,18 +50,17 @@ type Props = {
 };
 
 function SinglePost({ data }: Props) {
-	const { title, tagList, createTime, member, contents, thumbnailAddress } = data;
+	const { title, tagList, createTime, member, contents, thumbnailAddress,  like } = data;
 
 	return (
 		<SinglePostTemplate>
-			<PostLikeOption />
+			<PostLikeOption like={like}/>
 			<SinglePostContentsWrap>
 				{thumbnailAddress ? <Thumbnail src={thumbnailAddress} alt="sigle_post_thumbnail" /> : <></>}
 				<Title>{title}</Title>
 				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
 				<PostContents markdown={contents} />
 			</SinglePostContentsWrap>
-
 		</SinglePostTemplate>
 	);
 }

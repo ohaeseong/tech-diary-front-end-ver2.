@@ -2,15 +2,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { FaCommentAlt } from 'react-icons/fa';
-import { FcLike } from 'react-icons/fc';
+import { AiFillBulb } from 'react-icons/ai';
 
 import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 import Link from 'next/link';
+import { color } from 'styles/color';
 
 const PostItemWrap = styled.div`
 	width: 100%;
-	height: 24rem;
+	height: 24.5rem;
 
 	border-radius: 7px;
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
@@ -160,6 +161,8 @@ const IconWrap = styled.div`
 
 	& > * {
 		padding: 0.3rem;
+		margin-top: 0.3rem;
+		margin-bottom: 0.1rem;
 	}
 `;
 
@@ -198,11 +201,11 @@ function PostItem({ item }: Props) {
 				</PostContent>
 				<PostBottomWrap>
 					<IconWrap>
-						<FaCommentAlt size="15" color="#126CED" />
+						<FaCommentAlt size="15" color="#4f95ef" />
 						{commentList}
 					</IconWrap>
 					<IconWrap>
-						<FcLike size="15" />
+						<AiFillBulb size="15" color={color.star} />
 						{like}
 					</IconWrap>
 				</PostBottomWrap>

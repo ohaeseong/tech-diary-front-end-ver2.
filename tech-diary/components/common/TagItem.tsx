@@ -29,4 +29,4 @@ function TagItem({ tagName }: Props) {
 	);
 }
 
-export default TagItem;
+export default React.memo(TagItem);

@@ -25,7 +25,7 @@ const MarkDownStyle = styled.div`
 		font-weight: 400;
 		src: local('Spoqa Han Sans'), local('Spoqa Han Sans');
 		font-display: swap;
-	};
+	}
 `;
 
 type Props = {
@@ -51,4 +51,4 @@ function MarkdwonRenderer({ markdown }: Props) {
 	);
 }
 
-export default MarkdwonRenderer;
+export default React.memo(MarkdwonRenderer);

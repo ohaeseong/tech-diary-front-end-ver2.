@@ -19,6 +19,7 @@ export const color = {
 	facebook: '#4196e4',
 	light_purple: '#F7F6FD',
 	emphasis: '#FAF557',
+	star: 'f1e05b',
 	purple: '#6155a6',
 	gradation: `background: #1a2a6c; background: -webkit-linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c); background: linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c);`,
 };
@@ -42,6 +43,7 @@ export const dark = {
 	shadow: 'rgba(0, 0, 0, 0.16)',
 	light_purple: '#F7F6FD',
 	emphasis: '#706af3',
+	star: 'f1e05b',
 	purple: '#6155a6',
 	facebook: '#4196e4',
 	gradation: `background: #360033; background: -webkit-linear-gradient(to right, #0b8793, #360033); background: linear-gradient(to right, #0b8793, #360033);`,

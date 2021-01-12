@@ -17,4 +17,4 @@ function TagGroup({ children }: Props) {
 	return <TagGroupWrap>{children}</TagGroupWrap>;
 }
 
-export default TagGroup;
+export default React.memo(TagGroup);

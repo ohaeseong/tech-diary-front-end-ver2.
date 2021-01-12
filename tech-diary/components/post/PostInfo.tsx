@@ -4,6 +4,7 @@ import { Member, Tag } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 import Link from 'next/link';
+import { css } from '@emotion/react';
 
 const PostInfoWrap = styled.div`
 	display: flex;
@@ -30,19 +31,21 @@ const UserInfoWrap = styled.div`
 	height: 100%;
 `;
 
-const InfoTxt = styled.a<{ isLink: boolean }>`
-	color: ${(props) => props.theme.gray_3};
+const UserIdTxt = styled.a`
+	color: ${(props) => props.theme.gray_5};
 
-	${(props) =>
-		props.isLink &&
-		`
-		&:hover {
-			cursor: pointer;
-		}
-		color: ${props.theme.black};
+	&:hover {
+		cursor: pointer;
+	}
+	color: ${(props) => props.theme.black};
 
-		font-weight: 700;
-	`}
+	font-weight: 700;
+`;
+
+const InfoTxt = styled.span`
+	color: ${(props) => props.theme.gray_5};
+	padding-left: 1rem;
+	font-size: 0.8rem;
 `;
 
 const ProfileImage = styled.img`
@@ -76,10 +79,11 @@ function PostInfo({ tagData, member, createTime }: Props) {
 						<ProfileImage src={profileImage} alt="profile_image" />
 					</Link>
 					<Link href="http://localhost:3000/">
-						<InfoTxt isLink>{memberId}</InfoTxt>
+						<UserIdTxt>{memberId}</UserIdTxt>
 					</Link>
+					<InfoTxt>1.2k followers</InfoTxt>
 				</UserInfoWrap>
-				<div>{dateFormat}</div>
+				<InfoTxt>{dateFormat}</InfoTxt>
 			</PostInfoHeader>
 			{tagData.length !== 0 ? (
 				<TagGroup>
@@ -94,4 +98,4 @@ function PostInfo({ tagData, member, createTime }: Props) {
 	);
 }
 
-export default PostInfo;
+export default React.memo(PostInfo);
