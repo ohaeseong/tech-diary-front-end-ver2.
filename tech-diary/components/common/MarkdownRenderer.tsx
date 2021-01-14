@@ -16,7 +16,7 @@ import {
 const MarkDownStyle = styled.div`
 	color: ${(props) => props.theme.black};
 	/* font-size: 1.125rem; */
-	line-height: 2.5rem;
+	line-height: 1.7rem;
 	font-display: swap;
 
 	@font-face {

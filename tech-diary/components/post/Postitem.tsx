@@ -1,13 +1,14 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import styled from '@emotion/styled';
-import { FaCommentAlt } from 'react-icons/fa';
+import { FaComment } from 'react-icons/fa';
 import { AiFillBulb } from 'react-icons/ai';
 
 import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { color } from 'styles/color';
+import MarkdownRenderer from 'components/common/MarkdownRenderer';
 
 const PostItemWrap = styled.div`
 	width: 100%;
@@ -201,7 +202,7 @@ function PostItem({ item }: Props) {
 				</PostContent>
 				<PostBottomWrap>
 					<IconWrap>
-						<FaCommentAlt size="15" color="#4f95ef" />
+						<FaComment size="15" color="#4f95ef" />
 						{commentList}
 					</IconWrap>
 					<IconWrap>

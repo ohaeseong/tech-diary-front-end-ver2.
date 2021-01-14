@@ -33,7 +33,9 @@ export type PostDetail = {
 	series?: string;
 	category: string;
 	createTime: string;
-	commentData: Comment[];
+	commentList: {
+		commentData: Comment[];
+	}
 	tagList: {
 		tagData: Tag[];
 	};

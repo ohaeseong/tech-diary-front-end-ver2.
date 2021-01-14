@@ -4,7 +4,13 @@ import React, { ReactNode } from 'react';
 
 import { color } from 'styles/color';
 
-const Btn = styled.button<{ size?: string; margin?: string; width?: string; height?: string }>`
+const Btn = styled.button<{
+	size?: string;
+	margin?: string;
+	width?: string;
+	height?: string;
+	color?: string;
+}>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -17,6 +23,7 @@ const Btn = styled.button<{ size?: string; margin?: string; width?: string; heig
 	transform: 0.3s ease-in-out;
 	font-family: 'Spoqa Han Sans';
 	cursor: pointer;
+	border-radius: 5px;
 
 	${(props) => {
 		if (props.size === 'sm') {
@@ -67,12 +74,13 @@ type Props = {
 	children: ReactNode;
 	width?: string;
 	height?: string;
+	color?: string;
 	onClick?: () => void;
 };
 
-function Button({ size = 'default', margin = '', children, width, height, onClick }: Props) {
+function Button({ size = 'default', margin = '', children, width, height, onClick, color }: Props) {
 	return (
-		<Btn size={size} margin={margin} width={width} height={height} onClick={onClick}>
+		<Btn size={size} margin={margin} width={width} height={height} onClick={onClick} color={color}>
 			{children}
 		</Btn>
 	);

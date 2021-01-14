@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { PostDetail } from 'store/types/post.types';
-import PostInfo from './PostInfo';
-import PostContents from './PostContents';
-import PostLikeOption from './PostLikeOption';
+import PostLikeOption from 'components/post/PostLikeOption';
+import PostInfo from 'components/post/PostInfo';
+import PostContents from 'components/post/PostContents';
 
 const SinglePostTemplate = styled.div`
-	/* position: relative; */
 	display: flex;
 	justify-content: center;
 	width: 100%;
@@ -50,11 +49,11 @@ type Props = {
 };
 
 function SinglePost({ data }: Props) {
-	const { title, tagList, createTime, member, contents, thumbnailAddress,  like } = data;
+	const { title, tagList, createTime, member, contents, thumbnailAddress, like, commentList } = data;
 
 	return (
 		<SinglePostTemplate>
-			<PostLikeOption like={like}/>
+			<PostLikeOption like={like} userIsLike commentCount={commentList.commentData.length} />
 			<SinglePostContentsWrap>
 				{thumbnailAddress ? <Thumbnail src={thumbnailAddress} alt="sigle_post_thumbnail" /> : <></>}
 				<Title>{title}</Title>
