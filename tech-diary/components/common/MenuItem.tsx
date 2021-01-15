@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
-import { color } from 'styles/color';
 
 const MenuItemWrap = styled.p`
 	width: 100%;

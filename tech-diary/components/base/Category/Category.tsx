@@ -1,9 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 
-import { color } from 'styles/color';
 import CategoryItem from 'components/base/Category/CategoryItem';
-import { useTheme } from '@emotion/react';
 
 const CategoryWrap = styled.div`
 	display: flex;
@@ -31,10 +29,9 @@ type Props = {
 
 function Category({ categorys }: Props) {
 	const [categoryList, setCategoryList] = useState([]);
-	const theme = useTheme();
 
 	useEffect(() => {
-		const categoryItems: any = categorys.map((item: CategoryItemProps, i) => {
+		const categoryItems: any = categorys.map((item: CategoryItemProps) => {
 			return (
 				<CategoryItem key={item.name} href={item.href}>
 					{item.name}

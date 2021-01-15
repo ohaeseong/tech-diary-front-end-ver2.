@@ -6,10 +6,8 @@ import {
 	InlineCodeBlock,
 	CodeBlock,
 	BlockQuote,
-	Strong,
 	ImageMarkdownRender,
 	ListMarkdownRender,
-	UlMarkdownRender,
 	OlMarkdownRender,
 	HeadingMarkdownRender,
 	ParagraphMarkdownRender,
@@ -19,19 +17,29 @@ import {
 } from 'libs/markdownCustomRender';
 
 const MarkDownStyle = styled.div`
-	color: ${(props) => props.theme.black};
+	color: ${(props) => props.theme.white};
 
 	line-height: 2rem;
 	font-display: swap;
 	white-space: pre-line;
 	word-break: keep-all;
 
-	& > * {
-		font-size: 1.125rem;
+	& > p {
+		color: ${(props) => props.theme.black};
 		font-family: 'Spoqa Han Sans Thin';
-		font-weight: 400;
-		font-display: swap;
 	}
+
+	& > h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: ${(props) => props.theme.black};
+		font-family: 'Spoqa Han Sans Bold';
+	}
+
+	& > 
 `;
 
 type Props = {

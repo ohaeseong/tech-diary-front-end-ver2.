@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
@@ -118,7 +118,6 @@ type createLoginForm = {
 function LoginBox() {
 	const dispatch = useDispatch();
 	const router = useRouter();
-	const theme = useTheme();
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
 
 	const [form, onChange] = useForm<createLoginForm>({

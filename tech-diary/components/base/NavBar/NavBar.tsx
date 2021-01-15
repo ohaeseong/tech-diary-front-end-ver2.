@@ -11,7 +11,7 @@ import { getStorage, removeStorage } from 'libs/storage';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
 import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
-import { mediaQuery } from 'components/layout/responsive';
+import { TypeDecoded } from 'store/types/auth.types';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -164,8 +164,8 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	}, [handleIsScrollEvent]);
 
 	useEffect(() => {
-		const token = getStorage('tech-token');
-		const tokenDecoded = jwt.decode(token);
+		const token = getStorage('tech-token') as string;
+		const tokenDecoded = jwt.decode(token) as TypeDecoded;
 
 		if (token && tokenDecoded) {
 			setIsToken(true);
