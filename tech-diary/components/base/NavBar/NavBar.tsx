@@ -167,7 +167,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		const token = getStorage('tech-token');
 		const tokenDecoded = jwt.decode(token);
 
-		if (token) {
+		if (token && tokenDecoded) {
 			setIsToken(true);
 			setProfileImage(tokenDecoded.profileImage);
 		} else {

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../styles/reset.css';
+import '../styles/font.css';
 
 import { wrapper } from 'store';
 

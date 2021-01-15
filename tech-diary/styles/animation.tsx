@@ -30,6 +30,25 @@ export const fadein = keyframes`
       transform: none;
     }
 `;
+
+
+export const fadeout = keyframes`
+  from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+
+    0% {
+      transform: none;
+    }
+    100% {
+      transform: translateY(-10rem);
+    }
+
+`;
+
 export const flicker = keyframes`
   0% {
     opacity: 1;
@@ -64,4 +83,52 @@ export const pulse = keyframes`
   100% {
     transform: scale(1);
   }
+`;
+
+export const moveAngle = keyframes`
+  0% {
+    transform: translate(0,0);
+    transform: translateX(0);
+  }
+  50% {
+    /* transform: translateY(3.5rem); */
+    transform: translate(-0.5rem, 0.5rem);
+  }
+  100% {
+    transform: translateY(0);
+    transform: translateX(0);
+  }
+`;
+
+export const moveLeft = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-0.5rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+
+export const moveDown = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.5rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+export const toSmall = keyframes`
+    from {
+    transform: scale(1);
+    }
+    to {
+      transform: scale(0.5);
+    }
 `;

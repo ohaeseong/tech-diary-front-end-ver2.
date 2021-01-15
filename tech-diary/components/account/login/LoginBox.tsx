@@ -1,7 +1,5 @@
-/** @tsx */
-
 import React, { useCallback } from 'react';
-import { css, ThemeProvider, useTheme, jsx } from '@emotion/react';
+import { css, jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';

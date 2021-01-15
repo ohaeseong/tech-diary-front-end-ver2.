@@ -8,22 +8,28 @@ import {
 	BlockQuote,
 	Strong,
 	ImageMarkdownRender,
-	ListMarkdownRander,
-	UlMarkdownRander,
-	OlMarkdownRander,
+	ListMarkdownRender,
+	UlMarkdownRender,
+	OlMarkdownRender,
+	HeadingMarkdownRender,
+	ParagraphMarkdownRender,
+	HorizontalRuleMarkdownRender,
+	StrongMarkdownRender,
+	LinkMarkdownRender,
 } from 'libs/markdownCustomRender';
 
 const MarkDownStyle = styled.div`
 	color: ${(props) => props.theme.black};
-	/* font-size: 1.125rem; */
-	line-height: 1.7rem;
-	font-display: swap;
 
-	@font-face {
-		font-family: 'Spoqa Han Sans';
-		font-style: normal;
+	line-height: 2rem;
+	font-display: swap;
+	white-space: pre-line;
+	word-break: keep-all;
+
+	& > * {
+		font-size: 1.125rem;
+		font-family: 'Spoqa Han Sans Thin';
 		font-weight: 400;
-		src: local('Spoqa Han Sans'), local('Spoqa Han Sans');
 		font-display: swap;
 	}
 `;
@@ -41,12 +47,16 @@ function MarkdwonRenderer({ markdown }: Props) {
 					inlineCode: InlineCodeBlock,
 					code: CodeBlock,
 					blockquote: BlockQuote,
-					strong: Strong,
 					image: ImageMarkdownRender,
-					list: OlMarkdownRander,
-					listItem: ListMarkdownRander,
+					list: OlMarkdownRender,
+					listItem: ListMarkdownRender,
+					heading: HeadingMarkdownRender,
+					paragraph: ParagraphMarkdownRender,
+					thematicBreak: HorizontalRuleMarkdownRender,
+					strong: StrongMarkdownRender,
+					link: LinkMarkdownRender,
 				}}
-			 />
+			/>
 		</MarkDownStyle>
 	);
 }

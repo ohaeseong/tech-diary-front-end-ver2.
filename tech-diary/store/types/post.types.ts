@@ -39,7 +39,7 @@ export type PostDetail = {
 	tagList: {
 		tagData: Tag[];
 	};
-	like: number;
+	like: Like[];
 	member: Member;
 };
 
@@ -55,6 +55,12 @@ export type Tag = {
 	idx: number;
 	tagName: string;
 	postId: string;
+};
+
+export type Like = {
+	idx: number;
+	postId: string;
+	memberId: string;
 };
 
 export type Member = {

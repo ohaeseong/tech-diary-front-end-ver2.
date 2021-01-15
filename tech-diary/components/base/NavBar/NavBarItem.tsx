@@ -43,7 +43,7 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }
 `;
 
 type Props = {
-	url: string;
+	url?: string;
 	children: ReactNode | string;
 	isScroll: boolean;
 	isMain?: boolean;
@@ -51,6 +51,7 @@ type Props = {
 };
 
 function NavBarItem({ url, children, isScroll, isMain, type }: Props) {
+
 	return (
 		<Link href={url}>
 			<LinkWrap isScroll={isScroll} isMain={isMain} type={type}>

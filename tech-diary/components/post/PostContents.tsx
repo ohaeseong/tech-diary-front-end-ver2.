@@ -5,7 +5,6 @@ import MarkdwonRenderer from 'components/common/MarkdownRenderer';
 const ContentsWrap = styled.div`
 	width: 100%;
 	min-height: 30rem;
-	margin-bottom: 15rem;
 	padding: 1rem;
 `;
 

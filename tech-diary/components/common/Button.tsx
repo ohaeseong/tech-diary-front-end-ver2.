@@ -65,7 +65,11 @@ const Btn = styled.button<{
 		props.color &&
 		`
         background-color: ${props.color};
-    `}
+	`}
+	
+	& > * {
+		margin-left: 0.4rem;
+	}
 `;
 
 type Props = {
