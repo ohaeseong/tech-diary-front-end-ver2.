@@ -50,11 +50,37 @@ const Thumbnail = styled.img`
 	border: 1px solid black;
 `;
 
+type OptionState = {
+	isLike: boolean,
+	isBookMark: boolean,
+	isShareItemOpen: boolean,
+	likeCount: number,
+};
+
 type Props = {
+	toggleLike: () => void;
+	toggleBookMark: () => void;
+	toggleShareItemOpen: () => void;
+	moveToComment: () => void;
+	closeShareItem: () => void;
+	copyUrl: () => void;
+	dispatchForUpdateState: any;
+
+	optionState: OptionState;
 	data: PostDetail;
 };
 
-function SinglePost({ data }: Props) {
+function SinglePost({
+	toggleLike,
+	toggleBookMark,
+	toggleShareItemOpen,
+	closeShareItem,
+	copyUrl,
+	moveToComment,
+	dispatchForUpdateState,
+	optionState,
+	data,
+}: Props) {
 	const { title, tagList, createTime, member, contents, thumbnailAddress, like, commentList, id } = data;
 	const [userIsLike, setUserIsLike] = useState(false);
 
@@ -74,10 +100,16 @@ function SinglePost({ data }: Props) {
 	return (
 		<SinglePostTemplate>
 			<PostLikeOption
-				like={like.length}
 				userIsLike={userIsLike}
 				commentCount={commentList.commentData.length}
-				postId={id}
+				optionState={optionState}
+				toggleLike={toggleLike}
+				toggleBookMark={toggleBookMark}
+				toggleShareItemOpen={toggleShareItemOpen}
+				closeShareItem={closeShareItem}
+				copyUrl={copyUrl}
+				moveToComment={moveToComment}
+				dispatchForUpdateState={dispatchForUpdateState}
 			/>
 			<SinglePostContentsWrap>
 				{thumbnailAddress ? <Thumbnail src={thumbnailAddress} alt="sigle_post_thumbnail" /> : <></>}

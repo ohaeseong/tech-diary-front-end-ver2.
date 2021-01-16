@@ -32,45 +32,11 @@ const NonePost = styled.div`
 
 type Props = {
 	posts: Post[];
-	category: string;
-	kinds: string;
+	isEarlyData: boolean;
+	postList: Array<Post>;
 };
 
-function PostList({ posts, category, kinds }: Props) {
-	const [postList, setPostList] = useState(posts);
-	const [isEarlyData, setIsEarlyData] = useState(true);
-	const { postData, setLimit, limit } = usePost(category, kinds);
-
-	const handlePostData = useCallback(() => {
-		const { innerHeight } = window;
-		const { scrollHeight } = document.body;
-
-		const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-
-		if (scrollHeight - innerHeight - scrollTop < 100) {
-			if (postData.length + 10 < limit) {
-				return;
-			}
-			setLimit(limit + 10);
-
-			setPostList(postData);
-		}
-	}, [limit, postData, setLimit]);
-
-	useEffect(() => {
-		window.addEventListener('scroll', handlePostData);
-
-		return () => {
-			window.removeEventListener('scroll', handlePostData);
-		};
-	}, [handlePostData]);
-
-	useEffect(() => {
-		if (postData.length !== 0) {
-			setIsEarlyData(false);
-		}
-	}, [postData.length]);
-
+function PostList({ posts, isEarlyData, postList }: Props) {
 	return (
 		<>
 			<PostListTemplate>

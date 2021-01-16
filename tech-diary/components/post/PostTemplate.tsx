@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Post } from 'store/types/post.types';
-import { useRouter } from 'next/router';
 
 import PostListHeader from 'components/post/PostListHeader';
 import PostList from 'components/post/PostList';
@@ -16,38 +15,17 @@ const Template = styled.div`
 `;
 
 type Props = {
+	postList: Array<Post>;
 	posts: Array<Post>;
+	headName: string;
+	isEarlyData: boolean;
 };
 
-function PostTemplate({ posts }: Props) {
-	const router = useRouter();
-	const kinds = router.pathname.split('/');
-
-	let headName = '';
-
-	switch (router.pathname) {
-		case '/blog/front-end':
-			headName = 'Front-End';
-			break;
-		case '/blog/back-end':
-			headName = 'Back-End';
-			break;
-		case '/blog/database':
-			headName = 'Database';
-			break;
-		case '/blog/other':
-			headName = 'Other';
-			break;
-
-		default:
-			headName = 'All';
-			break;
-	}
-
+function PostTemplate({ posts, isEarlyData, postList, headName }: Props) {
 	return (
 		<Template>
 			{posts.length > 0 ? <PostListHeader haedName={headName} /> : <></>}
-			<PostList posts={posts} category="blog" kinds={kinds[2]} />
+			<PostList posts={posts} isEarlyData={isEarlyData} postList={postList} />
 		</Template>
 	);
 }

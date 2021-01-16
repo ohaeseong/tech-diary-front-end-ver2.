@@ -6,16 +6,10 @@ import { ImLink } from 'react-icons/im';
 import { FaComment, FaTwitter, FaFacebook } from 'react-icons/fa';
 import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { MdArrowDropDown } from 'react-icons/md';
-import { useRouter } from 'next/router';
 
 import { color } from 'styles/color';
 import { moveLeft, moveDown, moveAngle } from 'styles/animation';
 import Button from 'components/common/Button';
-import { requestPostLike, useRequest } from 'libs/hooks/useRequest';
-import { getStorage } from 'libs/storage';
-import { server } from 'config/config';
-import { useDispatch } from 'react-redux';
-import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 
 const PostLikeOptionBlock = styled.div`
 	position: sticky;
@@ -24,8 +18,6 @@ const PostLikeOptionBlock = styled.div`
 	margin-top: 15rem;
 	margin-left: -5rem;
 	top: 9rem;
-
-	/* border: 1px solid black; */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -46,14 +38,12 @@ const ItemWrap = styled.div`
 	width: 100%;
 
 	margin-bottom: 1rem;
-	/* border: 1px solid black; */
 `;
 
 const SubIconWrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	/* align-items: center; */
 	width: 100%;
 	padding-top: 1rem;
 
@@ -86,7 +76,6 @@ const ShareIconWrap = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	/* position: relative; */
 	width: 2.6rem;
 	height: 2.6rem;
 	border-radius: 50%;
@@ -147,102 +136,47 @@ const ShareItemWrap = styled.div<{ isOpen: boolean }>`
 `;
 
 const BookmarkWrap = styled.div`
-	/* width: 100%; */
 	display: flex;
 	align-items: center;
-	/* padding-right: 0.3rem; */
-	/* border: 1px solid black; */
 `;
 
-type Props = {
-	like: number;
-	commentCount: number;
-	userIsLike: boolean;
-	userIsBookMark?: boolean;
-	userIsFollow?: boolean;
-	postId: string;
+type OptionState = {
+	isLike: boolean;
+	isBookMark: boolean;
+	isShareItemOpen: boolean;
+	likeCount: number;
 };
 
-function PostLikeOption({ like, userIsLike, commentCount, userIsBookMark, userIsFollow, postId }: Props) {
-	const [isLike, setIsLike] = useState(userIsLike);
-	const [isBookMark, setIsBookMark] = useState(userIsBookMark);
-	const [isShareItemOpen, setIsShareItemOpen] = useState(false);
-	const [likeCount, setLikeCount] = useState(like);
-	const router = useRouter();
-	const dispatch = useDispatch();
+type Props = {
+	toggleLike: () => void;
+	toggleBookMark: () => void;
+	toggleShareItemOpen: () => void;
+	moveToComment: () => void;
+	closeShareItem: () => void;
+	copyUrl: () => void;
+	dispatchForUpdateState: any;
 
-	const toggleLike = useCallback(() => {
-		const token = getStorage('tech-token');
-		if (!token) {
-			alert('로그인 후 이용해 주세요!');
+	optionState: OptionState;
+	commentCount: number;
+	userIsLike: boolean;
+	userIsFollow?: boolean;
+};
 
-			return;
-		}
+function PostLikeOption({
+	toggleLike,
+	toggleBookMark,
+	toggleShareItemOpen,
+	closeShareItem,
+	copyUrl,
+	moveToComment,
+	dispatchForUpdateState,
 
-		if (isLike) {
-			setIsLike(false);
-			setLikeCount(likeCount - 1);
-		} else {
-			setIsLike(true);
-
-			setLikeCount(likeCount + 1);
-		}
-
-		useRequest(requestPostLike, postId);
-	}, [isLike, likeCount, postId]);
-
-	const toggleBookMark = useCallback(() => {
-		const token = getStorage('tech-token');
-		if (!token) {
-			alert('로그인 후 이용해 주세요!');
-
-			return;
-		}
-
-		if (isBookMark) {
-			setIsBookMark(false);
-		} else {
-			setIsBookMark(true);
-		}
-	}, [isBookMark]);
-
-	const toggleShareItemOpen = useCallback(() => {
-		if (isShareItemOpen) {
-			setIsShareItemOpen(false);
-		} else {
-			setIsShareItemOpen(true);
-		}
-	}, [isShareItemOpen]);
-
-	const moveToComment = () => {
-		if (document.querySelector('body')) {
-			const location = document.querySelector('body')?.clientHeight;
-			window.scrollTo({ top: location, left: 0, behavior: 'smooth' });
-		}
-	};
-
-	const closeShareItem = useCallback(() => {
-		if (isShareItemOpen) {
-			setIsShareItemOpen(false);
-		}
-	}, [isShareItemOpen]);
-
-	const copyUrl = () => {
-		navigator.clipboard.writeText(`${server.client_url}${router.asPath}`);
-
-		dispatch({
-			type: SHOW_TOAST,
-			payload: {
-				text: '링크 주소를 복사했습니다!',
-			},
-		});
-
-		setTimeout(() => {
-			dispatch({
-				type: DROP_TOAST,
-			});
-		}, 2000);
-	};
+	optionState,
+	userIsLike,
+	commentCount,
+	userIsFollow,
+}: Props) {
+	const { isBookMark, isLike, isShareItemOpen, likeCount } = optionState;
 
 	useEffect(() => {
 		document.body.addEventListener('click', closeShareItem);
@@ -251,8 +185,11 @@ function PostLikeOption({ like, userIsLike, commentCount, userIsBookMark, userIs
 	}, [closeShareItem]);
 
 	useEffect(() => {
-		setIsLike(userIsLike);
-	}, [userIsLike]);
+		dispatchForUpdateState({
+			name: 'isLike',
+			value: userIsLike,
+		});
+	}, [dispatchForUpdateState, userIsLike]);
 
 	return (
 		<PostLikeOptionBlock>

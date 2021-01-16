@@ -3,33 +3,43 @@ import { server } from 'config/config';
 import { getStorage } from 'libs/storage';
 import { useCallback, useEffect, useState } from 'react';
 
-export function useRequest(request: any, params?: any) {
-	const [loading, setLoading] = useState(false);
-	const [data, setData] = useState();
+export async function useRequest(request: any, params?: any) {
+	// const [loading, setLoading] = useState(false);
+	// const [data, setData] = useState();
 
-	const onRequest = useCallback(async () => {
-		try {
-			setLoading(true);
-			const response = await request(params);
-			setData(response.data);
-		} catch (error) {
-			setLoading(false);
-		}
+	// const onRequest = useCallback(async () => {
+	// 	try {
+	// 		// setLoading(true);
+	// 		const response = await request(params);
+	// 		// setData(response.data);
+	// 	} catch (error) {
+	// 		// setLoading(false);
+	// 	}
 
-		setLoading(false);
-	}, []);
+	// 	// setLoading(false);
+	// }, []);
 
-	useEffect(() => {
-		onRequest();
-	}, []);
+	// useEffect(() => {
+	// 	onRequest();
+	// }, []);
 
-	return [data, loading];
+	try {
+		// setLoading(true);
+		const response = await request(params);
+		// setData(response.data);
+		return response;
+	} catch (error) {
+		// setLoading(false);
+	}
+
+	// return [data, loading];
 }
 
 export const requestPostLike = (req: { postId: string }) => {
 	const { postId } = req;
 	const token = getStorage('tech-token');
-
+	console.log(postId);
+	
 	axios
 		.post(
 			`${server.host}/post/like`,

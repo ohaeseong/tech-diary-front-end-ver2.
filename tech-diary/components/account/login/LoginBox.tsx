@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Image from 'next/image';
@@ -112,8 +112,8 @@ type loginForm = {
 type Props = {
 	onLogin: () => void;
 	onLoginWithGithub: () => void;
-	handleKeypress: () => null;
-	onChange: () => void;
+	handleKeypress: (event: React.KeyboardEvent) => void;
+	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 
 	errorMsg: string;
 	form: loginForm;
