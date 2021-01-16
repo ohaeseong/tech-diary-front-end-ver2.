@@ -7,10 +7,9 @@ import PostLikeOption from 'components/post/PostLikeOption';
 import PostInfo from 'components/post/PostInfo';
 import PostContents from 'components/post/PostContents';
 import { getStorage } from 'libs/storage';
-import PostComment from './PostComment';
-import PostBottom from './PostBottom';
-import { asyncForeach } from 'libs/method';
 import Toast from 'components/common/Toast';
+import PostComment from 'components/post/PostCommentTemplate';
+import { TypeDecoded } from 'store/types/auth.types';
 
 const SinglePostTemplate = styled.div`
 	display: flex;
@@ -60,11 +59,10 @@ function SinglePost({ data }: Props) {
 	const [userIsLike, setUserIsLike] = useState(false);
 
 	useEffect(() => {
-		const token = getStorage('tech-token');
-		const tokenDecoded = jwt.decode(token);
+		const token = getStorage('tech-token') as string;
+		const tokenDecoded = jwt.decode(token) as TypeDecoded;
 
 		if (tokenDecoded) {
-			// await asyncForeach();
 			like.forEach((likeData) => {
 				if (likeData.memberId === tokenDecoded.memberId.toString()) {
 					setUserIsLike(true);
@@ -87,7 +85,7 @@ function SinglePost({ data }: Props) {
 				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
 				<PostContents markdown={contents} />
 				{/* <PostBottom /> */}
-				<PostComment />
+				<PostComment commentList={commentList.commentData} postId={id} />
 			</SinglePostContentsWrap>
 			<Toast />
 		</SinglePostTemplate>

@@ -6,12 +6,12 @@ import { ImLink } from 'react-icons/im';
 import { FaComment, FaTwitter, FaFacebook } from 'react-icons/fa';
 import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { MdArrowDropDown } from 'react-icons/md';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { color } from 'styles/color';
 import { moveLeft, moveDown, moveAngle } from 'styles/animation';
 import Button from 'components/common/Button';
-import { requestPostLike, useRequest } from 'libs/hooks/useApi';
+import { requestPostLike, useRequest } from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 import { server } from 'config/config';
 import { useDispatch } from 'react-redux';
@@ -42,10 +42,11 @@ const ItemWrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-around;
 	width: 100%;
 
 	margin-bottom: 1rem;
+	/* border: 1px solid black; */
 `;
 
 const SubIconWrap = styled.div`
@@ -141,6 +142,7 @@ const ShareItemWrap = styled.div<{ isOpen: boolean }>`
 				}
 			`;
 		}
+		return null;
 	}}
 `;
 

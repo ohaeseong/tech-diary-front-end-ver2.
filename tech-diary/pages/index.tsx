@@ -1,10 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import axios from 'axios';
-import { NextPageContext } from 'next';
-
 import MainTemplate from 'components/template/mainTemplate/MainTemplate';
-import PostLayout from 'container/Post/PostLayout';
+import PostLayout from 'container/post/PostLayout';
 import { server } from 'config/config';
 
 type Props = {
@@ -25,7 +23,7 @@ function IndexPage({ posts }: Props) {
 	);
 }
 
-IndexPage.getInitialProps = async (_: NextPageContext) => {
+IndexPage.getInitialProps = async () => {
 	const response = await axios.get(`${server.host}/post/?limit=30&category=blog`);
 	const posts = response.data.data;
 

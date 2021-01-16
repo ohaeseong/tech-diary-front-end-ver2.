@@ -51,6 +51,7 @@ export const dark = {
 
 export type ThemeType = {
 	white: string;
+	white_1: string;
 	black: string;
 	gray_0: string;
 	gray_1: string;
@@ -59,11 +60,18 @@ export type ThemeType = {
 	gray_4: string;
 	gray_5: string;
 	success: string;
-	error: string;
+	neon_0: string;
+	neon_1: string;
+	neon_2: string;
 	warning: string;
 	info: string;
 	shadow: string;
+	light_purple: string;
+	emphasis: string;
+	star: string;
+	purple: string;
 	facebook: string;
+	gradation: string;
 };
 
 export const gradation = {

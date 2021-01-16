@@ -1,16 +1,14 @@
 import React from 'react';
 
 import Head from 'next/head';
-import PostDetailLayout from 'container/PostDetail/PostDetailLayout';
-import MainTemplate from 'components/template/mainTemplate/MainTemplate';
-import { useRouter } from 'next/router';
+import PostDetailLayout from 'container/postDetail/PostDetailLayout';
 import { NextPageContext } from 'next';
 import axios from 'axios';
 import { server } from 'config/config';
-import { Post } from 'store/types/post.types';
+import { PostDetail } from 'store/types/post.types';
 
 type Props = {
-	post: Post;
+	post: PostDetail;
 };
 
 function DetailPage({ post }: Props) {

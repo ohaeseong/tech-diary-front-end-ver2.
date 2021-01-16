@@ -8,7 +8,6 @@ import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { color } from 'styles/color';
-import MarkdownRenderer from 'components/common/MarkdownRenderer';
 
 const PostItemWrap = styled.div`
 	width: 100%;
@@ -178,9 +177,9 @@ function PostItem({ item }: Props) {
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
 	const profileImage = member.profileImage || '/image/user.png';
 
-	const loadUserPage = () => {
-		// window.location.href = 'http://localhost:3000/login';
-	};
+	// const loadUserPage = () => {
+	// 	// window.location.href = 'http://localhost:3000/login';
+	// };
 
 	return (
 		<PostItemWrap>

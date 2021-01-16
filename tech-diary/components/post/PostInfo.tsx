@@ -4,7 +4,6 @@ import { Member, Tag } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 import Link from 'next/link';
-import { css } from '@emotion/react';
 
 const PostInfoWrap = styled.div`
 	display: flex;

@@ -1,37 +1,27 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { color } from 'styles/color';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
-const Pre = styled.pre`
-	background-color: ${(props) => props.theme.info};
-	padding: 2rem;
-	color: ${(props) => props.theme.black};
-	line-height: 1.7rem;
-	margin: 2rem auto;
-	/* color: ${(props) => props.theme.gray_5}; */
-
-	& > * {
-		font-family: 'Spoqa Han Sans Thin';
-		font-weight: 400;
-		font-size: 1rem;
-	}
-
-	overflow: auto;
-`;
-
-export function CodeBlock(children: { value: React.ReactNode }) {
+export function CodeBlock(children: { value: string; language: string }) {
 	return (
-		<Pre>
-			<code>{children.value}</code>
-		</Pre>
+		<SyntaxHighlighter language={children.language} style={darcula}>
+			{children.value}
+		</SyntaxHighlighter>
 	);
 }
 
 const BlockQuoteStyle = styled.div`
 	border-left: 5px solid ${(props) => props.theme.neon_2};
+	color: ${(props) => props.theme.black};
 	padding: 1rem;
 	margin: 2rem auto;
 	background-color: ${(props) => props.theme.info};
+
+	& > p {
+		color: ${(props) => props.theme.black};
+		font-family: 'Spoqa Han Sans Thin';
+	}
 `;
 
 export function BlockQuote(children: { children: React.ReactNode }) {
@@ -63,7 +53,7 @@ const ImageStyle = styled.img`
 	object-fit: contain;
 `;
 
-export function ImageMarkdownRender(children: { value: React.ReactNode }) {
+export function ImageMarkdownRender(children: { src: string }) {
 	return (
 		<ImageWrap>
 			<ImageStyle src={children.src} alt="post_image" />
@@ -83,30 +73,37 @@ const UlStyle = styled.ul`
 	padding-left: 2rem;
 	list-style-type: disc;
 	color: ${(props) => props.theme.black};
-`;
 
-export function UlMarkdownRender(children: { children: React.ReactNode }) {
-	return <UlStyle>{children.children}</UlStyle>;
-}
+	& > * {
+		color: ${(props) => props.theme.black};
+		font-family: 'Spoqa Han Sans Thin';
+	}
+`;
 
 const OlStyle = styled.ol`
 	list-style-type: decimal;
 	padding-left: 2rem;
 	margin: 1rem auto;
 	color: ${(props) => props.theme.black};
+
+	& > * {
+		color: ${(props) => props.theme.black};
+		font-family: 'Spoqa Han Sans Regular';
+	}
 `;
 
-export function OlMarkdownRender(children: { children: React.ReactNode }) {
-	return <OlStyle>{children.children}</OlStyle>;
+export function OlMarkdownRender(children: { children: string; ordered: boolean, start: number }) {
+	if (children.ordered) {
+		return <OlStyle start={children.start}>{children.children}</OlStyle>;
+	}
+	return <UlStyle>{children.children}</UlStyle>;
 }
 
 const HeadingStyled = styled.div`
 	margin: 1rem 0;
-
-	font-family: 'Spoqa Han Sans Regular';
 `;
 
-export function HeadingMarkdownRender(children: { children: React.ReactNode }) {
+export function HeadingMarkdownRender(children: { level: number; children: string }) {
 	let Head;
 	switch (children.level) {
 		case 1:
@@ -153,7 +150,7 @@ const HorizontalRuleTagStyled = styled.hr`
 `;
 
 export function HorizontalRuleMarkdownRender(children: { children: React.ReactNode }) {
-	return <HorizontalRuleTagStyled>{children.children}</HorizontalRuleTagStyled>
+	return <HorizontalRuleTagStyled>{children.children}</HorizontalRuleTagStyled>;
 }
 
 const StrongTagStyled = styled.strong`
@@ -162,7 +159,7 @@ const StrongTagStyled = styled.strong`
 `;
 
 export function StrongMarkdownRender(children: { children: React.ReactNode }) {
-	return <StrongTagStyled>{children.children}</StrongTagStyled>
+	return <StrongTagStyled>{children.children}</StrongTagStyled>;
 }
 
 const LinkTagStyled = styled.a`
@@ -170,8 +167,6 @@ const LinkTagStyled = styled.a`
 	outline: none;
 `;
 
-export function LinkMarkdownRender(children: { children: any }) {
-	console.log(children);
-	
-	return <LinkTagStyled href={children.href}>{children.children}</LinkTagStyled>
-};
+export function LinkMarkdownRender(children: { href: string; children: string }) {
+	return <LinkTagStyled href={children.href}>{children.children}</LinkTagStyled>;
+}

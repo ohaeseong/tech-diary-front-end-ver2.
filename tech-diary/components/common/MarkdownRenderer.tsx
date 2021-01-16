@@ -19,10 +19,14 @@ import {
 const MarkDownStyle = styled.div`
 	color: ${(props) => props.theme.white};
 
-	line-height: 2rem;
+	line-height: 1.8rem;
 	font-display: swap;
 	white-space: pre-line;
 	word-break: keep-all;
+
+	& > * {
+		font-size:1.125rem;
+	}
 
 	& > p {
 		color: ${(props) => props.theme.black};

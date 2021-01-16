@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { Post } from 'store/types/post.types';
 import PostItem from 'components/post/PostItem';
 import usePost from 'libs/hooks/usePost';
-import SkeletonLoading from 'components/common/SkeletonLoading';
 import { mediaQuery } from 'components/layout/responsive';
 
 const PostListTemplate = styled.div`
@@ -40,7 +39,7 @@ type Props = {
 function PostList({ posts, category, kinds }: Props) {
 	const [postList, setPostList] = useState(posts);
 	const [isEarlyData, setIsEarlyData] = useState(true);
-	const { postData, setLimit, limit, loading } = usePost(category, kinds);
+	const { postData, setLimit, limit } = usePost(category, kinds);
 
 	const handlePostData = useCallback(() => {
 		const { innerHeight } = window;

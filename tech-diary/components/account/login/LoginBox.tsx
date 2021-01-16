@@ -1,18 +1,13 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState } from 'store/modules';
 import { color } from 'styles/color';
 import { fadein } from 'styles/animation';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
-import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
-import useForm from 'libs/hooks/useForm';
 import AccountInput from 'components/account/AccountInput';
 
 const LoginBoxWrap = styled.div`
@@ -109,51 +104,22 @@ const LinkText = styled.a`
 		color: ${color.gray_2};
 	}
 `;
-
-type createLoginForm = {
+type loginForm = {
 	memberId: string;
 	pw: string;
 };
 
-function LoginBox() {
-	const dispatch = useDispatch();
-	const router = useRouter();
-	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
+type Props = {
+	onLogin: () => void;
+	onLoginWithGithub: () => void;
+	handleKeypress: () => null;
+	onChange: () => void;
 
-	const [form, onChange] = useForm<createLoginForm>({
-		memberId: '',
-		pw: '',
-	});
+	errorMsg: string;
+	form: loginForm;
+};
 
-	const onLogin = useCallback(() => {
-		const { memberId, pw } = form;
-
-		dispatch({
-			type: AUTH_LOGIN_REQUEST,
-			payload: {
-				memberId,
-				pw,
-				successCB: () => {
-					router.back();
-				},
-			},
-		});
-	}, [dispatch, form, router]);
-
-	const onLoginWithGithub = async () => {
-		const GIT_HUB_LOGIN_URL = 'https://github.com/login/oauth/authorize?';
-		const CLIENT_ID = '38450a3f2fd57007603a';
-		const REDIRECT_URI = 'http://localhost:3000/login/github-callback';
-
-		window.location.href = `${GIT_HUB_LOGIN_URL}client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
-	};
-
-	const handleKeypress = (event: React.KeyboardEvent) => {
-		if (event.key === 'Enter') {
-			onLogin();
-		}
-	};
-
+function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorMsg, form }: Props) {
 	return (
 		<LoginBoxWrap>
 			<LoginHalfWrap isImage>

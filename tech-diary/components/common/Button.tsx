@@ -90,4 +90,4 @@ function Button({ size = 'default', margin = '', children, width, height, onClic
 	);
 }
 
-export default Button;
+export default React.memo(Button);

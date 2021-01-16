@@ -1,10 +1,16 @@
 export type AuthLogin = {
 	memberId: string;
 	pw: string;
-	successCB?: () => {};
+	successCB?: () => null;
 };
 
 export type GitHubLoginRequest = {
 	code: string;
-	successCB?: () => {};
+	successCB?: () => null;
+};
+
+export type TypeDecoded = {
+	profileImage: string;
+	memberId: string;
+	accessLevel: number;
 };

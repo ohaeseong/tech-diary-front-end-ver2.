@@ -1,4 +1,4 @@
-import { createAsyncAction, ActionType, createReducer, createAction } from 'typesafe-actions';
+import { createAsyncAction, ActionType, createReducer } from 'typesafe-actions';
 import { AxiosError } from 'axios';
 import { GitHubLoginRequest } from 'store/types/auth.types';
 
