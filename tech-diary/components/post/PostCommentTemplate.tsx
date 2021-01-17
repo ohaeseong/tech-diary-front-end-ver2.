@@ -25,15 +25,16 @@ const Header = styled.div`
 `;
 
 type Props = {
+	dispatchForUpdateState: () => void;
 	commentList?: Comment[];
 	postId: string;
 };
 
-function PostComment({ commentList, postId }: Props) {
+function PostComment({ commentList, postId, dispatchForUpdateState }: Props) {
 	return (
 		<PostCommentTemplate>
 			<Header>{commentList?.length} Comments</Header>
-			<PostCommentWriteContainer postId={postId} />
+			<PostCommentWriteContainer postId={postId} dispatchForUpdateState={dispatchForUpdateState} />
 			{commentList?.map((item) => {
 				return <PostCommentItem key={item.idx} item={item} />;
 			})}

@@ -6,17 +6,15 @@ function useRequest(request: any) {
 
 	const onRequest = useCallback(
 		async (params: any) => {
+			setLoading(true);
 			try {
-				setLoading(true);
 				const response = await request(params);
-				console.log(response);
-				
 				setData(response.data);
 			} catch (error) {
 				setLoading(false);
+			} finally {
+				setLoading(false);
 			}
-
-			setLoading(false);
 		},
 		[request]
 	);

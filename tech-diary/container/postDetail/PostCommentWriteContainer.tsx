@@ -1,17 +1,15 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import PostCommentEdit from 'components/post/PostCommentEditor';
 import useRequest from 'libs/hooks/useRequest';
-import { requestWriteComment } from 'libs/repository';
-
-// import styled from '@'
+import { requestGetComment, requestWriteComment } from 'libs/repository';
 
 type Props = {
 	postId: string;
-}
+};
 
 function PostCommentWriteContainer({ postId }: Props) {
 	const [comment, setComment] = useState('');
-	const [data, loading, onRequest] = useRequest(requestWriteComment);
+	const [, , onRequest] = useRequest(requestWriteComment);
 
 	const handleCommentTextState = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length > 1000) {
@@ -21,7 +19,7 @@ function PostCommentWriteContainer({ postId }: Props) {
 		setComment(event.target.value);
 	}, []);
 
-	const applyComment = async () => {
+	const applyComment = useCallback(async () => {
 		if (comment.length === 0) {
 			return;
 		}
@@ -31,8 +29,9 @@ function PostCommentWriteContainer({ postId }: Props) {
 			postId,
 		};
 
-		onRequest(req);
-	};
+		await onRequest(req);
+		setComment('');
+	}, [comment, postId, onRequest]);
 
 	return (
 		<PostCommentEdit

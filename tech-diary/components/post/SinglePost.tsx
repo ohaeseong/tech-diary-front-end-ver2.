@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import jwt from 'jsonwebtoken';
 
-import { PostDetail } from 'store/types/post.types';
+import { Comment, PostDetail } from 'store/types/post.types';
 import PostLikeOption from 'components/post/PostLikeOption';
 import PostInfo from 'components/post/PostInfo';
 import PostContents from 'components/post/PostContents';
@@ -42,22 +42,8 @@ const Title = styled.div`
 `;
 
 const Thumbnail = styled.img`
-	width: 100%;
-	height: 25rem;
-
 	margin-top: 8rem;
-
-	border: 1px solid black;
-`;
-
-const CommentHeader = styled.div`
-	width: 100%;
-	height: 5rem;
-	line-height: 5rem;
-	padding-left: 1rem;
-	font-size: 1.4rem;
-
-	color: ${(props) => props.theme.gray_5};
+	object-fit: contain;
 `;
 
 type OptionState = {
@@ -78,6 +64,7 @@ type Props = {
 
 	optionState: OptionState;
 	data: PostDetail;
+	commentList: Comment[];
 };
 
 function SinglePost({
@@ -89,9 +76,10 @@ function SinglePost({
 	moveToComment,
 	dispatchForUpdateState,
 	optionState,
+	commentList,
 	data,
 }: Props) {
-	const { title, tagList, createTime, member, contents, thumbnailAddress, like, commentList, id } = data;
+	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id } = data;
 	const [userIsLike, setUserIsLike] = useState(false);
 
 	useEffect(() => {
@@ -111,7 +99,7 @@ function SinglePost({
 		<SinglePostTemplate>
 			<PostLikeOption
 				userIsLike={userIsLike}
-				commentCount={commentList.commentData.length}
+				commentCount={commentList.length}
 				optionState={optionState}
 				toggleLike={toggleLike}
 				toggleBookMark={toggleBookMark}
@@ -127,7 +115,7 @@ function SinglePost({
 				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
 				<PostContents markdown={contents} />
 				{/* <PostBottom /> */}
-				<PostComment commentList={commentList.commentData} postId={id} />
+				<PostComment commentList={commentList} postId={id} dispatchForUpdateState={dispatchForUpdateState}/>
 			</SinglePostContentsWrap>
 			<Toast />
 		</SinglePostTemplate>

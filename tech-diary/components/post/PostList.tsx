@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Post } from 'store/types/post.types';
 import PostItem from 'components/post/PostItem';
-import usePost from 'libs/hooks/usePost';
 import { mediaQuery } from 'components/layout/responsive';
 
 const PostListTemplate = styled.div`

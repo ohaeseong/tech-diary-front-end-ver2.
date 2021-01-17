@@ -47,3 +47,16 @@ export const requestWriteComment = (req: { postId: string; text: string }) => {
 			throw err;
 		});
 };
+
+export const requestGetComment = (req: { postId: string }) => {
+	const { postId } = req;
+	return axios
+		.get(`${server.host}/post/comment`, {
+			params: {
+				postId,
+			},
+		})
+		.catch((error) => {
+			throw error;
+		});
+};

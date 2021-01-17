@@ -66,19 +66,20 @@ type Props = {
 };
 
 function PostInfo({ tagData, member, createTime }: Props) {
-	const { profileImage, memberId } = member;
+	const { profileImage, memberName } = member;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+	const profileImageSource = profileImage || '/image/user.png';
 
 	return (
 		<PostInfoWrap>
 			<PostInfoHeader>
 				<UserInfoWrap>
 					<Link href="http://localhost:3000/">
-						<ProfileImage src={profileImage} alt="profile_image" />
+						<ProfileImage src={profileImageSource} alt="profile_image" />
 					</Link>
 					<Link href="http://localhost:3000/">
-						<UserIdTxt>{memberId}</UserIdTxt>
+						<UserIdTxt>{memberName}</UserIdTxt>
 					</Link>
 					<InfoTxt>1.2k followers</InfoTxt>
 				</UserInfoWrap>

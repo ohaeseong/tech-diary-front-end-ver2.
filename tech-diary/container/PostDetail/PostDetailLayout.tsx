@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from 'react';
+import React, {  useCallback } from 'react';
 import { ThemeProvider } from '@emotion/react';
 
 import SinglePost from 'components/post/SinglePost';
@@ -8,7 +8,7 @@ import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { requestPostLike, requestWriteComment } from 'libs/repository';
+import { requestPostLike } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
@@ -20,7 +20,7 @@ type Props = {
 };
 
 function PostDetailLayout({ post }: Props) {
-	const { id, like } = post;
+	const { id, like, commentList } = post;
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
 
 	const [state, onChange, dispatchForUpdateState] = useForm({
@@ -28,6 +28,7 @@ function PostDetailLayout({ post }: Props) {
 		isBookMark: false,
 		isShareItemOpen: false,
 		likeCount: like.length,
+		commentList: commentList.commentData,
 	});
 
 	const [data, loading, onRequest] = useRequest(requestPostLike);
@@ -147,6 +148,7 @@ function PostDetailLayout({ post }: Props) {
 					copyUrl={copyUrl}
 					dispatchForUpdateState={dispatchForUpdateState}
 					optionState={state}
+					commentList={state.commentList}
 					data={post}
 				/>
 			</ThemeProvider>

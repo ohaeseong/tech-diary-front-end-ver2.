@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { AiFillBulb, AiOutlineShareAlt } from 'react-icons/ai';
@@ -154,7 +154,7 @@ type Props = {
 	moveToComment: () => void;
 	closeShareItem: () => void;
 	copyUrl: () => void;
-	dispatchForUpdateState: (name: string, value: any) => void;
+	dispatchForUpdateState: any;
 
 	optionState: OptionState;
 	commentCount: number;

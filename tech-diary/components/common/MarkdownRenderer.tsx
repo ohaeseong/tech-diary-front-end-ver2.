@@ -15,25 +15,37 @@ import {
 	StrongMarkdownRender,
 	LinkMarkdownRender,
 } from 'libs/markdownCustomRender';
+import { css } from '@emotion/react';
 
-const MarkDownStyle = styled.div`
+const MarkDownStyle = styled.div<{ type?: string }>`
 	color: ${(props) => props.theme.white};
 
 	line-height: 1.8rem;
 	font-display: swap;
 	white-space: pre-line;
-	word-break: keep-all;
+	word-break: break-all;
 
-	& > * {
-		font-size:1.125rem;
-	}
+	${(props) => {
+		if (props.type === 'comment') {
+			return css`
+				& > * {
+					font-size: 1rem;
+				}
+			`;
+		}
+		return css`
+			& > * {
+				font-size: 1.125rem;
+			}
+		`;
+	}}
 
-	& > p {
+	& > p, em {
 		color: ${(props) => props.theme.black};
 		font-family: 'Spoqa Han Sans Thin';
 	}
 
-	& > h1,
+	& > * h1,
 	h2,
 	h3,
 	h4,
@@ -43,16 +55,19 @@ const MarkDownStyle = styled.div`
 		font-family: 'Spoqa Han Sans Bold';
 	}
 
-	& > 
+	& > pre code {
+		font-size: 0.8em;
+	}
 `;
 
 type Props = {
 	markdown: string;
+	type?: string;
 };
 
-function MarkdwonRenderer({ markdown }: Props) {
+function MarkdwonRenderer({ markdown, type }: Props) {
 	return (
-		<MarkDownStyle>
+		<MarkDownStyle type={type}>
 			<ReactMarkdown
 				children={markdown}
 				renderers={{

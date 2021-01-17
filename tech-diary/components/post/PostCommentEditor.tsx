@@ -1,15 +1,15 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
 import Button from 'components/common/Button';
 import { color } from 'styles/color';
-import { requestWriteComment, useRequest } from 'libs/hooks/useRequest';
 
 const PostCommentEditorTemplate = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	min-height: 12rem;
+	margin-bottom: 3rem;
 
 	& > * {
 		font-family: 'Spoqa Han Sans Medium';
@@ -45,8 +45,6 @@ const EditorTextarea = styled(TextareaAutosize)`
 const TextCount = styled.div`
 	width: auto;
 	height: 1rem;
-	/* border: 1px solid black; */
-
 	font-size: 0.8rem;
 	padding-right: 0.5rem;
 	padding-top: 0.8rem;

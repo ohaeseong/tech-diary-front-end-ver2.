@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 export type getPostList = {
 	limit: string;
 	category: string;
@@ -35,7 +34,7 @@ export type PostDetail = {
 	createTime: string;
 	commentList: {
 		commentData: Comment[];
-	}
+	};
 	tagList: {
 		tagData: Tag[];
 	};
@@ -45,10 +44,11 @@ export type PostDetail = {
 
 export type Comment = {
 	idx: number;
-	comment_txt: string;
-	member_id: string;
-	post_id: string;
-	create_date: string;
+	commentTxt: string;
+	memberId: string;
+	postId: string;
+	createDate: string;
+	member: Member;
 };
 
 export type Tag = {
