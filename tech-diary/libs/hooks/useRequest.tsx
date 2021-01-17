@@ -1,86 +1,28 @@
-import axios from 'axios';
-import { server } from 'config/config';
-import { getStorage } from 'libs/storage';
 import { useCallback, useEffect, useState } from 'react';
 
-export async function useRequest(request: any, params?: any) {
-	// const [loading, setLoading] = useState(false);
-	// const [data, setData] = useState();
+function useRequest(request: any) {
+	const [loading, setLoading] = useState(false);
+	const [data, setData] = useState({});
 
-	// const onRequest = useCallback(async () => {
-	// 	try {
-	// 		// setLoading(true);
-	// 		const response = await request(params);
-	// 		// setData(response.data);
-	// 	} catch (error) {
-	// 		// setLoading(false);
-	// 	}
+	const onRequest = useCallback(
+		async (params: any) => {
+			try {
+				setLoading(true);
+				const response = await request(params);
+				console.log(response);
+				
+				setData(response.data);
+			} catch (error) {
+				setLoading(false);
+			}
 
-	// 	// setLoading(false);
-	// }, []);
+			setLoading(false);
+		},
+		[request]
+	);
 
-	// useEffect(() => {
-	// 	onRequest();
-	// }, []);
-
-	try {
-		// setLoading(true);
-		const response = await request(params);
-		// setData(response.data);
-		return response;
-	} catch (error) {
-		// setLoading(false);
-	}
-
-	// return [data, loading];
+	return [data, loading, onRequest];
 }
 
-export const requestPostLike = (req: { postId: string }) => {
-	const { postId } = req;
-	const token = getStorage('tech-token');
-	console.log(postId);
-	
-	axios
-		.post(
-			`${server.host}/post/like`,
-			{
-				postId,
-			},
-			{
-				headers: {
-					token,
-				},
-			}
-		)
-		.then((res) => res.data)
-		.catch((err) => {
-			throw err;
-		});
-};
-
-export const requestWriteComment = (req: { postId: string; text: string }) => {
-	const { postId, text } = req;
-	const token = getStorage('tech-token');
-
-	console.log(req);
-
-	axios
-		.post(
-			`${server.host}/post/comment`,
-			{
-				commentTxt: text,
-				postId,
-			},
-			{
-				headers: {
-					token,
-				},
-			}
-		)
-		.then((res) => res.data)
-		.catch((err) => {
-			throw err;
-		});
-};
-
 // export const requestPostBookMark = (params) => {};
+export default useRequest;

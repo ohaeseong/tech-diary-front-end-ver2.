@@ -13,17 +13,17 @@ const ToastTemplate = styled.div<{ isCall: boolean }>`
 		if (props.isCall) {
 			return css`
 				& > * {
-					transition: ease-in-out 0.3s;
+					transition: ease-in-out 0.2s;
 					word-break: break-all;
 					width: 20rem;
 					height: 4rem;
-					padding: 0rem;
+					padding: 1rem;
 				}
 			`;
 		}
 		return css`
 			& > * {
-				transition: ease-in-out 0.3s;
+				transition: ease-in-out 0.2s;
 				width: 0;
 				height: 0;
 				padding: 0;

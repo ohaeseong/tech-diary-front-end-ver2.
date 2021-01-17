@@ -50,11 +50,21 @@ const Thumbnail = styled.img`
 	border: 1px solid black;
 `;
 
+const CommentHeader = styled.div`
+	width: 100%;
+	height: 5rem;
+	line-height: 5rem;
+	padding-left: 1rem;
+	font-size: 1.4rem;
+
+	color: ${(props) => props.theme.gray_5};
+`;
+
 type OptionState = {
-	isLike: boolean,
-	isBookMark: boolean,
-	isShareItemOpen: boolean,
-	likeCount: number,
+	isLike: boolean;
+	isBookMark: boolean;
+	isShareItemOpen: boolean;
+	likeCount: number;
 };
 
 type Props = {
@@ -64,7 +74,7 @@ type Props = {
 	moveToComment: () => void;
 	closeShareItem: () => void;
 	copyUrl: () => void;
-	dispatchForUpdateState: any;
+	dispatchForUpdateState: () => void;
 
 	optionState: OptionState;
 	data: PostDetail;

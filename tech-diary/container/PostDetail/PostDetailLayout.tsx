@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { ThemeProvider } from '@emotion/react';
 
 import SinglePost from 'components/post/SinglePost';
@@ -8,7 +8,8 @@ import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { requestPostLike, useRequest } from 'libs/hooks/useRequest';
+import { requestPostLike, requestWriteComment } from 'libs/repository';
+import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import { server } from 'config/config';
@@ -20,7 +21,6 @@ type Props = {
 
 function PostDetailLayout({ post }: Props) {
 	const { id, like } = post;
-
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
 
 	const [state, onChange, dispatchForUpdateState] = useForm({
@@ -30,6 +30,7 @@ function PostDetailLayout({ post }: Props) {
 		likeCount: like.length,
 	});
 
+	const [data, loading, onRequest] = useRequest(requestPostLike);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -66,8 +67,8 @@ function PostDetailLayout({ post }: Props) {
 			postId: id,
 		};
 
-		useRequest(requestPostLike, req);
-	}, [state, id, dispatchForUpdateState]);
+		onRequest(req);
+	}, [state, dispatchForUpdateState, id, onRequest]);
 
 	const toggleBookMark = useCallback(() => {
 		const token = getStorage('tech-token');

@@ -154,7 +154,7 @@ type Props = {
 	moveToComment: () => void;
 	closeShareItem: () => void;
 	copyUrl: () => void;
-	dispatchForUpdateState: any;
+	dispatchForUpdateState: (name: string, value: any) => void;
 
 	optionState: OptionState;
 	commentCount: number;

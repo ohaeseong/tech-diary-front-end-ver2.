@@ -34,7 +34,7 @@ const EditorTextarea = styled(TextareaAutosize)`
 	border: none;
 	resize: none;
 
-	color: ${(props) => props.theme.gray_3};
+	color: ${(props) => props.theme.gray_5};
 	background-color: ${(props) => props.theme.white_1};
 
 	&::placeholder {
@@ -58,52 +58,30 @@ const Bottom = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	/* align-items: center; */
 	width: 100%;
 	height: 3rem;
 
 	white-space: pre-wrap;
-	/* border: 1px solid black; */
 `;
 
 type Props = {
-	postId: string;
+	handleCommentTextState: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+	applyComment: () => void;
+
+	commentText: string;
 };
 
-function PostCommentEditor({ postId }: Props) {
-	const [text, setText] = useState('');
-
-	const handleTextState = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
-		if (event.target.value.length > 1000) {
-			return;
-		}
-
-		setText(event.target.value);
-	}, []);
-
-	const applyComment = () => {
-		if (text.length === 0) {
-			return;
-		}
-
-		const req = {
-			text,
-			postId,
-		};
-
-		useRequest(requestWriteComment, req);
-	};
-
+function PostCommentEditor({ commentText, handleCommentTextState, applyComment }: Props) {
 	return (
 		<PostCommentEditorTemplate>
 			<TextareaWrap>
-				<EditorTextarea value={text} onChange={handleTextState} placeholder="댓글을 작성 해보세요!" />
+				<EditorTextarea value={commentText} onChange={handleCommentTextState} placeholder="댓글을 작성 해보세요!" />
 			</TextareaWrap>
 			<Bottom>
 				<Button height="2.5rem" color={color.neon_2} margin="1rem 0.5rem" onClick={applyComment}>
 					댓글 작성
 				</Button>
-				<TextCount>{text.length} / 1000</TextCount>
+				<TextCount>{commentText.length} / 1000</TextCount>
 			</Bottom>
 		</PostCommentEditorTemplate>
 	);

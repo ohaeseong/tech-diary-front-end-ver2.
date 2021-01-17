@@ -14,9 +14,7 @@ type Props = {
 };
 
 function PostCommentItem({ item }: Props) {
-	console.log(item);
-
-	return <PostCommentItemWrap></PostCommentItemWrap>;
+	return <PostCommentItemWrap />;
 }
 
 export default PostCommentItem;

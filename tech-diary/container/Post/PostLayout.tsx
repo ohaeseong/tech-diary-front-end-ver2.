@@ -15,6 +15,7 @@ function PostLayout({ posts }: Props) {
 
 	let headName = '';
 
+	// router 별 headname 설정
 	switch (router.pathname) {
 		case '/blog/front-end':
 			headName = 'Front-End';
@@ -34,10 +35,14 @@ function PostLayout({ posts }: Props) {
 			break;
 	}
 
+	// csr server request postList, 초기 데이터 구분을 위한 isEarlyData 선언
 	const [postList, setPostList] = useState(posts);
 	const [isEarlyData, setIsEarlyData] = useState(true);
+
+	// 우선 blog로 설정 이후에 로직 변경 예정
 	const { postData, setLimit, limit } = usePost('blog', kinds[2]);
 
+	// 추가 데이터 요청
 	const handlePostData = useCallback(() => {
 		const { innerHeight } = window;
 		const { scrollHeight } = document.body;
@@ -54,6 +59,7 @@ function PostLayout({ posts }: Props) {
 		}
 	}, [limit, postData, setLimit]);
 
+	// scroll 이벤트 리스너
 	useEffect(() => {
 		window.addEventListener('scroll', handlePostData);
 

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Comment } from 'store/types/post.types';
 import PostCommentItem from 'components/post/PostCommentItem';
-import PostCommentEditor from 'components/post/PostCommentEditor';
+import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
 
 const PostCommentTemplate = styled.div`
 	display: flex;
@@ -10,8 +10,6 @@ const PostCommentTemplate = styled.div`
 	width: 100%;
 	min-height: 30rem;
 	margin-left: 1rem;
-
-	/* border: 1px solid black; */
 
 	margin-bottom: 5rem;
 `;
@@ -23,8 +21,6 @@ const Header = styled.div`
 	padding-left: 1rem;
 	font-size: 1.4rem;
 
-
-	/* border-bottom: 1px solid black; */
 	color: ${(props) => props.theme.gray_5};
 `;
 
@@ -34,11 +30,10 @@ type Props = {
 };
 
 function PostComment({ commentList, postId }: Props) {
-
 	return (
 		<PostCommentTemplate>
 			<Header>{commentList?.length} Comments</Header>
-			<PostCommentEditor postId={postId} />
+			<PostCommentWriteContainer postId={postId} />
 			{commentList?.map((item) => {
 				return <PostCommentItem key={item.idx} item={item} />;
 			})}
@@ -46,4 +41,4 @@ function PostComment({ commentList, postId }: Props) {
 	);
 }
 
-export default PostComment;
+export default React.memo(PostComment);
