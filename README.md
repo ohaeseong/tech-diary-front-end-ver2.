@@ -1,11 +1,11 @@
-### stack
+### 🛠 stack
 - typescript
 - next.js
 - redux
 - redux-saga
 - emotion
 
-### script
+### 📑 script
 
 - yarn dev => 개발 모드에서 실행
 - yarn start => build 필요
