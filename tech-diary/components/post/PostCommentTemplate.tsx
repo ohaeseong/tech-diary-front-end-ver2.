@@ -25,7 +25,8 @@ const Header = styled.div`
 `;
 
 type Props = {
-	dispatchForUpdateState: () => void;
+	dispatchForUpdateState: any;
+
 	commentList?: Comment[];
 	postId: string;
 };

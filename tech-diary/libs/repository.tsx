@@ -1,19 +1,16 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { getStorage } from './storage';
 
-export const requestPostLike = async (req: { postId: string }) => {
-	const { postId } = req;
-	const token = getStorage('tech-token');
-	await axios
+export const requestPostLike = (req: { postId: string; token: string }) =>
+	axios
 		.post(
 			`${server.host}/post/like`,
 			{
-				postId,
+				postId: req.postId,
 			},
 			{
 				headers: {
-					token,
+					token: req.token,
 				},
 			}
 		)
@@ -23,40 +20,32 @@ export const requestPostLike = async (req: { postId: string }) => {
 		.catch((err) => {
 			throw err;
 		});
-};
 
-export const requestWriteComment = (req: { postId: string; text: string }) => {
-	const { postId, text } = req;
-	const token = getStorage('tech-token');
-
+export const requestWriteComment = (req: { postId: string; text: string; token: string }) =>
 	axios
 		.post(
 			`${server.host}/post/comment`,
 			{
-				commentTxt: text,
-				postId,
+				commentTxt: req.text,
+				postId: req.postId,
 			},
 			{
 				headers: {
-					token,
+					token: req.token,
 				},
 			}
 		)
-		.then((res) => res.data)
-		.catch((err) => {
-			throw err;
+		.catch((error) => {
+			throw error;
 		});
-};
 
-export const requestGetComment = (req: { postId: string }) => {
-	const { postId } = req;
-	return axios
+export const requestGetComment = (req: { postId: string }) =>
+	axios
 		.get(`${server.host}/post/comment`, {
 			params: {
-				postId,
+				postId: req.postId,
 			},
 		})
 		.catch((error) => {
 			throw error;
 		});
-};

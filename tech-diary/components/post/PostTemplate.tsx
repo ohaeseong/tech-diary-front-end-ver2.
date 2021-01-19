@@ -4,6 +4,7 @@ import { Post } from 'store/types/post.types';
 
 import PostListHeader from 'components/post/PostListHeader';
 import PostList from 'components/post/PostList';
+import { mediaQuery } from 'components/layout/responsive';
 
 const Template = styled.div`
 	display: flex;
@@ -12,6 +13,10 @@ const Template = styled.div`
 	width: 80%;
 	height: 100%;
 	margin: 3rem auto;
+
+	${mediaQuery.over} {
+		align-items: center;
+	}
 `;
 
 type Props = {

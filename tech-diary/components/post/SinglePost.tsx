@@ -33,7 +33,6 @@ const SinglePostContentsWrap = styled.div`
 const Title = styled.div`
 	width: 100%;
 
-	/* font-family: 'Spoqa Han Sans'; */
 	font-size: 2.5rem;
 	margin-top: 5rem;
 	margin-bottom: 1rem;

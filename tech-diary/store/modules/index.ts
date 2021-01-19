@@ -4,6 +4,7 @@ import githubAuth from './github.auth';
 import post from './post';
 import theme from './theme.state';
 import toast from './toast';
+import postComment from './post.comment';
 
 const rootReducer = combineReducers({
 	auth,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
 	post,
 	theme,
 	toast,
+	postComment,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

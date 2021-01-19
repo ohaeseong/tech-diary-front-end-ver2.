@@ -11,7 +11,7 @@ import { color } from 'styles/color';
 
 const PostItemWrap = styled.div`
 	width: 100%;
-	height: 24.5rem;
+	height: 23.5rem;
 
 	border-radius: 7px;
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
@@ -30,7 +30,8 @@ const ThumbnailWrap = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	height: 12rem;
+	height: 10rem;
+	margin-bottom: 1rem;
 	overflow: hidden;
 
 	border-radius: 7px 7px 0px 0px;
@@ -48,6 +49,7 @@ const Thumbnail = styled.img`
 	height: 100%;
 
 	object-fit: cover;
+
 `;
 
 const PostContentsWrap = styled.div`
@@ -85,7 +87,7 @@ const PostContent = styled.div<{ type: string }>`
 		if (props.type === 'contents') {
 			return css`
 				font-size: 0.5rem;
-				height: 4rem;
+				height: 5 rem;
 				line-height: 1rem;
 				color: ${props.theme.gray_5};
 				-webkit-line-clamp: 4;
@@ -145,6 +147,8 @@ const PostBottomWrap = styled.div`
 	width: 100%;
 	height: 3rem;
 
+	/* border: 1px solid black; */
+
 	& > * {
 		margin: 0.8rem;
 		font-size: 0.1rem;
@@ -158,6 +162,7 @@ const IconWrap = styled.div`
 	justify-content: center;
 	height: 100%;
 	color: ${(props) => props.theme.black};
+	margin-top: 1rem;
 
 	& > * {
 		padding: 0.3rem;

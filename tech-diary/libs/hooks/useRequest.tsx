@@ -2,25 +2,25 @@ import { useCallback, useEffect, useState } from 'react';
 
 function useRequest(request: any) {
 	const [loading, setLoading] = useState(false);
-	const [data, setData] = useState({});
+	const [data, setData] = useState(null);
+	const [error, setError] = useState<Error | null>(null);
 
 	const onRequest = useCallback(
-		async (params: any) => {
-			setLoading(true);
+		async (params: any[]) => {
 			try {
+				setLoading(true);
 				const response = await request(params);
 				setData(response.data);
-			} catch (error) {
-				setLoading(false);
-			} finally {
-				setLoading(false);
+			} catch (e) {
+				setError(e);
+				throw e;
 			}
+			setLoading(false);
 		},
 		[request]
 	);
 
-	return [data, loading, onRequest];
+	return [data, loading, onRequest, error];
 }
 
-// export const requestPostBookMark = (params) => {};
 export default useRequest;

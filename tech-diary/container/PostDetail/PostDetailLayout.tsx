@@ -66,6 +66,7 @@ function PostDetailLayout({ post }: Props) {
 
 		const req = {
 			postId: id,
+			token,
 		};
 
 		onRequest(req);
