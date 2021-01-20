@@ -147,8 +147,6 @@ const PostBottomWrap = styled.div`
 	width: 100%;
 	height: 3rem;
 
-	/* border: 1px solid black; */
-
 	& > * {
 		margin: 0.8rem;
 		font-size: 0.1rem;

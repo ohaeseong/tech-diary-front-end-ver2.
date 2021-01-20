@@ -4,6 +4,13 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 export function CodeBlock(children: { value: string; language: string }) {
+	if (!children.value) {
+		return (
+			<SyntaxHighlighter language={children.language} style={darcula}>
+				{' '}
+			</SyntaxHighlighter>
+		);
+	}
 	return (
 		<SyntaxHighlighter language={children.language} style={darcula}>
 			{children.value}
@@ -92,7 +99,7 @@ const OlStyle = styled.ol`
 	}
 `;
 
-export function OlMarkdownRender(children: { children: string; ordered: boolean, start: number }) {
+export function OlMarkdownRender(children: { children: string; ordered: boolean; start: number }) {
 	if (children.ordered) {
 		return <OlStyle start={children.start}>{children.children}</OlStyle>;
 	}
@@ -116,7 +123,7 @@ export function HeadingMarkdownRender(children: { level: number; children: strin
 			Head = <h3>{children.children}</h3>;
 			break;
 		case 4:
-			Head = <h4>children.children</h4>;
+			Head = <h4>{children.children}</h4>;
 			break;
 		case 5:
 			Head = <h5>{children.children}</h5>;

@@ -57,6 +57,8 @@ const MarkDownStyle = styled.div<{ type?: string }>`
 
 	& > pre code {
 		font-size: 0.8em;
+		max-width: 100%;
+		word-break: break-all;
 	}
 `;
 

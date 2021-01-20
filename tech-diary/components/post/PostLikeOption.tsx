@@ -142,8 +142,6 @@ const BookmarkWrap = styled.div`
 
 type OptionState = {
 	isLike: boolean;
-	isBookMark: boolean;
-	isShareItemOpen: boolean;
 	likeCount: number;
 };
 
@@ -160,6 +158,8 @@ type Props = {
 	commentCount: number;
 	userIsLike: boolean;
 	userIsFollow?: boolean;
+	bookMarkToggleValue: boolean;
+	shareItemOpenToggleValue: boolean;
 };
 
 function PostLikeOption({
@@ -175,8 +175,10 @@ function PostLikeOption({
 	userIsLike,
 	commentCount,
 	userIsFollow,
+	bookMarkToggleValue,
+	shareItemOpenToggleValue,
 }: Props) {
-	const { isBookMark, isLike, isShareItemOpen, likeCount } = optionState;
+	const { isLike, likeCount } = optionState;
 
 	useEffect(() => {
 		document.body.addEventListener('click', closeShareItem);
@@ -232,7 +234,7 @@ function PostLikeOption({
 				<ShareIconWrap onClick={toggleShareItemOpen}>
 					<AiOutlineShareAlt size="2rem" cursor="pointer" />
 				</ShareIconWrap>
-				<ShareItemWrap isOpen={isShareItemOpen}>
+				<ShareItemWrap isOpen={shareItemOpenToggleValue}>
 					<ShareItem>
 						<FaTwitter size="100%" />
 					</ShareItem>
@@ -244,7 +246,7 @@ function PostLikeOption({
 					</ShareItem>
 				</ShareItemWrap>
 				<BookmarkWrap>
-					{isBookMark ? (
+					{bookMarkToggleValue ? (
 						<BsFillBookmarkFill size="2rem" cursor="pointer" color={color.neon_2} onClick={toggleBookMark} />
 					) : (
 						<BsBookmark size="2rem" cursor="pointer" color={color.neon_2} onClick={toggleBookMark} />

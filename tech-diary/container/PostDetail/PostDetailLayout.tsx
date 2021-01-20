@@ -1,4 +1,4 @@
-import React, {  useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ThemeProvider } from '@emotion/react';
 
 import SinglePost from 'components/post/SinglePost';
@@ -14,6 +14,7 @@ import { getStorage } from 'libs/storage';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
+import useToggle from 'libs/hooks/useToggle';
 
 type Props = {
 	post: PostDetail;
@@ -23,15 +24,16 @@ function PostDetailLayout({ post }: Props) {
 	const { id, like, commentList } = post;
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
 
-	const [state, onChange, dispatchForUpdateState] = useForm({
+	const [state, , dispatchForUpdateState] = useForm({
 		isLike: false,
-		isBookMark: false,
-		isShareItemOpen: false,
 		likeCount: like.length,
 		commentList: commentList.commentData,
 	});
 
-	const [data, loading, onRequest] = useRequest(requestPostLike);
+	const [bookMarkToggleValue, bookMarkToggle] = useToggle(false);
+	const [shareItemOpenToggleValue, shareItemToggle] = useToggle(false);
+
+	const [, , onRequest] = useRequest(requestPostLike);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -80,40 +82,31 @@ function PostDetailLayout({ post }: Props) {
 			return;
 		}
 
-		const { isBookMark } = state;
+		bookMarkToggle();
+	}, [bookMarkToggle]);
 
-		dispatchForUpdateState({
-			name: 'isBookMark',
-			value: !isBookMark,
-		});
-	}, [dispatchForUpdateState, state]);
+	const toggleShareItemOpen = useCallback(
+		(action?: string) => {
+			if (action === 'close' && shareItemOpenToggleValue) {
+				shareItemToggle();
+			}
 
-	const toggleShareItemOpen = useCallback(() => {
-		const { isShareItemOpen } = state;
+			shareItemToggle();
+		},
+		[shareItemOpenToggleValue, shareItemToggle]
+	);
 
-		dispatchForUpdateState({
-			name: 'isShareItemOpen',
-			value: !isShareItemOpen,
-		});
-	}, [state, dispatchForUpdateState]);
-
+	const closeShareItem = () => {
+		if (shareItemOpenToggleValue) {
+			shareItemToggle();
+		}
+	};
 	const moveToComment = () => {
 		if (document.querySelector('body')) {
 			const location = document.querySelector('body')?.clientHeight;
 			window.scrollTo({ top: location, left: 0, behavior: 'smooth' });
 		}
 	};
-
-	const closeShareItem = useCallback(() => {
-		if (state.isShareItemOpen) {
-			const { isShareItemOpen } = state;
-
-			dispatchForUpdateState({
-				name: 'isShareItemOpen',
-				value: !isShareItemOpen,
-			});
-		}
-	}, [dispatchForUpdateState, state]);
 
 	const copyUrl = () => {
 		navigator.clipboard.writeText(`${server.client_url}${router.asPath}`);
@@ -145,9 +138,11 @@ function PostDetailLayout({ post }: Props) {
 					toggleBookMark={toggleBookMark}
 					toggleShareItemOpen={toggleShareItemOpen}
 					moveToComment={moveToComment}
-					closeShareItem={closeShareItem}
 					copyUrl={copyUrl}
 					dispatchForUpdateState={dispatchForUpdateState}
+					bookMarkToggleValue={bookMarkToggleValue}
+					closeShareItem={closeShareItem}
+					shareItemOpenToggleValue={shareItemOpenToggleValue}
 					optionState={state}
 					commentList={state.commentList}
 					data={post}

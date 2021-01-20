@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Comment } from 'store/types/post.types';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
+import Button from 'components/common/Button';
+import { BiMessageRoundedAdd } from 'react-icons/bi';
+import PostCommentEditor from './PostCommentEditor';
+import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
+import useToggle from 'libs/hooks/useToggle';
 
 const PostCommentItemWrap = styled.div`
 	display: flex;
@@ -23,8 +28,6 @@ const Head = styled.div`
 	justify-content: space-between;
 	width: 100%;
 	height: 2rem;
-
-	/* border: 1px solid black; */
 `;
 
 const PostCommentItemContentsWrap = styled.div`
@@ -35,22 +38,25 @@ const PostCommentItemContentsWrap = styled.div`
 `;
 
 const CommentText = styled.div`
-	width: 100%;
+	max-width: 100%;
 	height: 100%;
 	padding: 0rem 0.5rem;
-
-	line-height: 1.7rem;
-
+	overflow: hidden;
+	margin-bottom: 1rem;
 	font-family: 'Spoqa Han Sans Thin';
+
+	/* border: 1px solid black; */
+
+	& > * pre {
+		max-width: 41.5rem;
+	}
 `;
 
 const UserInfoText = styled.a`
 	font-size: 1rem;
-	/* line-height: 2rem; */
 	height: 1.2rem;
 	margin: 0.5rem 0 0 0.5rem;
-	/* border: 1px solid black; */
-	cursor: ;
+	cursor: pointer;
 
 	color: ${(props) => props.theme.black};
 `;
@@ -76,15 +82,53 @@ const ProfileImage = styled.img`
 	border-radius: 50%;
 `;
 
+const ReplyButtonWrap = styled.div`
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 2rem;
+	margin-bottom: 2rem;
+	/* border: 1px solid black; */
+
+	& > * {
+		cursor: pointer;
+
+		color: ${(props) => props.theme.gray_5};
+	}
+
+	& > button {
+		color: ${(props) => props.theme.gray_5};
+	}
+`;
+
+const ReplyButton = styled.button`
+	background-color: rgba(255, 255, 255, 0);
+	border: none;
+	outline: none;
+	font-size: 1rem;
+
+	font-family: 'Spoqa Han Sans Regular';
+`;
+
+const PostCommentWriteContainerWrap = styled.div<{ replyIsOpen: boolean }>`
+	display: none;
+	${(props) => props.replyIsOpen && `display: block`};
+`;
+
 type Props = {
 	item: Comment;
 };
 
 function PostCommentItem({ item }: Props) {
-	const { commentTxt, createDate, member } = item;
+	const [replyIsOpen, toggle] = useToggle(false);
+	const { commentTxt, createDate, member, postId } = item;
 	const { memberName, profileImage } = member;
 	const date = new Date(createDate);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+	const toggleReplyOpen = () => {
+		toggle();
+	};
 
 	return (
 		<PostCommentItemWrap>
@@ -99,6 +143,13 @@ function PostCommentItem({ item }: Props) {
 				<CommentText>
 					<MarkdownRenderer markdown={commentTxt} type="comment" />
 				</CommentText>
+				<ReplyButtonWrap>
+					<BiMessageRoundedAdd size="1.2em" />
+					<ReplyButton onClick={toggleReplyOpen}>답글 작성</ReplyButton>
+				</ReplyButtonWrap>
+				<PostCommentWriteContainerWrap replyIsOpen={replyIsOpen}>
+					<PostCommentWriteContainer postId={postId} />
+				</PostCommentWriteContainerWrap>
 			</PostCommentItemContentsWrap>
 		</PostCommentItemWrap>
 	);

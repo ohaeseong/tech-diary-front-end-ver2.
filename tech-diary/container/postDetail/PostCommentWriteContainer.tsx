@@ -2,10 +2,9 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import PostCommentEdit from 'components/post/PostCommentEditor';
 import useRequest from 'libs/hooks/useRequest';
 import { requestGetComment, requestWriteComment } from 'libs/repository';
-import { useDispatch, useSelector } from 'react-redux';
-import { GET_POST_COMMENT_REQUEST } from 'store/modules/post.comment';
-import { RootState } from 'store/modules';
+import { useDispatch } from 'react-redux';
 import { getStorage } from 'libs/storage';
+import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 
 type Props = {
 	postId: string;
@@ -14,9 +13,11 @@ type Props = {
 
 function PostCommentWriteContainer({ postId, dispatchForUpdateState }: Props) {
 	const [comment, setComment] = useState('');
-	const [, loading, onRequest] = useRequest(requestWriteComment);
+	const [, , onWriteComment] = useRequest(requestWriteComment);
+	const [commentState, , reloadComment] = useRequest(requestGetComment);
+
 	const dispatch = useDispatch();
-	const { commentData } = useSelector((store: RootState) => store.postComment); // const [commentList, ,getComment]
+
 	const handleCommentTextState = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length > 1000) {
 			return;
@@ -25,22 +26,25 @@ function PostCommentWriteContainer({ postId, dispatchForUpdateState }: Props) {
 		setComment(event.target.value);
 	}, []);
 
-	const reloadComment = useCallback(() => {
-		dispatch({
-			type: GET_POST_COMMENT_REQUEST,
-			payload: {
-				postId,
-			},
-		});
-
-		// dispatchForUpdateState({
-		// 	name: 'commentList',
-		// 	value: commentData,
-		// });
-	}, [dispatch, postId]);
-
 	const applyComment = useCallback(async () => {
 		const token = getStorage('tech-token');
+		if (!token) {
+			dispatch({
+				type: SHOW_TOAST,
+				payload: {
+					text: '로그인 후 이용해 주세요!',
+				},
+			});
+
+			setTimeout(() => {
+				dispatch({
+					type: DROP_TOAST,
+				});
+			}, 2000);
+
+			return;
+		}
+
 		if (comment.length === 0) {
 			return;
 		}
@@ -51,36 +55,24 @@ function PostCommentWriteContainer({ postId, dispatchForUpdateState }: Props) {
 			token,
 		};
 
-		await onRequest(req);
+		await onWriteComment(req);
 		setComment('');
 
-		const reqGetComment = {
+		const realoadCommentReq = {
 			postId,
 		};
 
-		// await requestGetComment(reqGetComment);
-
-		// dispatchForUpdateState({
-		// 	name: 'commentList',
-		// 	value:
-		// });
-	}, [comment, postId, onRequest]);
+		await reloadComment(realoadCommentReq);
+	}, [comment, postId, onWriteComment, reloadComment, dispatch]);
 
 	useEffect(() => {
-		if (loading) {
-			dispatch({
-				type: GET_POST_COMMENT_REQUEST,
-				payload: {
-					postId,
-				},
-			});
-
+		if (commentState) {
 			dispatchForUpdateState({
 				name: 'commentList',
-				value: commentData,
+				value: commentState.data.commentData,
 			});
 		}
-	}, [loading]);
+	}, [commentState, dispatchForUpdateState]);
 
 	return (
 		<PostCommentEdit

@@ -47,8 +47,6 @@ const Thumbnail = styled.img`
 
 type OptionState = {
 	isLike: boolean;
-	isBookMark: boolean;
-	isShareItemOpen: boolean;
 	likeCount: number;
 };
 
@@ -64,6 +62,8 @@ type Props = {
 	optionState: OptionState;
 	data: PostDetail;
 	commentList: Comment[];
+	bookMarkToggleValue: boolean;
+	shareItemOpenToggleValue: boolean;
 };
 
 function SinglePost({
@@ -77,6 +77,8 @@ function SinglePost({
 	optionState,
 	commentList,
 	data,
+	bookMarkToggleValue,
+	shareItemOpenToggleValue,
 }: Props) {
 	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id } = data;
 	const [userIsLike, setUserIsLike] = useState(false);
@@ -100,9 +102,11 @@ function SinglePost({
 				userIsLike={userIsLike}
 				commentCount={commentList.length}
 				optionState={optionState}
+				shareItemOpenToggleValue={shareItemOpenToggleValue}
 				toggleLike={toggleLike}
 				toggleBookMark={toggleBookMark}
 				toggleShareItemOpen={toggleShareItemOpen}
+				bookMarkToggleValue={bookMarkToggleValue}
 				closeShareItem={closeShareItem}
 				copyUrl={copyUrl}
 				moveToComment={moveToComment}
