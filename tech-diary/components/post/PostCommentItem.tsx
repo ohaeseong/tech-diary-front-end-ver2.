@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Comment } from 'store/types/post.types';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
-import Button from 'components/common/Button';
 import { BiMessageRoundedAdd } from 'react-icons/bi';
-import PostCommentEditor from './PostCommentEditor';
-import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
 import useToggle from 'libs/hooks/useToggle';
+import PostReplyCommentContainer from 'container/postDetail/PostReplyCommentContainer';
 
-const PostCommentItemWrap = styled.div`
+const PostCommentItemWrap = styled.div<{ isReply?: boolean }>`
 	display: flex;
 	flex-direction: row;
 	width: 100%;
@@ -20,6 +18,8 @@ const PostCommentItemWrap = styled.div`
 	}
 
 	border-bottom: 1px solid ${(props) => props.theme.gray_2};
+
+	/* ${(props) => props.isReply && `background-color: #F8F9F9`}; */
 `;
 
 const Head = styled.div`
@@ -45,8 +45,6 @@ const CommentText = styled.div`
 	margin-bottom: 1rem;
 	font-family: 'Spoqa Han Sans Thin';
 
-	/* border: 1px solid black; */
-
 	& > * pre {
 		max-width: 41.5rem;
 	}
@@ -64,7 +62,7 @@ const UserInfoText = styled.a`
 const DateInfoText = styled.span`
 	font-size: 0.8rem;
 	line-height: 2rem;
-	margin: 0.5rem 0 0 0.5rem;
+	margin: 0.5rem 1rem 0 0.5rem;
 
 	color: ${(props) => props.theme.gray_5};
 `;
@@ -110,30 +108,28 @@ const ReplyButton = styled.button`
 	font-family: 'Spoqa Han Sans Regular';
 `;
 
-const PostCommentWriteContainerWrap = styled.div<{ replyIsOpen: boolean }>`
-	display: none;
-	${(props) => props.replyIsOpen && `display: block`};
-`;
-
 type Props = {
 	item: Comment;
+	isReply?: boolean;
 };
 
-function PostCommentItem({ item }: Props) {
+function PostCommentItem({ item, isReply }: Props) {
 	const [replyIsOpen, toggle] = useToggle(false);
-	const { commentTxt, createDate, member, postId } = item;
+	const { commentTxt, createDate, member, postId, replyCommentCount, idx } = item;
 	const { memberName, profileImage } = member;
 	const date = new Date(createDate);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
+	const replyCommentCountText = replyCommentCount ? `${replyCommentCount}개의 답글` : '답글 달기';
+	const profileImageSource = profileImage || '/image/user.png';
 	const toggleReplyOpen = () => {
 		toggle();
 	};
 
 	return (
-		<PostCommentItemWrap>
+		<PostCommentItemWrap isReply={isReply}>
 			<ProfileImageWrap>
-				<ProfileImage src={profileImage} />
+				<ProfileImage src={profileImageSource} />
 			</ProfileImageWrap>
 			<PostCommentItemContentsWrap>
 				<Head>
@@ -143,13 +139,15 @@ function PostCommentItem({ item }: Props) {
 				<CommentText>
 					<MarkdownRenderer markdown={commentTxt} type="comment" />
 				</CommentText>
-				<ReplyButtonWrap>
-					<BiMessageRoundedAdd size="1.2em" />
-					<ReplyButton onClick={toggleReplyOpen}>답글 작성</ReplyButton>
-				</ReplyButtonWrap>
-				<PostCommentWriteContainerWrap replyIsOpen={replyIsOpen}>
-					<PostCommentWriteContainer postId={postId} />
-				</PostCommentWriteContainerWrap>
+				{isReply ? (
+					<></>
+				) : (
+					<ReplyButtonWrap>
+						<BiMessageRoundedAdd size="1.2em" />
+						<ReplyButton onClick={toggleReplyOpen}>{!replyIsOpen ? replyCommentCountText : '답글 숨기기'}</ReplyButton>
+					</ReplyButtonWrap>
+				)}
+				{replyIsOpen ? <PostReplyCommentContainer postId={postId} commentIdx={idx} /> : <></>}
 			</PostCommentItemContentsWrap>
 		</PostCommentItemWrap>
 	);

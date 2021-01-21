@@ -49,3 +49,14 @@ export const requestGetComment = (req: { postId: string }) =>
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestGetReplyComment = (req: { commentIdx: number }) =>
+	axios
+		.get(`${server.host}/post/comment/reply`, {
+			params: {
+				replyCommentIdx: req.commentIdx,
+			},
+		})
+		.catch((error) => {
+			throw error;
+		});

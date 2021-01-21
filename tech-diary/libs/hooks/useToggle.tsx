@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 function useToggle(value: any) {
 	const [isToggle, setIsToggle] = useState(value);
 
-	const toggle = () => {
+	const toggle = useCallback(() => {
 		setIsToggle(!isToggle);
-	};
+	}, [isToggle]);
 
 	return [isToggle, toggle] as [boolean, () => void];
 }

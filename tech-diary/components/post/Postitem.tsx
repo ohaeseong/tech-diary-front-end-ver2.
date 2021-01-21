@@ -49,7 +49,6 @@ const Thumbnail = styled.img`
 	height: 100%;
 
 	object-fit: cover;
-
 `;
 
 const PostContentsWrap = styled.div`
@@ -174,7 +173,7 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { id, title, contents, createTime, thumbnailAddress, memberId, commentList, like, member } = item;
+	const { id, title, contents, createTime, thumbnailAddress, memberId, comments, like, member } = item;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
@@ -205,7 +204,7 @@ function PostItem({ item }: Props) {
 				<PostBottomWrap>
 					<IconWrap>
 						<FaComment size="15" color="#4f95ef" />
-						{commentList}
+						{comments.length}
 					</IconWrap>
 					<IconWrap>
 						<AiFillBulb size="15" color={color.star} />

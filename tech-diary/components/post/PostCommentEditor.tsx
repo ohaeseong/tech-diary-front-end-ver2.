@@ -10,6 +10,7 @@ const PostCommentEditorTemplate = styled.div`
 	width: 100%;
 	min-height: 12rem;
 	margin-bottom: 3rem;
+	margin-top: 2rem;
 
 	& > * {
 		font-family: 'Spoqa Han Sans Medium';

@@ -10,16 +10,13 @@ const PostCommentTemplate = styled.div`
 	width: 100%;
 	min-height: 30rem;
 	margin-left: 1rem;
-
-	margin-bottom: 5rem;
 `;
 
 const Header = styled.div`
 	width: 100%;
-	height: 5rem;
-	line-height: 5rem;
 	padding-left: 1rem;
 	font-size: 1.4rem;
+	/* border: 1px solid black; */
 
 	color: ${(props) => props.theme.gray_5};
 `;

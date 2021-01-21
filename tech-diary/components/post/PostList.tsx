@@ -13,7 +13,7 @@ const PostListTemplate = styled.div`
 	row-gap: 2rem;
 	place-items: center;
 	${mediaQuery.over} {
-		grid-template-columns: repeat(5, 20rem);
+		grid-template-columns: repeat(5, 16rem);
 		place-items: center;
 		width: 85%;
 	}

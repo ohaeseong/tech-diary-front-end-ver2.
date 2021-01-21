@@ -18,7 +18,7 @@ export type Post = {
 	series?: string;
 	category: string;
 	createTime: string;
-	commentList: number;
+	comments: Comment[];
 	like: number;
 	member: Member;
 };
@@ -49,6 +49,7 @@ export type Comment = {
 	postId: string;
 	createDate: string;
 	member: Member;
+	replyCommentCount: number;
 };
 
 export type Tag = {
