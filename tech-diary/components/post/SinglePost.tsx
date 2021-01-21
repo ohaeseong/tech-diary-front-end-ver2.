@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import jwt from 'jsonwebtoken';
 
@@ -58,6 +58,7 @@ type Props = {
 	closeShareItem: () => void;
 	copyUrl: () => void;
 	dispatchForUpdateState: () => void;
+	setCommentList: (dispatch: Comment[]) => void;
 
 	optionState: OptionState;
 	data: PostDetail;
@@ -74,6 +75,7 @@ function SinglePost({
 	copyUrl,
 	moveToComment,
 	dispatchForUpdateState,
+	setCommentList,
 	optionState,
 	commentList,
 	data,
@@ -118,7 +120,7 @@ function SinglePost({
 				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
 				<PostContents markdown={contents} />
 				{/* <PostBottom /> */}
-				<PostComment commentList={commentList} postId={id} dispatchForUpdateState={dispatchForUpdateState}/>
+				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
 			</SinglePostContentsWrap>
 			<Toast />
 		</SinglePostTemplate>

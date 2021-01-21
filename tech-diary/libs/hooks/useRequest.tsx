@@ -6,7 +6,7 @@ function useRequest(request: any) {
 	const [error, setError] = useState<Error | null>(null);
 
 	const onRequest = useCallback(
-		async (params: any[]) => {
+		async (params: any) => {
 			try {
 				setData(null);
 				setLoading(true);

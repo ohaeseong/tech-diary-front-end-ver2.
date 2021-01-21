@@ -27,8 +27,9 @@ function PostDetailLayout({ post }: Props) {
 	const [state, , dispatchForUpdateState] = useForm({
 		isLike: false,
 		likeCount: like.length,
-		commentList: commentList.commentData,
 	});
+
+	const [commentListData, setCommentListData] = useState(commentList.commentData);
 
 	const [bookMarkToggleValue, bookMarkToggle] = useToggle(false);
 	const [shareItemOpenToggleValue, shareItemToggle] = useToggle(false);
@@ -144,7 +145,8 @@ function PostDetailLayout({ post }: Props) {
 					closeShareItem={closeShareItem}
 					shareItemOpenToggleValue={shareItemOpenToggleValue}
 					optionState={state}
-					commentList={state.commentList}
+					setCommentList={setCommentListData}
+					commentList={commentListData}
 					data={post}
 				/>
 			</ThemeProvider>

@@ -1,17 +1,25 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import PostCommentEdit from 'components/post/PostCommentEditor';
 import useRequest from 'libs/hooks/useRequest';
-import { requestGetComment, requestWriteComment } from 'libs/repository';
 import { useDispatch } from 'react-redux';
 import { getStorage } from 'libs/storage';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 
 type Props = {
 	postId: string;
-	dispatchForUpdateState: any;
+	commentIdx?: number;
+	setCommentList: (dispatch: Comment[]) => void;
+	requestWriteComment: () => any;
+	requestGetComment: () => any;
 };
 
-function PostCommentWriteContainer({ postId, dispatchForUpdateState }: Props) {
+function PostCommentWriteContainer({
+	postId,
+	commentIdx,
+	setCommentList,
+	requestWriteComment,
+	requestGetComment,
+}: Props) {
 	const [comment, setComment] = useState('');
 	const [, , onWriteComment] = useRequest(requestWriteComment);
 	const [commentState, , reloadComment] = useRequest(requestGetComment);
@@ -49,30 +57,44 @@ function PostCommentWriteContainer({ postId, dispatchForUpdateState }: Props) {
 			return;
 		}
 
-		const req = {
-			text: comment,
-			postId,
-			token,
-		};
+		if (!commentIdx) {
+			const req = {
+				text: comment,
+				postId,
+				token,
+			};
 
-		await onWriteComment(req);
-		setComment('');
+			await onWriteComment(req);
+			setComment('');
 
-		const realoadCommentReq = {
-			postId,
-		};
+			const realoadCommentReq = {
+				postId,
+			};
 
-		await reloadComment(realoadCommentReq);
-	}, [comment, postId, onWriteComment, reloadComment, dispatch]);
+			await reloadComment(realoadCommentReq);
+		} else {
+			const req = {
+				text: comment,
+				postId,
+				token,
+				replyCommentIdx: commentIdx,
+			};
+
+			await onWriteComment(req);
+			setComment('');
+
+			const realoadCommentReq = {
+				commentIdx,
+			};
+			await reloadComment(realoadCommentReq);
+		}
+	}, [comment, commentIdx, dispatch, postId, onWriteComment, reloadComment]);
 
 	useEffect(() => {
 		if (commentState) {
-			dispatchForUpdateState({
-				name: 'commentList',
-				value: commentState.data.commentData,
-			});
+			setCommentList(commentState.data.commentData);
 		}
-	}, [commentState, dispatchForUpdateState]);
+	}, [commentState, setCommentList]);
 
 	return (
 		<PostCommentEdit

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Comment } from 'store/types/post.types';
-import PostCommentItem from './PostCommentItem';
+import PostCommentItem from 'components/post/PostCommentItem';
 
 const PostReplyCommentTemplate = styled.div`
 	width: 100%;

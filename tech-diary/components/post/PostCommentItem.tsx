@@ -115,12 +115,12 @@ type Props = {
 
 function PostCommentItem({ item, isReply }: Props) {
 	const [replyIsOpen, toggle] = useToggle(false);
-	const { commentTxt, createDate, member, postId, replyCommentCount, idx } = item;
+	const { commentTxt, createDate, member, postId, replyComments, idx } = item;
 	const { memberName, profileImage } = member;
 	const date = new Date(createDate);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
-	const replyCommentCountText = replyCommentCount ? `${replyCommentCount}개의 답글` : '답글 달기';
+	const replyCommentCountText = replyComments?.length ? `${replyComments.length}개의 답글` : '답글 달기';
 	const profileImageSource = profileImage || '/image/user.png';
 	const toggleReplyOpen = () => {
 		toggle();
@@ -153,4 +153,4 @@ function PostCommentItem({ item, isReply }: Props) {
 	);
 }
 
-export default PostCommentItem;
+export default React.memo(PostCommentItem);

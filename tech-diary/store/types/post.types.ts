@@ -49,7 +49,7 @@ export type Comment = {
 	postId: string;
 	createDate: string;
 	member: Member;
-	replyCommentCount: number;
+	replyComments: Comment[];
 };
 
 export type Tag = {

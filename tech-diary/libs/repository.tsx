@@ -60,3 +60,27 @@ export const requestGetReplyComment = (req: { commentIdx: number }) =>
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestWriteReplyComment = (req: {
+	text: string;
+	postId: string;
+	replyCommentIdx: number;
+	token: string;
+}) =>
+	axios
+		.post(
+			`${server.host}/post/comment/reply`,
+			{
+				commentTxt: req.text,
+				postId: req.postId,
+				replyCommentIdx: req.replyCommentIdx,
+			},
+			{
+				headers: {
+					token: req.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});

@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { Comment } from 'store/types/post.types';
 import PostCommentItem from 'components/post/PostCommentItem';
 import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
+import { requestGetComment, requestWriteComment } from 'libs/repository';
 
 const PostCommentTemplate = styled.div`
 	display: flex;
@@ -16,23 +17,26 @@ const Header = styled.div`
 	width: 100%;
 	padding-left: 1rem;
 	font-size: 1.4rem;
-	/* border: 1px solid black; */
-
 	color: ${(props) => props.theme.gray_5};
 `;
 
 type Props = {
-	dispatchForUpdateState: any;
+	setCommentList: (dispatch: Comment[]) => void;
 
 	commentList?: Comment[];
 	postId: string;
 };
 
-function PostComment({ commentList, postId, dispatchForUpdateState }: Props) {
+function PostComment({ commentList, postId, setCommentList }: Props) {
 	return (
 		<PostCommentTemplate>
 			<Header>{commentList?.length} Comments</Header>
-			<PostCommentWriteContainer postId={postId} dispatchForUpdateState={dispatchForUpdateState} />
+			<PostCommentWriteContainer
+				postId={postId}
+				setCommentList={setCommentList}
+				requestWriteComment={requestWriteComment}
+				requestGetComment={requestGetComment}
+			/>
 			{commentList?.map((item) => {
 				return <PostCommentItem key={item.idx} item={item} />;
 			})}
