@@ -18,8 +18,6 @@ const PostCommentItemWrap = styled.div<{ isReply?: boolean }>`
 	}
 
 	border-bottom: 1px solid ${(props) => props.theme.gray_2};
-
-	/* ${(props) => props.isReply && `background-color: #F8F9F9`}; */
 `;
 
 const Head = styled.div`

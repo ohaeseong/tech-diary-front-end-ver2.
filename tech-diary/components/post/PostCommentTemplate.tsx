@@ -11,6 +11,7 @@ const PostCommentTemplate = styled.div`
 	width: 100%;
 	min-height: 30rem;
 	margin-left: 1rem;
+	margin-bottom: 7rem;
 `;
 
 const Header = styled.div`

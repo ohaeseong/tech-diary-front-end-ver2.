@@ -21,17 +21,17 @@ export const requestPostLike = (req: { postId: string; token: string }) =>
 			throw err;
 		});
 
-export const requestWriteComment = (req: { postId: string; text: string; token: string }) =>
+export const requestWriteComment = (req?: { postId: string; text: string; token: string }) =>
 	axios
 		.post(
 			`${server.host}/post/comment`,
 			{
-				commentTxt: req.text,
-				postId: req.postId,
+				commentTxt: req?.text,
+				postId: req?.postId,
 			},
 			{
 				headers: {
-					token: req.token,
+					token: req?.token,
 				},
 			}
 		)
@@ -39,29 +39,29 @@ export const requestWriteComment = (req: { postId: string; text: string; token: 
 			throw error;
 		});
 
-export const requestGetComment = (req: { postId: string }) =>
+export const requestGetComment = (req?: { postId: string }) =>
 	axios
 		.get(`${server.host}/post/comment`, {
 			params: {
-				postId: req.postId,
+				postId: req?.postId,
 			},
 		})
 		.catch((error) => {
 			throw error;
 		});
 
-export const requestGetReplyComment = (req: { commentIdx: number }) =>
+export const requestGetReplyComment = (req?: { commentIdx: number }) =>
 	axios
 		.get(`${server.host}/post/comment/reply`, {
 			params: {
-				replyCommentIdx: req.commentIdx,
+				replyCommentIdx: req?.commentIdx,
 			},
 		})
 		.catch((error) => {
 			throw error;
 		});
 
-export const requestWriteReplyComment = (req: {
+export const requestWriteReplyComment = (req?: {
 	text: string;
 	postId: string;
 	replyCommentIdx: number;
@@ -71,13 +71,13 @@ export const requestWriteReplyComment = (req: {
 		.post(
 			`${server.host}/post/comment/reply`,
 			{
-				commentTxt: req.text,
-				postId: req.postId,
-				replyCommentIdx: req.replyCommentIdx,
+				commentTxt: req?.text,
+				postId: req?.postId,
+				replyCommentIdx: req?.replyCommentIdx,
 			},
 			{
 				headers: {
-					token: req.token,
+					token: req?.token,
 				},
 			}
 		)
