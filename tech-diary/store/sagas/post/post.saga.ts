@@ -1,7 +1,7 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import postRepo from './post.repository';
 import { setPostListErrorMsg, onPostListGet, GET_POST_LIST_REQUEST } from '../../modules/post';
-import { GET_POST_COMMENT_REQUEST, onPostCommentListGet } from '../../modules/post.comment';
+import { GET_POST_COMMENT_REQUEST, onPostCommentListGet } from '../../modules/post.comment.count';
 
 function* executeCallback(cb?: () => void) {
 	if (cb) {
@@ -31,33 +31,10 @@ function* onRequestGetPostList(action: ReturnType<typeof onPostListGet.request>)
 	yield executeCallback(successCB);
 }
 
-function* getPostCommentList(action: ReturnType<typeof onPostCommentListGet.request>) {
-	const { postId } = action.payload;
-
-	const { status, data } = yield call(postRepo.getPostCommentList, {
-		postId,
-	});
-
-	if (status === 400) {
-		setPostListErrorMsg('request 400 error');
-		return;
-	}
-
-	const payload = {
-		commentList: data.data.commentData,
-	};
-
-	yield put(onPostCommentListGet.success(payload));
-}
-
 function* watchOnRequestGetPostList() {
 	yield takeLatest(GET_POST_LIST_REQUEST, onRequestGetPostList);
 }
 
-function* watchGetPostCommentList() {
-	yield takeLatest(GET_POST_COMMENT_REQUEST, getPostCommentList);
-}
-
 export default function* postSagas() {
-	yield all([fork(watchOnRequestGetPostList), fork(watchGetPostCommentList)]);
+	yield all([fork(watchOnRequestGetPostList)]);
 }

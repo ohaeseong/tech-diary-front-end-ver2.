@@ -8,6 +8,7 @@ import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { color } from 'styles/color';
+import { useSelector } from 'react-redux';
 
 const PostItemWrap = styled.div`
 	width: 100%;
@@ -173,7 +174,8 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { id, title, contents, createTime, thumbnailAddress, memberId, comments, like, member } = item;
+	const { id, title, contents, createTime, thumbnailAddress, memberId, like, member, commentCount } = item;
+
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
@@ -204,7 +206,7 @@ function PostItem({ item }: Props) {
 				<PostBottomWrap>
 					<IconWrap>
 						<FaComment size="15" color="#4f95ef" />
-						{comments.length}
+						{commentCount}
 					</IconWrap>
 					<IconWrap>
 						<AiFillBulb size="15" color={color.star} />

@@ -21,6 +21,7 @@ export type Post = {
 	comments: Comment[];
 	like: number;
 	member: Member;
+	commentCount: number;
 };
 
 export type PostDetail = {
@@ -40,6 +41,7 @@ export type PostDetail = {
 	};
 	like: Like[];
 	member: Member;
+	commentCount: number;
 };
 
 export type Comment = {

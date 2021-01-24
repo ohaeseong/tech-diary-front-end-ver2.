@@ -1,13 +1,16 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import PostCommentEdit from 'components/post/PostCommentEditor';
 import useRequest from 'libs/hooks/useRequest';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getStorage } from 'libs/storage';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
+import { SET_POST_COMMENT_COUNT } from 'store/modules/post.comment.count';
+import { RootState } from 'store/modules';
 
 type Props = {
 	postId: string;
 	commentIdx?: number;
+
 	setCommentList: (dispatch: Comment[]) => void;
 	requestWriteComment: () => any;
 	requestGetComment: () => any;
@@ -16,6 +19,7 @@ type Props = {
 function PostCommentWriteContainer({
 	postId,
 	commentIdx,
+
 	setCommentList,
 	requestWriteComment,
 	requestGetComment,
@@ -23,6 +27,7 @@ function PostCommentWriteContainer({
 	const [comment, setComment] = useState('');
 	const [, , onWriteComment] = useRequest(requestWriteComment);
 	const [commentState, , reloadComment] = useRequest(requestGetComment);
+	const { commentCount } = useSelector((state: RootState) => state.postComment);
 
 	const dispatch = useDispatch();
 
@@ -88,7 +93,14 @@ function PostCommentWriteContainer({
 			};
 			await reloadComment(realoadCommentReq);
 		}
-	}, [comment, commentIdx, dispatch, postId, onWriteComment, reloadComment]);
+
+		dispatch({
+			type: SET_POST_COMMENT_COUNT,
+			payload: {
+				commentCount: commentCount + 1,
+			},
+		});
+	}, [comment, commentIdx, commentCount, dispatch, postId, onWriteComment, reloadComment]);
 
 	useEffect(() => {
 		if (commentState) {

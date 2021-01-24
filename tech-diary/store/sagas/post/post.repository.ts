@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { getCommentList } from 'store/modules/post.comment';
+import { getCommentList } from 'store/modules/post.comment.count';
 import { getPostList } from 'store/types/post.types';
 
 class postRepository {

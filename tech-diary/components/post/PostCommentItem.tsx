@@ -121,18 +121,18 @@ const EditButton = styled.span`
 `;
 
 type Props = {
+	deleteComment: () => void;
 	item: Comment;
 	isReply?: boolean;
 };
 
-function PostCommentItem({ item, isReply }: Props) {
+function PostCommentItem({ item, isReply, deleteComment }: Props) {
 	const [replyIsOpen, toggle] = useToggle(false);
 	const [isMine, setIsMine] = useState(false);
 	const { commentTxt, createDate, member, postId, replyComments, idx, memberId } = item;
 	const { memberName, profileImage } = member;
 	const date = new Date(createDate);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-
 	const replyCommentCountText = replyComments?.length ? `${replyComments.length}개의 답글` : '답글 달기';
 	const profileImageSource = profileImage || '/image/user.png';
 	const toggleReplyOpen = () => {
@@ -169,7 +169,7 @@ function PostCommentItem({ item, isReply }: Props) {
 							{isMine ? (
 								<SubButtonWrap>
 									<EditButton>수정</EditButton>
-									<EditButton>삭제</EditButton>
+									<EditButton onClick={deleteComment}>삭제</EditButton>
 								</SubButtonWrap>
 							) : (
 								<></>
@@ -186,7 +186,7 @@ function PostCommentItem({ item, isReply }: Props) {
 							{isMine ? (
 								<SubButtonWrap>
 									<EditButton>수정</EditButton>
-									<EditButton>삭제</EditButton>
+									<EditButton onClick={deleteComment}>삭제</EditButton>
 								</SubButtonWrap>
 							) : (
 								<></>

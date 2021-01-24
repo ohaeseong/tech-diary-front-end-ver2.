@@ -10,6 +10,8 @@ import { MdArrowDropDown } from 'react-icons/md';
 import { color } from 'styles/color';
 import { moveLeft, moveDown, moveAngle } from 'styles/animation';
 import Button from 'components/common/Button';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules';
 
 const PostLikeOptionBlock = styled.div`
 	position: sticky;
@@ -170,8 +172,6 @@ type Props = {
 	dispatchForUpdateState: any;
 
 	optionState: OptionState;
-	isMine: boolean;
-	commentCount: number;
 	userIsLike: boolean;
 	userIsFollow?: boolean;
 	bookMarkToggleValue: boolean;
@@ -189,14 +189,12 @@ function PostLikeOption({
 
 	optionState,
 	userIsLike,
-	isMine,
-	commentCount,
 	userIsFollow,
 	bookMarkToggleValue,
 	shareItemOpenToggleValue,
 }: Props) {
 	const { isLike, likeCount } = optionState;
-
+	const { commentCount } = useSelector((state: RootState) => state.postComment);
 	useEffect(() => {
 		document.body.addEventListener('click', closeShareItem);
 

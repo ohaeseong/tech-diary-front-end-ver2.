@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Comment } from 'store/types/post.types';
-import PostCommentItem from 'components/post/PostCommentItem';
 import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
 import { requestGetComment, requestWriteComment } from 'libs/repository';
+import { RootState } from 'store/modules';
+import { useSelector } from 'react-redux';
+import PostCommentContainer from 'container/postDetail/PostCommentContainer';
 
 const PostCommentTemplate = styled.div`
 	display: flex;
@@ -29,9 +31,10 @@ type Props = {
 };
 
 function PostComment({ commentList, postId, setCommentList }: Props) {
+	const { commentCount } = useSelector((state: RootState) => state.postComment);
 	return (
 		<PostCommentTemplate>
-			<Header>{commentList?.length} Comments</Header>
+			<Header>{commentCount} Comments</Header>
 			<PostCommentWriteContainer
 				postId={postId}
 				setCommentList={setCommentList}
@@ -39,7 +42,7 @@ function PostComment({ commentList, postId, setCommentList }: Props) {
 				requestGetComment={requestGetComment}
 			/>
 			{commentList?.map((item) => {
-				return <PostCommentItem key={item.idx} item={item} />;
+				return <PostCommentContainer key={item.idx} item={item} setCommentList={setCommentList} />;
 			})}
 		</PostCommentTemplate>
 	);

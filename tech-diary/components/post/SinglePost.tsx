@@ -77,6 +77,7 @@ function SinglePost({
 	moveToComment,
 	dispatchForUpdateState,
 	setCommentList,
+
 	optionState,
 	commentList,
 	data,
@@ -104,14 +105,12 @@ function SinglePost({
 		<SinglePostTemplate>
 			<PostLikeOption
 				userIsLike={userIsLike}
-				commentCount={commentList.length}
 				optionState={optionState}
 				shareItemOpenToggleValue={shareItemOpenToggleValue}
 				toggleLike={toggleLike}
 				toggleBookMark={toggleBookMark}
 				toggleShareItemOpen={toggleShareItemOpen}
 				bookMarkToggleValue={bookMarkToggleValue}
-				isMine={isMine}
 				closeShareItem={closeShareItem}
 				copyUrl={copyUrl}
 				moveToComment={moveToComment}

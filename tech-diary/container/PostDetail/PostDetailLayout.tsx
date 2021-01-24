@@ -17,13 +17,14 @@ import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
 import useToggle from 'libs/hooks/useToggle';
 import { TypeDecoded } from 'store/types/auth.types';
+import { SET_POST_COMMENT_COUNT } from 'store/modules/post.comment.count';
 
 type Props = {
 	post: PostDetail;
 };
 
 function PostDetailLayout({ post }: Props) {
-	const { id, like, commentList, memberId } = post;
+	const { id, like, commentList, memberId, commentCount } = post;
 	const [theme, toggleTheme] = useDarkMode();
 
 	const [state, , dispatchForUpdateState] = useForm({
@@ -32,6 +33,7 @@ function PostDetailLayout({ post }: Props) {
 	});
 
 	const [commentListData, setCommentListData] = useState(commentList.commentData);
+
 	const [isMine, setIsMine] = useState(false);
 
 	const [bookMarkToggleValue, bookMarkToggle] = useToggle(false);
@@ -139,6 +141,15 @@ function PostDetailLayout({ post }: Props) {
 			}
 		}
 	}, [memberId]);
+
+	useEffect(() => {
+		dispatch({
+			type: SET_POST_COMMENT_COUNT,
+			payload: {
+				commentCount,
+			},
+		});
+	}, [commentCount, dispatch]);
 
 	return (
 		<>
