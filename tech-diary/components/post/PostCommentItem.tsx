@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import jwt from 'jsonwebtoken';
+import { BiMessageRoundedAdd } from 'react-icons/bi';
+
 import { Comment } from 'store/types/post.types';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
-import { BiMessageRoundedAdd } from 'react-icons/bi';
 import useToggle from 'libs/hooks/useToggle';
 import PostReplyCommentContainer from 'container/postDetail/PostReplyCommentContainer';
+import { TypeDecoded } from 'store/types/auth.types';
+import { getStorage } from 'libs/storage';
 
-const PostCommentItemWrap = styled.div<{ isReply?: boolean }>`
+const PostCommentItemWrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 100%;
 	min-height: 8rem;
-	padding: 1.5rem 0;
+	padding: 1rem 0;
 
 	& > * {
 		font-family: 'Spoqa Han Sans Thin';
 	}
-
-	border-bottom: 1px solid ${(props) => props.theme.gray_2};
 `;
 
 const Head = styled.div`
@@ -42,6 +44,9 @@ const CommentText = styled.div`
 	overflow: hidden;
 	margin-bottom: 1rem;
 	font-family: 'Spoqa Han Sans Thin';
+	margin-top: 1rem;
+	border-radius: 5px;
+	box-shadow: 0 2px 6px 0 ${(props) => props.theme.shadow};
 
 	& > * pre {
 		max-width: 41.5rem;
@@ -60,7 +65,7 @@ const UserInfoText = styled.a`
 const DateInfoText = styled.span`
 	font-size: 0.8rem;
 	line-height: 2rem;
-	margin: 0.5rem 1rem 0 0.5rem;
+	margin-right: 0.5rem;
 
 	color: ${(props) => props.theme.gray_5};
 `;
@@ -68,13 +73,13 @@ const DateInfoText = styled.span`
 const ProfileImageWrap = styled.div`
 	display: flex;
 	justify-content: center;
-	width: 6rem;
+	width: 4rem;
 	height: 100%;
 `;
 
 const ProfileImage = styled.img`
-	width: 3rem;
-	height: 3rem;
+	width: 2rem;
+	height: 2rem;
 	border-radius: 50%;
 `;
 
@@ -83,12 +88,15 @@ const ReplyButtonWrap = styled.div`
 	align-items: center;
 	width: 100%;
 	height: 2rem;
-	margin-bottom: 2rem;
-	/* border: 1px solid black; */
+	margin-bottom: 1rem;
+	justify-content: space-between;
+`;
 
+const SubButtonWrap = styled.div`
+	display: flex;
+	align-items: center;
 	& > * {
 		cursor: pointer;
-
 		color: ${(props) => props.theme.gray_5};
 	}
 
@@ -106,6 +114,12 @@ const ReplyButton = styled.button`
 	font-family: 'Spoqa Han Sans Regular';
 `;
 
+const EditButton = styled.span`
+	font-family: 'Spoqa Han Sans Thin';
+	font-size: 0.9rem;
+	margin-left: 0.5rem;
+`;
+
 type Props = {
 	item: Comment;
 	isReply?: boolean;
@@ -113,7 +127,8 @@ type Props = {
 
 function PostCommentItem({ item, isReply }: Props) {
 	const [replyIsOpen, toggle] = useToggle(false);
-	const { commentTxt, createDate, member, postId, replyComments, idx } = item;
+	const [isMine, setIsMine] = useState(false);
+	const { commentTxt, createDate, member, postId, replyComments, idx, memberId } = item;
 	const { memberName, profileImage } = member;
 	const date = new Date(createDate);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -124,8 +139,19 @@ function PostCommentItem({ item, isReply }: Props) {
 		toggle();
 	};
 
+	useEffect(() => {
+		const token = getStorage('tech-token') as string;
+		const tokenDecoded = jwt.decode(token) as TypeDecoded;
+
+		if (token) {
+			if (tokenDecoded.memberId.toString() === memberId) {
+				setIsMine(true);
+			}
+		}
+	}, [memberId]);
+
 	return (
-		<PostCommentItemWrap isReply={isReply}>
+		<PostCommentItemWrap>
 			<ProfileImageWrap>
 				<ProfileImage src={profileImageSource} />
 			</ProfileImageWrap>
@@ -137,14 +163,37 @@ function PostCommentItem({ item, isReply }: Props) {
 				<CommentText>
 					<MarkdownRenderer markdown={commentTxt} type="comment" />
 				</CommentText>
-				{isReply ? (
-					<></>
-				) : (
-					<ReplyButtonWrap>
-						<BiMessageRoundedAdd size="1.2em" />
-						<ReplyButton onClick={toggleReplyOpen}>{!replyIsOpen ? replyCommentCountText : '답글 숨기기'}</ReplyButton>
-					</ReplyButtonWrap>
-				)}
+				<ReplyButtonWrap>
+					{isReply ? (
+						<>
+							{isMine ? (
+								<SubButtonWrap>
+									<EditButton>수정</EditButton>
+									<EditButton>삭제</EditButton>
+								</SubButtonWrap>
+							) : (
+								<></>
+							)}
+						</>
+					) : (
+						<>
+							<SubButtonWrap>
+								<BiMessageRoundedAdd size="1.2em" />
+								<ReplyButton onClick={toggleReplyOpen}>
+									{!replyIsOpen ? replyCommentCountText : '답글 숨기기'}
+								</ReplyButton>
+							</SubButtonWrap>
+							{isMine ? (
+								<SubButtonWrap>
+									<EditButton>수정</EditButton>
+									<EditButton>삭제</EditButton>
+								</SubButtonWrap>
+							) : (
+								<></>
+							)}
+						</>
+					)}
+				</ReplyButtonWrap>
 				{replyIsOpen ? <PostReplyCommentContainer postId={postId} commentIdx={idx} /> : <></>}
 			</PostCommentItemContentsWrap>
 		</PostCommentItemWrap>

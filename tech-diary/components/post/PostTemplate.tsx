@@ -2,9 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Post } from 'store/types/post.types';
 
-import PostListHeader from 'components/post/PostListHeader';
 import PostList from 'components/post/PostList';
-import { mediaQuery } from 'components/layout/responsive';
 
 const Template = styled.div`
 	display: flex;
@@ -13,10 +11,15 @@ const Template = styled.div`
 	width: 80%;
 	height: 100%;
 	margin: 3rem auto;
+`;
 
-	${mediaQuery.over} {
-		align-items: center;
-	}
+const Header = styled.div`
+	height: 3rem;
+	font-size: 2rem;
+	line-height: 50px;
+	margin: 1rem 1rem;
+
+	color: ${(props) => props.theme.black};
 `;
 
 type Props = {
@@ -29,7 +32,7 @@ type Props = {
 function PostTemplate({ posts, isEarlyData, postList, headName }: Props) {
 	return (
 		<Template>
-			{posts.length > 0 ? <PostListHeader haedName={headName} /> : <></>}
+			{posts.length > 0 ? <Header>{headName}</Header> : <></>}
 			<PostList posts={posts} isEarlyData={isEarlyData} postList={postList} />
 		</Template>
 	);

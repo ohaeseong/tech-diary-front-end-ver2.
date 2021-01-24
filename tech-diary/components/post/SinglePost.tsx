@@ -1,4 +1,4 @@
-import React, { Dispatch, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import jwt from 'jsonwebtoken';
 
@@ -65,6 +65,7 @@ type Props = {
 	commentList: Comment[];
 	bookMarkToggleValue: boolean;
 	shareItemOpenToggleValue: boolean;
+	isMine: boolean;
 };
 
 function SinglePost({
@@ -81,6 +82,7 @@ function SinglePost({
 	data,
 	bookMarkToggleValue,
 	shareItemOpenToggleValue,
+	isMine,
 }: Props) {
 	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id } = data;
 	const [userIsLike, setUserIsLike] = useState(false);
@@ -109,6 +111,7 @@ function SinglePost({
 				toggleBookMark={toggleBookMark}
 				toggleShareItemOpen={toggleShareItemOpen}
 				bookMarkToggleValue={bookMarkToggleValue}
+				isMine={isMine}
 				closeShareItem={closeShareItem}
 				copyUrl={copyUrl}
 				moveToComment={moveToComment}

@@ -1,10 +1,9 @@
 import PostReplyComment from 'components/post/PostReplyComment';
 import useRequest from 'libs/hooks/useRequest';
-import { requestGetReplyComment, requestWriteComment, requestWriteReplyComment } from 'libs/repository';
+import { requestGetReplyComment, requestWriteReplyComment } from 'libs/repository';
 import React, { useEffect, useState } from 'react';
 import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
 import styled from '@emotion/styled';
-import { Comment } from 'store/types/post.types';
 
 const ReplyCommentWrap = styled.div`
 	width: 100%;

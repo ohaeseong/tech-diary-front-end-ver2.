@@ -12,10 +12,9 @@ const PostListTemplate = styled.div`
 	column-gap: 2rem;
 	row-gap: 2rem;
 	place-items: center;
+
 	${mediaQuery.over} {
-		grid-template-columns: repeat(5, 16rem);
-		place-items: center;
-		width: 85%;
+		grid-template-columns: repeat(5, auto);
 	}
 `;
 

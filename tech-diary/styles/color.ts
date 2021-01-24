@@ -40,7 +40,7 @@ export const dark = {
 	neon_2: '#706af3',
 	warning: '#eca95c',
 	info: '#2E2E2E',
-	shadow: 'rgba(0, 0, 0, 0.16)',
+	shadow: 'rgba(100, 100, 100, 1)',
 	light_purple: '#F7F6FD',
 	emphasis: '#706af3',
 	star: 'f1e05b',

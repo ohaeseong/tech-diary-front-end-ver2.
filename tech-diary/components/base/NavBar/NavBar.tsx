@@ -169,7 +169,9 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 
 		if (token && tokenDecoded) {
 			setIsToken(true);
-			setProfileImage(tokenDecoded.profileImage);
+			if (tokenDecoded.profileImage) {
+				setProfileImage(tokenDecoded.profileImage);
+			}
 		} else {
 			setIsToken(false);
 		}

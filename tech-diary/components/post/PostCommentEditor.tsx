@@ -20,7 +20,7 @@ const PostCommentEditorTemplate = styled.div`
 const TextareaWrap = styled.div`
 	padding: 1rem;
 
-	border: 1px solid ${(props) => props.theme.gray_3};
+	border: 1px solid ${(props) => props.theme.gray_2};
 `;
 
 const EditorTextarea = styled(TextareaAutosize)`

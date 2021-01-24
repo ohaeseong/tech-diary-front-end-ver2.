@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@emotion/react';
+import jwt from 'jsonwebtoken';
 
 import SinglePost from 'components/post/SinglePost';
 import { PostDetail } from 'store/types/post.types';
@@ -15,14 +16,15 @@ import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
 import useToggle from 'libs/hooks/useToggle';
+import { TypeDecoded } from 'store/types/auth.types';
 
 type Props = {
 	post: PostDetail;
 };
 
 function PostDetailLayout({ post }: Props) {
-	const { id, like, commentList } = post;
-	const [theme, toggleTheme, componentMounted] = useDarkMode();
+	const { id, like, commentList, memberId } = post;
+	const [theme, toggleTheme] = useDarkMode();
 
 	const [state, , dispatchForUpdateState] = useForm({
 		isLike: false,
@@ -30,6 +32,7 @@ function PostDetailLayout({ post }: Props) {
 	});
 
 	const [commentListData, setCommentListData] = useState(commentList.commentData);
+	const [isMine, setIsMine] = useState(false);
 
 	const [bookMarkToggleValue, bookMarkToggle] = useToggle(false);
 	const [shareItemOpenToggleValue, shareItemToggle] = useToggle(false);
@@ -126,9 +129,16 @@ function PostDetailLayout({ post }: Props) {
 		}, 2000);
 	};
 
-	if (!componentMounted) {
-		return <div />;
-	}
+	useEffect(() => {
+		const token = getStorage('tech-token') as string;
+		const tokenDecoded = jwt.decode(token) as TypeDecoded;
+
+		if (token) {
+			if (tokenDecoded.memberId === memberId) {
+				setIsMine(true);
+			}
+		}
+	}, [memberId]);
 
 	return (
 		<>
@@ -141,6 +151,7 @@ function PostDetailLayout({ post }: Props) {
 					moveToComment={moveToComment}
 					copyUrl={copyUrl}
 					dispatchForUpdateState={dispatchForUpdateState}
+					isMine={isMine}
 					bookMarkToggleValue={bookMarkToggleValue}
 					closeShareItem={closeShareItem}
 					shareItemOpenToggleValue={shareItemOpenToggleValue}

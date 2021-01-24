@@ -36,6 +36,7 @@ const ItemWrap = styled.div`
 	align-items: center;
 	justify-content: space-around;
 	width: 100%;
+	/* border: 1px solid black; */
 
 	margin-bottom: 1rem;
 `;
@@ -83,10 +84,24 @@ const ShareIconWrap = styled.div`
 	background-color: ${(props) => props.theme.white_1};
 `;
 
+const EditText = styled.span`
+	padding-top: 1rem;
+	color: ${(props) => props.theme.gray_5};
+	font-family: 'Spoqa Han Sans Thin';
+	cursor: pointer;
+
+	&:after {
+		content: '';
+		display: block;
+		width: 100%;
+		border-bottom: 1px solid #bcbcbc;
+	}
+`;
+
 const ShareItem = styled.span`
 	position: absolute;
 	margin-left: 0.2rem;
-	margin-top: 0.1rem;
+	margin-top: 0.2rem;
 	width: 2rem;
 	height: 2rem;
 	border-radius: 50%;
@@ -155,6 +170,7 @@ type Props = {
 	dispatchForUpdateState: any;
 
 	optionState: OptionState;
+	isMine: boolean;
 	commentCount: number;
 	userIsLike: boolean;
 	userIsFollow?: boolean;
@@ -173,6 +189,7 @@ function PostLikeOption({
 
 	optionState,
 	userIsLike,
+	isMine,
 	commentCount,
 	userIsFollow,
 	bookMarkToggleValue,
