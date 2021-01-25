@@ -14,9 +14,6 @@ export const requestPostLike = (req: { postId: string; token: string }) =>
 				},
 			}
 		)
-		.then((res) => {
-			return res.data;
-		})
 		.catch((err) => {
 			throw err;
 		});
