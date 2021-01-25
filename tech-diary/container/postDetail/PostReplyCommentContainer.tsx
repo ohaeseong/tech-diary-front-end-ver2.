@@ -13,19 +13,15 @@ import PostCommentItem from 'components/post/PostCommentItem';
 
 const ReplyCommentWrap = styled.div`
 	width: 100%;
-	/* height
-	 */
-	/* background-color: ${(props) => props.theme.gray_0}; */
 `;
 
 type Props = {
-	postId: string;
 	commentIdx: number;
 	item: Comment;
 	setReplyComments: (dispatch: Comment[]) => void;
 };
 
-function PostReplyCommentContainer({ postId, commentIdx, item, setReplyComments }: Props) {
+function PostReplyCommentContainer({ commentIdx, item, setReplyComments }: Props) {
 	const [, , onDeleteComment] = useRequest(requestDeleteReplyComment);
 	const [replyComments, , getReplyComment] = useRequest(requestGetReplyComment);
 
@@ -51,7 +47,8 @@ function PostReplyCommentContainer({ postId, commentIdx, item, setReplyComments 
 				commentCount: commentCount - 1,
 			},
 		});
-	}, [commentCount, dispatch, getReplyComment, item.idx, onDeleteComment, postId]);
+	}, [commentCount, commentIdx, dispatch, getReplyComment, item.idx, onDeleteComment]);
+
 	useEffect(() => {
 		const req = {
 			commentIdx,

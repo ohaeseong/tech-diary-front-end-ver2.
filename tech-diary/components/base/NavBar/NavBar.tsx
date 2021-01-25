@@ -69,8 +69,8 @@ const IconWrap = styled.div`
 `;
 
 const ProfileWrap = styled.div`
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 2rem;
+	height: 2rem;
 
 	margin: auto 5rem auto auto;
 `;

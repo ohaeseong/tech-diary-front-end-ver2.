@@ -8,7 +8,7 @@ import { RootState } from 'store/modules';
 import useForm from 'libs/hooks/useForm';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 
-type loginForm = {
+type LoginForm = {
 	memberId: string;
 	pw: string;
 };
@@ -18,7 +18,7 @@ function LoginLayout() {
 	const router = useRouter();
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
 
-	const [form, onChange] = useForm<loginForm>({
+	const [form, onChange] = useForm<LoginForm>({
 		memberId: '',
 		pw: '',
 	});
