@@ -98,3 +98,17 @@ export const requestDeleteComment = (req: { commentIdx: number; token: string })
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestDeleteReplyComment = (req: { commentIdx: number; token: string }) =>
+	axios
+		.delete(`${server.host}/post/comment/reply`, {
+			headers: {
+				token: req?.token,
+			},
+			params: {
+				commentIdx: req?.commentIdx,
+			},
+		})
+		.catch((error) => {
+			throw error;
+		});

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Comment } from 'store/types/post.types';
-import PostCommentItem from 'components/post/PostCommentItem';
+import PostReplyCommentContainer from 'container/postDetail/PostReplyCommentContainer';
+import { requestGetReplyComment, requestWriteReplyComment } from 'libs/repository';
+import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
 
 const PostReplyCommentTemplate = styled.div`
 	width: 100%;
@@ -9,14 +11,37 @@ const PostReplyCommentTemplate = styled.div`
 
 type Props = {
 	replyCommentList: Comment[];
+	postId: string;
+	commentIdx: number;
 };
 
-function PostReplyComment({ replyCommentList }: Props) {
+function PostReplyComment({ replyCommentList, postId, commentIdx }: Props) {
+	const [replyComments, setReplyComments] = useState(replyCommentList);
+
 	return (
 		<PostReplyCommentTemplate>
-			{replyCommentList.map((item: Comment) => {
-				return <PostCommentItem key={item.idx} item={item} isReply />;
-			})}
+			{replyComments ? (
+				replyComments.map((item: Comment) => {
+					return (
+						<PostReplyCommentContainer
+							key={item.idx}
+							item={item}
+							postId={postId}
+							commentIdx={commentIdx}
+							setReplyComments={setReplyComments}
+						/>
+					);
+				})
+			) : (
+				<></>
+			)}
+			<PostCommentWriteContainer
+				postId={postId}
+				setCommentList={setReplyComments}
+				requestWriteComment={requestWriteReplyComment}
+				requestGetComment={requestGetReplyComment}
+				commentIdx={commentIdx}
+			/>
 		</PostReplyCommentTemplate>
 	);
 }

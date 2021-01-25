@@ -1,9 +1,15 @@
 import PostReplyComment from 'components/post/PostReplyComment';
 import useRequest from 'libs/hooks/useRequest';
-import { requestGetReplyComment, requestWriteReplyComment } from 'libs/repository';
-import React, { useEffect, useState } from 'react';
+import { requestDeleteComment, requestDeleteReplyComment, requestGetReplyComment, requestWriteReplyComment } from 'libs/repository';
+import React, { useCallback, useEffect, useState } from 'react';
 import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
 import styled from '@emotion/styled';
+import { getStorage } from 'libs/storage';
+import { SET_POST_COMMENT_COUNT } from 'store/modules/post.comment.count';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/modules';
+import { Comment } from 'store/types/post.types';
+import PostCommentItem from 'components/post/PostCommentItem';
 
 const ReplyCommentWrap = styled.div`
 	width: 100%;
@@ -15,12 +21,37 @@ const ReplyCommentWrap = styled.div`
 type Props = {
 	postId: string;
 	commentIdx: number;
+	item: Comment;
+	setReplyComments: (dispatch: Comment[]) => void;
 };
 
-function PostReplyCommentContainer({ postId, commentIdx }: Props) {
+function PostReplyCommentContainer({ postId, commentIdx, item, setReplyComments }: Props) {
+	const [, , onDeleteComment] = useRequest(requestDeleteReplyComment);
 	const [replyComments, , getReplyComment] = useRequest(requestGetReplyComment);
-	const [replyCommentList, setReplyCommentList] = useState([]);
 
+	const { commentCount } = useSelector((state: RootState) => state.postComment);
+	const dispatch = useDispatch();
+	const deleteComment = useCallback(async () => {
+		const token = getStorage('tech-token');
+		const req = {
+			commentIdx: item.idx,
+			token,
+		};
+
+		await onDeleteComment(req);
+
+		const realoadCommentReq = {
+			commentIdx,
+		};
+		await getReplyComment(realoadCommentReq);
+
+		dispatch({
+			type: SET_POST_COMMENT_COUNT,
+			payload: {
+				commentCount: commentCount - 1,
+			},
+		});
+	}, [commentCount, dispatch, getReplyComment, item.idx, onDeleteComment, postId]);
 	useEffect(() => {
 		const req = {
 			commentIdx,
@@ -31,20 +62,13 @@ function PostReplyCommentContainer({ postId, commentIdx }: Props) {
 
 	useEffect(() => {
 		if (replyComments) {
-			setReplyCommentList(replyComments.data.commentData);
+			setReplyComments(replyComments.data.commentData);
 		}
-	}, [replyComments]);
+	}, [replyComments, setReplyComments]);
 
 	return (
 		<ReplyCommentWrap>
-			{replyComments ? <PostReplyComment replyCommentList={replyCommentList} /> : <></>}
-			<PostCommentWriteContainer
-				postId={postId}
-				setCommentList={setReplyCommentList}
-				requestWriteComment={requestWriteReplyComment}
-				requestGetComment={requestGetReplyComment}
-				commentIdx={commentIdx}
-			/>
+			{replyComments ? <PostCommentItem item={item} deleteComment={deleteComment} isReply /> : <></>}
 		</ReplyCommentWrap>
 	);
 }

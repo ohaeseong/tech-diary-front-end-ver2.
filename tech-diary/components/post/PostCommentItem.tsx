@@ -9,6 +9,7 @@ import useToggle from 'libs/hooks/useToggle';
 import PostReplyCommentContainer from 'container/postDetail/PostReplyCommentContainer';
 import { TypeDecoded } from 'store/types/auth.types';
 import { getStorage } from 'libs/storage';
+import PostReplyComment from './PostReplyComment';
 
 const PostCommentItemWrap = styled.div`
 	display: flex;
@@ -121,7 +122,7 @@ const EditButton = styled.span`
 `;
 
 type Props = {
-	deleteComment: () => void;
+	deleteComment?: () => void;
 	item: Comment;
 	isReply?: boolean;
 };
@@ -167,10 +168,13 @@ function PostCommentItem({ item, isReply, deleteComment }: Props) {
 					{isReply ? (
 						<>
 							{isMine ? (
-								<SubButtonWrap>
-									<EditButton>수정</EditButton>
-									<EditButton onClick={deleteComment}>삭제</EditButton>
-								</SubButtonWrap>
+								<>
+									<SubButtonWrap />
+									<SubButtonWrap>
+										<EditButton>수정</EditButton>
+										<EditButton onClick={deleteComment}>삭제</EditButton>
+									</SubButtonWrap>
+								</>
 							) : (
 								<></>
 							)}
@@ -194,7 +198,7 @@ function PostCommentItem({ item, isReply, deleteComment }: Props) {
 						</>
 					)}
 				</ReplyButtonWrap>
-				{replyIsOpen ? <PostReplyCommentContainer postId={postId} commentIdx={idx} /> : <></>}
+				{replyIsOpen ? <PostReplyComment postId={postId} commentIdx={idx} replyCommentList={replyComments} /> : <></>}
 			</PostCommentItemContentsWrap>
 		</PostCommentItemWrap>
 	);
