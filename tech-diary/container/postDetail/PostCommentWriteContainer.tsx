@@ -111,7 +111,7 @@ function PostCommentWriteContainer({
 	return (
 		<PostCommentEdit
 			commentText={comment}
-			applyComment={applyComment}
+			onCommentFunction={applyComment}
 			handleCommentTextState={handleCommentTextState}
 		/>
 	);

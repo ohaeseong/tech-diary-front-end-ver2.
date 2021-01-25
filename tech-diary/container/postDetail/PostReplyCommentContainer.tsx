@@ -27,6 +27,7 @@ function PostReplyCommentContainer({ commentIdx, item, setReplyComments }: Props
 
 	const { commentCount } = useSelector((state: RootState) => state.postComment);
 	const dispatch = useDispatch();
+
 	const deleteComment = useCallback(async () => {
 		const token = getStorage('tech-token');
 		const req = {

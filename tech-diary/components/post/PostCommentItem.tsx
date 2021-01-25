@@ -9,6 +9,7 @@ import useToggle from 'libs/hooks/useToggle';
 import PostReplyCommentContainer from 'container/postDetail/PostReplyCommentContainer';
 import { TypeDecoded } from 'store/types/auth.types';
 import { getStorage } from 'libs/storage';
+import PostCommentUpdateContainer from 'container/postDetail/PostCommentUpdateContainer';
 import PostReplyComment from './PostReplyComment';
 
 const PostCommentItemWrap = styled.div`
@@ -41,7 +42,7 @@ const PostCommentItemContentsWrap = styled.div`
 const CommentText = styled.div`
 	max-width: 100%;
 	height: 100%;
-	padding: 0rem 0.5rem;
+	padding: 0rem 1rem;
 	overflow: hidden;
 	margin-bottom: 1rem;
 	font-family: 'Spoqa Han Sans Thin';
@@ -129,6 +130,7 @@ type Props = {
 
 function PostCommentItem({ item, isReply, deleteComment }: Props) {
 	const [replyIsOpen, toggle] = useToggle(false);
+	const [openEdit, toggleOpenEdit] = useToggle(false);
 	const [isMine, setIsMine] = useState(false);
 	const { commentTxt, createDate, member, postId, replyComments, idx, memberId } = item;
 	const { memberName, profileImage } = member;
@@ -161,17 +163,23 @@ function PostCommentItem({ item, isReply, deleteComment }: Props) {
 					<UserInfoText>{memberName}</UserInfoText>
 					<DateInfoText>{dateFormat}</DateInfoText>
 				</Head>
-				<CommentText>
-					<MarkdownRenderer markdown={commentTxt} type="comment" />
-				</CommentText>
+				<>
+					{openEdit ? (
+						<PostCommentUpdateContainer comment={commentTxt} commentIdx={idx} toggleOpenEditor={toggleOpenEdit} />
+					) : (
+						<CommentText>
+							<MarkdownRenderer markdown={commentTxt} />
+						</CommentText>
+					)}
+				</>
 				<ReplyButtonWrap>
 					{isReply ? (
 						<>
-							{isMine ? (
+							{isMine && !openEdit ? (
 								<>
 									<SubButtonWrap />
 									<SubButtonWrap>
-										<EditButton>수정</EditButton>
+										<EditButton onClick={toggleOpenEdit}>수정</EditButton>
 										<EditButton onClick={deleteComment}>삭제</EditButton>
 									</SubButtonWrap>
 								</>
@@ -187,9 +195,9 @@ function PostCommentItem({ item, isReply, deleteComment }: Props) {
 									{!replyIsOpen ? replyCommentCountText : '답글 숨기기'}
 								</ReplyButton>
 							</SubButtonWrap>
-							{isMine ? (
+							{isMine && !openEdit ? (
 								<SubButtonWrap>
-									<EditButton>수정</EditButton>
+									<EditButton onClick={toggleOpenEdit}>수정</EditButton>
 									<EditButton onClick={deleteComment}>삭제</EditButton>
 								</SubButtonWrap>
 							) : (

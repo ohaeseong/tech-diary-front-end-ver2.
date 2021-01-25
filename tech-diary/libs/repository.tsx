@@ -109,3 +109,21 @@ export const requestDeleteReplyComment = (req: { commentIdx: number; token: stri
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestUpdateComment = (req: { commentIdx: number; token: string; text: string }) =>
+	axios
+		.put(
+			`${server.host}/post/comment`,
+			{
+				commentTxt: req?.text,
+				commentIdx: req?.commentIdx,
+			},
+			{
+				headers: {
+					token: req?.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});

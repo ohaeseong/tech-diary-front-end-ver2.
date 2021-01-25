@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
 import Button from 'components/common/Button';
 import { color } from 'styles/color';
+import ButtonGroup from 'components/common/ButtonGroup';
 
 const PostCommentEditorTemplate = styled.div`
 	display: flex;
@@ -65,21 +66,38 @@ const Bottom = styled.div`
 
 type Props = {
 	handleCommentTextState: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-	applyComment: () => void;
+	onCommentFunction: () => void;
+	toggleOpenEditor?: () => void;
 
+	isUpdateMode?: boolean;
 	commentText: string;
 };
 
-function PostCommentEditor({ commentText, handleCommentTextState, applyComment }: Props) {
+function PostCommentEditor({
+	commentText,
+	isUpdateMode,
+	handleCommentTextState,
+	onCommentFunction,
+	toggleOpenEditor,
+}: Props) {
 	return (
 		<PostCommentEditorTemplate>
 			<TextareaWrap>
 				<EditorTextarea value={commentText} onChange={handleCommentTextState} placeholder="댓글을 작성 해보세요!" />
 			</TextareaWrap>
 			<Bottom>
-				<Button height="2.5rem" color={color.neon_2} margin="1rem 0.5rem" onClick={applyComment}>
-					댓글 작성
-				</Button>
+				<ButtonGroup sortDirection="row" margin="1rem 0 0 0">
+					<Button height="2.5rem" color={color.neon_2} onClick={onCommentFunction}>
+						{isUpdateMode ? '댓글 수정' : '댓글 작성'}
+					</Button>
+					{isUpdateMode ? (
+						<Button height="2.5rem" color={color.gray_3} onClick={toggleOpenEditor}>
+							취소
+						</Button>
+					) : (
+						<></>
+					)}
+				</ButtonGroup>
 				<TextCount>{commentText.length} / 1000</TextCount>
 			</Bottom>
 		</PostCommentEditorTemplate>
