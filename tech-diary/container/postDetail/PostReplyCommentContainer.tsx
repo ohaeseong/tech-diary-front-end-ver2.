@@ -1,6 +1,11 @@
 import PostReplyComment from 'components/post/PostReplyComment';
 import useRequest from 'libs/hooks/useRequest';
-import { requestDeleteComment, requestDeleteReplyComment, requestGetReplyComment, requestWriteReplyComment } from 'libs/repository';
+import {
+	requestDeleteComment,
+	requestDeleteReplyComment,
+	requestGetReplyComment,
+	requestWriteReplyComment,
+} from 'libs/repository';
 import React, { useCallback, useEffect, useState } from 'react';
 import PostCommentWriteContainer from 'container/postDetail/PostCommentWriteContainer';
 import styled from '@emotion/styled';
@@ -66,7 +71,11 @@ function PostReplyCommentContainer({ commentIdx, item, setReplyComments }: Props
 
 	return (
 		<ReplyCommentWrap>
-			{replyComments ? <PostCommentItem item={item} deleteComment={deleteComment} isReply /> : <></>}
+			{replyComments ? (
+				<PostCommentItem item={item} deleteComment={deleteComment} isReply setCommentList={setReplyComments} />
+			) : (
+				<></>
+			)}
 		</ReplyCommentWrap>
 	);
 }

@@ -8,7 +8,7 @@ import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { color } from 'styles/color';
-import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const PostItemWrap = styled.div`
 	width: 100%;
@@ -113,7 +113,7 @@ const PostContent = styled.div<{ type: string }>`
 const PostInfo = styled.div`
 	font-size: 0.5rem;
 	height: 1.5rem;
-	padding-top: 0.5rem;
+	padding-top: 0.3rem;
 	color: ${(props) => props.theme.gray_3};
 
 	&:hover {
@@ -122,10 +122,9 @@ const PostInfo = styled.div`
 `;
 
 const UserProfile = styled.img`
-	width: 1.8rem;
-	height: 1.8rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	margin-top: 0.5rem;
-	/* border: 1px solid white; */
 	object-fit: cover;
 	border-radius: 50%;
 	display: flex;
@@ -180,18 +179,21 @@ function PostItem({ item }: Props) {
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
 	const profileImage = member.profileImage || '/image/user.png';
+	const router = useRouter();
 
 	// const loadUserPage = () => {
 	// 	// window.location.href = 'http://localhost:3000/login';
 	// };
 
+	const goToPostDetail = (url: string) => {
+		router.push(url);
+	};
+
 	return (
 		<PostItemWrap>
-			<Link href={`http://localhost:3000/blog/detail/${id}`}>
-				<ThumbnailWrap>
-					<Thumbnail src={thumbnailSrc} alt="thumbnail" />
-				</ThumbnailWrap>
-			</Link>
+			<ThumbnailWrap onClick={() => router.push(`http://localhost:3000/blog/detail/${id}`)}>
+				<Thumbnail src={thumbnailSrc} alt="thumbnail" />
+			</ThumbnailWrap>
 			<PostContentsWrap>
 				<Link href={`http://localhost:3000/blog/detail/${id}`}>
 					<PostContent type="title">{title}</PostContent>

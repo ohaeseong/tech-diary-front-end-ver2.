@@ -1,3 +1,4 @@
+import { getStorage, setStorage } from 'libs/storage';
 import { useEffect, useState } from 'react';
 
 export default function useDarkMode() {
@@ -5,7 +6,7 @@ export default function useDarkMode() {
 	const [componentMounted, setComponentMounted] = useState(false);
 
 	const setMode = (mode: string) => {
-		window.localStorage.setItem('theme', mode);
+		setStorage('theme', mode);
 		setTheme(mode);
 	};
 
@@ -18,12 +19,12 @@ export default function useDarkMode() {
 	};
 
 	useEffect(() => {
-		const localTheme = window.localStorage.getItem('theme');
+		const localTheme = getStorage('theme');
 		if (localTheme) {
 			setTheme(localTheme);
 		} else {
 			setTheme('light');
-			window.localStorage.setItem('theme', 'light');
+			setStorage('theme', 'light');
 		}
 		setComponentMounted(true);
 	}, []);

@@ -34,7 +34,7 @@ type Props = {
 	isNav: boolean;
 };
 
-function MainTemplate({ children, isNav }: Props) {
+function MainTemplate({ children, isNav = true }: Props) {
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
 
 	const themeMode = theme === 'light';
@@ -62,10 +62,5 @@ function MainTemplate({ children, isNav }: Props) {
 		</Template>
 	);
 }
-
-MainTemplate.defaultProps = {
-	// eslint-disable-next-line react/default-props-match-prop-types
-	isNav: true,
-};
 
 export default MainTemplate;

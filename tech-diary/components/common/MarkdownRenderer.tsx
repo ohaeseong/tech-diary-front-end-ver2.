@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 import {
 	InlineCodeBlock,
@@ -14,6 +15,9 @@ import {
 	HorizontalRuleMarkdownRender,
 	StrongMarkdownRender,
 	LinkMarkdownRender,
+	TableMarkdownRender,
+	TheadMarkdownRender,
+	TbodyMarkdownRender,
 } from 'libs/markdownCustomRender';
 import { css } from '@emotion/react';
 
@@ -40,7 +44,7 @@ const MarkDownStyle = styled.div<{ type?: string }>`
 		`;
 	}}
 
-	& > p, em {
+	& > p, em, del {
 		color: ${(props) => props.theme.black};
 		font-family: 'Spoqa Han Sans Thin';
 	}
@@ -71,6 +75,7 @@ function MarkdwonRenderer({ markdown, type }: Props) {
 		<MarkDownStyle type={type}>
 			<ReactMarkdown
 				children={markdown}
+				plugins={[gfm]}
 				renderers={{
 					inlineCode: InlineCodeBlock,
 					code: CodeBlock,
@@ -83,6 +88,9 @@ function MarkdwonRenderer({ markdown, type }: Props) {
 					thematicBreak: HorizontalRuleMarkdownRender,
 					strong: StrongMarkdownRender,
 					link: LinkMarkdownRender,
+					table: TableMarkdownRender,
+					tableHead: TheadMarkdownRender,
+					tableBody: TbodyMarkdownRender,
 				}}
 			/>
 		</MarkDownStyle>

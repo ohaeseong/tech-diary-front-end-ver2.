@@ -39,4 +39,4 @@ function ButtonGroup({ children, sortDirection, margin }: Props) {
 	);
 }
 
-export default ButtonGroup;
+export default React.memo(ButtonGroup);

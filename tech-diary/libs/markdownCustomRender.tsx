@@ -37,6 +37,10 @@ export function BlockQuote(children: { children: React.ReactNode }) {
 
 const InlinCode = styled.em`
 	background: ${(props) => props.theme.emphasis};
+	padding: 2px 4px;
+	font-size: 1rem;
+	border-radius: 2px;
+	font-style: normal;
 `;
 
 export function InlineCodeBlock(children: { value: React.ReactNode }) {
@@ -172,8 +176,52 @@ export function StrongMarkdownRender(children: { children: React.ReactNode }) {
 const LinkTagStyled = styled.a`
 	border: none;
 	outline: none;
+	color: ${(props) => props.theme.neon_2};
+	text-decoration: none;
 `;
 
 export function LinkMarkdownRender(children: { href: string; children: string }) {
 	return <LinkTagStyled href={children.href}>{children.children}</LinkTagStyled>;
+}
+
+const TableStyled = styled.table`
+	display: table;
+	color: ${(props) => props.theme.black};
+	border: 1px solid ${(props) => props.theme.gray_1};
+	margin: 20px 0;
+	border-spacing: 2px;
+`;
+
+export function TableMarkdownRender(children: { children: React.ReactNode }) {
+	return <TableStyled>{children.children}</TableStyled>;
+}
+
+const TheadStyled = styled.thead`
+	border-bottom: 2px solid ${(props) => props.theme.neon_2};
+	vertical-align: center;
+
+	& > * tr,
+	th {
+		padding: 0.5rem 2rem;
+		line-height: 1.7rem;
+		font-family: 'Spoqa Han Sans Thin';
+	}
+`;
+
+export function TheadMarkdownRender(children: { children: React.ReactNode }) {
+	return <TheadStyled>{children.children}</TheadStyled>
+}
+
+const TbodyStyled = styled.tbody`
+	vertical-align: center;
+	& > * tr,
+	td {
+		padding: 0.5rem 1rem;
+		border: 1px solid ${(props) => props.theme.gray_1};
+		font-family: 'Spoqa Han Sans Thin';
+	}
+`;
+
+export function TbodyMarkdownRender(children: { children: React.ReactNode }) {
+	return <TbodyStyled>{children.children}</TbodyStyled>;
 }

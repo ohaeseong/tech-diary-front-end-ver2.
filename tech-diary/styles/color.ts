@@ -18,7 +18,7 @@ export const color = {
 	shadow: 'rgba(0, 0, 0, 0.16)',
 	facebook: '#4196e4',
 	light_purple: '#F7F6FD',
-	emphasis: '#FAF557',
+	emphasis: '#D2BCF9',
 	star: 'f1e05b',
 	purple: '#6155a6',
 	gradation: `background: #1a2a6c; background: -webkit-linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c); background: linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c);`,

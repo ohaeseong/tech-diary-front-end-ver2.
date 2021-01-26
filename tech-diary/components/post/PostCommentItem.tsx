@@ -10,6 +10,7 @@ import { TypeDecoded } from 'store/types/auth.types';
 import { getStorage } from 'libs/storage';
 import PostCommentUpdateContainer from 'container/postDetail/PostCommentUpdateContainer';
 import PostReplyComment from 'components/post/PostReplyComment';
+import Link from 'next/link';
 
 const PostCommentItemWrap = styled.div`
 	display: flex;
@@ -54,7 +55,7 @@ const CommentText = styled.div`
 	}
 `;
 
-const UserInfoText = styled.a`
+const UserInfoText = styled.span`
 	font-size: 1rem;
 	height: 1.2rem;
 	margin: 0.5rem 0 0 0.5rem;
@@ -156,11 +157,13 @@ function PostCommentItem({ item, isReply, deleteComment, setCommentList }: Props
 	return (
 		<PostCommentItemWrap>
 			<ProfileImageWrap>
-				<ProfileImage src={profileImageSource} />
+				<ProfileImage src={profileImageSource} alt="profile_image" />
 			</ProfileImageWrap>
 			<PostCommentItemContentsWrap>
 				<Head>
-					<UserInfoText>{memberName}</UserInfoText>
+					<Link href="/">
+						<UserInfoText>{memberName}</UserInfoText>
+					</Link>
 					<DateInfoText>{dateFormat}</DateInfoText>
 				</Head>
 				<>
@@ -170,6 +173,7 @@ function PostCommentItem({ item, isReply, deleteComment, setCommentList }: Props
 							commentIdx={idx}
 							toggleOpenEditor={toggleOpenEdit}
 							parentIdx={postId}
+							isReply={isReply}
 							setCommentList={setCommentList}
 						/>
 					) : (

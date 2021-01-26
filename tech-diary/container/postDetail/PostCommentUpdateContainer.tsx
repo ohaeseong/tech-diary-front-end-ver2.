@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import PostCommentEditor from 'components/post/PostCommentEditor';
 import useRequest from 'libs/hooks/useRequest';
-import { requestGetComment, requestUpdateComment } from 'libs/repository';
+import { requestGetComment, requestUpdateComment, requestUpdateReplyComment } from 'libs/repository';
 import { getStorage } from 'libs/storage';
 import { Comment } from 'store/types/post.types';
 
@@ -12,11 +12,20 @@ type Props = {
 	commentIdx: number;
 	comment: string;
 	parentIdx: number | string;
+	isReply?: boolean;
 };
 
-function PostCommentUpdateContainer({ comment, commentIdx, parentIdx, toggleOpenEditor, setCommentList }: Props) {
+function PostCommentUpdateContainer({
+	comment,
+	commentIdx,
+	parentIdx,
+	isReply,
+	toggleOpenEditor,
+	setCommentList,
+}: Props) {
 	const [commentText, setCommentText] = useState(comment);
 	const [, , onUpdateComment] = useRequest(requestUpdateComment);
+	const [, , onUpdateReplyComment] = useRequest(requestUpdateReplyComment);
 	const [commentState, , reloadComment] = useRequest(requestGetComment);
 
 	const handleCommentTextState = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -39,13 +48,18 @@ function PostCommentUpdateContainer({ comment, commentIdx, parentIdx, toggleOpen
 			token,
 		};
 
-		await onUpdateComment(req);
+		if (!isReply) {
+			await onUpdateComment(req);
+		} else {
+			await onUpdateReplyComment(req);
+		}
+
 		const realoadCommentReq = {
 			postId: parentIdx,
 		};
 
 		await reloadComment(realoadCommentReq);
-	}, [commentIdx, commentText, onUpdateComment, parentIdx, reloadComment]);
+	}, [commentIdx, commentText, isReply, onUpdateComment, onUpdateReplyComment, parentIdx, reloadComment]);
 
 	useEffect(() => {
 		if (commentState) {
