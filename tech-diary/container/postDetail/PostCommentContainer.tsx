@@ -59,7 +59,7 @@ function PostCommentContainer({ item, isReply, setCommentList }: Props) {
 		}
 	}, [commentState, setCommentList]);
 
-	return <PostComment item={item} isReply={isReply} deleteComment={deleteComment} />;
+	return <PostComment item={item} isReply={isReply} deleteComment={deleteComment} setCommentList={setCommentList} />;
 }
 
 export default PostCommentContainer;

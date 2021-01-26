@@ -6,11 +6,10 @@ import { BiMessageRoundedAdd } from 'react-icons/bi';
 import { Comment } from 'store/types/post.types';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
 import useToggle from 'libs/hooks/useToggle';
-import PostReplyCommentContainer from 'container/postDetail/PostReplyCommentContainer';
 import { TypeDecoded } from 'store/types/auth.types';
 import { getStorage } from 'libs/storage';
 import PostCommentUpdateContainer from 'container/postDetail/PostCommentUpdateContainer';
-import PostReplyComment from './PostReplyComment';
+import PostReplyComment from 'components/post/PostReplyComment';
 
 const PostCommentItemWrap = styled.div`
 	display: flex;
@@ -124,11 +123,12 @@ const EditButton = styled.span`
 
 type Props = {
 	deleteComment?: () => void;
+	setCommentList: (dispatch: Comment[]) => void;
 	item: Comment;
 	isReply?: boolean;
 };
 
-function PostCommentItem({ item, isReply, deleteComment }: Props) {
+function PostCommentItem({ item, isReply, deleteComment, setCommentList }: Props) {
 	const [replyIsOpen, toggle] = useToggle(false);
 	const [openEdit, toggleOpenEdit] = useToggle(false);
 	const [isMine, setIsMine] = useState(false);
@@ -165,7 +165,13 @@ function PostCommentItem({ item, isReply, deleteComment }: Props) {
 				</Head>
 				<>
 					{openEdit ? (
-						<PostCommentUpdateContainer comment={commentTxt} commentIdx={idx} toggleOpenEditor={toggleOpenEdit} />
+						<PostCommentUpdateContainer
+							comment={commentTxt}
+							commentIdx={idx}
+							toggleOpenEditor={toggleOpenEdit}
+							parentIdx={postId}
+							setCommentList={setCommentList}
+						/>
 					) : (
 						<CommentText>
 							<MarkdownRenderer markdown={commentTxt} />

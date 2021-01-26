@@ -1,15 +1,23 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import PostCommentEditor from 'components/post/PostCommentEditor';
+import useRequest from 'libs/hooks/useRequest';
+import { requestGetComment, requestUpdateComment } from 'libs/repository';
+import { getStorage } from 'libs/storage';
+import { Comment } from 'store/types/post.types';
 
 type Props = {
-    toggleOpenEditor: () => void;
+	toggleOpenEditor: () => void;
+	setCommentList: (dispatch: Comment[]) => void;
 
 	commentIdx: number;
 	comment: string;
+	parentIdx: number | string;
 };
 
-function PostCommentUpdateContainer({ comment, commentIdx, toggleOpenEditor }: Props) {
+function PostCommentUpdateContainer({ comment, commentIdx, parentIdx, toggleOpenEditor, setCommentList }: Props) {
 	const [commentText, setCommentText] = useState(comment);
+	const [, , onUpdateComment] = useRequest(requestUpdateComment);
+	const [commentState, , reloadComment] = useRequest(requestGetComment);
 
 	const handleCommentTextState = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length > 1000) {
@@ -19,17 +27,42 @@ function PostCommentUpdateContainer({ comment, commentIdx, toggleOpenEditor }: P
 		setCommentText(event.target.value);
 	}, []);
 
-	const onUpdateComment = useCallback(() => {}, []);
+	const handleUpdateComment = useCallback(async () => {
+		const token = getStorage('tech-token');
+		if (commentText.length === 0) {
+			return;
+		}
+
+		const req = {
+			text: commentText,
+			commentIdx,
+			token,
+		};
+
+		await onUpdateComment(req);
+		const realoadCommentReq = {
+			postId: parentIdx,
+		};
+
+		await reloadComment(realoadCommentReq);
+	}, [commentIdx, commentText, onUpdateComment, parentIdx, reloadComment]);
+
+	useEffect(() => {
+		if (commentState) {
+			setCommentList(commentState.data.commentData);
+			toggleOpenEditor();
+		}
+	}, [commentState, setCommentList, toggleOpenEditor]);
 
 	return (
 		<PostCommentEditor
 			commentText={commentText}
 			isUpdateMode
 			toggleOpenEditor={toggleOpenEditor}
-			onCommentFunction={onUpdateComment}
+			onCommentFunction={handleUpdateComment}
 			handleCommentTextState={handleCommentTextState}
 		/>
 	);
 }
 
-export default PostCommentUpdateContainer;
+export default React.memo(PostCommentUpdateContainer);
