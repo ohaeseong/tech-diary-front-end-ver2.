@@ -31,24 +31,18 @@ const NonePost = styled.div`
 `;
 
 type Props = {
-	posts: Post[];
-	isEarlyData: boolean;
 	postList: Array<Post>;
 };
 
-function PostList({ posts, isEarlyData, postList }: Props) {
+function PostList({ postList }: Props) {
 	return (
 		<>
 			<PostListTemplate>
-				{isEarlyData && posts.length !== 0
-					? posts.map((item) => {
-							return <PostItem key={item.id} item={item} />;
-					  })
-					: postList.map((item) => {
-							return <PostItem key={item.id} item={item} />;
-					  })}
+				{postList.map((item) => {
+					return <PostItem key={item.id} item={item} />;
+				})}
 			</PostListTemplate>
-			{posts.length === 0 ? (
+			{postList.length === 0 ? (
 				<NonePost>
 					None Post <br /> Please write your story!{' '}
 				</NonePost>

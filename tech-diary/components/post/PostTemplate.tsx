@@ -24,16 +24,14 @@ const Header = styled.div`
 
 type Props = {
 	postList: Array<Post>;
-	posts: Array<Post>;
 	headName: string;
-	isEarlyData: boolean;
 };
 
-function PostTemplate({ posts, isEarlyData, postList, headName }: Props) {
+function PostTemplate({ postList, headName }: Props) {
 	return (
 		<Template>
-			{posts.length > 0 ? <Header>{headName}</Header> : <></>}
-			<PostList posts={posts} isEarlyData={isEarlyData} postList={postList} />
+			{postList.length > 0 ? <Header>{headName}</Header> : <></>}
+			<PostList postList={postList} />
 		</Template>
 	);
 }

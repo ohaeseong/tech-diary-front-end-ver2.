@@ -12,6 +12,7 @@ import NavBarItem from 'components/base/NavBar/NavBarItem';
 import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
 import { TypeDecoded } from 'store/types/auth.types';
+import { useRouter } from 'next/router';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -122,7 +123,9 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isToken, setIsToken] = useState(false);
 	const [height, setHeight] = useState(0);
 	const [profileImage, setProfileImage] = useState('/image/user.png');
-	const profileMenuHeight = 120;
+	const profileMenuHeight = 150;
+
+	const router = useRouter();
 
 	const menuToggle = useCallback(() => {
 		if (height === profileMenuHeight) {
@@ -202,6 +205,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 						<ProfileImage src={profileImage} onClick={menuToggle} alt="profile_image" />
 						<MenuSlider height={height}>
 							<MenuItem>내 정보</MenuItem>
+							<MenuItem onClick={() => router.push('/blog/write')}>글 쓰러 가기</MenuItem>
 							<MenuItem>임시글 보러가기</MenuItem>
 							<MenuItem>북마크한 글 보러가기</MenuItem>
 							<MenuItem onClick={onLogout}>로그아웃</MenuItem>

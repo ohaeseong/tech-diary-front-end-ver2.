@@ -34,10 +34,7 @@ function PostLayout({ posts }: Props) {
 			headName = 'All';
 			break;
 	}
-
-	// csr server request postList, 초기 데이터 구분을 위한 isEarlyData 선언
 	const [postList, setPostList] = useState(posts);
-	const [isEarlyData, setIsEarlyData] = useState(true);
 
 	// 우선 blog로 설정 이후에 로직 변경 예정
 	const { postData, setLimit, limit } = usePost('blog', kinds[2]);
@@ -68,13 +65,7 @@ function PostLayout({ posts }: Props) {
 		};
 	}, [handlePostData]);
 
-	useEffect(() => {
-		if (postData.length !== 0) {
-			setIsEarlyData(false);
-		}
-	}, [postData.length, setIsEarlyData]);
-
-	return <PostTemplate posts={posts} postList={postList} isEarlyData={isEarlyData} headName={headName} />;
+	return <PostTemplate postList={postList} headName={headName} />;
 }
 
 export default PostLayout;

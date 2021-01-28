@@ -2,6 +2,7 @@
 export const color = {
 	white: '#ffffff',
 	white_1: '#ffffff',
+	white_2: '#f9f9f9',
 	black: '#000000',
 	gray_0: '#ECF0F1',
 	gray_1: '#E5E7E9',
@@ -27,6 +28,7 @@ export const color = {
 export const dark = {
 	white: '#323333',
 	white_1: '#161717',
+	white_2: '#323333',
 	black: '#ffffff',
 	gray_0: '#161717',
 	gray_1: '#B0B2B2',

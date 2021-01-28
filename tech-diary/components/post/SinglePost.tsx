@@ -122,7 +122,7 @@ function SinglePost({
 				<Title>{title}</Title>
 				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
 				<PostContents markdown={contents} />
-				<PostBottom />
+				{/* <PostBottom /> */}
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
 			</SinglePostContentsWrap>
 			<Toast />

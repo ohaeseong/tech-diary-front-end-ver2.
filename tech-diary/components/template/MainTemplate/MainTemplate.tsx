@@ -31,7 +31,7 @@ export const MainContents = styled.div`
 
 type Props = {
 	children: ReactNode;
-	isNav: boolean;
+	isNav?: boolean;
 };
 
 function MainTemplate({ children, isNav = true }: Props) {
