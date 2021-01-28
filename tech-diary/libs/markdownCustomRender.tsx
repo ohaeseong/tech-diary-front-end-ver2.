@@ -184,16 +184,28 @@ export function LinkMarkdownRender(children: { href: string; children: string })
 	return <LinkTagStyled href={children.href}>{children.children}</LinkTagStyled>;
 }
 
+const TableWrap = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin: 2rem 0;
+	height: auto;
+`;
+
 const TableStyled = styled.table`
 	display: table;
+	width: 100%;
 	color: ${(props) => props.theme.black};
 	border: 1px solid ${(props) => props.theme.gray_1};
-	margin: 20px 0;
-	border-spacing: 2px;
 `;
 
 export function TableMarkdownRender(children: { children: React.ReactNode }) {
-	return <TableStyled>{children.children}</TableStyled>;
+	return (
+		<TableWrap>
+			<TableStyled>{children.children}</TableStyled>
+		</TableWrap>
+	);
 }
 
 const TheadStyled = styled.thead`
@@ -205,11 +217,12 @@ const TheadStyled = styled.thead`
 		padding: 0.5rem 2rem;
 		line-height: 1.7rem;
 		font-family: 'Spoqa Han Sans Thin';
+		font-size: 0.9rem;
 	}
 `;
 
 export function TheadMarkdownRender(children: { children: React.ReactNode }) {
-	return <TheadStyled>{children.children}</TheadStyled>
+	return <TheadStyled>{children.children}</TheadStyled>;
 }
 
 const TbodyStyled = styled.tbody`
@@ -219,6 +232,7 @@ const TbodyStyled = styled.tbody`
 		padding: 0.5rem 1rem;
 		border: 1px solid ${(props) => props.theme.gray_1};
 		font-family: 'Spoqa Han Sans Thin';
+		font-size: 0.9rem;
 	}
 `;
 

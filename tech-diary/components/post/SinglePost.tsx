@@ -10,6 +10,7 @@ import { getStorage } from 'libs/storage';
 import Toast from 'components/common/Toast';
 import PostComment from 'components/post/PostCommentTemplate';
 import { TypeDecoded } from 'store/types/auth.types';
+import PostBottom from 'components/post/PostBottom';
 
 const SinglePostTemplate = styled.div`
 	display: flex;
@@ -121,7 +122,7 @@ function SinglePost({
 				<Title>{title}</Title>
 				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
 				<PostContents markdown={contents} />
-				{/* <PostBottom /> */}
+				<PostBottom />
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
 			</SinglePostContentsWrap>
 			<Toast />
