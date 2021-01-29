@@ -26,9 +26,9 @@ function PostEditor() {
 	return (
 		<EditorTemplate>
 			<EditorWrap>
-                <TitleEditor />
-                <ContentsEditor />
-            </EditorWrap>
+				<TitleEditor />
+				<ContentsEditor />
+			</EditorWrap>
 		</EditorTemplate>
 	);
 }
