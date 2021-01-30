@@ -151,6 +151,10 @@ function PostDetailLayout({ post }: Props) {
 		});
 	}, [commentCount, dispatch]);
 
+	useEffect(() => {
+		window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+	}, []);
+
 	return (
 		<>
 			<ThemeProvider theme={themeMode ? dark : color}>

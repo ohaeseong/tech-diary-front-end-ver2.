@@ -1104,7 +1104,7 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/codemirror@^0.0.107":
+"@types/codemirror@*", "@types/codemirror@^0.0.107":
   version "0.0.107"
   resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.107.tgz#2800d142f489a1137414df30665633bbfbf4abaa"
   integrity sha512-F3Uh8xBmZWeMckWPVrcG5TBQIr/rZM7dQfx8D0pHCb372MIWFBwc5mjLBpYPcxGpmgNM/p6bl619XwyzBUQTrQ==
@@ -1239,6 +1239,14 @@
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
+
+"@types/react-codemirror@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@types/react-codemirror/-/react-codemirror-1.0.3.tgz#5b0e4d5529a6bc934e992c49f3d1fa77daacc59b"
+  integrity sha512-EAyys2Wpys7bJatgnfpXXs4Gi1Vktj23mNngG4Ex2Q0W6eVgfkP4GP7qHyDVU2wbW3T0K7Jqatf2dCob25ptMw==
+  dependencies:
+    "@types/codemirror" "*"
+    "@types/react" "*"
 
 "@types/react-dom@^16.9.4":
   version "16.9.10"
@@ -7146,6 +7154,11 @@ rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-codemirror2@^7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-7.2.1.tgz#38dab492fcbe5fb8ebf5630e5bb7922db8d3a10c"
+  integrity sha512-t7YFmz1AXdlImgHXA9Ja0T6AWuopilub24jRaQdPVbzUJVNKIYuy3uCFZYa7CE5S3UW6SrSa5nAqVQvtzRF9gw==
 
 react-dom@^17.0.1:
   version "17.0.1"

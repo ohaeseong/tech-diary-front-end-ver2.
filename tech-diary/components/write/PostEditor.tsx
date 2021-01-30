@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import TitleEditor from './TitleEditor';
-import ContentsEditor from './ContentsEditor';
+import TitleEditor from 'components/write/TitleEditor';
+import MarkdownEditorContainer from 'container/postWrite/MarkdownEditor';
 
 const EditorTemplate = styled.div`
 	display: flex;
@@ -20,6 +20,10 @@ const EditorWrap = styled.div`
 	margin-left: 3rem;
 	background-color: ${(props) => props.theme.white_1};
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
+
+	& > * {
+		font-family: 'Spoqa Han Sans Thin';
+	}
 `;
 
 function PostEditor() {
@@ -27,7 +31,7 @@ function PostEditor() {
 		<EditorTemplate>
 			<EditorWrap>
 				<TitleEditor />
-				<ContentsEditor />
+				<MarkdownEditorContainer />
 			</EditorWrap>
 		</EditorTemplate>
 	);

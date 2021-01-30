@@ -1,18 +1,27 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import TextareaAutosize from 'react-textarea-autosize';
 
-const TitleEditorInput = styled.input`
-	width: calc(100% - 2rem);
-	font-size: 2.5rem;
-	padding: 3rem 1rem;
-	margin-bottom: 5rem;
-
+const TitleEditorTextarea = styled(TextareaAutosize)`
+	width: 100%;
+	font-size: 2rem;
+	padding: 2.5rem 1rem;
+	margin: 3rem 0;
+	font-family: 'Spoqa Han Sans Regular';
+	overflow: hidden;
 	border: none;
-	border-bottom: 1px solid ${(props) => props.theme.gray_0};
-`;
+	resize: none;
 
+	color: ${(props) => props.theme.black};
+	background-color: ${(props) => props.theme.white_1};
+	border-bottom: 1px solid ${(props) => props.theme.gray_2};
+
+	&::placeholder {
+		color: ${(props) => props.theme.gray_3};
+	}
+`;
 function TitleEditor() {
-	return <TitleEditorInput placeholder="제목" />;
+	return <TitleEditorTextarea placeholder="제목" />;
 }
 
 export default TitleEditor;
