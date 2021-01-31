@@ -118,22 +118,22 @@ export function HeadingMarkdownRender(children: { level: number; children: strin
 	let Head;
 	switch (children.level) {
 		case 1:
-			Head = <h1>{children.children}</h1>;
+			Head = <h1 css={{ fontSize: '2.5rem' }}>{children.children}</h1>;
 			break;
 		case 2:
-			Head = <h2>{children.children}</h2>;
+			Head = <h2 css={{ fontSize: '2rem' }}>{children.children}</h2>;
 			break;
 		case 3:
-			Head = <h3>{children.children}</h3>;
+			Head = <h3 css={{ fontSize: '1.5rem' }}>{children.children}</h3>;
 			break;
 		case 4:
-			Head = <h4>{children.children}</h4>;
+			Head = <h4 css={{ fontSize: '1.3125rem' }}>{children.children}</h4>;
 			break;
 		case 5:
-			Head = <h5>{children.children}</h5>;
+			Head = <h5 css={{ fontSize: '1.3125rem' }}>{children.children}</h5>;
 			break;
 		case 6:
-			Head = <h6>{children.children}</h6>;
+			Head = <h6 css={{ fontSize: '1.3125rem' }}>{children.children}</h6>;
 			break;
 
 		default:
