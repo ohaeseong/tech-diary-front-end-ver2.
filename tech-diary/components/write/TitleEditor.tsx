@@ -5,7 +5,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 const TitleEditorTextarea = styled(TextareaAutosize)`
 	width: 100%;
 	font-size: 2rem;
-	padding: 2.5rem 1rem;
+	padding: 2.5rem 0;
 	margin: 3rem 0;
 	font-family: 'Spoqa Han Sans Regular';
 	overflow: hidden;

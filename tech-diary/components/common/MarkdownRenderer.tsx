@@ -56,7 +56,7 @@ const MarkDownStyle = styled.div<{ type?: string }>`
 	h5,
 	h6 {
 		color: ${(props) => props.theme.black};
-		font-family: 'Spoqa Han Sans Bold';
+		font-family: 'Spoqa Han Sans Regular';
 	}
 
 	& > pre code {

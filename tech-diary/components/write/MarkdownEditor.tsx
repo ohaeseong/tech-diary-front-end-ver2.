@@ -1,20 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import { color } from 'styles/color';
-
-// require('codemirror/mode/markdown/markdown');
-
-const MarkdownEditorTextarea = styled.textarea`
-	width: 100%;
-	height: 100%;
-	resize: none;
-	border: none;
-	font-family: 'Spoqa Han Sans Thin';
-	font-size: 1rem;
-`;
 
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
@@ -23,35 +12,25 @@ const MarkdownEditorWrap = styled.div`
 	flex-direction: column;
 	position: relative;
 
+	& > p {
+		font-size: 1.125rem;
+		font-family: 'Spoqa Han Sans Thin';
+	}
+
 	& > * {
 		min-height: 100%;
 	}
 
-	&::-webkit-scrollbar {
-		border-radius: 3px;
-		width: 6px;
-		&:hover {
-			width: 16px;
-		}
-		background: ${color.gray_1};
-	}
-
-	&::-webkit-scrollbar-thumb {
-		z-index: 100;
-		background: ${color.gray_5};
-		/* -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75); */
-	}
-
-	/* & > .wrapper {
+	& > .wrapper {
 		min-height: 0;
 		padding-bottom: 4rem;
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-	} */
+	}
 
 	.CodeMirror-lines {
-		padding: 4px 0; /* Vertical padding around content */
+		padding: 4px 0;
 		padding-bottom: 3rem;
 	}
 
@@ -65,8 +44,24 @@ const MarkdownEditorWrap = styled.div`
 		flex: 1;
 		font-size: 1.125rem;
 		line-height: 1.5;
+		word-break: break-all;
+		white-space: pre-line;
 		color: ${(props) => props.theme.black};
-		font-family: 'Spoqa Han Sans Thin';
+		& > * span {
+			font-family: 'Spoqa Han Sans Thin';
+			word-break: break-all;
+			white-space: pre-line;
+		}
+
+		& > * .cm-header,
+		.cm-header-1,
+		.cm-header-2,
+		.cm-header-3,
+		.cm-header-4,
+		.cm-header-5,
+		.cm-header-6 {
+			font-family: 'Spoqa Han Sans Regular';
+		}
 
 		.cm-header {
 			line-height: 1.5;
@@ -101,20 +96,27 @@ const MarkdownEditorWrap = styled.div`
 			background-color: black;
 		}
 		.cm-hr {
-			position: absolute;
-			width: 100%;
+			/* position: absolute;
+			width: 100%; */
 			/* margin: 2rem 0; */
-			border-top: 0.1px solid ${(props) => props.theme.gray_2};
-			color: #fff;
+			/* border-top: 0.1px solid ${(props) => props.theme.gray_2}; */
+			/* color: #fff; */
 			/* text-align: center; */
 
-			& > * {
+			/* & > * {
 				display: none;
-			}
+			} */
+		}
+
+		.cm-del {
+			border: 1px solid black;
 		}
 		.CodeMirror-placeholder {
 			color: ${color.black};
 			font-style: italic;
+		}
+		.CodeMirror-scroll {
+			overflow: hidden !important;
 		}
 
 		/* ${media.custom(767)} {
@@ -152,16 +154,12 @@ function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 					theme: 'none',
 					lineNumbers: false,
 				}}
+				autoScroll
 				onBeforeChange={(editor, data, value) => {
 					setMarkdownText(value);
 				}}
-				onChange={(editor, data, value) => {
-					console.log('controlled', { value });
-				}}
-				editorDidMount={(editor) => {
-					if (editor) {
-						import('codemirror/mode/markdown/markdown');
-					}
+				editorDidMount={() => {
+					import('codemirror/mode/markdown/markdown');
 				}}
 			/>
 		</MarkdownEditorWrap>

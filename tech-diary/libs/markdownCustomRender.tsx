@@ -28,6 +28,7 @@ const BlockQuoteStyle = styled.div`
 	& > p {
 		color: ${(props) => props.theme.black};
 		font-family: 'Spoqa Han Sans Thin';
+		/* font-size: 0.9rem; */
 	}
 `;
 
