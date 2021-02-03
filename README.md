@@ -11,5 +11,5 @@
 - yarn start => build 필요
 - yarn build => out 폴더 내보내기 포함 (지금은 에러남 next.config.js 수정 필요)
 
-기술 블로그 플랫폼 (vellog 따라잡기!)
+기술 블로그 플랫폼 
 
