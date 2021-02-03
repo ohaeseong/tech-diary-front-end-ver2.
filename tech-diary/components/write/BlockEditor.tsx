@@ -1,5 +1,5 @@
 import React, { RefObject, useCallback, useState } from 'react';
-import styled from '@emotion/styled';
+import EditableBlock from 'components/write/EditableBlock';
 
 const uid = () => {
 	return Date.now().toString(36) + Math.random().toString(36).substr(2);
@@ -42,7 +42,7 @@ function BlockEditor() {
 
 	const addBlockHandler = useCallback(
 		async (currentBlock: CurrentBlockType) => {
-			const newBlock = { id: uid(), html: '', tag: 'h1' };
+			const newBlock = { id: uid(), html: '', tag: 'p' };
 			const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
 
 			const updatedBlocks = [...blocks];

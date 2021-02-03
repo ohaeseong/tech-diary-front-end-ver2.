@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -20,8 +20,14 @@ const TitleEditorTextarea = styled(TextareaAutosize)`
 		color: ${(props) => props.theme.gray_3};
 	}
 `;
-function TitleEditor() {
-	return <TitleEditorTextarea placeholder="제목" />;
+
+type Props = {
+	title: string;
+	onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+function TitleEditor({ title, onChange }: Props) {
+	return <TitleEditorTextarea value={title} onChange={onChange} placeholder="제목" />;
 }
 
 export default TitleEditor;

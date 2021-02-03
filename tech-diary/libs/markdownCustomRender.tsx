@@ -167,6 +167,7 @@ export function HorizontalRuleMarkdownRender(children: { children: React.ReactNo
 
 const StrongTagStyled = styled.strong`
 	font-family: 'Spoqa Han Sans Medium';
+	color: ${(props) => props.theme.neon_2};
 	font-weight: 400;
 `;
 

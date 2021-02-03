@@ -4,7 +4,7 @@ import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 import styled from '@emotion/styled';
 
 const ContentEditableWrap = styled(ContentEditable)`
-	border: 1px solid black;
+	color: ${(props) => props.theme.black};
 	padding: 0.3rem;
 	outline: none;
 `;
@@ -17,7 +17,7 @@ type InitialBlockType = {
 
 type CurrentBlockType = {
 	id: string;
-	ref: React.RefObject<unknown>;
+	ref: RefObject<HTMLElement>;
 };
 
 type Props = {
@@ -54,7 +54,6 @@ function EditableBlock({ html, tag, id, updatePage, addBLock, deleteBlockHandler
 		}
 
 		setPreviousKey(event.key);
-		// console.log(event.target.value);
 	};
 
 	return (

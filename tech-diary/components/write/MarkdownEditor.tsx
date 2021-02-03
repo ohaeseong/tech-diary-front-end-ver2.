@@ -7,26 +7,13 @@ import { color } from 'styles/color';
 
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
-	min-height: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	position: relative;
 
-	& > p {
-		font-size: 1.125rem;
-		font-family: 'Spoqa Han Sans Thin';
-	}
-
 	& > * {
-		min-height: 100%;
-	}
-
-	& > .wrapper {
-		min-height: 0;
-		padding-bottom: 4rem;
-		flex: 1;
-		display: flex;
-		flex-direction: column;
+		height: 100%;
 	}
 
 	.CodeMirror-lines {
@@ -34,23 +21,21 @@ const MarkdownEditorWrap = styled.div`
 		padding-bottom: 3rem;
 	}
 
-	.CodeMirror pre.CodeMirror-line,
-	.CodeMirror pre.CodeMirror-line-like {
-		/* padding: 0 3rem; Horizontal padding of content */
-	}
-
 	.CodeMirror {
+		background-color: ${(props) => props.theme.white_1};
 		min-height: 100%;
-		flex: 1;
 		font-size: 1.125rem;
 		line-height: 1.5;
 		word-break: break-all;
 		white-space: pre-line;
 		color: ${(props) => props.theme.black};
+
 		& > * span {
 			font-family: 'Spoqa Han Sans Thin';
 			word-break: break-all;
 			white-space: pre-line;
+			color: ${(props) => props.theme.black};
+			font-size: 1.125rem;
 		}
 
 		& > * .cm-header,
@@ -65,7 +50,7 @@ const MarkdownEditorWrap = styled.div`
 
 		.cm-header {
 			line-height: 1.5;
-			color: ${color.black};
+			color: ${(props) => props.theme.black};
 		}
 		.cm-header-1 {
 			font-size: 2.5rem;
@@ -85,38 +70,36 @@ const MarkdownEditorWrap = styled.div`
 			font-family: 'Spoqa Han Sans Medium';
 			font-weight: 400;
 		}
-		.cm-em {
+		.cm-pre {
 			background: ${(props) => props.theme.emphasis};
 			padding: 2px 4px;
 			font-size: 1rem;
 			border-radius: 2px;
 			font-style: normal;
-		}
-		.cm-code {
-			background-color: black;
-		}
-		.cm-hr {
-			/* position: absolute;
-			width: 100%; */
-			/* margin: 2rem 0; */
-			/* border-top: 0.1px solid ${(props) => props.theme.gray_2}; */
-			/* color: #fff; */
-			/* text-align: center; */
-
-			/* & > * {
-				display: none;
-			} */
+			color: ${(props) => props.theme.black};
 		}
 
 		.cm-del {
-			border: 1px solid black;
+			border: 1px solid ${(props) => props.theme.black};
 		}
+
+		.cm-url,
+		.cm-link {
+			color: ${(props) => props.theme.neon_2};
+		}
+
+		.cm-comment {
+			white-space: pre-line;
+		}
+
 		.CodeMirror-placeholder {
 			color: ${color.black};
 			font-style: italic;
 		}
-		.CodeMirror-scroll {
-			overflow: hidden !important;
+
+		.cm-strong,
+		.cm-em {
+			color: ${(props) => props.theme.neon_2};
 		}
 
 		/* ${media.custom(767)} {
