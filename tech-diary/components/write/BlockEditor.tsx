@@ -1,14 +1,10 @@
 import React, { RefObject, useCallback, useState } from 'react';
 import EditableBlock from 'components/write/EditableBlock';
 
-const uid = () => {
-	return Date.now().toString(36) + Math.random().toString(36).substr(2);
-};
-
-const initialBlock = {
-	id: uid(),
-	html: '',
-	tag: 'p',
+type BlockType = {
+	id: string;
+	html: string;
+	tag: string;
 };
 
 type InitialBlockType = {
@@ -22,51 +18,15 @@ type CurrentBlockType = {
 	ref: RefObject<HTMLElement>;
 };
 
-function BlockEditor() {
-	const [blocks, setBlocks] = useState([initialBlock]);
+type Props = {
+	blocks: Array<BlockType>;
+	updatePageHandler: (updatedBlock: InitialBlockType) => void;
+	addBlockHandler: (currentBlock: CurrentBlockType) => void;
+	deleteBlockHandler: (currnetBlock: CurrentBlockType) => void;
+}
 
-	const updatePageHandler = useCallback(
-		(updatedBlock: InitialBlockType) => {
-			const index = blocks.map((b) => b.id).indexOf(updatedBlock.id);
-			const updatedBlocks = [...blocks];
-			updatedBlocks[index] = {
-				...updatedBlocks[index],
-				tag: updatedBlock.tag,
-				html: updatedBlock.html,
-			};
+function BlockEditor({ blocks, addBlockHandler, deleteBlockHandler, updatePageHandler }: Props) {
 
-			setBlocks(updatedBlocks);
-		},
-		[blocks]
-	);
-
-	const addBlockHandler = useCallback(
-		async (currentBlock: CurrentBlockType) => {
-			const newBlock = { id: uid(), html: '', tag: 'p' };
-			const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
-
-			const updatedBlocks = [...blocks];
-			updatedBlocks.splice(index + 1, 0, newBlock);
-			await setBlocks(updatedBlocks);
-
-			currentBlock.ref.nextElementSibling.focus();
-		},
-		[blocks]
-	);
-
-	const deleteBlockHandler = useCallback(
-		async (currentBlock: CurrentBlockType) => {
-			const previousBlock = currentBlock.ref.previousElementSibling;
-			if (previousBlock) {
-				const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
-				const updatedBlocks = [...blocks];
-				updatedBlocks.splice(index, 1);
-				await setBlocks(updatedBlocks);
-				previousBlock.focus();
-			}
-		},
-		[blocks]
-	);
 	return (
 		<div>
 			{blocks.map((block) => {

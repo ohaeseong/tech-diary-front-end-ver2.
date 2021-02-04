@@ -7,6 +7,9 @@ const ContentEditableWrap = styled(ContentEditable)`
 	color: ${(props) => props.theme.black};
 	padding: 0.3rem;
 	outline: none;
+	border: 1px solid black;
+
+	font-family: 'Spoqa Han Sans Thin';
 `;
 
 type InitialBlockType = {
@@ -33,6 +36,7 @@ type Props = {
 function EditableBlock({ html, tag, id, updatePage, addBLock, deleteBlockHandler }: Props) {
 	const [tagState, setTagState] = useState(tag);
 	const [htmlState, setHtmlState] = useState(html);
+	const [htmlBackUp, setHtmlBackUp] = useState('');
 	const [previousKey, setPreviousKey] = useState('');
 	const contentEditable = createRef() as RefObject<HTMLElement>;
 
@@ -41,6 +45,10 @@ function EditableBlock({ html, tag, id, updatePage, addBLock, deleteBlockHandler
 	};
 
 	const onKeyDownHandler = (event: KeyboardEvent<HTMLDivElement>) => {
+		if (event.key === "/") {
+			setHtmlBackUp(htmlState);
+		}
+
 		if (event.key === 'Enter') {
 			if (previousKey !== 'Shift') {
 				event.preventDefault();

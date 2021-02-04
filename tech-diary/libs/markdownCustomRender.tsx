@@ -179,6 +179,7 @@ const LinkTagStyled = styled.a`
 	border: none;
 	outline: none;
 	color: ${(props) => props.theme.neon_2};
+	font-family: 'Spoqa Han Sans Thin';
 	text-decoration: none;
 `;
 

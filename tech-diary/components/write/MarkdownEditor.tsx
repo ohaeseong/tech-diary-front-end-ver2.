@@ -102,6 +102,12 @@ const MarkdownEditorWrap = styled.div`
 			color: ${(props) => props.theme.neon_2};
 		}
 
+		.CodeMirror-placeholder {
+			font-family: 'Spoqa Han Sans Thin';
+			color: ${(props) => props.theme.gray_3};
+			font-style: italic;
+		}
+
 		/* ${media.custom(767)} {
 			font-size: 0.875rem;
 			.cm-header-1 {
@@ -134,8 +140,13 @@ function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 				value={markdownText}
 				options={{
 					mode: 'markdown',
-					theme: 'none',
 					lineNumbers: false,
+					placeholder: '블로그 작성...',
+					// spellcheck: true,
+					// indentUnit: 4,
+					// tabSize: 4,
+					lineWrapping: true,
+					// indentWithTabs: true,
 				}}
 				autoScroll
 				onBeforeChange={(editor, data, value) => {
@@ -143,6 +154,9 @@ function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 				}}
 				editorDidMount={() => {
 					import('codemirror/mode/markdown/markdown');
+					import('codemirror/addon/display/placeholder');
+					import('codemirror/mode/javascript/javascript');
+					import('codemirror/mode/jsx/jsx');
 				}}
 			/>
 		</MarkdownEditorWrap>

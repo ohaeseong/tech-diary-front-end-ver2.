@@ -39,7 +39,7 @@ export const dark = {
 	success: '#75d701',
 	neon_0: '#9900FF',
 	neon_1: '#9900FF',
-	neon_2: '#706af3',
+	neon_2: '#a270f6',
 	warning: '#eca95c',
 	info: '#2E2E2E',
 	shadow: 'rgba(100, 100, 100, 1)',
