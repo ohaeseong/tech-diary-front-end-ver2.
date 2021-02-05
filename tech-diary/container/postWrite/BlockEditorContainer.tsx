@@ -14,7 +14,7 @@ const EditorWrap = styled.div`
 	box-shadow: 0 2px 6px 0 ${(props) => props.theme.shadow};
 
 	& > * {
-		font-family: 'Spoqa Han Sans Thin';
+		/* font-family: 'Spoqa Han Sans ㄱ'; */
 	}
 `;
 
