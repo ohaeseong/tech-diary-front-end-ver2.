@@ -75,6 +75,9 @@ export function ImageMarkdownRender(children: { src: string }) {
 
 const ListStyle = styled.li`
 	color: ${(props) => props.theme.black};
+	& > * {
+		font-family: 'Spoqa Han Sans Thin';
+	}
 `;
 
 export function ListMarkdownRender(children: { children: React.ReactNode }) {
@@ -87,7 +90,6 @@ const UlStyle = styled.ul`
 	color: ${(props) => props.theme.black};
 
 	& > * {
-		color: ${(props) => props.theme.black};
 		font-family: 'Spoqa Han Sans Thin';
 	}
 `;
@@ -99,7 +101,6 @@ const OlStyle = styled.ol`
 	color: ${(props) => props.theme.black};
 
 	& > * {
-		color: ${(props) => props.theme.black};
 		font-family: 'Spoqa Han Sans Regular';
 	}
 `;

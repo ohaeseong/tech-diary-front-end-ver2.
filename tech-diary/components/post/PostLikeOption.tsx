@@ -38,7 +38,6 @@ const ItemWrap = styled.div`
 	align-items: center;
 	justify-content: space-around;
 	width: 100%;
-	/* border: 1px solid black; */
 
 	margin-bottom: 1rem;
 `;

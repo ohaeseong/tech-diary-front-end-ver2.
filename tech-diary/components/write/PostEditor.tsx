@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import TitleEditor from 'components/write/TitleEditor';
 import MarkdownEditorContainer from 'container/postWrite/MarkdownEditorContainer';
 import BlockEditorContainer from 'container/postWrite/BlockEditorContainer';
 
