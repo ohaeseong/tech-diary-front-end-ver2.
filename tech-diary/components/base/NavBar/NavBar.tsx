@@ -13,6 +13,7 @@ import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
 import { TypeDecoded } from 'store/types/auth.types';
 import { useRouter } from 'next/router';
+import useMenuSliderHeight from 'libs/hooks/useMenuSliderHeight';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -121,25 +122,10 @@ type Props = {
 function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
-	const [height, setHeight] = useState(0);
 	const [profileImage, setProfileImage] = useState('/image/user.png');
-	const profileMenuHeight = 150;
+	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
 
 	const router = useRouter();
-
-	const menuToggle = useCallback(() => {
-		if (height === profileMenuHeight) {
-			setHeight(0);
-		} else {
-			setHeight(profileMenuHeight);
-		}
-	}, [height]);
-
-	const closeMenu = useCallback(() => {
-		if (height === profileMenuHeight) {
-			setHeight(0);
-		}
-	}, [height]);
 
 	const handleIsScrollEvent = useCallback(() => {
 		if (!isMain) {
@@ -203,7 +189,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 				{isToken ? (
 					<ProfileWrap>
 						<ProfileImage src={profileImage} onClick={menuToggle} alt="profile_image" />
-						<MenuSlider height={height}>
+						<MenuSlider height={menuHeight}>
 							<MenuItem>내 정보</MenuItem>
 							<MenuItem onClick={() => router.push('/blog/write')}>글 쓰러 가기</MenuItem>
 							<MenuItem>임시글 보러가기</MenuItem>

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, KeyboardEvent } from 'react';
 
 const MenuItemWrap = styled.p`
 	width: 100%;
@@ -18,12 +18,18 @@ const MenuItemWrap = styled.p`
 `;
 
 type Props = {
-	children: ReactNode;
-	onClick?: () => void;
+	children: string;
+	itemInfo?: any;
+	onClick: (params?: any) => void;
+	onKeyDown?: (event: KeyboardEvent<HTMLDivElement>) => void;
 };
 
-function MenuItem({ children, onClick }: Props) {
-	return <MenuItemWrap onClick={onClick}>{children}</MenuItemWrap>;
+function MenuItem({ children, itemInfo, onClick, onKeyDown }: Props) {
+	return (
+		<MenuItemWrap onClick={() => onClick(itemInfo)} onKeyDown={onKeyDown}>
+			{children}
+		</MenuItemWrap>
+	);
 }
 
 export default React.memo(MenuItem);
