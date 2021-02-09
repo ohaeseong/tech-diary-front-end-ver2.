@@ -13,8 +13,14 @@ const EditorWrap = styled.div`
 	background-color: ${(props) => props.theme.white_1};
 	box-shadow: 0 2px 6px 0 ${(props) => props.theme.shadow};
 
-	& > * {
-		font-family: 'Spoqa Han Sans';
+	& > * h1,
+	h2,
+	h3 {
+		font-family: 'Spoqa Han Sans Regular';
+	}
+
+	& > * strong {
+		width: 100%;
 	}
 `;
 

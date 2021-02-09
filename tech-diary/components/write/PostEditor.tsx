@@ -12,7 +12,7 @@ const EditorTemplate = styled.div`
 `;
 
 function PostEditor() {
-	const toggleEditor = false;
+	const toggleEditor = true;
 	return <EditorTemplate>{toggleEditor ? <MarkdownEditorContainer /> : <BlockEditorContainer />}</EditorTemplate>;
 }
 

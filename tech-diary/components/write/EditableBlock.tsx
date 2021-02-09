@@ -11,12 +11,18 @@ const ContentEditableWrap = styled(ContentEditable)`
 	color: ${(props) => props.theme.black};
 	padding: 0.3rem;
 	outline: none;
-	border: 1px solid ${(props) => props.theme.gray_2};;
+	cursor: text;
+	/* border: 1px solid ${(props) => props.theme.gray_2}; */
 
 	font-family: 'Spoqa Han Sans Thin';
+
+	p {
+		color: red;
+	}
+
 	&:empty:before {
 		content: attr(placeholder);
-		color: grey;
+		color: ${(props) => props.theme.gray_3};;
 		display: inline-block;
 	}
 `;
@@ -90,8 +96,6 @@ function EditableBlock({ html, tag, id, updatePage, addBLock, deleteBlockHandler
 
 			if (event.key === 'Enter') {
 				if (previousKey !== 'Shift') {
-					console.log(contentEditable.current);
-					
 					event.preventDefault();
 					addBLock({ id, ref: contentEditable.current });
 				}
@@ -119,22 +123,26 @@ function EditableBlock({ html, tag, id, updatePage, addBLock, deleteBlockHandler
 
 	return (
 		<>
-			<TagMenuWrap>
-				<MenuSlider height={menuHeight}>
-					{tagItems.map((item) => {
-						return (
-							<MenuItem
-								key={item.id}
-								itemInfo={{ id: item.id, name: item.name }}
-								onClick={tagSelectHandler}
-								onKeyDown={menuItemKeyDownHandler}
-							>
-								{item.name}
-							</MenuItem>
-						);
-					})}
-				</MenuSlider>
-			</TagMenuWrap>
+			{menuHeight !== 0 ? (
+				<TagMenuWrap>
+					<MenuSlider height={menuHeight}>
+						{tagItems.map((item) => {
+							return (
+								<MenuItem
+									key={item.id}
+									itemInfo={{ id: item.id, name: item.name }}
+									onClick={tagSelectHandler}
+									onKeyDown={menuItemKeyDownHandler}
+								>
+									{item.name}
+								</MenuItem>
+							);
+						})}
+					</MenuSlider>
+				</TagMenuWrap>
+			) : (
+				<></>
+			)}
 			<ContentEditableWrap
 				className="Block"
 				placeholder={placeholderText}
