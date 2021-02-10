@@ -16,7 +16,6 @@ const EditorWrap = styled.div`
 	flex-direction: column;
 	padding: 1rem 3rem;
 	width: 100%;
-	/* border: 1px solid black; */
 `;
 
 const RendererWrap = styled.div`

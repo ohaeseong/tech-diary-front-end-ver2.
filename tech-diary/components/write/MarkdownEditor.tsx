@@ -142,11 +142,7 @@ function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 					mode: 'markdown',
 					lineNumbers: false,
 					placeholder: '블로그 작성...',
-					// spellcheck: true,
-					// indentUnit: 4,
-					// tabSize: 4,
 					lineWrapping: true,
-					// indentWithTabs: true,
 				}}
 				autoScroll
 				onBeforeChange={(editor, data, value) => {
