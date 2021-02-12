@@ -2,7 +2,6 @@ import React from 'react';
 import styled from '@emotion/styled';
 import MarkdownEditorContainer from 'container/postWrite/MarkdownEditorContainer';
 import BlockEditorContainer from 'container/postWrite/BlockEditorContainer';
-import PostEditorTool from './PostEditorTool';
 
 const EditorTemplate = styled.div`
 	display: flex;
@@ -18,7 +17,6 @@ function PostEditor() {
 		<EditorTemplate>
 			{toggleEditor ? (
 				<>
-					<PostEditorTool />
 					<MarkdownEditorContainer />
 				</>
 			) : (

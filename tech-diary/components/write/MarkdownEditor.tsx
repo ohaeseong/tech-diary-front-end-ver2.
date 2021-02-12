@@ -5,6 +5,17 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import { color } from 'styles/color';
 
+const EditorToolWrap = styled.div`
+	position: fixed;
+	width: 100%;
+	height: 3rem;
+	border: 1px solid black;
+`;
+
+function MarkdownEditorTool() {
+	return <EditorToolWrap></EditorToolWrap>;
+}
+
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
 	height: 100%;
@@ -135,27 +146,30 @@ type Props = {
 
 function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 	return (
-		<MarkdownEditorWrap>
-			<CodeMirror
-				value={markdownText}
-				options={{
-					mode: 'markdown',
-					lineNumbers: false,
-					placeholder: '블로그 작성...',
-					lineWrapping: true,
-				}}
-				autoScroll
-				onBeforeChange={(editor, data, value) => {
-					setMarkdownText(value);
-				}}
-				editorDidMount={() => {
-					import('codemirror/mode/markdown/markdown');
-					import('codemirror/addon/display/placeholder');
-					import('codemirror/mode/javascript/javascript');
-					import('codemirror/mode/jsx/jsx');
-				}}
-			/>
-		</MarkdownEditorWrap>
+		<>
+			<MarkdownEditorTool />
+			<MarkdownEditorWrap>
+				<CodeMirror
+					value={markdownText}
+					options={{
+						mode: 'markdown',
+						lineNumbers: false,
+						placeholder: '블로그 작성...',
+						lineWrapping: true,
+					}}
+					autoScroll
+					onBeforeChange={(editor, data, value) => {
+						setMarkdownText(value);
+					}}
+					editorDidMount={() => {
+						import('codemirror/mode/markdown/markdown');
+						import('codemirror/addon/display/placeholder');
+						import('codemirror/mode/javascript/javascript');
+						import('codemirror/mode/jsx/jsx');
+					}}
+				/>
+			</MarkdownEditorWrap>
+		</>
 	);
 }
 
