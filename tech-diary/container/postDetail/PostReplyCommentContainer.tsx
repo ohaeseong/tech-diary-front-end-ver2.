@@ -1,4 +1,3 @@
-import PostReplyComment from 'components/post/PostReplyComment';
 import useRequest from 'libs/hooks/useRequest';
 import { requestDeleteReplyComment, requestGetReplyComment } from 'libs/repository';
 import React, { useCallback, useEffect } from 'react';
