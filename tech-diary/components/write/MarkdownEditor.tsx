@@ -5,6 +5,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import { color } from 'styles/color';
 import PostEditorTool from './PostEditorTool';
+import useDarkMode from 'libs/hooks/useDarkMode';
 
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
@@ -135,9 +136,12 @@ type Props = {
 };
 
 function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
+	const [theme, toggleTheme] = useDarkMode();
+	const themeMode = theme === 'light';
+
 	return (
 		<>
-			<PostEditorTool />
+			<PostEditorTool isDark={themeMode} toggleTheme={toggleTheme} />
 			<MarkdownEditorWrap>
 				<CodeMirror
 					value={markdownText}

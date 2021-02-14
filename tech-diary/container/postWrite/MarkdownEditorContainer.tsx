@@ -3,6 +3,7 @@ import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
+import useDarkMode from 'libs/hooks/useDarkMode';
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;

@@ -20,7 +20,7 @@ const MenuItemWrap = styled.p`
 type Props = {
 	children: string;
 	itemInfo?: any;
-	onClick: (params?: any) => void;
+	onClick?: (params?: any) => void;
 	onKeyDown?: (event: KeyboardEvent<HTMLDivElement>) => void;
 };
 

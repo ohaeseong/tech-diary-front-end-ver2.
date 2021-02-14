@@ -5,7 +5,7 @@ import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
 
 function PostEditorContainer() {
-	const [theme, toggleTheme] = useDarkMode();
+	const [theme] = useDarkMode();
 	const themeMode = theme === 'light';
 
 	return (
