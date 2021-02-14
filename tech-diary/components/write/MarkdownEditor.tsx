@@ -4,17 +4,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import { color } from 'styles/color';
-
-const EditorToolWrap = styled.div`
-	position: fixed;
-	width: 100%;
-	height: 3rem;
-	border: 1px solid black;
-`;
-
-function MarkdownEditorTool() {
-	return <EditorToolWrap></EditorToolWrap>;
-}
+import PostEditorTool from './PostEditorTool';
 
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
@@ -147,7 +137,7 @@ type Props = {
 function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 	return (
 		<>
-			<MarkdownEditorTool />
+			<PostEditorTool />
 			<MarkdownEditorWrap>
 				<CodeMirror
 					value={markdownText}
