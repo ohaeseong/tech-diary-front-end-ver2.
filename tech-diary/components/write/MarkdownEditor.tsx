@@ -1,11 +1,10 @@
-import React, { createRef, RefObject, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import { color } from 'styles/color';
 import PostEditorTool from './PostEditorTool';
-import { EditorFromTextArea } from 'codemirror';
 
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
@@ -99,8 +98,7 @@ const MarkdownEditorWrap = styled.div`
 			font-style: italic;
 		}
 
-		.cm-strong,
-		.cm-em {
+		.cm-strong {
 			color: ${(props) => props.theme.neon_2};
 		}
 
@@ -164,6 +162,9 @@ function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 			case 'DEL':
 				doc.replaceSelection(` \n ~text~`);
 				break;
+			case 'CODE':
+				doc.replaceSelection(' \n ```\ncode\n``` ');
+				break;
 			default:
 				break;
 		}
@@ -187,7 +188,7 @@ function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 					onBeforeChange={(editor, data, value) => {
 						setMarkdownText(value);
 					}}
-					editorDidMount={() => {
+					editorWillUnmount={() => {
 						import('codemirror/mode/markdown/markdown');
 						import('codemirror/addon/display/placeholder');
 						import('codemirror/mode/javascript/javascript');

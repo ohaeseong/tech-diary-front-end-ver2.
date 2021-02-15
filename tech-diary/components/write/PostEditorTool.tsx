@@ -78,7 +78,7 @@ function PostEditorTool({ onClick }: Props) {
 				</ToolItemGroup>
 				<ToolItemGroup>
 					<ToolItem>
-						<HiCode size={ICON_SIZE} />
+						<HiCode size={ICON_SIZE} onClick={() => onClick('CODE')} />
 					</ToolItem>
 					<ToolItem>
 						<BiLinkAlt size={ICON_SIZE} />

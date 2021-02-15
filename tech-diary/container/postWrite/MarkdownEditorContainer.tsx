@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
 import useDarkMode from 'libs/hooks/useDarkMode';
+import Modal from 'components/common/Modal';
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
@@ -51,16 +52,19 @@ function MarkdownEditorContainer() {
 	}, []);
 
 	return (
-		<MarkdownEditorTemplate>
-			<EditorWrap>
-				<TitleEditor title={title} onChange={handleTitleLength} />
-				<MarkdownEditor markdownText={markdownText} setMarkdownText={setMarkdownText} />
-			</EditorWrap>
-			<RendererWrap>
-				<TitlePreview>{title}</TitlePreview>
-				<MarkdownRenderer markdown={markdownText} />
-			</RendererWrap>
-		</MarkdownEditorTemplate>
+		<>
+			<Modal />
+			<MarkdownEditorTemplate>
+				<EditorWrap>
+					<TitleEditor title={title} onChange={handleTitleLength} />
+					<MarkdownEditor markdownText={markdownText} setMarkdownText={setMarkdownText} />
+				</EditorWrap>
+				<RendererWrap>
+					<TitlePreview>{title}</TitlePreview>
+					<MarkdownRenderer markdown={markdownText} />
+				</RendererWrap>
+			</MarkdownEditorTemplate>
+		</>
 	);
 }
 

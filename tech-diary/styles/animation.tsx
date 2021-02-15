@@ -132,3 +132,12 @@ export const toSmall = keyframes`
       transform: scale(0.5);
     }
 `;
+
+export const toBig = keyframes`
+    from {
+    transform: scale(0.5);
+    }
+    to {
+      transform: scale(1);
+    }
+`;
