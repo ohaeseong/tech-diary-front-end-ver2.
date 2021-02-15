@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { createRef, RefObject, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import { color } from 'styles/color';
 import PostEditorTool from './PostEditorTool';
-import useDarkMode from 'libs/hooks/useDarkMode';
+import { EditorFromTextArea } from 'codemirror';
 
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
@@ -136,22 +136,54 @@ type Props = {
 };
 
 function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
-	const [theme, toggleTheme] = useDarkMode();
-	const themeMode = theme === 'light';
+	const [codemirror, setCodemirror] = useState();
+
+	const handleToolbarClick = (mode: string) => {
+		if (!codemirror) return;
+		const { doc } = codemirror.editor;
+
+		switch (mode) {
+			case 'H1':
+				doc.replaceSelection(` \n # Heading1`);
+				break;
+			case 'H2':
+				doc.replaceSelection(` \n ## Heading2`);
+				break;
+			case 'H3':
+				doc.replaceSelection(` \n ### Heading3`);
+				break;
+			case 'H4':
+				doc.replaceSelection(` \n #### Heading4`);
+				break;
+			case 'BOLD':
+				doc.replaceSelection(` \n **text**`);
+				break;
+			case 'ITALIC':
+				doc.replaceSelection(` \n _text_`);
+				break;
+			case 'DEL':
+				doc.replaceSelection(` \n ~text~`);
+				break;
+			default:
+				break;
+		}
+	};
 
 	return (
 		<>
-			<PostEditorTool isDark={themeMode} toggleTheme={toggleTheme} />
+			<PostEditorTool onClick={handleToolbarClick} />
 			<MarkdownEditorWrap>
 				<CodeMirror
 					value={markdownText}
+					ref={(ref: any) => {
+						setCodemirror(ref);
+					}}
 					options={{
 						mode: 'markdown',
 						lineNumbers: false,
 						placeholder: '블로그 작성...',
 						lineWrapping: true,
 					}}
-					autoScroll
 					onBeforeChange={(editor, data, value) => {
 						setMarkdownText(value);
 					}}

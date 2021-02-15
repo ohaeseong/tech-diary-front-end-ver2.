@@ -2,11 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Button from 'components/common/Button';
 import { color } from 'styles/color';
-import Switch from 'react-switch';
 import { BsTypeBold } from 'react-icons/bs';
-import { RiMoonClearFill } from 'react-icons/ri';
-import { FaSun } from 'react-icons/fa';
-import { BiItalic, BiLinkAlt, BiSave } from 'react-icons/bi';
+import { BiItalic, BiLinkAlt } from 'react-icons/bi';
 import { HiCode } from 'react-icons/hi';
 import { MdFormatStrikethrough, MdImage, MdFormatQuote } from 'react-icons/md';
 
@@ -25,7 +22,6 @@ const ToolBoxWrap = styled.div`
 `;
 
 const ToolItemWrap = styled.div`
-	/* border: 1px solid black; */
 	display: flex;
 	align-items: center;
 `;
@@ -42,7 +38,7 @@ const ToolItem = styled.button`
 	justify-content: center;
 	width: 2.5rem;
 	height: 2.5rem;
-	margin: 0 0.5rem;
+	margin: 0 0.4rem;
 	font-family: 'Spoqa Han Sans Regular';
 	font-weight: 700;
 	background-color: white;
@@ -53,53 +49,31 @@ const ToolItem = styled.button`
 	cursor: pointer;
 `;
 
-const IconWrap = styled.div`
-	display: flex;
-	width: 100%;
-	height: 100%;
-
-	align-items: center;
-	justify-content: center;
-`;
-
-const SwitchWrap = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 5rem;
-	height: 100%;
-	margin-right: 2.5rem;
-`;
-
 type Props = {
-	isDark: boolean;
-	toggleTheme: () => void;
-}
+	onClick: (mode: string) => void;
+};
 
-function PostEditorTool({ toggleTheme, isDark }: Props) {
+function PostEditorTool({ onClick }: Props) {
 	const ICON_SIZE = '1.5rem';
 
 	return (
 		<ToolBoxWrap>
 			<ToolItemWrap>
 				<ToolItemGroup>
-					<ToolItem>
-						<BiSave size={ICON_SIZE} />
-					</ToolItem>
-					<ToolItem>H1</ToolItem>
-					<ToolItem>H2</ToolItem>
-					<ToolItem>H3</ToolItem>
-					<ToolItem>H4</ToolItem>
+					<ToolItem onClick={() => onClick('H1')}>H1</ToolItem>
+					<ToolItem onClick={() => onClick('H2')}>H2</ToolItem>
+					<ToolItem onClick={() => onClick('H3')}>H3</ToolItem>
+					<ToolItem onClick={() => onClick('H4')}>H4</ToolItem>
 				</ToolItemGroup>
 				<ToolItemGroup>
 					<ToolItem>
-						<BsTypeBold size={ICON_SIZE} />
+						<BsTypeBold size={ICON_SIZE} onClick={() => onClick('BOLD')} />
 					</ToolItem>
 					<ToolItem>
-						<BiItalic size={ICON_SIZE} />
+						<BiItalic size={ICON_SIZE} onClick={() => onClick('ITALIC')} />
 					</ToolItem>
 					<ToolItem>
-						<MdFormatStrikethrough size={ICON_SIZE} />
+						<MdFormatStrikethrough size={ICON_SIZE} onClick={() => onClick('DEL')} />
 					</ToolItem>
 				</ToolItemGroup>
 				<ToolItemGroup>
@@ -118,24 +92,6 @@ function PostEditorTool({ toggleTheme, isDark }: Props) {
 				</ToolItemGroup>
 			</ToolItemWrap>
 			<ToolItemWrap>
-				<SwitchWrap>
-					<Switch
-						checked={isDark}
-						onChange={() => toggleTheme()}
-						checkedIcon={
-							<IconWrap>
-								<FaSun color="#F5B7B1" />
-							</IconWrap>
-						}
-						uncheckedIcon={
-							<IconWrap>
-								<RiMoonClearFill color="#F4D03F" />
-							</IconWrap>
-						}
-						onColor={color.neon_0}
-						offColor={color.black}
-					/>
-				</SwitchWrap>
 				<Button color={color.neon_2} margin="0 2rem 0 0">
 					작성 완료
 				</Button>

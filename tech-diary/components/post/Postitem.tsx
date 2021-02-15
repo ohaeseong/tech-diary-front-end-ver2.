@@ -87,8 +87,8 @@ const PostContent = styled.div<{ type: string }>`
 		if (props.type === 'contents') {
 			return css`
 				font-size: 0.5rem;
-				height: 5 rem;
-				line-height: 1rem;
+				height: 5rem;
+				line-height: 1.2rem;
 				color: ${props.theme.gray_5};
 				-webkit-line-clamp: 4;
 
