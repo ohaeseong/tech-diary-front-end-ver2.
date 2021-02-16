@@ -3,8 +3,14 @@ import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
-import useDarkMode from 'libs/hooks/useDarkMode';
-import Modal from 'components/common/Modal';
+import PostPublishModal from 'components/write/PostPublishModal';
+import useToggle from 'libs/hooks/useToggle';
+import { useDispatch } from 'react-redux';
+import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
+import Toast from 'components/common/Toast';
+import useRequest from 'libs/hooks/useRequest';
+import { requestCreatePost } from 'libs/repository';
+import { getStorage } from 'libs/storage';
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
@@ -45,19 +51,64 @@ function MarkdownEditorContainer() {
 	const [markdownText, setMarkdownText] = useState('');
 	const [title, setTitle] = useState('');
 
+	const [isOpenModal, modalToggle] = useToggle(false);
+	const [, , onCreatePost, ,] = useRequest(requestCreatePost);
+	const dispatch = useDispatch();
+
+	const onTemporaryStorage = useCallback(() => {
+		const token = getStorage('tech-token');
+		const req = {
+			title,
+			contents: markdownText,
+			kinds: 'front-end',
+			category: 'blog',
+			thumbnailAddress: '',
+			series: '',
+			token,
+		};
+		onCreatePost(req);
+	}, [markdownText, onCreatePost, title]);
+
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
 			setTitle(event.target.value);
 		}
 	}, []);
 
+	const openModal = useCallback(() => {
+		if (title.length === 0 || markdownText.length === 0) {
+			dispatch({
+				type: SHOW_TOAST,
+				payload: {
+					text: '제목 또는 내용을 채워주세요.',
+				},
+			});
+			setTimeout(() => {
+				dispatch({
+					type: DROP_TOAST,
+				});
+			}, 2000);
+
+			return;
+		}
+		if (!isOpenModal) {
+			modalToggle();
+		}
+	}, [dispatch, isOpenModal, markdownText.length, modalToggle, title.length]);
+
 	return (
 		<>
-			<Modal />
+			<Toast />
+			<PostPublishModal isOpen={isOpenModal} modalToggle={modalToggle} />
 			<MarkdownEditorTemplate>
 				<EditorWrap>
 					<TitleEditor title={title} onChange={handleTitleLength} />
-					<MarkdownEditor markdownText={markdownText} setMarkdownText={setMarkdownText} />
+					<MarkdownEditor
+						markdownText={markdownText}
+						setMarkdownText={setMarkdownText}
+						openModal={openModal}
+						requestSave={onTemporaryStorage}
+					/>
 				</EditorWrap>
 				<RendererWrap>
 					<TitlePreview>{title}</TitlePreview>

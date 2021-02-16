@@ -5,9 +5,10 @@ import { RootState } from 'store/modules';
 import { css } from '@emotion/react';
 
 const ToastTemplate = styled.div<{ isCall: boolean }>`
-	position: fixed;
+	position: absolute;
 	top: 7rem;
 	right: 5rem;
+	z-index: 999;
 
 	${(props) => {
 		if (props.isCall) {

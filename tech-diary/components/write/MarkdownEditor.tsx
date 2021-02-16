@@ -4,7 +4,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import { color } from 'styles/color';
-import PostEditorTool from './PostEditorTool';
+import PostEditorTool from 'components/write/PostEditorTool';
 
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
@@ -129,11 +129,13 @@ const MarkdownEditorWrap = styled.div`
 `;
 
 type Props = {
+	requestSave: () => void;
 	setMarkdownText: (dispatch: string) => void;
 	markdownText: string;
+	openModal: () => void;
 };
 
-function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
+function MarkdownEditor({ setMarkdownText, openModal, requestSave, markdownText }: Props) {
 	const [codemirror, setCodemirror] = useState();
 
 	const handleToolbarClick = (mode: string) => {
@@ -172,7 +174,7 @@ function MarkdownEditor({ setMarkdownText, markdownText }: Props) {
 
 	return (
 		<>
-			<PostEditorTool onClick={handleToolbarClick} />
+			<PostEditorTool onClick={handleToolbarClick} openModal={openModal} requestSave={requestSave} />
 			<MarkdownEditorWrap>
 				<CodeMirror
 					value={markdownText}

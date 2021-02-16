@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { ReactNode, KeyboardEvent } from 'react';
+import React, { KeyboardEvent } from 'react';
 
 const MenuItemWrap = styled.p`
 	width: 100%;

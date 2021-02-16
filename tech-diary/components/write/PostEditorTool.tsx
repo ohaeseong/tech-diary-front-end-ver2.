@@ -51,9 +51,11 @@ const ToolItem = styled.button`
 
 type Props = {
 	onClick: (mode: string) => void;
+	openModal: () => void;
+	requestSave: () => void;
 };
 
-function PostEditorTool({ onClick }: Props) {
+function PostEditorTool({ onClick, openModal, requestSave }: Props) {
 	const ICON_SIZE = '1.5rem';
 
 	return (
@@ -66,19 +68,19 @@ function PostEditorTool({ onClick }: Props) {
 					<ToolItem onClick={() => onClick('H4')}>H4</ToolItem>
 				</ToolItemGroup>
 				<ToolItemGroup>
-					<ToolItem>
-						<BsTypeBold size={ICON_SIZE} onClick={() => onClick('BOLD')} />
+					<ToolItem onClick={() => onClick('BOLD')}>
+						<BsTypeBold size={ICON_SIZE} />
 					</ToolItem>
-					<ToolItem>
-						<BiItalic size={ICON_SIZE} onClick={() => onClick('ITALIC')} />
+					<ToolItem onClick={() => onClick('ITALIC')}>
+						<BiItalic size={ICON_SIZE} />
 					</ToolItem>
-					<ToolItem>
-						<MdFormatStrikethrough size={ICON_SIZE} onClick={() => onClick('DEL')} />
+					<ToolItem onClick={() => onClick('DEL')}>
+						<MdFormatStrikethrough size={ICON_SIZE} />
 					</ToolItem>
 				</ToolItemGroup>
 				<ToolItemGroup>
-					<ToolItem>
-						<HiCode size={ICON_SIZE} onClick={() => onClick('CODE')} />
+					<ToolItem onClick={() => onClick('CODE')}>
+						<HiCode size={ICON_SIZE} />
 					</ToolItem>
 					<ToolItem>
 						<BiLinkAlt size={ICON_SIZE} />
@@ -92,7 +94,10 @@ function PostEditorTool({ onClick }: Props) {
 				</ToolItemGroup>
 			</ToolItemWrap>
 			<ToolItemWrap>
-				<Button color={color.neon_2} margin="0 2rem 0 0">
+				<Button btnColor={color.gray_3} margin="0 1.2rem 0 0" onClick={requestSave}>
+					임시 저장
+				</Button>
+				<Button btnColor={color.neon_2} margin="0 2rem 0 0" onClick={openModal}>
 					작성 완료
 				</Button>
 			</ToolItemWrap>

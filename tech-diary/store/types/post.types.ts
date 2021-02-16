@@ -9,6 +9,16 @@ export type PostList = {
 	posts: Array<Post>;
 };
 
+export type CreatePost = {
+	title: string;
+	contents: string;
+	kinds: string;
+	category: string;
+	series?  string;
+	thumbnailAddress?: string;
+	token: string;
+};
+
 export type Post = {
 	id: string;
 	title: string;

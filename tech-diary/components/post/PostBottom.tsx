@@ -10,11 +10,7 @@ const PostBottomTemplate = styled.div`
 `;
 
 function PostBottom() {
-
-	return (
-		<PostBottomTemplate>
-		</PostBottomTemplate>
-	);
+	return <PostBottomTemplate />;
 }
 
 export default PostBottom;

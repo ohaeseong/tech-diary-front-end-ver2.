@@ -78,13 +78,13 @@ type Props = {
 	children: ReactNode;
 	width?: string;
 	height?: string;
-	color?: string;
+	btnColor?: string;
 	onClick?: () => void;
 };
 
-function Button({ size = 'default', margin = '', children, width, height, onClick, color }: Props) {
+function Button({ size = 'default', margin = '', children, width, height, onClick, btnColor }: Props) {
 	return (
-		<Btn size={size} margin={margin} width={width} height={height} onClick={onClick} color={color}>
+		<Btn size={size} margin={margin} width={width} height={height} onClick={onClick} color={btnColor}>
 			{children}
 		</Btn>
 	);

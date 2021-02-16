@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { server } from 'config/config';
+import { CreatePost, Post } from 'store/types/post.types';
 
 export const requestPostLike = (req: { postId: string; token: string }) =>
 	axios
@@ -139,6 +140,28 @@ export const requestUpdateReplyComment = (req: { commentIdx: number; token: stri
 			{
 				headers: {
 					token: req?.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});
+
+export const requestCreatePost = (req: CreatePost) =>
+	axios
+		.post(
+			`${server.host}/post`,
+			{
+				title: req.title,
+				contents: req.contents,
+				category: req.category,
+				kinds: req.kinds,
+				series: req.series,
+				thumbnailAddress: req.thumbnailAddress,
+			},
+			{
+				headers: {
+					token: req.token,
 				},
 			}
 		)

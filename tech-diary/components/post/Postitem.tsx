@@ -181,14 +181,6 @@ function PostItem({ item }: Props) {
 	const profileImage = member.profileImage || '/image/user.png';
 	const router = useRouter();
 
-	// const loadUserPage = () => {
-	// 	// window.location.href = 'http://localhost:3000/login';
-	// };
-
-	const goToPostDetail = (url: string) => {
-		router.push(url);
-	};
-
 	return (
 		<PostItemWrap>
 			<ThumbnailWrap onClick={() => router.push(`http://localhost:3000/blog/detail/${id}`)}>

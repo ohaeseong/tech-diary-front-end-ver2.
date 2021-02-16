@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getStorage } from 'libs/storage';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import { SET_POST_COMMENT_COUNT } from 'store/modules/post.comment.count';
+import { Comment } from 'store/types/post.types';
 import { RootState } from 'store/modules';
 
 type Props = {

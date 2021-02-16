@@ -31,7 +31,6 @@ export const fadein = keyframes`
     }
 `;
 
-
 export const fadeout = keyframes`
   from {
         opacity: 0;
@@ -46,7 +45,15 @@ export const fadeout = keyframes`
     100% {
       transform: translateY(-10rem);
     }
+`;
 
+export const fadeinForModal = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.3;
+    }
 `;
 
 export const flicker = keyframes`
