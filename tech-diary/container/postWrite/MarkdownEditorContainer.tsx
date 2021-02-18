@@ -5,12 +5,15 @@ import TitleEditor from 'components/write/TitleEditor';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
 import PostPublishModal from 'components/write/PostPublishModal';
 import useToggle from 'libs/hooks/useToggle';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import Toast from 'components/common/Toast';
 import useRequest from 'libs/hooks/useRequest';
 import { requestCreatePost } from 'libs/repository';
 import { getStorage } from 'libs/storage';
+import { setWritePostId } from 'store/modules/write';
+import { RootState } from 'store/modules';
+import { useRouter } from 'next/router';
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
@@ -48,26 +51,24 @@ const TitlePreview = styled.span`
 `;
 
 function MarkdownEditorContainer() {
+	const { postId } = useSelector((root: RootState) => root.write);
 	const [markdownText, setMarkdownText] = useState('');
 	const [title, setTitle] = useState('');
 
 	const [isOpenModal, modalToggle] = useToggle(false);
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost);
+	const router = useRouter();
 	const dispatch = useDispatch();
 
 	const onTemporaryStorage = useCallback(() => {
-		const token = getStorage('tech-token');
-		const req = {
-			title,
-			contents: markdownText,
-			kinds: 'front-end',
-			category: 'blog',
-			thumbnailAddress: '',
-			series: '',
-			token,
-		};
-		onCreatePost(req);
-	}, [markdownText, onCreatePost, title]);
+		if (postId) {
+			// console.log(postId);
+		} else {
+			console.log("test");
+			dispatch(setWritePostId('test'));
+			router.push(`/blog/write?id=test`);
+		}
+	}, [dispatch, postId, router]);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import auth from './auth';
 import githubAuth from './github.auth';
 import post from './post';
+import write from './write';
 import theme from './theme.state';
 import toast from './toast';
 import modal from './modal';
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
 	toast,
 	postComment,
 	modal,
+	write,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
