@@ -12,7 +12,7 @@ type Props = {
 };
 
 function BlogWriteEditPage({ post }: Props) {
-	console.log(post);
+	console.log(post, 'test');
 
 	return (
 		<>

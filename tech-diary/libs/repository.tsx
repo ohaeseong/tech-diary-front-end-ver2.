@@ -154,10 +154,6 @@ export const requestCreatePost = (req: CreatePost) =>
 			{
 				title: req.title,
 				contents: req.contents,
-				category: req.category,
-				kinds: req.kinds,
-				series: req.series,
-				thumbnailAddress: req.thumbnailAddress,
 			},
 			{
 				headers: {

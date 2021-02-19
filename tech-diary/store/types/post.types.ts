@@ -12,10 +12,6 @@ export type PostList = {
 export type CreatePost = {
 	title: string;
 	contents: string;
-	kinds: string;
-	category: string;
-	series?  string;
-	thumbnailAddress?: string;
 	token: string;
 };
 

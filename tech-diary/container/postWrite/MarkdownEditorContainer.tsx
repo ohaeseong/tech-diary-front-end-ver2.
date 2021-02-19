@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
@@ -14,6 +14,7 @@ import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
 import { RootState } from 'store/modules';
 import { useRouter } from 'next/router';
+import { CreatePost } from 'store/types/post.types';
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
@@ -56,19 +57,23 @@ function MarkdownEditorContainer() {
 	const [title, setTitle] = useState('');
 
 	const [isOpenModal, modalToggle] = useToggle(false);
-	const [, , onCreatePost, ,] = useRequest(requestCreatePost);
+	const [createPostReturnData, , onCreatePost, ,] = useRequest(requestCreatePost);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const onTemporaryStorage = useCallback(() => {
-		if (postId) {
-			// console.log(postId);
-		} else {
-			console.log("test");
-			dispatch(setWritePostId('test'));
-			router.push(`/blog/write?id=test`);
+	const onTemporaryStorage = useCallback(async () => {
+		if (!postId) {
+			const token = getStorage('tech-token');
+			const req = {
+				title,
+				contents: markdownText,
+				token,
+			} as CreatePost;
+			await onCreatePost(req);
 		}
-	}, [dispatch, postId, router]);
+
+		// console.log(postId);
+	}, [markdownText, onCreatePost, postId, title]);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
@@ -96,6 +101,12 @@ function MarkdownEditorContainer() {
 			modalToggle();
 		}
 	}, [dispatch, isOpenModal, markdownText.length, modalToggle, title.length]);
+
+	useEffect(() => {
+		if (createPostReturnData) {
+			dispatch(setWritePostId('test'));
+		}
+	}, [createPostReturnData, dispatch, router]);
 
 	return (
 		<>
