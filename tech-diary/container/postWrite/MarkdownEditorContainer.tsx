@@ -14,7 +14,7 @@ import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
 import { RootState } from 'store/modules';
 import { useRouter } from 'next/router';
-import { CreatePost } from 'store/types/post.types';
+import { CreatePost, PostDetail } from 'store/types/post.types';
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
@@ -57,7 +57,7 @@ function MarkdownEditorContainer() {
 	const [title, setTitle] = useState('');
 
 	const [isOpenModal, modalToggle] = useToggle(false);
-	const [createPostReturnData, , onCreatePost, ,] = useRequest(requestCreatePost);
+	const [createPostReturnData, , onCreatePost, ,] = useRequest(requestCreatePost, true);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -69,11 +69,14 @@ function MarkdownEditorContainer() {
 				contents: markdownText,
 				token,
 			} as CreatePost;
-			await onCreatePost(req);
+			const response = await onCreatePost(req);
+			const { id } = response.data;
+			dispatch(setWritePostId(id));
+			router.push(`/blog/write?id=${id}`);
 		}
 
 		// console.log(postId);
-	}, [markdownText, onCreatePost, postId, title]);
+	}, [dispatch, markdownText, onCreatePost, postId, router, title]);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
@@ -101,12 +104,6 @@ function MarkdownEditorContainer() {
 			modalToggle();
 		}
 	}, [dispatch, isOpenModal, markdownText.length, modalToggle, title.length]);
-
-	useEffect(() => {
-		if (createPostReturnData) {
-			dispatch(setWritePostId('test'));
-		}
-	}, [createPostReturnData, dispatch, router]);
 
 	return (
 		<>

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-function useRequest(request: any) {
+function useRequest(request: any, getResponseForCB?: boolean) {
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState(null);
 	const [error, setError] = useState<Error | null>(null);
@@ -12,13 +12,16 @@ function useRequest(request: any) {
 				setLoading(true);
 				const response = await request(params);
 				setData(response.data);
+				if (getResponseForCB) {
+					return response.data;
+				}
 			} catch (e) {
 				setError(e);
 				throw e;
 			}
 			setLoading(false);
 		},
-		[request]
+		[getResponseForCB, request]
 	);
 
 	return [data, loading, onRequest, error];
