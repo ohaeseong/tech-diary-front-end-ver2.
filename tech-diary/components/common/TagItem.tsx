@@ -17,13 +17,22 @@ const TagItemWrap = styled.a`
 
 type Props = {
 	tagName: string;
+	isLink: boolean;
 };
 
-function TagItem({ tagName }: Props) {
+function TagItem({ tagName, isLink }: Props) {
 	return (
-		<Link href="http://localhost:3000">
-			<TagItemWrap>{tagName}</TagItemWrap>
-		</Link>
+		<>
+			{isLink ? (
+				<>
+					<Link href="http://localhost:3000">
+						<TagItemWrap>{tagName}</TagItemWrap>
+					</Link>
+				</>
+			) : (
+				<TagItemWrap>{tagName}</TagItemWrap>
+			)}
+		</>
 	);
 }
 

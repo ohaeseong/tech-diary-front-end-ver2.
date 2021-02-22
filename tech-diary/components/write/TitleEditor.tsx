@@ -6,7 +6,7 @@ const TitleEditorTextarea = styled(TextareaAutosize)`
 	width: 100%;
 	font-size: 2rem;
 	padding: 2.5rem 0;
-	margin: 3rem 0;
+	margin: 3rem 0 1.7rem 0;
 	font-family: 'Spoqa Han Sans Regular';
 	overflow: hidden;
 	border: none;

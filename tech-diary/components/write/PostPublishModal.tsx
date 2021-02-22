@@ -5,6 +5,8 @@ import { GoX } from 'react-icons/go';
 import { color } from 'styles/color';
 import PostItem from 'components/post/PostItem';
 import { Post } from 'store/types/post.types';
+import TagGroup from 'components/common/TagGroup';
+import TagItem from 'components/common/TagItem';
 // import {  }
 
 const ModalTemplate = styled.div`
@@ -57,11 +59,26 @@ const Body = styled.div`
 
 const PostPublishContentWrap = styled.div`
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding: 1rem;
 	width: 100%;
 	max-height: 100%;
+	border: 1px solid black;
+`;
+
+const PostPreviewBottom = styled.span`
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	font-size: 0.7rem;
+	color: ${(props) => props.theme.gray_4};
+`;
+
+const InputTag = styled.input`
+	width: 100%;
 `;
 
 const itemDumyData = {
@@ -86,9 +103,10 @@ const itemDumyData = {
 type Props = {
 	isOpen: boolean;
 	modalToggle: () => void;
+	onSavePost: () => void;
 };
 
-function PostPublishModal({ isOpen, modalToggle }: Props) {
+function PostPublishModal({ isOpen, modalToggle, onSavePost }: Props) {
 	const closeModal = useCallback(() => {
 		modalToggle();
 	}, [modalToggle]);
@@ -105,9 +123,11 @@ function PostPublishModal({ isOpen, modalToggle }: Props) {
 							</Head>
 							<Body>
 								<PostPublishContentWrap>
-									<PostItem item={itemDumyData} />
+									<PostItem item={itemDumyData} isReadOnly />
+									<PostPreviewBottom>*미리보기</PostPreviewBottom>
 								</PostPublishContentWrap>
-								<PostPublishContentWrap />
+								<PostPublishContentWrap>
+								</PostPublishContentWrap>
 							</Body>
 						</ModalBox>
 					</ModalTemplate>

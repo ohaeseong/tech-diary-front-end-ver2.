@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, KeyboardEvent, useState } from 'react';
 import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
@@ -15,6 +15,8 @@ import { setWritePostId } from 'store/modules/write';
 import { RootState } from 'store/modules';
 import { useRouter } from 'next/router';
 import { CreatePost, PostDetail } from 'store/types/post.types';
+import TagGroup from 'components/common/TagGroup';
+import TagItem from 'components/common/TagItem';
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
@@ -51,15 +53,51 @@ const TitlePreview = styled.span`
 	font-family: 'Spoqa Han Sans Regular';
 `;
 
+const TagInput = styled.input`
+	padding: 0.5rem 0.5rem;
+	width: 100%;
+	font-size: 1rem;
+	margin-top: 0.5rem;
+	border: 1px solid ${(props) => props.theme.gray_2};
+	font-family: 'Spoqa Han Sans Thin';
+	border-radius: 5px;
+`;
+
 function MarkdownEditorContainer() {
 	const { postId } = useSelector((root: RootState) => root.write);
 	const [markdownText, setMarkdownText] = useState('');
 	const [title, setTitle] = useState('');
+	const [isTemp, setIsTemp] = useState(false);
+	const [tagItemList, setTagItemList] = useState([]);
+	const [tagName, setTagName] = useState('');
 
 	const [isOpenModal, modalToggle] = useToggle(false);
 	const [createPostReturnData, , onCreatePost, ,] = useRequest(requestCreatePost, true);
 	const router = useRouter();
 	const dispatch = useDispatch();
+
+	const addTag = useCallback(() => {
+		if (tagName.length === 0) return;
+
+		const tagList: any = [...tagItemList];
+
+		tagList.push(<TagItem tagName={tagName} isLink={false} />);
+		setTagItemList(tagList);
+		setTagName('');
+	}, [tagItemList, tagName]);
+
+	const tagInputOnChage = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+		setTagName(event.target.value);
+	}, []);
+
+	const handleTagInputKeypress = useCallback(
+		(event: React.KeyboardEvent<HTMLInputElement>) => {
+			if (event.key === 'Enter') {
+				addTag();
+			}
+		},
+		[addTag]
+	);
 
 	const onTemporaryStorage = useCallback(async () => {
 		if (!postId) {
@@ -72,11 +110,14 @@ function MarkdownEditorContainer() {
 			const response = await onCreatePost(req);
 			const { id } = response.data;
 			dispatch(setWritePostId(id));
-			router.push(`/blog/write?id=${id}`);
+			router.replace(`/blog/write?id=${id}`);
+			setIsTemp(true);
 		}
 
 		// console.log(postId);
 	}, [dispatch, markdownText, onCreatePost, postId, router, title]);
+
+	const onSavePost = useCallback(() => {}, []);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
@@ -108,10 +149,17 @@ function MarkdownEditorContainer() {
 	return (
 		<>
 			<Toast />
-			<PostPublishModal isOpen={isOpenModal} modalToggle={modalToggle} />
+			<PostPublishModal isOpen={isOpenModal} modalToggle={modalToggle} onSavePost={onSavePost} />
 			<MarkdownEditorTemplate>
 				<EditorWrap>
 					<TitleEditor title={title} onChange={handleTitleLength} />
+					<TagGroup>{tagItemList}</TagGroup>
+					<TagInput
+						placeholder="Enter를 눌러 tag를 추가해 보세요!"
+						onChange={tagInputOnChage}
+						onKeyDown={handleTagInputKeypress}
+						value={tagName}
+					/>
 					<MarkdownEditor
 						markdownText={markdownText}
 						setMarkdownText={setMarkdownText}

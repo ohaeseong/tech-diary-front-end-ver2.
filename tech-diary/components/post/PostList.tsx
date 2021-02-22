@@ -39,7 +39,7 @@ function PostList({ postList }: Props) {
 		<>
 			<PostListTemplate>
 				{postList.map((item) => {
-					return <PostItem key={item.id} item={item} />;
+					return <PostItem key={item.id} item={item} isReadOnly={false} />;
 				})}
 			</PostListTemplate>
 			{postList.length === 0 ? (

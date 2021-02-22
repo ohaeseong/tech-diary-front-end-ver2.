@@ -18,7 +18,7 @@ type Props = {
 	onChange?: (e: ChangeEvent<any>) => void;
 	name: string;
 	value: string;
-	handleKeyPress?: (e: React.KeyboardEvent) => void;
+	handleKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 function AccountInput({ isPw, explanation, onChange, name, value, handleKeyPress }: Props) {

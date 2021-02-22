@@ -88,7 +88,7 @@ function PostInfo({ tagData, member, createTime }: Props) {
 			{tagData.length !== 0 ? (
 				<TagGroup>
 					{tagData.map((item) => {
-						return <TagItem key={item.idx} tagName={item.tagName} />;
+						return <TagItem key={item.idx} tagName={item.tagName} isLink />;
 					})}{' '}
 				</TagGroup>
 			) : (

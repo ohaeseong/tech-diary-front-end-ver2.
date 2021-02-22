@@ -112,7 +112,7 @@ type loginForm = {
 type Props = {
 	onLogin: () => void;
 	onLoginWithGithub: () => void;
-	handleKeypress: (event: React.KeyboardEvent) => void;
+	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 
 	errorMsg: string;

@@ -46,7 +46,7 @@ function LoginLayout() {
 		window.location.href = `${GIT_HUB_LOGIN_URL}client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
 	};
 
-	const handleKeypress = (event: React.KeyboardEvent) => {
+	const handleKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			onLogin();
 		}

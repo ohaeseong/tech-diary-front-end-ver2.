@@ -11,6 +11,7 @@ const MarkdownEditorWrap = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	margin-top: 1rem;
 	position: relative;
 
 	& > * {
