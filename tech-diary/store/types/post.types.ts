@@ -50,6 +50,13 @@ export type PostDetail = {
 	commentCount: number;
 };
 
+export type PostUpdate = {
+	id: string;
+	title: string;
+	contents: string;
+	token: string;
+};
+
 export type Comment = {
 	idx: number;
 	commentTxt: string;

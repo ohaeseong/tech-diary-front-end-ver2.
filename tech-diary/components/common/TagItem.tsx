@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { fadeinForModal, toBig } from 'styles/animation';
 
 const TagItemWrap = styled.a`
 	padding: 0.5rem 1rem;
@@ -9,6 +10,8 @@ const TagItemWrap = styled.a`
 	background-color: ${(props) => props.theme.neon_2};
 	color: white;
 	border-radius: 15px;
+
+	animation: ${toBig} 0.2s;
 
 	&:hover {
 		cursor: pointer;

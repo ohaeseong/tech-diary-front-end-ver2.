@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { CreatePost, Post } from 'store/types/post.types';
+import { CreatePost, Post, PostUpdate } from 'store/types/post.types';
 
 export const requestPostLike = (req: { postId: string; token: string }) =>
 	axios
@@ -164,3 +164,27 @@ export const requestCreatePost = (req: CreatePost) =>
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestUpdatePostForTemp = (req: PostUpdate) =>
+	axios
+		.put(
+			`${server.host}/post`,
+			{
+				id: req.id,
+				title: req.title,
+				contents: req.contents,
+			},
+			{
+				headers: {
+					token: req.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});
+
+export const requestGetDetail = (req: { id: string }) =>
+	axios.get(`${server.host}/post/detail/${req.id}`).catch((error) => {
+		throw error;
+	});

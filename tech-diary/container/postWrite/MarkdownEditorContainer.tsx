@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, KeyboardEvent, useState } from 'react';
+import React, { ChangeEvent, useCallback, KeyboardEvent, useState, useEffect } from 'react';
 import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
@@ -9,12 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import Toast from 'components/common/Toast';
 import useRequest from 'libs/hooks/useRequest';
-import { requestCreatePost } from 'libs/repository';
+import { requestCreatePost, requestGetDetail, requestUpdatePostForTemp } from 'libs/repository';
 import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
 import { RootState } from 'store/modules';
 import { useRouter } from 'next/router';
-import { CreatePost, PostDetail } from 'store/types/post.types';
+import { CreatePost, PostDetail, PostUpdate } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 
@@ -58,10 +58,16 @@ const TagInput = styled.input`
 	width: 100%;
 	font-size: 1rem;
 	margin-top: 0.5rem;
-	border: 1px solid ${(props) => props.theme.gray_2};
+	border: 0px solid ${(props) => props.theme.gray_2};
 	font-family: 'Spoqa Han Sans Thin';
 	border-radius: 5px;
 `;
+
+type tagValueType = {
+	props: {
+		tagName: string;
+	};
+};
 
 function MarkdownEditorContainer() {
 	const { postId } = useSelector((root: RootState) => root.write);
@@ -72,12 +78,25 @@ function MarkdownEditorContainer() {
 	const [tagName, setTagName] = useState('');
 
 	const [isOpenModal, modalToggle] = useToggle(false);
-	const [createPostReturnData, , onCreatePost, ,] = useRequest(requestCreatePost, true);
+	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
+	const [, , onUpdatePost, ,] = useRequest(requestUpdatePostForTemp, true);
+	const [lastPostData, , getLastPost, ,] = useRequest(requestGetDetail, true);
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const qsId = router.query.id;
 
 	const addTag = useCallback(() => {
 		if (tagName.length === 0) return;
+		let checkIsSame = false;
+		tagItemList.forEach((tagValue: tagValueType) => {
+			if (tagName === tagValue.props.tagName) {
+				checkIsSame = true;
+			}
+		});
+		if (checkIsSame) {
+			setTagName('');
+			return;
+		}
 
 		const tagList: any = [...tagItemList];
 
@@ -100,7 +119,7 @@ function MarkdownEditorContainer() {
 	);
 
 	const onTemporaryStorage = useCallback(async () => {
-		if (!postId) {
+		if (!postId && !qsId) {
 			const token = getStorage('tech-token');
 			const req = {
 				title,
@@ -111,11 +130,19 @@ function MarkdownEditorContainer() {
 			const { id } = response.data;
 			dispatch(setWritePostId(id));
 			router.replace(`/blog/write?id=${id}`);
-			setIsTemp(true);
 		}
 
-		// console.log(postId);
-	}, [dispatch, markdownText, onCreatePost, postId, router, title]);
+		if (qsId) {
+			const token = getStorage('tech-token');
+			const req = {
+				id: qsId,
+				title,
+				contents: markdownText,
+				token,
+			} as PostUpdate;
+			const response = await onUpdatePost(req);
+		}
+	}, [dispatch, markdownText, onCreatePost, onUpdatePost, postId, qsId, router, title]);
 
 	const onSavePost = useCallback(() => {}, []);
 
@@ -146,6 +173,23 @@ function MarkdownEditorContainer() {
 		}
 	}, [dispatch, isOpenModal, markdownText.length, modalToggle, title.length]);
 
+	useEffect(() => {
+		if (qsId) {
+			const req = {
+				id: qsId,
+			};
+
+			getLastPost(req);
+		}
+	}, [getLastPost, qsId]);
+
+	useEffect(() => {
+		if (lastPostData) {
+			setTitle(lastPostData.data.post.title);
+			setMarkdownText(lastPostData.data.post.contents)
+		}
+	}, [lastPostData]);
+
 	return (
 		<>
 			<Toast />
@@ -154,15 +198,12 @@ function MarkdownEditorContainer() {
 				<EditorWrap>
 					<TitleEditor title={title} onChange={handleTitleLength} />
 					<TagGroup>{tagItemList}</TagGroup>
-					<TagInput
-						placeholder="Enter를 눌러 tag를 추가해 보세요!"
-						onChange={tagInputOnChage}
-						onKeyDown={handleTagInputKeypress}
-						value={tagName}
-					/>
 					<MarkdownEditor
 						markdownText={markdownText}
 						setMarkdownText={setMarkdownText}
+						handleTagInputKeypress={handleTagInputKeypress}
+						tagName={tagName}
+						tagInputOnChage={tagInputOnChage}
 						openModal={openModal}
 						requestSave={onTemporaryStorage}
 					/>

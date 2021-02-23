@@ -129,14 +129,35 @@ const MarkdownEditorWrap = styled.div`
 	}
 `;
 
+const TagInput = styled.input`
+	padding: 0.5rem 0.5rem;
+	width: 100%;
+	font-size: 1rem;
+	margin-top: 0.5rem;
+	border: 0px solid ${(props) => props.theme.gray_2};
+	font-family: 'Spoqa Han Sans Thin';
+	border-radius: 5px;
+`;
+
 type Props = {
 	requestSave: () => void;
 	setMarkdownText: (dispatch: string) => void;
+	tagInputOnChage: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+	handleTagInputKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+	tagName: string;
 	markdownText: string;
 	openModal: () => void;
 };
 
-function MarkdownEditor({ setMarkdownText, openModal, requestSave, markdownText }: Props) {
+function MarkdownEditor({
+	setMarkdownText,
+	openModal,
+	requestSave,
+	handleTagInputKeypress,
+	tagInputOnChage,
+	tagName,
+	markdownText,
+}: Props) {
 	const [codemirror, setCodemirror] = useState();
 
 	const handleToolbarClick = (mode: string) => {
@@ -176,6 +197,12 @@ function MarkdownEditor({ setMarkdownText, openModal, requestSave, markdownText 
 	return (
 		<>
 			<PostEditorTool onClick={handleToolbarClick} openModal={openModal} requestSave={requestSave} />
+			<TagInput
+				placeholder="Enter를 눌러 tag를 추가해 보세요!"
+				onChange={tagInputOnChage}
+				onKeyDown={handleTagInputKeypress}
+				value={tagName}
+			/>
 			<MarkdownEditorWrap>
 				<CodeMirror
 					value={markdownText}
