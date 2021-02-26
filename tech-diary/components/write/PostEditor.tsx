@@ -12,7 +12,7 @@ const EditorTemplate = styled.div`
 `;
 
 function PostEditor() {
-	const toggleEditor = true;
+	const toggleEditor = false;
 	return (
 		<EditorTemplate>
 			{toggleEditor ? (
