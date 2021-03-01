@@ -17,7 +17,7 @@ function PostEditor() {
 		<EditorTemplate>
 			{toggleEditor ? (
 				<>
-					<MarkdasdfasdfasdfownEditorContainer />
+					<MarkdownEditorContainer />
 				</>
 			) : (
 				<BlockEditorContainer />

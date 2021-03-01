@@ -188,3 +188,20 @@ export const requestGetDetail = (req: { id: string }) =>
 	axios.get(`${server.host}/post/detail/${req.id}`).catch((error) => {
 		throw error;
 	});
+
+export const requestPublishPost = (req: { id: string; token: string }) =>
+	axios
+		.put(
+			`${server.host}/post/publish`,
+			{
+				id: req.id,
+			},
+			{
+				headers: {
+					token: req.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});

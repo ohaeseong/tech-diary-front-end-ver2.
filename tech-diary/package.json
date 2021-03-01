@@ -44,6 +44,7 @@
     "react-switch": "^5.0.1",
     "react-syntax-highlighter": "^15.4.3",
     "react-textarea-autosize": "^8.3.0",
+    "react-toastify": "^7.0.3",
     "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.1.3",

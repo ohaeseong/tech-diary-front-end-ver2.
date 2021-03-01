@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, KeyboardEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useCallback, useState, useEffect } from 'react';
 import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
@@ -7,14 +7,15 @@ import PostPublishModal from 'components/write/PostPublishModal';
 import useToggle from 'libs/hooks/useToggle';
 import { useDispatch, useSelector } from 'react-redux';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
-import Toast from 'components/common/Toast';
 import useRequest from 'libs/hooks/useRequest';
-import { requestCreatePost, requestGetDetail, requestUpdatePostForTemp } from 'libs/repository';
+import { requestCreatePost, requestGetDetail, requestPublishPost, requestUpdatePostForTemp } from 'libs/repository';
 import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
 import { RootState } from 'store/modules';
 import { useRouter } from 'next/router';
-import { CreatePost, PostDetail, PostUpdate } from 'store/types/post.types';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { CreatePost, PostUpdate } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 
@@ -76,10 +77,12 @@ function MarkdownEditorContainer() {
 	const [isTemp, setIsTemp] = useState(false);
 	const [tagItemList, setTagItemList] = useState([]);
 	const [tagName, setTagName] = useState('');
+	const [kinds, setKinds] = useState('');
 
 	const [isOpenModal, modalToggle] = useToggle(false);
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
 	const [, , onUpdatePost, ,] = useRequest(requestUpdatePostForTemp, true);
+	const [, , onPublishPost, ,] = useRequest(requestPublishPost);
 	const [lastPostData, , getLastPost, ,] = useRequest(requestGetDetail, true);
 	const router = useRouter();
 	const dispatch = useDispatch();
@@ -119,7 +122,17 @@ function MarkdownEditorContainer() {
 	);
 
 	const onTemporaryStorage = useCallback(async () => {
+		let toastMassege = '';
 		if (!postId && !qsId) {
+			if (title.length === 0 || markdownText.length === 0) {
+				toastMassege = '제목 혹은 내용이 비어있습니다.';
+				toast.error(toastMassege, {
+					position: toast.POSITION.BOTTOM_RIGHT,
+				});
+
+				return;
+			}
+
 			const token = getStorage('tech-token');
 			const req = {
 				title,
@@ -130,9 +143,19 @@ function MarkdownEditorContainer() {
 			const { id } = response.data;
 			dispatch(setWritePostId(id));
 			router.replace(`/blog/write?id=${id}`);
+
+			toastMassege = '임시저장 완료';
 		}
 
 		if (qsId) {
+			if (title.length === 0 || markdownText.length === 0) {
+				toastMassege = '제목 혹은 내용이 비어있습니다.';
+				toast.error(toastMassege, {
+					position: toast.POSITION.BOTTOM_RIGHT,
+				});
+
+				return;
+			}
 			const token = getStorage('tech-token');
 			const req = {
 				id: qsId,
@@ -141,10 +164,24 @@ function MarkdownEditorContainer() {
 				token,
 			} as PostUpdate;
 			const response = await onUpdatePost(req);
+			toastMassege = '임시저장 완료';
 		}
+
+		toast.success(toastMassege, {
+			position: toast.POSITION.BOTTOM_RIGHT,
+		});
 	}, [dispatch, markdownText, onCreatePost, onUpdatePost, postId, qsId, router, title]);
 
-	const onSavePost = useCallback(() => {}, []);
+	const onSavePost = useCallback(async () => {
+		console.log(postId);
+
+		const token = getStorage('tech-token');
+		const req = {
+			id: postId,
+			token,
+		};
+		await onPublishPost(req);
+	}, [onPublishPost, postId]);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
@@ -154,24 +191,16 @@ function MarkdownEditorContainer() {
 
 	const openModal = useCallback(() => {
 		if (title.length === 0 || markdownText.length === 0) {
-			dispatch({
-				type: SHOW_TOAST,
-				payload: {
-					text: '제목 또는 내용을 채워주세요.',
-				},
+			toast.error('제목 혹은 내용이 비어있습니다.', {
+				position: toast.POSITION.BOTTOM_RIGHT,
 			});
-			setTimeout(() => {
-				dispatch({
-					type: DROP_TOAST,
-				});
-			}, 2000);
 
 			return;
 		}
 		if (!isOpenModal) {
 			modalToggle();
 		}
-	}, [dispatch, isOpenModal, markdownText.length, modalToggle, title.length]);
+	}, [isOpenModal, markdownText.length, modalToggle, title.length]);
 
 	useEffect(() => {
 		if (qsId) {
@@ -192,7 +221,6 @@ function MarkdownEditorContainer() {
 
 	return (
 		<>
-			<Toast />
 			<PostPublishModal isOpen={isOpenModal} modalToggle={modalToggle} onSavePost={onSavePost} />
 			<MarkdownEditorTemplate>
 				<EditorWrap>

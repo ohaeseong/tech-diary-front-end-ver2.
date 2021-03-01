@@ -7,6 +7,8 @@ import PostItem from 'components/post/PostItem';
 import { Post } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
+import Button from 'components/common/Button';
+import ButtonGroup from 'components/common/ButtonGroup';
 // import {  }
 
 const ModalTemplate = styled.div`
@@ -75,6 +77,7 @@ const PostPreviewBottom = styled.span`
 	height: 100%;
 	font-size: 0.7rem;
 	color: ${(props) => props.theme.gray_4};
+	margin-top: 1rem;
 `;
 
 const InputTag = styled.input`
@@ -127,6 +130,12 @@ function PostPublishModal({ isOpen, modalToggle, onSavePost }: Props) {
 									<PostPreviewBottom>*미리보기</PostPreviewBottom>
 								</PostPublishContentWrap>
 								<PostPublishContentWrap>
+									
+									<ButtonGroup sortDirection="row">
+										<Button btnColor={color.neon_2} onClick={onSavePost}>
+											출간 하기
+										</Button>
+									</ButtonGroup>
 								</PostPublishContentWrap>
 							</Body>
 						</ModalBox>

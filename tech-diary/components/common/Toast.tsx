@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/modules';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { css } from '@emotion/react';
 
 const ToastTemplate = styled.div<{ isCall: boolean }>`
@@ -45,11 +47,15 @@ const ToastWrap = styled.div`
 
 function Toast() {
 	const { isCall, text } = useSelector((store: RootState) => store.toast);
+	const notify = () => toast(text);
 
 	return (
 		<>
 			<ToastTemplate isCall={isCall}>
-				<ToastWrap>{text}</ToastWrap>
+				<button onClick={notify} type="button">
+					Notify
+				</button>
+				<ToastContainer />
 			</ToastTemplate>
 		</>
 	);

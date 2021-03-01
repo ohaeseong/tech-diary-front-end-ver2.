@@ -6,6 +6,7 @@ import { BsTypeBold } from 'react-icons/bs';
 import { BiItalic, BiLinkAlt } from 'react-icons/bi';
 import { HiCode } from 'react-icons/hi';
 import { MdFormatStrikethrough, MdImage, MdFormatQuote } from 'react-icons/md';
+import { toast, ToastContainer } from 'react-toastify';
 
 const ToolBoxWrap = styled.div`
 	position: fixed;
@@ -57,7 +58,6 @@ type Props = {
 
 function PostEditorTool({ onClick, openModal, requestSave }: Props) {
 	const ICON_SIZE = '1.5rem';
-
 	return (
 		<ToolBoxWrap>
 			<ToolItemWrap>
@@ -100,6 +100,7 @@ function PostEditorTool({ onClick, openModal, requestSave }: Props) {
 				<Button btnColor={color.neon_2} margin="0 2rem 0 0" onClick={openModal}>
 					작성 완료
 				</Button>
+				<ToastContainer autoClose={2500} toastStyle={{ backgroundColor: `${color.neon_2}` }} />
 			</ToolItemWrap>
 		</ToolBoxWrap>
 	);
