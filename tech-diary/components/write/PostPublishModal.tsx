@@ -1,15 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { fadeinForModal, toBig } from 'styles/animation';
 import { GoX } from 'react-icons/go';
 import { color } from 'styles/color';
 import PostItem from 'components/post/PostItem';
 import { Post } from 'store/types/post.types';
-import TagGroup from 'components/common/TagGroup';
-import TagItem from 'components/common/TagItem';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
-// import {  }
 
 const ModalTemplate = styled.div`
 	position: absolute;
@@ -80,8 +77,16 @@ const PostPreviewBottom = styled.span`
 	margin-top: 1rem;
 `;
 
-const InputTag = styled.input`
+const KindsSelect = styled.select`
 	width: 100%;
+	height: 2rem;
+	outline: none;
+	border: 1px solid ${color.gray_2};
+	/* padding: 0.rem; */
+
+	& > * {
+		color: black;
+	}
 `;
 
 const itemDumyData = {
@@ -107,9 +112,10 @@ type Props = {
 	isOpen: boolean;
 	modalToggle: () => void;
 	onSavePost: () => void;
+	handleKindsValue: (event: ChangeEvent<HTMLSelectElement>) => void;
 };
 
-function PostPublishModal({ isOpen, modalToggle, onSavePost }: Props) {
+function PostPublishModal({ isOpen, modalToggle, onSavePost, handleKindsValue }: Props) {
 	const closeModal = useCallback(() => {
 		modalToggle();
 	}, [modalToggle]);
@@ -130,7 +136,12 @@ function PostPublishModal({ isOpen, modalToggle, onSavePost }: Props) {
 									<PostPreviewBottom>*미리보기</PostPreviewBottom>
 								</PostPublishContentWrap>
 								<PostPublishContentWrap>
-									
+									<KindsSelect onChange={handleKindsValue}>
+										<option value="front-end">front-end</option>
+										<option value="back-end">back-end</option>
+										<option value="database">database</option>
+										<option value="other">other</option>
+									</KindsSelect>
 									<ButtonGroup sortDirection="row">
 										<Button btnColor={color.neon_2} onClick={onSavePost}>
 											출간 하기

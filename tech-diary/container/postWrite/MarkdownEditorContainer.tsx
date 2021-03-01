@@ -77,7 +77,7 @@ function MarkdownEditorContainer() {
 	const [isTemp, setIsTemp] = useState(false);
 	const [tagItemList, setTagItemList] = useState([]);
 	const [tagName, setTagName] = useState('');
-	const [kinds, setKinds] = useState('');
+	const [kinds, setKinds] = useState('front-end');
 
 	const [isOpenModal, modalToggle] = useToggle(false);
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
@@ -123,7 +123,9 @@ function MarkdownEditorContainer() {
 
 	const onTemporaryStorage = useCallback(async () => {
 		let toastMassege = '';
-		if (!postId && !qsId) {
+		console.log(postId, qsId);
+
+		if (!postId || !qsId) {
 			if (title.length === 0 || markdownText.length === 0) {
 				toastMassege = '제목 혹은 내용이 비어있습니다.';
 				toast.error(toastMassege, {
@@ -174,19 +176,39 @@ function MarkdownEditorContainer() {
 
 	const onSavePost = useCallback(async () => {
 		console.log(postId);
+		let id = '';
 
 		const token = getStorage('tech-token');
-		const req = {
-			id: postId,
+
+		if (!postId || !qsId) {
+			const saveReq = {
+				title,
+				contents: markdownText,
+				token,
+			} as CreatePost;
+			const response = await onCreatePost(saveReq);
+			id = response.data.id;
+		}
+
+		const publishReq = {
+			id: postId || id,
+			kinds,
+			category: 'blog',
 			token,
 		};
-		await onPublishPost(req);
-	}, [onPublishPost, postId]);
+		await onPublishPost(publishReq);
+
+		router.push('/');
+	}, [kinds, markdownText, onCreatePost, onPublishPost, postId, qsId, router, title]);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
 			setTitle(event.target.value);
 		}
+	}, []);
+
+	const handleKindsValue = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+		setKinds(event.target.value);
 	}, []);
 
 	const openModal = useCallback(() => {
@@ -221,7 +243,12 @@ function MarkdownEditorContainer() {
 
 	return (
 		<>
-			<PostPublishModal isOpen={isOpenModal} modalToggle={modalToggle} onSavePost={onSavePost} />
+			<PostPublishModal
+				isOpen={isOpenModal}
+				modalToggle={modalToggle}
+				onSavePost={onSavePost}
+				handleKindsValue={handleKindsValue}
+			/>
 			<MarkdownEditorTemplate>
 				<EditorWrap>
 					<TitleEditor title={title} onChange={handleTitleLength} />

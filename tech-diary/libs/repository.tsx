@@ -189,12 +189,14 @@ export const requestGetDetail = (req: { id: string }) =>
 		throw error;
 	});
 
-export const requestPublishPost = (req: { id: string; token: string }) =>
+export const requestPublishPost = (req: { id: string; token: string; kinds: string; category: string; }) =>
 	axios
 		.put(
 			`${server.host}/post/publish`,
 			{
 				id: req.id,
+				kinds: req.kinds,
+				category: req.category,
 			},
 			{
 				headers: {
