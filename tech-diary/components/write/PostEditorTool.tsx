@@ -50,6 +50,12 @@ const ToolItem = styled.button`
 	cursor: pointer;
 `;
 
+const UploadImageLabel = styled.label`
+	width: 1.5rem;
+	height: 1.5rem;
+	cursor: pointer;
+`;
+
 type Props = {
 	onClick: (mode: string) => void;
 	openModal: () => void;
@@ -86,7 +92,10 @@ function PostEditorTool({ onClick, openModal, requestSave }: Props) {
 						<BiLinkAlt size={ICON_SIZE} />
 					</ToolItem>
 					<ToolItem>
-						<MdImage size={ICON_SIZE} />
+						<UploadImageLabel htmlFor="image_upload">
+							<MdImage size={ICON_SIZE} />
+						</UploadImageLabel>
+						<input id="image_upload" accept="image/*" type="file" style={{ display: 'none' }} />
 					</ToolItem>
 					<ToolItem>
 						<MdFormatQuote size={ICON_SIZE} />
@@ -100,7 +109,7 @@ function PostEditorTool({ onClick, openModal, requestSave }: Props) {
 				<Button btnColor={color.neon_2} margin="0 2rem 0 0" onClick={openModal}>
 					작성 완료
 				</Button>
-				<ToastContainer autoClose={2500} toastStyle={{ backgroundColor: `${color.neon_2}` }} />
+				<ToastContainer autoClose={2500} />
 			</ToolItemWrap>
 		</ToolBoxWrap>
 	);

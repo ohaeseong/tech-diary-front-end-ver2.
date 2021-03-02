@@ -88,6 +88,10 @@ function MarkdownEditorContainer() {
 	const dispatch = useDispatch();
 	const qsId = router.query.id;
 
+	const handleImage = useCallback(() => {
+		
+	}, []);
+
 	const addTag = useCallback(() => {
 		if (tagName.length === 0) return;
 		let checkIsSame = false;

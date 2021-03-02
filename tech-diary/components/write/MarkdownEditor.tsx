@@ -159,10 +159,13 @@ function MarkdownEditor({
 	markdownText,
 }: Props) {
 	const [codemirror, setCodemirror] = useState();
+	const editorElement = React.createRef<HTMLTextAreaElement>();
 
 	const handleToolbarClick = (mode: string) => {
 		if (!codemirror) return;
-		const { doc } = codemirror.editor;
+		const { doc } = codemirror?.editor;
+		// console.log(codemirror.current);
+		console.log(editorElement);
 
 		switch (mode) {
 			case 'H1':
@@ -225,6 +228,7 @@ function MarkdownEditor({
 						import('codemirror/mode/jsx/jsx');
 					}}
 				/>
+				<textarea ref={editorElement} style={{ display: 'none' }} />
 			</MarkdownEditorWrap>
 		</>
 	);
