@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useCallback, useState, useEffect } from 'react';
+import Head from 'next/head';
 import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
@@ -6,14 +7,13 @@ import MarkdownRenderer from 'components/common/MarkdownRenderer';
 import PostPublishModal from 'components/write/PostPublishModal';
 import useToggle from 'libs/hooks/useToggle';
 import { useDispatch, useSelector } from 'react-redux';
-import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import useRequest from 'libs/hooks/useRequest';
 import { requestCreatePost, requestGetDetail, requestPublishPost, requestUpdatePostForTemp } from 'libs/repository';
 import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
 import { RootState } from 'store/modules';
 import { useRouter } from 'next/router';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CreatePost, PostUpdate } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
@@ -54,16 +54,6 @@ const TitlePreview = styled.span`
 	font-family: 'Spoqa Han Sans Regular';
 `;
 
-const TagInput = styled.input`
-	padding: 0.5rem 0.5rem;
-	width: 100%;
-	font-size: 1rem;
-	margin-top: 0.5rem;
-	border: 0px solid ${(props) => props.theme.gray_2};
-	font-family: 'Spoqa Han Sans Thin';
-	border-radius: 5px;
-`;
-
 type tagValueType = {
 	props: {
 		tagName: string;
@@ -71,10 +61,9 @@ type tagValueType = {
 };
 
 function MarkdownEditorContainer() {
-	const { postId } = useSelector((root: RootState) => root.write);
+	const { postId, isTemp } = useSelector((root: RootState) => root.write);
 	const [markdownText, setMarkdownText] = useState('');
 	const [title, setTitle] = useState('');
-	const [isTemp, setIsTemp] = useState(false);
 	const [tagItemList, setTagItemList] = useState([]);
 	const [tagName, setTagName] = useState('');
 	const [kinds, setKinds] = useState('front-end');
@@ -86,10 +75,14 @@ function MarkdownEditorContainer() {
 	const [lastPostData, , getLastPost, ,] = useRequest(requestGetDetail, true);
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const qsId = router.query.id;
 
-	const handleImage = useCallback(() => {
-		
+	const handleImage = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+		const formData = new FormData();
+		const imageFile = event.target.files;
+
+		if (imageFile) {
+			formData.append('image', imageFile[0]);
+		}
 	}, []);
 
 	const addTag = useCallback(() => {
@@ -112,7 +105,7 @@ function MarkdownEditorContainer() {
 		setTagName('');
 	}, [tagItemList, tagName]);
 
-	const tagInputOnChage = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+	const tagInputOnChage = useCallback((event: ChangeEvent<HTMLInputElement>) => {
 		setTagName(event.target.value);
 	}, []);
 
@@ -127,9 +120,8 @@ function MarkdownEditorContainer() {
 
 	const onTemporaryStorage = useCallback(async () => {
 		let toastMassege = '';
-		console.log(postId, qsId);
 
-		if (!postId || !qsId) {
+		if (!postId) {
 			if (title.length === 0 || markdownText.length === 0) {
 				toastMassege = '제목 혹은 내용이 비어있습니다.';
 				toast.error(toastMassege, {
@@ -153,7 +145,7 @@ function MarkdownEditorContainer() {
 			toastMassege = '임시저장 완료';
 		}
 
-		if (qsId) {
+		if (isTemp) {
 			if (title.length === 0 || markdownText.length === 0) {
 				toastMassege = '제목 혹은 내용이 비어있습니다.';
 				toast.error(toastMassege, {
@@ -164,7 +156,7 @@ function MarkdownEditorContainer() {
 			}
 			const token = getStorage('tech-token');
 			const req = {
-				id: qsId,
+				id: postId,
 				title,
 				contents: markdownText,
 				token,
@@ -176,15 +168,14 @@ function MarkdownEditorContainer() {
 		toast.success(toastMassege, {
 			position: toast.POSITION.BOTTOM_RIGHT,
 		});
-	}, [dispatch, markdownText, onCreatePost, onUpdatePost, postId, qsId, router, title]);
+	}, [dispatch, isTemp, markdownText, onCreatePost, onUpdatePost, postId, router, title]);
 
 	const onSavePost = useCallback(async () => {
-		console.log(postId);
 		let id = '';
 
 		const token = getStorage('tech-token');
 
-		if (!postId || !qsId) {
+		if (!postId) {
 			const saveReq = {
 				title,
 				contents: markdownText,
@@ -201,9 +192,10 @@ function MarkdownEditorContainer() {
 			token,
 		};
 		await onPublishPost(publishReq);
+		dispatch(setWritePostId(''));
 
 		router.push('/');
-	}, [kinds, markdownText, onCreatePost, onPublishPost, postId, qsId, router, title]);
+	}, [dispatch, kinds, markdownText, onCreatePost, onPublishPost, postId, router, title]);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
@@ -229,24 +221,27 @@ function MarkdownEditorContainer() {
 	}, [isOpenModal, markdownText.length, modalToggle, title.length]);
 
 	useEffect(() => {
-		if (qsId) {
+		if (postId) {
 			const req = {
-				id: qsId,
+				id: postId,
 			};
 
 			getLastPost(req);
 		}
-	}, [getLastPost, qsId]);
+	}, [getLastPost, postId]);
 
 	useEffect(() => {
 		if (lastPostData) {
 			setTitle(lastPostData.data.post.title);
-			setMarkdownText(lastPostData.data.post.contents)
+			setMarkdownText(lastPostData.data.post.contents);
 		}
 	}, [lastPostData]);
 
 	return (
 		<>
+			<Head>
+				<title>{title ? `(작성중) ${title}` : 'Blog write'}</title>
+			</Head>
 			<PostPublishModal
 				isOpen={isOpenModal}
 				modalToggle={modalToggle}
@@ -265,6 +260,7 @@ function MarkdownEditorContainer() {
 						tagInputOnChage={tagInputOnChage}
 						openModal={openModal}
 						requestSave={onTemporaryStorage}
+						handleImage={handleImage}
 					/>
 				</EditorWrap>
 				<RendererWrap>

@@ -58,11 +58,12 @@ const UploadImageLabel = styled.label`
 
 type Props = {
 	onClick: (mode: string) => void;
+	handleImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	openModal: () => void;
 	requestSave: () => void;
 };
 
-function PostEditorTool({ onClick, openModal, requestSave }: Props) {
+function PostEditorTool({ onClick, openModal, requestSave, handleImage }: Props) {
 	const ICON_SIZE = '1.5rem';
 	return (
 		<ToolBoxWrap>
@@ -95,7 +96,13 @@ function PostEditorTool({ onClick, openModal, requestSave }: Props) {
 						<UploadImageLabel htmlFor="image_upload">
 							<MdImage size={ICON_SIZE} />
 						</UploadImageLabel>
-						<input id="image_upload" accept="image/*" type="file" style={{ display: 'none' }} />
+						<input
+							id="image_upload"
+							type="file"
+							style={{ display: 'none' }}
+							accept="image/gif, image/jpeg, image/jpg, image/png"
+							onChange={handleImage}
+						/>
 					</ToolItem>
 					<ToolItem>
 						<MdFormatQuote size={ICON_SIZE} />

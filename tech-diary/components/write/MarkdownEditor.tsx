@@ -144,6 +144,7 @@ type Props = {
 	setMarkdownText: (dispatch: string) => void;
 	tagInputOnChage: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	handleTagInputKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+	handleImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	tagName: string;
 	markdownText: string;
 	openModal: () => void;
@@ -155,6 +156,7 @@ function MarkdownEditor({
 	requestSave,
 	handleTagInputKeypress,
 	tagInputOnChage,
+	handleImage,
 	tagName,
 	markdownText,
 }: Props) {
@@ -199,7 +201,12 @@ function MarkdownEditor({
 
 	return (
 		<>
-			<PostEditorTool onClick={handleToolbarClick} openModal={openModal} requestSave={requestSave} />
+			<PostEditorTool
+				onClick={handleToolbarClick}
+				openModal={openModal}
+				requestSave={requestSave}
+				handleImage={handleImage}
+			/>
 			<TagInput
 				placeholder="Enter를 눌러 tag를 추가해 보세요!"
 				onChange={tagInputOnChage}
