@@ -61,8 +61,8 @@ type tagValueType = {
 };
 
 function MarkdownEditorContainer() {
-	const { postId, isTemp } = useSelector((root: RootState) => root.write);
-	const [markdownText, setMarkdownText] = useState('');
+	const { postId, isTemp, initialBody } = useSelector((root: RootState) => root.write);
+	const [markdownText, setMarkdownText] = useState(initialBody);
 	const [title, setTitle] = useState('');
 	const [tagItemList, setTagItemList] = useState([]);
 	const [tagName, setTagName] = useState('');
