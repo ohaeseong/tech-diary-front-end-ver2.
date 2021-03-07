@@ -6,7 +6,7 @@ import TitleEditor from 'components/write/TitleEditor';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
 import PostPublishModal from 'components/write/PostPublishModal';
 import useToggle from 'libs/hooks/useToggle';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useRequest from 'libs/hooks/useRequest';
 import { requestCreatePost, requestGetDetail, requestPublishPost, requestUpdatePostForTemp } from 'libs/repository';
 import { getStorage } from 'libs/storage';
@@ -120,6 +120,7 @@ function MarkdownEditorContainer() {
 
 	const onTemporaryStorage = useCallback(async () => {
 		let toastMassege = '';
+		console.log(postId, isTemp);
 
 		if (!postId) {
 			if (title.length === 0 || markdownText.length === 0) {
@@ -143,6 +144,12 @@ function MarkdownEditorContainer() {
 			router.replace(`/blog/write?id=${id}`);
 
 			toastMassege = '임시저장 완료';
+
+			toast.success(toastMassege, {
+				position: toast.POSITION.BOTTOM_RIGHT,
+			});
+
+			return;
 		}
 
 		if (isTemp) {
@@ -163,11 +170,13 @@ function MarkdownEditorContainer() {
 			} as PostUpdate;
 			const response = await onUpdatePost(req);
 			toastMassege = '임시저장 완료';
-		}
 
-		toast.success(toastMassege, {
-			position: toast.POSITION.BOTTOM_RIGHT,
-		});
+			toast.success(toastMassege, {
+				position: toast.POSITION.BOTTOM_RIGHT,
+			});
+
+			return;
+		}
 	}, [dispatch, isTemp, markdownText, onCreatePost, onUpdatePost, postId, router, title]);
 
 	const onSavePost = useCallback(async () => {
@@ -236,6 +245,21 @@ function MarkdownEditorContainer() {
 			setMarkdownText(lastPostData.data.post.contents);
 		}
 	}, [lastPostData]);
+
+	useEffect(() => {
+		const changed = !shallowEqual(title, markdownText);
+
+		if (changed) {
+			const timeId = setTimeout(() => {
+				if (!postId || title.length === 0 || markdownText.length === 0) return;
+				onTemporaryStorage();
+			}, 5000);
+
+			return () => {
+				clearTimeout(timeId);
+			};
+		}
+	}, [markdownText, onTemporaryStorage, postId, title]);
 
 	return (
 		<>
