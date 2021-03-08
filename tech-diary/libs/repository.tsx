@@ -189,7 +189,7 @@ export const requestGetDetail = (req: { id: string }) =>
 		throw error;
 	});
 
-export const requestPublishPost = (req: { id: string; token: string; kinds: string; category: string; }) =>
+export const requestPublishPost = (req: { id: string; token: string; kinds: string; category: string }) =>
 	axios
 		.put(
 			`${server.host}/post/publish`,
@@ -204,6 +204,17 @@ export const requestPublishPost = (req: { id: string; token: string; kinds: stri
 				},
 			}
 		)
+		.catch((error) => {
+			throw error;
+		});
+
+export const uploadImage = (req: { formData: Array<FormData>; token: string }) =>
+	axios
+		.post(`${server.host}/upload/img`, req.formData, {
+			headers: {
+				token: req.token,
+			},
+		})
 		.catch((error) => {
 			throw error;
 		});

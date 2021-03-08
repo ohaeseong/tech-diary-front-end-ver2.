@@ -100,6 +100,7 @@ function PostEditorTool({ onClick, openModal, requestSave, handleImage }: Props)
 							id="image_upload"
 							type="file"
 							style={{ display: 'none' }}
+							multiple={false}
 							accept="image/gif, image/jpeg, image/jpg, image/png"
 							onChange={handleImage}
 						/>

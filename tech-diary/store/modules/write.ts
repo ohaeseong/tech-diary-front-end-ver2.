@@ -34,8 +34,7 @@ type WriteAction = ActionType<typeof actions>;
 export default createReducer<WriteState, WriteAction>(initialState, {
 	[SET_INITIAL_BODY]: (state, action: SetInitialBody) => ({
 		...state,
-		postId: action.payload,
-		isTemp: true,
+		initialBody: action.payload,
 	}),
 
 	[SET_WRITE_POST_ID]: (state, action: SetWritePostId) => ({

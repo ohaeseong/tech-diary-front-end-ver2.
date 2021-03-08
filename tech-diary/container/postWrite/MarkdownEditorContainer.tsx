@@ -8,7 +8,13 @@ import PostPublishModal from 'components/write/PostPublishModal';
 import useToggle from 'libs/hooks/useToggle';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import useRequest from 'libs/hooks/useRequest';
-import { requestCreatePost, requestGetDetail, requestPublishPost, requestUpdatePostForTemp } from 'libs/repository';
+import {
+	requestCreatePost,
+	requestGetDetail,
+	requestPublishPost,
+	requestUpdatePostForTemp,
+	uploadImage,
+} from 'libs/repository';
 import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
 import { RootState } from 'store/modules';
@@ -73,17 +79,35 @@ function MarkdownEditorContainer() {
 	const [, , onUpdatePost, ,] = useRequest(requestUpdatePostForTemp, true);
 	const [, , onPublishPost, ,] = useRequest(requestPublishPost);
 	const [lastPostData, , getLastPost, ,] = useRequest(requestGetDetail, true);
+	const [, , onUploadImage, ,] = useRequest(uploadImage, true);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const handleImage = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-		const formData = new FormData();
-		const imageFile = event.target.files;
+	const handleImage = useCallback(
+		async (event: ChangeEvent<HTMLInputElement>) => {
+			const token = getStorage('tech-token');
+			const formData = new FormData();
+			const imageFile = event.target.files;
 
-		if (imageFile) {
-			formData.append('image', imageFile[0]);
-		}
-	}, []);
+			if (imageFile) {
+				formData.append('image', imageFile[0]);
+			}
+
+			const req = {
+				formData,
+				token,
+			};
+
+			const response = await onUploadImage(req);
+
+			let body = markdownText;
+
+			body = `${body} \n ![](${response.data.imgs[0].fileAddress})`;
+
+			setMarkdownText(body);
+		},
+		[markdownText, onUploadImage]
+	);
 
 	const addTag = useCallback(() => {
 		if (tagName.length === 0) return;
@@ -120,7 +144,6 @@ function MarkdownEditorContainer() {
 
 	const onTemporaryStorage = useCallback(async () => {
 		let toastMassege = '';
-		console.log(postId, isTemp);
 
 		if (!postId) {
 			if (title.length === 0 || markdownText.length === 0) {
