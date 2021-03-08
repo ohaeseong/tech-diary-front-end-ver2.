@@ -11,7 +11,7 @@ import { getStorage, removeStorage } from 'libs/storage';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
 import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
-import { TypeDecoded } from 'store/types/auth.types';
+import { TypeDecoded, UserInfo } from 'store/types/auth.types';
 import { useRouter } from 'next/router';
 import useMenuSliderHeight from 'libs/hooks/useMenuSliderHeight';
 
@@ -139,8 +139,16 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		}
 	}, [isMain]);
 
+	const goToProfile = useCallback(() => {
+		const userInfo = getStorage('user-info') as UserInfo;
+		const userPageUrl = `${userInfo.memberName}`;
+
+		router.push(`/user/${userPageUrl}`);
+	}, []);
+
 	const onLogout = () => {
 		removeStorage('tech-token');
+		removeStorage('user-info');
 		window.location.reload();
 	};
 
@@ -190,7 +198,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 					<ProfileWrap>
 						<ProfileImage src={profileImage} onClick={menuToggle} alt="profile_image" />
 						<MenuSlider height={menuHeight}>
-							<MenuItem>내 정보</MenuItem>
+							<MenuItem onClick={goToProfile}>내 정보</MenuItem>
 							<MenuItem onClick={() => router.push('/blog/write')}>글 쓰러 가기</MenuItem>
 							<MenuItem>임시글 보러가기</MenuItem>
 							<MenuItem>북마크한 글 보러가기</MenuItem>

@@ -14,3 +14,11 @@ export type TypeDecoded = {
 	memberId: string;
 	accessLevel: number;
 };
+
+export type UserInfo = {
+	accessLevel: number;
+	profileImage?: string;
+	introduce?: string;
+	memberName: string;
+	memberId: string;
+}

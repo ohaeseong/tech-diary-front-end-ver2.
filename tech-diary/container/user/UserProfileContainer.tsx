@@ -1,10 +1,7 @@
 import React from 'react';
 
 function UserProfileContainer() {
-    return (
-        <>
-        </>
-    );
+	return <></>;
 }
 
 export default UserProfileContainer;

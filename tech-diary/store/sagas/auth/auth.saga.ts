@@ -36,8 +36,10 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 	const payload = {
 		token: data.data.token,
 		refreshToken: data.data.refreshToken,
+		member: data.data.member,
 	};
 
+	setStorage('user-info', payload.member);
 	setStorage('tech-token', payload.token);
 	yield put(onAuthLogin.success());
 	yield put(setLoginErrorMsg(''));
@@ -65,8 +67,10 @@ function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.requ
 
 	const payload = {
 		token: data.data.token,
+		member: data.data.member,
 	};
 
+	setStorage('user-info', payload.member);
 	setStorage('tech-token', payload.token);
 	yield put(onGithubAuthLogin.success());
 	yield executeCallback(successCB);

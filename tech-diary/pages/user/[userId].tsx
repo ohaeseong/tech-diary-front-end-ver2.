@@ -1,12 +1,17 @@
 import React from 'react';
 import Head from 'next/head';
-import { withRouter } from 'next/router';
+import { useRouter, withRouter } from 'next/router';
 import UserProfileContainer from 'container/user/UserProfileContainer';
 
 function UserInfoPage() {
+	const router = useRouter();
+	const { userId } = router.query;
+
 	return (
 		<>
-			<Head />
+			<Head>
+				<title>{userId}</title>
+			</Head>
 			<UserProfileContainer />
 		</>
 	);
