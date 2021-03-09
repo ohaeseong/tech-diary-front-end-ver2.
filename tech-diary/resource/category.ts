@@ -10,6 +10,10 @@ const categoryItems = [
 		name: 'Front-End',
 	},
 	{
+		href: '/blog/mobile',
+		name: 'Mobile',
+	},
+	{
 		href: '/blog/back-end',
 		name: 'Back-End',
 	},
@@ -19,7 +23,7 @@ const categoryItems = [
 	},
 	{
 		href: '/blog/other',
-		name: 'other',
+		name: 'Other',
 	},
 ];
 
