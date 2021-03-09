@@ -120,7 +120,7 @@ function SinglePost({
 			<SinglePostContentsWrap>
 				{thumbnailAddress ? <Thumbnail src={thumbnailAddress} alt="sigle_post_thumbnail" /> : <></>}
 				<Title>{title}</Title>
-				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
+				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />ㅁㅇㄴㄹ
 				<PostContents markdown={contents} />
 				<PostBottom />
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
