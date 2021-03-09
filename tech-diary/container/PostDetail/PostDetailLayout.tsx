@@ -13,6 +13,7 @@ import { requestPostLike } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
+import { toast } from 'react-toastify';
 import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
 import useToggle from 'libs/hooks/useToggle';
@@ -117,18 +118,12 @@ function PostDetailLayout({ post }: Props) {
 	const copyUrl = () => {
 		navigator.clipboard.writeText(`${server.client_url}${router.asPath}`);
 
-		dispatch({
-			type: SHOW_TOAST,
-			payload: {
-				text: '링크 주소를 복사했습니다!',
-			},
-		});
 
-		setTimeout(() => {
-			dispatch({
-				type: DROP_TOAST,
-			});
-		}, 2000);
+		const toastMassege = '링크 주소 복사';
+
+		toast.success(toastMassege, {
+			position: toast.POSITION.TOP_RIGHT,
+		});
 	};
 
 	useEffect(() => {
@@ -174,7 +169,7 @@ function PostDetailLayout({ post }: Props) {
 					setCommentList={setCommentListData}
 					commentList={commentListData}
 					data={post}
-				/>
+				/> 
 			</ThemeProvider>
 		</>
 	);
