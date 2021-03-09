@@ -144,8 +144,9 @@ function MarkdownEditorContainer() {
 
 	const onTemporaryStorage = useCallback(async () => {
 		let toastMassege = '';
+		const qsId = router.query.id;
 
-		if (!postId) {
+		if (!postId && !qsId) {
 			if (title.length === 0 || markdownText.length === 0) {
 				toastMassege = '제목 혹은 내용이 비어있습니다.';
 				toast.error(toastMassege, {
@@ -156,6 +157,7 @@ function MarkdownEditorContainer() {
 			}
 
 			const token = getStorage('tech-token');
+
 			const req = {
 				title,
 				contents: markdownText,
@@ -175,7 +177,7 @@ function MarkdownEditorContainer() {
 			return;
 		}
 
-		if (isTemp) {
+		if (isTemp || qsId) {
 			if (title.length === 0 || markdownText.length === 0) {
 				toastMassege = '제목 혹은 내용이 비어있습니다.';
 				toast.error(toastMassege, {
@@ -186,7 +188,7 @@ function MarkdownEditorContainer() {
 			}
 			const token = getStorage('tech-token');
 			const req = {
-				id: postId,
+				id: postId || qsId,
 				title,
 				contents: markdownText,
 				token,
@@ -203,11 +205,11 @@ function MarkdownEditorContainer() {
 	}, [dispatch, isTemp, markdownText, onCreatePost, onUpdatePost, postId, router, title]);
 
 	const onSavePost = useCallback(async () => {
-		let id = '';
+		let { id } = router.query;
 
 		const token = getStorage('tech-token');
 
-		if (!postId) {
+		if (!postId || !qsId) {
 			const saveReq = {
 				title,
 				contents: markdownText,
@@ -244,8 +246,6 @@ function MarkdownEditorContainer() {
 			toast.error('제목 혹은 내용이 비어있습니다.', {
 				position: toast.POSITION.BOTTOM_RIGHT,
 			});
-
-			return;
 		}
 		if (!isOpenModal) {
 			modalToggle();
@@ -253,14 +253,15 @@ function MarkdownEditorContainer() {
 	}, [isOpenModal, markdownText.length, modalToggle, title.length]);
 
 	useEffect(() => {
-		if (postId) {
+		const qsId = router.query.id;
+		if (qsId || postId) {
 			const req = {
-				id: postId,
+				id: postId || qsId,
 			};
 
 			getLastPost(req);
 		}
-	}, [getLastPost, postId]);
+	}, [getLastPost, postId, router.query.id]);
 
 	useEffect(() => {
 		if (lastPostData) {

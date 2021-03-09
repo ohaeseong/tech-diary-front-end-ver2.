@@ -188,12 +188,12 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 						Tech
 					</Logo>
 				</Link>
-				<NavBarItem url="/" isScroll={isScroll} isMain={isMain}>
+				{/* <NavBarItem url="/" isScroll={isScroll} isMain={isMain}>
 					Blog
 				</NavBarItem>
 				<NavBarItem url="/portfolio" isScroll={isScroll} isMain={isMain}>
 					Portfolio
-				</NavBarItem>
+				</NavBarItem> */}
 				{isToken ? (
 					<ProfileWrap>
 						<ProfileImage src={profileImage} onClick={menuToggle} alt="profile_image" />

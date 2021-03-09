@@ -7,10 +7,10 @@ import PostLikeOption from 'components/post/PostLikeOption';
 import PostInfo from 'components/post/PostInfo';
 import PostContents from 'components/post/PostContents';
 import { getStorage } from 'libs/storage';
-import Toast from 'components/common/Toast';
 import PostComment from 'components/post/PostCommentTemplate';
 import { TypeDecoded } from 'store/types/auth.types';
 import PostBottom from 'components/post/PostBottom';
+import { ToastContainer } from 'react-toastify';
 
 const SinglePostTemplate = styled.div`
 	display: flex;
@@ -122,10 +122,10 @@ function SinglePost({
 				<Title>{title}</Title>
 				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
 				<PostContents markdown={contents} />
-				{/* <PostBottom /> */}
+				<PostBottom />
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
 			</SinglePostContentsWrap>
-			<Toast />
+			<ToastContainer autoClose={1000} key="adf" />
 		</SinglePostTemplate>
 	);
 }
