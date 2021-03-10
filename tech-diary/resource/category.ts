@@ -6,21 +6,21 @@ const categoryItems = [
 		name: 'All',
 	},
 	{
-		href: '/blog/front-end',
-		name: 'Front-End',
-	},
-	{
 		href: '/blog/mobile',
 		name: 'Mobile',
+	},
+	{
+		href: '/blog/front-end',
+		name: 'Front-End',
 	},
 	{
 		href: '/blog/back-end',
 		name: 'Back-End',
 	},
-	{
-		href: '/blog/database',
-		name: 'Database',
-	},
+	// {
+	// 	href: '/blog/database',
+	// 	name: 'Database',
+	// },
 	{
 		href: '/blog/other',
 		name: 'Other',
