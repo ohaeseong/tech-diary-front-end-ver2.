@@ -189,7 +189,7 @@ export const requestGetDetail = (req: { id: string }) =>
 		throw error;
 	});
 
-export const requestPublishPost = (req: { id: string; token: string; kinds: string; category: string }) =>
+export const requestPublishPost = (req: { id: string; token: string; kinds: string; category: string; slugUrl: string }) =>
 	axios
 		.put(
 			`${server.host}/post/publish`,
@@ -197,6 +197,7 @@ export const requestPublishPost = (req: { id: string; token: string; kinds: stri
 				id: req.id,
 				kinds: req.kinds,
 				category: req.category,
+				slugUrl: req.slugUrl,
 			},
 			{
 				headers: {

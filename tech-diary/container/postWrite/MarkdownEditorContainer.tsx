@@ -24,6 +24,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { CreatePost, PostUpdate } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
+import { escapeForUrl } from 'libs/utils';
+import { UserInfo } from 'store/types/auth.types';
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
@@ -73,6 +75,7 @@ function MarkdownEditorContainer() {
 	const [tagItemList, setTagItemList] = useState([]);
 	const [tagName, setTagName] = useState('');
 	const [kinds, setKinds] = useState('front-end');
+	const [slugUrl, setSlugUrl] = useState(title);
 
 	const [isOpenModal, modalToggle] = useToggle(false);
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
@@ -133,6 +136,10 @@ function MarkdownEditorContainer() {
 		setTagName(event.target.value);
 	}, []);
 
+	const handleUrl = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+		setSlugUrl(event.target.value);
+	}, []);
+
 	const handleTagInputKeypress = useCallback(
 		(event: React.KeyboardEvent<HTMLInputElement>) => {
 			if (event.key === 'Enter') {
@@ -146,7 +153,7 @@ function MarkdownEditorContainer() {
 		let toastMassege = '';
 		const qsId = router.query.id;
 
-		if (!postId && !qsId) {
+		if (!qsId) {
 			if (title.length === 0 || markdownText.length === 0) {
 				toastMassege = '제목 혹은 내용이 비어있습니다.';
 				toast.error(toastMassege, {
@@ -199,8 +206,6 @@ function MarkdownEditorContainer() {
 			toast.success(toastMassege, {
 				position: toast.POSITION.BOTTOM_RIGHT,
 			});
-
-			return;
 		}
 	}, [dispatch, isTemp, markdownText, onCreatePost, onUpdatePost, postId, router, title]);
 
@@ -208,8 +213,11 @@ function MarkdownEditorContainer() {
 		let { id } = router.query;
 
 		const token = getStorage('tech-token');
+		const userInfo = getStorage('user-info') as UserInfo;
 
-		if (!postId || !qsId) {
+		const reqSlugUrl = `/@${userInfo.memberName}/${escapeForUrl(slugUrl)}`;
+
+		if (!postId && !id) {
 			const saveReq = {
 				title,
 				contents: markdownText,
@@ -222,6 +230,7 @@ function MarkdownEditorContainer() {
 		const publishReq = {
 			id: postId || id,
 			kinds,
+			slugUrl: reqSlugUrl,
 			category: 'blog',
 			token,
 		};
@@ -229,7 +238,7 @@ function MarkdownEditorContainer() {
 		dispatch(setWritePostId(''));
 
 		router.push('/');
-	}, [dispatch, kinds, markdownText, onCreatePost, onPublishPost, postId, router, title]);
+	}, [dispatch, kinds, markdownText, onCreatePost, onPublishPost, postId, router, slugUrl, title]);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
@@ -246,6 +255,8 @@ function MarkdownEditorContainer() {
 			toast.error('제목 혹은 내용이 비어있습니다.', {
 				position: toast.POSITION.BOTTOM_RIGHT,
 			});
+
+			return;
 		}
 		if (!isOpenModal) {
 			modalToggle();
@@ -254,9 +265,9 @@ function MarkdownEditorContainer() {
 
 	useEffect(() => {
 		const qsId = router.query.id;
-		if (qsId || postId) {
+		if (qsId) {
 			const req = {
-				id: postId || qsId,
+				id: qsId,
 			};
 
 			getLastPost(req);
@@ -285,6 +296,9 @@ function MarkdownEditorContainer() {
 		}
 	}, [markdownText, onTemporaryStorage, postId, title]);
 
+	useEffect(() => {
+		setSlugUrl(title);
+	}, [title]);
 	return (
 		<>
 			<Head>
@@ -292,9 +306,11 @@ function MarkdownEditorContainer() {
 			</Head>
 			<PostPublishModal
 				isOpen={isOpenModal}
+				slugUrl={slugUrl}
 				modalToggle={modalToggle}
-				onSavePost={onSavePost}
+				onPublishPost={onSavePost}
 				handleKindsValue={handleKindsValue}
+				handleUrl={handleUrl}
 			/>
 			<MarkdownEditorTemplate>
 				<EditorWrap>

@@ -51,7 +51,7 @@ const ToolItem = styled.button`
 `;
 
 const UploadImageLabel = styled.label`
-	width: 1.5rem;
+	width: 100%;
 	height: 1.5rem;
 	cursor: pointer;
 `;
