@@ -6,6 +6,7 @@
 - emotion
 
 ### 📑 script
+tech 폴더 내에서 실행해 주세요.
 
 - yarn dev => 개발 모드에서 실행
 - yarn start => build 필요
