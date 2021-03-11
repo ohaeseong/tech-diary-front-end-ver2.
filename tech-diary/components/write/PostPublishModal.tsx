@@ -3,8 +3,6 @@ import styled from '@emotion/styled';
 import { fadeinForModal, toBig } from 'styles/animation';
 import { GoX } from 'react-icons/go';
 import { color } from 'styles/color';
-import PostItem from 'components/post/PostItem';
-import { Post } from 'store/types/post.types';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import { MdImage } from 'react-icons/md';
@@ -31,10 +29,11 @@ const ModalOver = styled.div`
 
 const ModalBox = styled.div`
 	width: 50rem;
-	height: 30rem;
+	height: 35rem;
 	background-color: white;
 	animation: ${toBig} 0.7s;
 	border-radius: 5px;
+	padding: 0 1rem;
 `;
 
 const Head = styled.div`
@@ -64,7 +63,7 @@ const PostPublishContentWrap = styled.div`
 	justify-content: center;
 	padding: 1rem;
 	width: 100%;
-	max-height: 100%;
+	height: 100%;
 	/* border: 1px solid black; */
 `;
 
@@ -79,7 +78,28 @@ const PostPublishSetCardWrap = styled.div`
 `;
 
 const ThumbnailUploadLabel = styled.label`
+	width: 100%;
+	height: 100%;
 	cursor: pointer;
+`;
+
+const ThumbnailUpdateLabelWrap = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+
+	& > * {
+		margin-left: 0.5rem;
+	}
+`;
+
+const ThumbnailUpdateLabel = styled.label`
+	font-size: 1rem;
+	cursor: pointer;
+	font-family: 'Spoqa Han Sans Regular';
+	color: ${color.gray_3};
+	border-bottom: 1px solid ${color.gray_2};
 `;
 
 const ThumbnailUpload = styled.div`
@@ -89,10 +109,30 @@ const ThumbnailUpload = styled.div`
 	height: 10rem;
 	border: 1px solid ${(props) => props.theme.gray_2};
 	border-radius: 3px;
+	width: 100%;
+	height: 100%;
 
 	& > * {
 		color: ${(props) => props.theme.gray_5};
 	}
+`;
+
+const ThumbnailImageWrap = styled.div`
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin-top: 0.8rem;
+`;
+
+const ThumbnailImage = styled.img`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 3px;
+	/* border: 1px solid black; */
 `;
 
 const PreviewText = styled.textarea`
@@ -134,37 +174,75 @@ const KindsSelect = styled.select`
 
 const ContentLabel = styled.span`
 	width: 100%;
-	font-size: 1.3rem;
-	margin-bottom: 0.5rem;
+	font-size: 1rem;
+	margin: 0.5rem 0;
 	font-family: 'Spoqa Han Sans Regular';
 `;
 
 const PublishSettingWrap = styled.div`
+	display: flex;
+	flex-direction: row;
 	width: 100%;
-	height: 5rem;
-	margin-bottom: 2rem;
-	border: 1px solid black;
+	height: 10rem;
+	align-items: center;
+	justify-content: space-between;
+	/* margin-bottom: 1rem; */
+	/* border: 1px solid black; */
+`;
+
+const PublishSettingItem = styled.div<{ isActive: boolean }>`
+	width: 100%;
+	height: 3rem;
+	/* border: 1px solid ${color.gray_2}; */
+	background-color: ${(props) => props.theme.white_2};
+
+	${(props) =>
+		props.isActive &&
+		`
+			background-color: ${props.theme.neon_2};
+			opacity: 0.4;
+			border: 1px solid ${color.purple};
+	`}
 `;
 
 const SlugUrlSettingInput = styled.input`
 	height: 2rem;
 	font-size: 1.2rem;
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
 	font-family: 'Spoqa Han Sans Thin';
-	padding-left: 0.5rem;
+	padding: 0.4rem 0.5rem;
 	border: 1px solid ${color.gray_2};
 `;
 
 type Props = {
 	isOpen: boolean;
+	postIntro: string;
 	modalToggle: () => void;
 	onPublishPost: () => void;
 	handleKindsValue: (event: ChangeEvent<HTMLSelectElement>) => void;
 	handleUrl: (event: ChangeEvent<HTMLInputElement>) => void;
+	handleThumbnailImage: (event: ChangeEvent<HTMLInputElement>) => void;
+	handlePostIntro: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+	resetThumbnail: () => void;
+	handlePrivateSetting: () => void;
+	thumbnailImage: string;
 	slugUrl: string;
 };
 
-function PostPublishModal({ isOpen, modalToggle, onPublishPost, handleKindsValue, handleUrl, slugUrl }: Props) {
+function PostPublishModal({
+	isOpen,
+	modalToggle,
+	onPublishPost,
+	handleKindsValue,
+	handleUrl,
+	handleThumbnailImage,
+	handlePostIntro,
+	resetThumbnail,
+	handlePrivateSetting,
+	thumbnailImage,
+	slugUrl,
+	postIntro,
+}: Props) {
 	const closeModal = useCallback(() => {
 		modalToggle();
 	}, [modalToggle]);
@@ -182,25 +260,54 @@ function PostPublishModal({ isOpen, modalToggle, onPublishPost, handleKindsValue
 							<Body>
 								<PostPublishContentWrap>
 									<PostPublishSetCardWrap>
-										<ThumbnailUploadLabel htmlFor="thumbnail_upload">
-											<ThumbnailUpload>
-												<MdImage size="2rem" />
-											</ThumbnailUpload>
-										</ThumbnailUploadLabel>
-										<ThumbnailUploadInput
-											id="thumbnail_upload"
-											type="file"
-											multiple={false}
-											accept="image/gif, image/jpeg, image/jpg, image/png"
+										{thumbnailImage ? (
+											<>
+												<ThumbnailUpdateLabelWrap>
+													<ThumbnailUpdateLabel htmlFor="thumbnail_update">재업로드</ThumbnailUpdateLabel>
+													<ThumbnailUploadInput
+														id="thumbnail_update"
+														type="file"
+														multiple={false}
+														onChange={handleThumbnailImage}
+														accept="image/gif, image/jpeg, image/jpg, image/png"
+													/>
+													<ThumbnailUpdateLabel onClick={resetThumbnail}>제거</ThumbnailUpdateLabel>
+												</ThumbnailUpdateLabelWrap>
+												<ThumbnailImageWrap>
+													<ThumbnailImage src={thumbnailImage} />
+												</ThumbnailImageWrap>
+											</>
+										) : (
+											<>
+												<ThumbnailUploadLabel htmlFor="thumbnail_upload">
+													<ThumbnailUpload>
+														<MdImage size="2rem" />
+													</ThumbnailUpload>
+												</ThumbnailUploadLabel>
+												<ThumbnailUploadInput
+													id="thumbnail_upload"
+													type="file"
+													multiple={false}
+													onChange={handleThumbnailImage}
+													accept="image/gif, image/jpeg, image/jpg, image/png"
+												/>
+											</>
+										)}
+										<PreviewText
+											placeholder="글에 대해 짧게 소개해보세요!"
+											value={postIntro}
+											onChange={handlePostIntro}
 										/>
-										<PreviewText placeholder="글에 대해 짧게 소개해보세요!" />
 									</PostPublishSetCardWrap>
-									<PostPreviewBottom>*미리보기</PostPreviewBottom>
+									{/* <PostPreviewBottom>*미리보기</PostPreviewBottom> */}
 								</PostPublishContentWrap>
 								<PostPublishContentWrap>
 									<PostPublishSetCardWrap>
 										<ContentLabel>공개 설정</ContentLabel>
-										<PublishSettingWrap />
+										<PublishSettingWrap>
+											<PublishSettingItem isActive></PublishSettingItem>
+											<PublishSettingItem></PublishSettingItem>
+										</PublishSettingWrap>
 										<ContentLabel>URL 설정</ContentLabel>
 										<SlugUrlSettingInput value={slugUrl} onChange={handleUrl} />
 										<ContentLabel>카테고리 선택</ContentLabel>
@@ -210,8 +317,8 @@ function PostPublishModal({ isOpen, modalToggle, onPublishPost, handleKindsValue
 											<option value="database">database</option>
 											<option value="other">other</option>
 										</KindsSelect>
-										<ButtonGroup sortDirection="row">
-											<Button btnColor={color.neon_2} onClick={onPublishPost}>
+										<ButtonGroup sortDirection="row" margin="7rem 0 0 0">
+											<Button btnColor={color.neon_2} onClick={onPublishPost} width="100%">
 												출간 하기
 											</Button>
 										</ButtonGroup>
