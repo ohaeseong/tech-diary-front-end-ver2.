@@ -28,6 +28,7 @@ export type Post = {
 	like: number;
 	member: Member;
 	commentCount: number;
+	intro: string;
 };
 
 export type PostDetail = {

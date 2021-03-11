@@ -76,6 +76,9 @@ function MarkdownEditorContainer() {
 	const [tagName, setTagName] = useState('');
 	const [kinds, setKinds] = useState('front-end');
 	const [slugUrl, setSlugUrl] = useState(title);
+	const [thumbnailImage, setThumbnailAddress] = useState('');
+	const [postIntro, setPostIntro] = useState('');
+	const [isPrivate, setIsPrivate] = useState(1);
 
 	const [isOpenModal, modalToggle] = useToggle(false);
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
@@ -86,11 +89,22 @@ function MarkdownEditorContainer() {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const handleImage = useCallback(
-		async (event: ChangeEvent<HTMLInputElement>) => {
+	const handlePrivateSetting = (privateSetting: number) => {
+		setIsPrivate(privateSetting);
+	};
+
+	const handlePostIntro = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
+		setPostIntro(event.target.value);
+	}, []);
+
+	const resetThumbnail = useCallback(() => {
+		setThumbnailAddress('');
+	}, []);
+
+	const uploadImageUtil = useCallback(
+		async (imageFile: any) => {
 			const token = getStorage('tech-token');
 			const formData = new FormData();
-			const imageFile = event.target.files;
 
 			if (imageFile) {
 				formData.append('image', imageFile[0]);
@@ -103,14 +117,31 @@ function MarkdownEditorContainer() {
 
 			const response = await onUploadImage(req);
 
+			return response.data.imgs[0].fileAddress;
+		},
+		[onUploadImage]
+	);
+
+	const handleImage = useCallback(
+		async (event: ChangeEvent<HTMLInputElement>) => {
+			const imageFile = event.target.files;
+			const imageAddress = await uploadImageUtil(imageFile);
+
 			let body = markdownText;
 
-			body = `${body} \n ![](${response.data.imgs[0].fileAddress})`;
+			body = `${body} \n ![](${imageAddress})`;
 
 			setMarkdownText(body);
 		},
-		[markdownText, onUploadImage]
+		[markdownText, uploadImageUtil]
 	);
+
+	const handleThumbnailImage = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
+		const imageFile = event.target.files;
+		const imageAddress = await uploadImageUtil(imageFile);
+
+		setThumbnailAddress(imageAddress);
+	}, []);
 
 	const addTag = useCallback(() => {
 		if (tagName.length === 0) return;
@@ -200,7 +231,7 @@ function MarkdownEditorContainer() {
 				contents: markdownText,
 				token,
 			} as PostUpdate;
-			const response = await onUpdatePost(req);
+			await onUpdatePost(req);
 			toastMassege = '임시저장 완료';
 
 			toast.success(toastMassege, {
@@ -232,13 +263,28 @@ function MarkdownEditorContainer() {
 			kinds,
 			slugUrl: reqSlugUrl,
 			category: 'blog',
+			thumbnailAddress: thumbnailImage,
+			intro: postIntro,
 			token,
 		};
+
 		await onPublishPost(publishReq);
 		dispatch(setWritePostId(''));
 
 		router.push('/');
-	}, [dispatch, kinds, markdownText, onCreatePost, onPublishPost, postId, router, slugUrl, title]);
+	}, [
+		dispatch,
+		kinds,
+		markdownText,
+		onCreatePost,
+		onPublishPost,
+		postId,
+		postIntro,
+		router,
+		slugUrl,
+		thumbnailImage,
+		title,
+	]);
 
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
@@ -297,7 +343,8 @@ function MarkdownEditorContainer() {
 	}, [markdownText, onTemporaryStorage, postId, title]);
 
 	useEffect(() => {
-		setSlugUrl(title);
+		const slugUrlDefault = `/${title}`;
+		setSlugUrl(slugUrlDefault);
 	}, [title]);
 	return (
 		<>
@@ -310,7 +357,13 @@ function MarkdownEditorContainer() {
 				modalToggle={modalToggle}
 				onPublishPost={onSavePost}
 				handleKindsValue={handleKindsValue}
+				thumbnailImage={thumbnailImage}
 				handleUrl={handleUrl}
+				handleThumbnailImage={handleThumbnailImage}
+				handlePostIntro={handlePostIntro}
+				resetThumbnail={resetThumbnail}
+				handlePrivateSetting={handlePrivateSetting}
+				postIntro={postIntro}
 			/>
 			<MarkdownEditorTemplate>
 				<EditorWrap>

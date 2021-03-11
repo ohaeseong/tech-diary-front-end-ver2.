@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { color } from 'styles/color';
 import { useRouter } from 'next/router';
 
-const PostItemWrap = styled.div<{ isReadOnly: boolean }>`
+const PostItemWrap = styled.div`
 	width: 100%;
 	height: 23.5rem;
 
@@ -19,14 +19,9 @@ const PostItemWrap = styled.div<{ isReadOnly: boolean }>`
 	transition: 0.3s ease-in-out;
 
 	background-color: ${(props) => props.theme.white};
-
-	${(props) =>
-		!props.isReadOnly &&
-		`
-			&:hover {
-				transform: translate(0, -10px);
-			}
-	`}
+	&:hover {
+		transform: translate(0, -10px);
+	}
 `;
 
 const ThumbnailWrap = styled.div`
@@ -174,11 +169,10 @@ const IconWrap = styled.div`
 
 type Props = {
 	item: Post;
-	isReadOnly: boolean;
 };
 
-function PostItem({ item, isReadOnly }: Props) {
-	const { id, title, contents, createTime, thumbnailAddress, memberId, like, member, commentCount } = item;
+function PostItem({ item }: Props) {
+	const { id, title, contents, createTime, thumbnailAddress, memberId, like, member, commentCount, intro } = item;
 
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -187,60 +181,36 @@ function PostItem({ item, isReadOnly }: Props) {
 	const router = useRouter();
 
 	return (
-		<PostItemWrap isReadOnly={isReadOnly}>
-			{!isReadOnly ? (
-				<>
-					<ThumbnailWrap onClick={() => router.push(`http://localhost:3000/blog/detail/${id}`)}>
-						<Thumbnail src={thumbnailSrc} alt="thumbnail" />
-					</ThumbnailWrap>
-					<PostContentsWrap>
-						<Link href={`http://localhost:3000/blog/detail/${id}`}>
-							<PostContent type="title">{title}</PostContent>
-						</Link>
-						<Link href={`http://localhost:3000/blog/detail/${id}`}>
-							<PostContent type="contents">{contents}</PostContent>
-						</Link>
-						<PostContent type="info">
-							<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
-							<UserProfile src={profileImage} alt="profile_image" />
-						</PostContent>
-						<PostBottomWrap>
-							<IconWrap>
-								<FaComment size="15" color="#4f95ef" />
-								{commentCount}
-							</IconWrap>
-							<IconWrap>
-								<AiFillBulb size="15" color={color.star} />
-								{like}
-							</IconWrap>
-						</PostBottomWrap>
-					</PostContentsWrap>
-				</>
-			) : (
-				<>
-					<ThumbnailWrap>
-						<Thumbnail src={thumbnailSrc} alt="thumbnail" />
-					</ThumbnailWrap>
-					<PostContentsWrap>
-						<PostContent type="title">{title}</PostContent>
+		<PostItemWrap>
+			<ThumbnailWrap onClick={() => router.push(`http://localhost:3000/blog/detail/${id}`)}>
+				<Thumbnail src={thumbnailSrc} alt="thumbnail" />
+			</ThumbnailWrap>
+			<PostContentsWrap>
+				<Link href={`http://localhost:3000/blog/detail/${id}`}>
+					<PostContent type="title">{title}</PostContent>
+				</Link>
+				<Link href={`http://localhost:3000/blog/detail/${id}`}>
+					{intro ? (
+						<PostContent type="contents">{intro}</PostContent>
+					) : (
 						<PostContent type="contents">{contents}</PostContent>
-						<PostContent type="info">
-							<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
-							<UserProfile src={profileImage} alt="profile_image" />
-						</PostContent>
-						<PostBottomWrap>
-							<IconWrap>
-								<FaComment size="15" color="#4f95ef" />
-								{commentCount}
-							</IconWrap>
-							<IconWrap>
-								<AiFillBulb size="15" color={color.star} />
-								{like}
-							</IconWrap>
-						</PostBottomWrap>
-					</PostContentsWrap>
-				</>
-			)}
+					)}
+				</Link>
+				<PostContent type="info">
+					<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
+					<UserProfile src={profileImage} alt="profile_image" />
+				</PostContent>
+				<PostBottomWrap>
+					<IconWrap>
+						<FaComment size="15" color="#4f95ef" />
+						{commentCount}
+					</IconWrap>
+					<IconWrap>
+						<AiFillBulb size="15" color={color.star} />
+						{like}
+					</IconWrap>
+				</PostBottomWrap>
+			</PostContentsWrap>
 		</PostItemWrap>
 	);
 }
