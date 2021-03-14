@@ -23,7 +23,7 @@ type Props = {
 	updatePageHandler: (updatedBlock: InitialBlockType) => void;
 	addBlockHandler: (currentBlock: CurrentBlockType) => void;
 	deleteBlockHandler: (currnetBlock: CurrentBlockType) => void;
-}; //test
+};
 
 function BlockEditor({ blocks, addBlockHandler, deleteBlockHandler, updatePageHandler }: Props) {
 	return (
