@@ -14,6 +14,7 @@ import {
 	requestPublishPost,
 	requestUpdatePostForTemp,
 	uploadImage,
+	requestAddTag,
 } from 'libs/repository';
 import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
@@ -78,20 +79,17 @@ function MarkdownEditorContainer() {
 	const [slugUrl, setSlugUrl] = useState(title);
 	const [thumbnailImage, setThumbnailAddress] = useState('');
 	const [postIntro, setPostIntro] = useState('');
-	const [isPrivate, setIsPrivate] = useState(1);
 
 	const [isOpenModal, modalToggle] = useToggle(false);
+	const [isPublic, isPublicToggle] = useToggle(true);
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
 	const [, , onUpdatePost, ,] = useRequest(requestUpdatePostForTemp, true);
 	const [, , onPublishPost, ,] = useRequest(requestPublishPost);
+	const [, , onAddTag, ,] = useRequest(requestAddTag);
 	const [lastPostData, , getLastPost, ,] = useRequest(requestGetDetail, true);
 	const [, , onUploadImage, ,] = useRequest(uploadImage, true);
 	const router = useRouter();
 	const dispatch = useDispatch();
-
-	const handlePrivateSetting = (privateSetting: number) => {
-		setIsPrivate(privateSetting);
-	};
 
 	const handlePostIntro = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		setPostIntro(event.target.value);
@@ -143,7 +141,7 @@ function MarkdownEditorContainer() {
 		setThumbnailAddress(imageAddress);
 	}, []);
 
-	const addTag = useCallback(() => {
+	const addTag = useCallback(async() => {
 		if (tagName.length === 0) return;
 		let checkIsSame = false;
 		tagItemList.forEach((tagValue: tagValueType) => {
@@ -160,6 +158,10 @@ function MarkdownEditorContainer() {
 
 		tagList.push(<TagItem tagName={tagName} isLink={false} />);
 		setTagItemList(tagList);
+
+
+		await 
+
 		setTagName('');
 	}, [tagItemList, tagName]);
 
@@ -258,6 +260,14 @@ function MarkdownEditorContainer() {
 			id = response.data.id;
 		}
 
+		let publishType;
+
+		if (isPublic) {
+			publishType = 1;
+		} else {
+			publishType = 2;
+		}
+
 		const publishReq = {
 			id: postId || id,
 			kinds,
@@ -266,6 +276,7 @@ function MarkdownEditorContainer() {
 			thumbnailAddress: thumbnailImage,
 			intro: postIntro,
 			token,
+			publishType,
 		};
 
 		await onPublishPost(publishReq);
@@ -274,6 +285,7 @@ function MarkdownEditorContainer() {
 		router.push('/');
 	}, [
 		dispatch,
+		isPublic,
 		kinds,
 		markdownText,
 		onCreatePost,
@@ -308,6 +320,10 @@ function MarkdownEditorContainer() {
 			modalToggle();
 		}
 	}, [isOpenModal, markdownText.length, modalToggle, title.length]);
+
+	const handlePublicState = useCallback(() => {
+		isPublicToggle();
+	}, [isPublicToggle]);
 
 	useEffect(() => {
 		const qsId = router.query.id;
@@ -362,7 +378,8 @@ function MarkdownEditorContainer() {
 				handleThumbnailImage={handleThumbnailImage}
 				handlePostIntro={handlePostIntro}
 				resetThumbnail={resetThumbnail}
-				handlePrivateSetting={handlePrivateSetting}
+				handlePublicState={handlePublicState}
+				isPublic={isPublic}
 				postIntro={postIntro}
 			/>
 			<MarkdownEditorTemplate>
