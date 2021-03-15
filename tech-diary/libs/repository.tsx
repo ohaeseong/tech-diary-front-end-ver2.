@@ -197,6 +197,7 @@ export const requestPublishPost = (req: {
 	slugUrl: string;
 	thumbnailAddress: string;
 	intro: string;
+	publishType: number;
 }) =>
 	axios
 		.put(
@@ -208,6 +209,7 @@ export const requestPublishPost = (req: {
 				slugUrl: req.slugUrl,
 				thumbnailAddress: req.thumbnailAddress,
 				intro: req.intro,
+				publishType: req.publishType,
 			},
 			{
 				headers: {
@@ -226,6 +228,24 @@ export const uploadImage = (req: { formData: Array<FormData>; token: string }) =
 				token: req.token,
 			},
 		})
+		.catch((error) => {
+			throw error;
+		});
+
+export const requestAddTag = (req: { postId: string; tagName: string }) =>
+	axios
+		.post(
+			`${server.host}/upload/img`,
+			{
+				postId: req.postId,
+				tagName: req.tagName,
+			},
+			{
+				headers: {
+					token: req.token,
+				},
+			}
+		)
 		.catch((error) => {
 			throw error;
 		});

@@ -142,7 +142,7 @@ const TagInput = styled.input`
 type Props = {
 	requestSave: () => void;
 	setMarkdownText: (dispatch: string) => void;
-	tagInputOnChage: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+	tagInputOnChage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	handleTagInputKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	handleImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	tagName: string;

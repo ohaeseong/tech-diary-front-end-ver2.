@@ -191,17 +191,25 @@ const PublishSettingWrap = styled.div`
 `;
 
 const PublishSettingItem = styled.div<{ isActive: boolean }>`
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 100%;
 	height: 3rem;
+	color: ${(props) => props.theme.gray_3};
 	/* border: 1px solid ${color.gray_2}; */
 	background-color: ${(props) => props.theme.white_2};
+	cursor: pointer;
+	transition: ease-in-out 0.2s;
 
 	${(props) =>
 		props.isActive &&
 		`
-			background-color: ${props.theme.neon_2};
-			opacity: 0.4;
-			border: 1px solid ${color.purple};
+			background-color: ${props.theme.emphasis};
+			// opacity: 0.7;
+			border-radius: 5px;
+			color: ${props.theme.white};
+			// border: 1px solid ${color.purple};
 	`}
 `;
 
@@ -224,7 +232,8 @@ type Props = {
 	handleThumbnailImage: (event: ChangeEvent<HTMLInputElement>) => void;
 	handlePostIntro: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 	resetThumbnail: () => void;
-	handlePrivateSetting: () => void;
+	handlePublicState: () => void;
+	isPublic: boolean;
 	thumbnailImage: string;
 	slugUrl: string;
 };
@@ -238,7 +247,8 @@ function PostPublishModal({
 	handleThumbnailImage,
 	handlePostIntro,
 	resetThumbnail,
-	handlePrivateSetting,
+	handlePublicState,
+	isPublic,
 	thumbnailImage,
 	slugUrl,
 	postIntro,
@@ -305,8 +315,12 @@ function PostPublishModal({
 									<PostPublishSetCardWrap>
 										<ContentLabel>공개 설정</ContentLabel>
 										<PublishSettingWrap>
-											<PublishSettingItem isActive></PublishSettingItem>
-											<PublishSettingItem></PublishSettingItem>
+											<PublishSettingItem isActive={isPublic} onClick={handlePublicState}>
+												공개
+											</PublishSettingItem>
+											<PublishSettingItem isActive={!isPublic} onClick={handlePublicState}>
+												비공개
+											</PublishSettingItem>
 										</PublishSettingWrap>
 										<ContentLabel>URL 설정</ContentLabel>
 										<SlugUrlSettingInput value={slugUrl} onChange={handleUrl} />
@@ -314,7 +328,7 @@ function PostPublishModal({
 										<KindsSelect onChange={handleKindsValue}>
 											<option value="front-end">front-end</option>
 											<option value="back-end">back-end</option>
-											<option value="database">database</option>
+											<option value="database">mobile</option>
 											<option value="other">other</option>
 										</KindsSelect>
 										<ButtonGroup sortDirection="row" margin="7rem 0 0 0">
