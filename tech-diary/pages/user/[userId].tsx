@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { useRouter, withRouter } from 'next/router';
-import UserProfileContainer from 'container/user/UserProfileContainer';
+import UserProfileContainer from 'container/user/UserInfoContainer';
 
 function UserInfoPage() {
 	const router = useRouter();

@@ -232,7 +232,7 @@ export const uploadImage = (req: { formData: Array<FormData>; token: string }) =
 			throw error;
 		});
 
-export const requestAddTag = (req: { postId: string; tagName: string }) =>
+export const requestAddTag = (req: { postId: string; tagName: string; token: string }) =>
 	axios
 		.post(
 			`${server.host}/upload/img`,

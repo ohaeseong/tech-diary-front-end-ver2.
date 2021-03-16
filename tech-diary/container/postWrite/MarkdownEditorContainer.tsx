@@ -85,7 +85,7 @@ function MarkdownEditorContainer() {
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
 	const [, , onUpdatePost, ,] = useRequest(requestUpdatePostForTemp, true);
 	const [, , onPublishPost, ,] = useRequest(requestPublishPost);
-	const [, , onAddTag, ,] = useRequest(requestAddTag);
+	const [, , onRequestAddTag, ,] = useRequest(requestAddTag);
 	const [lastPostData, , getLastPost, ,] = useRequest(requestGetDetail, true);
 	const [, , onUploadImage, ,] = useRequest(uploadImage, true);
 	const router = useRouter();
@@ -158,9 +158,6 @@ function MarkdownEditorContainer() {
 
 		tagList.push(<TagItem tagName={tagName} isLink={false} />);
 		setTagItemList(tagList);
-
-
-		await 
 
 		setTagName('');
 	}, [tagItemList, tagName]);
