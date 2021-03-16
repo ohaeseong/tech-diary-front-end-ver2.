@@ -118,7 +118,6 @@ function PostDetailLayout({ post }: Props) {
 	const copyUrl = () => {
 		navigator.clipboard.writeText(`${server.client_url}${router.asPath}`);
 
-
 		const toastMassege = '링크 주소 복사';
 
 		toast.success(toastMassege, {
