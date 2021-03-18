@@ -11,7 +11,7 @@ const UserProfileInfoWrap = styled.div`
 	border: 1px solid black;
 `;
 
-const UserProfileImageWrap = styled.div`
+const UserProfileImage = styled.img`
 	width: 14rem;
 	height: 14rem;
 	border-radius: 50%;
@@ -22,7 +22,7 @@ const UserProfileImageWrap = styled.div`
 function UserProfileInfoTemplate() {
 	return (
 		<UserProfileInfoWrap>
-			<UserProfileImageWrap />
+			<UserProfileImage />
 		</UserProfileInfoWrap>
 	);
 }
