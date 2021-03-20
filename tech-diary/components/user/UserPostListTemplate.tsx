@@ -8,6 +8,7 @@ const UserPostListWrap = styled.div`
 `;
 
 function UserPostListTemplate() {
+    console.log('test');
 	return <UserPostListWrap />;
 }
 
