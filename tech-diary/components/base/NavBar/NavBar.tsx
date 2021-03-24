@@ -144,7 +144,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		const userPageUrl = `${userInfo.memberName}`;
 
 		router.push(`/user/${userPageUrl}`);
-	}, []);
+	}, [router]);
 
 	const onLogout = () => {
 		removeStorage('tech-token');
@@ -200,8 +200,8 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 						<MenuSlider height={menuHeight}>
 							<MenuItem onClick={goToProfile}>내 정보</MenuItem>
 							<MenuItem onClick={() => router.push('/blog/write')}>글 쓰러 가기</MenuItem>
-							<MenuItem>임시글 보러가기</MenuItem>
-							<MenuItem>북마크한 글 보러가기</MenuItem>
+							<MenuItem onClick={() => router.push('/')}>임시글 보러가기</MenuItem>
+							<MenuItem onClick={() => router.push('/')}>북마크한 글 보러가기</MenuItem>
 							<MenuItem onClick={onLogout}>로그아웃</MenuItem>
 						</MenuSlider>
 					</ProfileWrap>

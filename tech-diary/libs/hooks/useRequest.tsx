@@ -24,7 +24,7 @@ function useRequest(request: any, getResponseToCB?: boolean) {
 		[getResponseToCB, request]
 	);
 
-	return [data, loading, onRequest, error];
+	return [data, loading, onRequest, error] as const;
 }
 
 export default useRequest;

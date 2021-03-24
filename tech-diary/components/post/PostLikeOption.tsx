@@ -85,19 +85,19 @@ const ShareIconWrap = styled.div`
 	background-color: ${(props) => props.theme.white_1};
 `;
 
-const EditText = styled.span`
-	padding-top: 1rem;
-	color: ${(props) => props.theme.gray_5};
-	font-family: 'Spoqa Han Sans Thin';
-	cursor: pointer;
+// const EditText = styled.span`
+// 	padding-top: 1rem;
+// 	color: ${(props) => props.theme.gray_5};
+// 	font-family: 'Spoqa Han Sans Thin';
+// 	cursor: pointer;
 
-	&:after {
-		content: '';
-		display: block;
-		width: 100%;
-		border-bottom: 1px solid #bcbcbc;
-	}
-`;
+// 	&:after {
+// 		content: '';
+// 		display: block;
+// 		width: 100%;
+// 		border-bottom: 1px solid #bcbcbc;
+// 	}
+// `;
 
 const ShareItem = styled.span`
 	position: absolute;
@@ -234,12 +234,12 @@ function PostLikeOption({
 			</ItemWrap>
 			<FollowWrap>
 				{userIsFollow ? (
-					<Button size="sm" margin="0" color={color.neon_2} height="1.8rem">
+					<Button size="sm" margin="0" btnColor={color.neon_2} height="1.8rem">
 						Following
 						<MdArrowDropDown size="1rem" />
 					</Button>
 				) : (
-					<Button size="sm" margin="0" color={color.neon_2} height="1.8rem">
+					<Button size="sm" margin="0" btnColor={color.neon_2} height="1.8rem">
 						Follow
 					</Button>
 				)}

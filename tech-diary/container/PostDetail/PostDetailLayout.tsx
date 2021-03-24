@@ -168,7 +168,7 @@ function PostDetailLayout({ post }: Props) {
 					setCommentList={setCommentListData}
 					commentList={commentListData}
 					data={post}
-				/> 
+				/>
 			</ThemeProvider>
 		</>
 	);
