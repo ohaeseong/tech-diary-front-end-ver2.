@@ -14,7 +14,7 @@ import {
 	requestPublishPost,
 	requestUpdatePostForTemp,
 	uploadImage,
-	requestAddTag,
+	// requestAddTag,
 } from 'libs/repository';
 import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
@@ -85,7 +85,7 @@ function MarkdownEditorContainer() {
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
 	const [, , onUpdatePost, ,] = useRequest(requestUpdatePostForTemp, true);
 	const [, , onPublishPost, ,] = useRequest(requestPublishPost);
-	const [, , onRequestAddTag, ,] = useRequest(requestAddTag);
+	// const [, , onRequestAddTag, ,] = useRequest(requestAddTag);
 	const [lastPostData, , getLastPost, ,] = useRequest(requestGetDetail, true);
 	const [, , onUploadImage, ,] = useRequest(uploadImage, true);
 	const router = useRouter();
@@ -134,14 +134,17 @@ function MarkdownEditorContainer() {
 		[markdownText, uploadImageUtil]
 	);
 
-	const handleThumbnailImage = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
-		const imageFile = event.target.files;
-		const imageAddress = await uploadImageUtil(imageFile);
+	const handleThumbnailImage = useCallback(
+		async (event: ChangeEvent<HTMLInputElement>) => {
+			const imageFile = event.target.files;
+			const imageAddress = await uploadImageUtil(imageFile);
 
-		setThumbnailAddress(imageAddress);
-	}, []);
+			setThumbnailAddress(imageAddress);
+		},
+		[uploadImageUtil]
+	);
 
-	const addTag = useCallback(async() => {
+	const addTag = useCallback(async () => {
 		if (tagName.length === 0) return;
 		let checkIsSame = false;
 		tagItemList.forEach((tagValue: tagValueType) => {

@@ -151,15 +151,15 @@ const ThumbnailUploadInput = styled.input`
 	display: none;
 `;
 
-const PostPreviewBottom = styled.span`
-	display: flex;
-	align-items: center;
-	width: 100%;
-	height: 2rem;
-	font-size: 0.7rem;
-	color: ${(props) => props.theme.gray_4};
-	margin-top: 1rem;
-`;
+// const PostPreviewBottom = styled.span`
+// 	display: flex;
+// 	align-items: center;
+// 	width: 100%;
+// 	height: 2rem;
+// 	font-size: 0.7rem;
+// 	color: ${(props) => props.theme.gray_4};
+// 	margin-top: 1rem;
+// `;
 
 const KindsSelect = styled.select`
 	width: 100%;
@@ -198,7 +198,7 @@ const PublishSettingItem = styled.div<{ isActive: boolean }>`
 	height: 3rem;
 	color: ${(props) => props.theme.gray_3};
 	/* border: 1px solid ${color.gray_2}; */
-	background-color: ${(props) => props.theme.white_2};
+	background-color: ${(props) => props.theme.white_1};
 	cursor: pointer;
 	transition: ease-in-out 0.2s;
 

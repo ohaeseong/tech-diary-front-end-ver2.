@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
 import { NavBar } from 'components/base/NavBar';
-import MainTemplate from 'components/template/mainTemplate/MainTemplate';
+// import MainTemplate from 'components/template/mainTemplate/MainTemplate';
 import UserPostListTemplate from 'components/user/UserPostListTemplate';
 import UserProfileInfoTemplate from 'components/user/UserProfileInfoTemplate';
 import useDarkMode from 'libs/hooks/useDarkMode';

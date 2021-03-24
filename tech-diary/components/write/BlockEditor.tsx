@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 // import EditableBlock from 'components/write/EditableBlock';
 
 // type BlockType = {
@@ -13,10 +13,10 @@ import React, { RefObject } from 'react';
 // 	tag: string;
 // };
 
-type CurrentBlockType = {
-	id: string;
-	ref: RefObject<HTMLElement>;
-};
+// type CurrentBlockType = {
+// 	id: string;
+// 	ref: RefObject<HTMLElement>;
+// };
 
 // type Props = {
 // 	blocks: Array<BlockType>;

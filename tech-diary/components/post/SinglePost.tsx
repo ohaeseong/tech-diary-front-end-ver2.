@@ -58,7 +58,7 @@ type Props = {
 	moveToComment: () => void;
 	closeShareItem: () => void;
 	copyUrl: () => void;
-	dispatchForUpdateState: () => void;
+	dispatchForUpdateState: any;
 	setCommentList: (dispatch: Comment[]) => void;
 
 	optionState: OptionState;

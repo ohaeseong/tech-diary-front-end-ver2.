@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { requestPostLike } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
-import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
+// import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import { toast } from 'react-toastify';
 import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
@@ -35,7 +35,7 @@ function PostDetailLayout({ post }: Props) {
 
 	const [commentListData, setCommentListData] = useState(commentList.commentData);
 
-	const [isMine, setIsMine] = useState(false);
+	// const [isMine, setIsMine] = useState(false);
 
 	const [bookMarkToggleValue, bookMarkToggle] = useToggle(false);
 	const [shareItemOpenToggleValue, shareItemToggle] = useToggle(false);
@@ -131,7 +131,7 @@ function PostDetailLayout({ post }: Props) {
 
 		if (token) {
 			if (tokenDecoded.memberId === memberId) {
-				setIsMine(true);
+				// setIsMine(true);
 			}
 		}
 	}, [memberId]);
@@ -160,7 +160,7 @@ function PostDetailLayout({ post }: Props) {
 					moveToComment={moveToComment}
 					copyUrl={copyUrl}
 					dispatchForUpdateState={dispatchForUpdateState}
-					isMine={isMine}
+					// isMine={isMine}
 					bookMarkToggleValue={bookMarkToggleValue}
 					closeShareItem={closeShareItem}
 					shareItemOpenToggleValue={shareItemOpenToggleValue}

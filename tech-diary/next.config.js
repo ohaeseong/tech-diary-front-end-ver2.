@@ -1,4 +1,9 @@
 const withTM = require('next-transpile-modules');
 const withPlugins = require('next-compose-plugins');
 
-module.exports = {};
+module.exports = {
+	images: {
+		loader: 'imgix',
+		path: 'https://noop/',
+	},
+};

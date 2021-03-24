@@ -6,7 +6,7 @@ import { BsTypeBold } from 'react-icons/bs';
 import { BiItalic, BiLinkAlt } from 'react-icons/bi';
 import { HiCode } from 'react-icons/hi';
 import { MdFormatStrikethrough, MdImage, MdFormatQuote } from 'react-icons/md';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const ToolBoxWrap = styled.div`
 	position: fixed;

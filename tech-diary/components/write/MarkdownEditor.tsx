@@ -108,24 +108,6 @@ const MarkdownEditorWrap = styled.div`
 			color: ${(props) => props.theme.gray_3};
 			font-style: italic;
 		}
-
-		/* ${media.custom(767)} {
-			font-size: 0.875rem;
-			.cm-header-1 {
-				font-size: 2rem;
-			}
-			.cm-header-2 {
-				font-size: 1.5rem;
-			}
-			.cm-header-3 {
-				font-size: 1.15rem;
-			}
-			.cm-header-4,
-			.cm-header-5,
-			.cm-header-6 {
-				font-size: 1rem;
-			}
-		} */
 	}
 `;
 
@@ -160,18 +142,13 @@ function MarkdownEditor({
 	tagName,
 	markdownText,
 }: Props) {
-	const [codemirror, setCodemirror] = useState();
+	const [codemirror, setCodemirror] = useState<any>();
 	const editorElement = React.createRef<HTMLTextAreaElement>();
 
 	const handleToolbarClick = (mode: string) => {
 		if (!codemirror) return;
-		type Codemirror = {
-			editor: null;
-		}
 
-		(codemirror as unknown) as Codemirror;
 		const { doc } = codemirror.editor;
-		// console.log(codemirror.current);
 
 		switch (mode) {
 			case 'H1':
@@ -229,7 +206,7 @@ function MarkdownEditor({
 						placeholder: '블로그 작성...',
 						lineWrapping: true,
 					}}
-					onBeforeChange={(editor, data, value) => {
+					onBeforeChange={(_editor, _data, value) => {
 						setMarkdownText(value);
 					}}
 					editorWillUnmount={() => {

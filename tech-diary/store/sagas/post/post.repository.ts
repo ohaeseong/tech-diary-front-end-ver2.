@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { getCommentList } from 'store/modules/post.comment.count';
+// import { getCommentList } from 'store/modules/post.comment.count';
 import { getPostList } from 'store/types/post.types';
 
 class postRepository {
@@ -16,7 +16,7 @@ class postRepository {
 			.catch((error) => error.response);
 	}
 
-	public async getPostCommentList(req: getCommentList) {
+	public async getPostCommentList(req: { postId: string }) {
 		return axios
 			.get(`${server.host}/post/comment`, {
 				params: {
