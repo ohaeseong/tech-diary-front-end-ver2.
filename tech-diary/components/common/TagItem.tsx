@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { fadeinForModal, toBig } from 'styles/animation';
+import { toBig } from 'styles/animation';
 
 const TagItemWrap = styled.a`
 	padding: 0.5rem 1rem;

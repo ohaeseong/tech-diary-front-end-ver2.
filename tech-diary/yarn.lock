@@ -1104,7 +1104,7 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/codemirror@*", "@types/codemirror@^0.0.107":
+"@types/codemirror@*", "@types/codemirror@0.0.107":
   version "0.0.107"
   resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.107.tgz#2800d142f489a1137414df30665633bbfbf4abaa"
   integrity sha512-F3Uh8xBmZWeMckWPVrcG5TBQIr/rZM7dQfx8D0pHCb372MIWFBwc5mjLBpYPcxGpmgNM/p6bl619XwyzBUQTrQ==

@@ -66,7 +66,6 @@ type Props = {
 	commentList: Comment[];
 	bookMarkToggleValue: boolean;
 	shareItemOpenToggleValue: boolean;
-	isMine: boolean;
 };
 
 function SinglePost({
@@ -84,7 +83,6 @@ function SinglePost({
 	data,
 	bookMarkToggleValue,
 	shareItemOpenToggleValue,
-	isMine,
 }: Props) {
 	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id } = data;
 	const [userIsLike, setUserIsLike] = useState(false);

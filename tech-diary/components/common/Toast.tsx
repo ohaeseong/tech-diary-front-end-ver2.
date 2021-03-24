@@ -35,15 +35,15 @@ const ToastTemplate = styled.div<{ isCall: boolean }>`
 	}}
 `;
 
-const ToastWrap = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	color: white;
+// const ToastWrap = styled.div`
+// 	display: flex;
+// 	flex-direction: column;
+// 	width: 100%;
+// 	height: 100%;
+// 	color: white;
 
-	background-color: #39ff14;
-`;
+// 	background-color: #39ff14;
+// `;
 
 function Toast() {
 	const { isCall, text } = useSelector((store: RootState) => store.toast);

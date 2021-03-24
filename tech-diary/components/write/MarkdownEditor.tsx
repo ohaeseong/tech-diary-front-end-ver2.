@@ -165,9 +165,13 @@ function MarkdownEditor({
 
 	const handleToolbarClick = (mode: string) => {
 		if (!codemirror) return;
-		const { doc } = codemirror?.editor;
+		type Codemirror = {
+			editor: null;
+		}
+
+		(codemirror as unknown) as Codemirror;
+		const { doc } = codemirror.editor;
 		// console.log(codemirror.current);
-		console.log(editorElement);
 
 		switch (mode) {
 			case 'H1':

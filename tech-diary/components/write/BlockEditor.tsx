@@ -1,34 +1,34 @@
-import React, { RefObject, useCallback, useState } from 'react';
-import EditableBlock from 'components/write/EditableBlock';
+import React, { RefObject } from 'react';
+// import EditableBlock from 'components/write/EditableBlock';
 
-type BlockType = {
-	id: string;
-	html: string;
-	tag: string;
-};
+// type BlockType = {
+// 	id: string;
+// 	html: string;
+// 	tag: string;
+// };
 
-type InitialBlockType = {
-	id: string;
-	html: string;
-	tag: string;
-};
+// type InitialBlockType = {
+// 	id: string;
+// 	html: string;
+// 	tag: string;
+// };
 
 type CurrentBlockType = {
 	id: string;
 	ref: RefObject<HTMLElement>;
 };
 
-type Props = {
-	blocks: Array<BlockType>;
-	updatePageHandler: (updatedBlock: InitialBlockType) => void;
-	addBlockHandler: (currentBlock: CurrentBlockType) => void;
-	deleteBlockHandler: (currnetBlock: CurrentBlockType) => void;
-};
+// type Props = {
+// 	blocks: Array<BlockType>;
+// 	// updatePageHandler: (updatedBlock: InitialBlockType) => void;
+// 	addBlockHandler: (currentBlock: CurrentBlockType) => void;
+// 	deleteBlockHandler: (currnetBlock: CurrentBlockType) => void;
+// };
 
-function BlockEditor({ blocks, addBlockHandler, deleteBlockHandler, updatePageHandler }: Props) {
+function BlockEditor() {
 	return (
 		<div>
-			{blocks.map((block) => {
+			{/* {blocks.map((block) => {
 				return (
 					<EditableBlock
 						key={block.id}
@@ -36,11 +36,11 @@ function BlockEditor({ blocks, addBlockHandler, deleteBlockHandler, updatePageHa
 						html={block.html}
 						tag={block.tag}
 						addBLock={addBlockHandler}
-						updatePage={updatePageHandler}
+						// updatePage={updatePageHandler}
 						deleteBlockHandler={deleteBlockHandler}
 					/>
 				);
-			})}
+			})} */}
 		</div>
 	);
 }
