@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { CreatePost, Post, PostUpdate } from 'store/types/post.types';
+import { CreatePost, PostUpdate } from 'store/types/post.types';
 
 export const requestPostLike = (req: { postId: string; token: string }) =>
 	axios

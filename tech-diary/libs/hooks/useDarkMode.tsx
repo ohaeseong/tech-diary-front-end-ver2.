@@ -19,7 +19,7 @@ export default function useDarkMode() {
 	};
 
 	useEffect(() => {
-		const localTheme = getStorage('theme');
+		const localTheme = getStorage<any>('theme');
 		if (localTheme) {
 			setTheme(localTheme);
 		} else {

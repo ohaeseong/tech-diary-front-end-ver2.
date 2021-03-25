@@ -12,10 +12,10 @@ const useDetailPost = (postId: string) => {
 		dispatch({
 			type: GET_POST_LIST_REQUEST,
 			payload: {
-                postid,
+				postId,
 			},
 		});
-	}, [dispatch]);
+	}, [dispatch, postId]);
 
 	useEffect(() => {
 		fetchBlogData();

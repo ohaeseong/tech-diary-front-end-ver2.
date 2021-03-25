@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 // import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 
 // import styled from '@emotion/styled';
@@ -44,10 +44,10 @@ import React, { RefObject } from 'react';
 // 	tag: string;
 // };
 
-type CurrentBlockType = {
-	id: string;
-	ref: RefObject<HTMLElement>;
-};
+// type CurrentBlockType = {
+// 	id: string;
+// 	ref: RefObject<HTMLElement>;
+// };
 
 // type Props = {
 // 	// updatePage: (updatedBlock: InitialBlockType) => void;

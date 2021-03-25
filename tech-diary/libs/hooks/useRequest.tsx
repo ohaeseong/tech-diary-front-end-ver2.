@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 function useRequest(request: any, getResponseToCB?: boolean) {
 	const [loading, setLoading] = useState(false);
-	const [data, setData] = useState(null);
+	const [data, setData] = useState<any>(null);
 	const [error, setError] = useState<Error | null>(null);
 
 	const onRequest = useCallback(

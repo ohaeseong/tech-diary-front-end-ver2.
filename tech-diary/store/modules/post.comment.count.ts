@@ -1,4 +1,4 @@
-import {  ActionType, createReducer, createAction } from 'typesafe-actions';
+import { ActionType, createReducer, createAction } from 'typesafe-actions';
 
 type PostCommentCountState = {
 	commentCount: number;

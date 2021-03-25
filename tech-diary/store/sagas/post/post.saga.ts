@@ -1,7 +1,7 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import postRepo from './post.repository';
 import { setPostListErrorMsg, onPostListGet, GET_POST_LIST_REQUEST } from '../../modules/post';
-import { GET_POST_COMMENT_REQUEST, onPostCommentListGet } from '../../modules/post.comment.count';
+// import { GET_POST_COMMENT_REQUEST, onPostCommentListGet } from '../../modules/post.comment.count';
 
 function* executeCallback(cb?: () => void) {
 	if (cb) {
