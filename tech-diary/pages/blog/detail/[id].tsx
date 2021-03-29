@@ -6,12 +6,17 @@ import { NextPageContext } from 'next';
 import axios from 'axios';
 import { server } from 'config/config';
 import { PostDetail } from 'store/types/post.types';
+import Error from 'next/error';
 
 type Props = {
 	post: PostDetail;
 };
 
 function DetailPage({ post }: Props) {
+	if (!post) {
+		return <Error statusCode={404} />;
+	}
+
 	return (
 		<>
 			<Head>
@@ -25,9 +30,14 @@ function DetailPage({ post }: Props) {
 	);
 }
 
-DetailPage.getInitialProps = async (_: NextPageContext) => {
-	const response = await axios.get(`${server.host}/post/detail/${_.query.id}`);
-	const { post } = response.data.data;
+DetailPage.getInitialProps = async ({ query }: NextPageContext) => {
+	let post;
+	try {
+		const response = await axios.get(`${server.host}/post/detail/${query.id}`);
+		post = response.data.data.post;
+	} catch (error) {
+		console.log(error);
+	}
 
 	return { post };
 };
