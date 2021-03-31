@@ -36,7 +36,7 @@ DetailPage.getInitialProps = async ({ query }: NextPageContext) => {
 		const response = await axios.get(`${server.host}/post/detail/${query.id}`);
 		post = response.data.data.post;
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 
 	return { post };
