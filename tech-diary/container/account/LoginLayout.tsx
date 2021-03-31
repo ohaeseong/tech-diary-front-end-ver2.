@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { RootState } from 'store/modules';
 import useForm from 'libs/hooks/useForm';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
+import { server } from 'config/config';
 
 type LoginForm = {
 	memberId: string;
@@ -41,7 +42,7 @@ function LoginLayout() {
 	const onLoginWithGithub = async () => {
 		const GIT_HUB_LOGIN_URL = 'https://github.com/login/oauth/authorize?';
 		const CLIENT_ID = '38450a3f2fd57007603a';
-		const REDIRECT_URI = 'http://localhost:3000/login/github-callback';
+		const REDIRECT_URI = `${server.client_url}/login/github-callback`;
 
 		window.location.href = `${GIT_HUB_LOGIN_URL}client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
 	};

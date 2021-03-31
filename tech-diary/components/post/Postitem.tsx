@@ -7,8 +7,9 @@ import { AiFillBulb } from 'react-icons/ai';
 import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 import Link from 'next/link';
+import { server } from 'config/config';
 import { color } from 'styles/color';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 const PostItemWrap = styled.div`
 	width: 100%;
@@ -178,18 +179,20 @@ function PostItem({ item }: Props) {
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
 	const profileImage = member.profileImage || '/image/user.png';
-	const router = useRouter();
+	// const router = useRouter();
 
 	return (
 		<PostItemWrap>
-			<ThumbnailWrap onClick={() => router.push(`http://localhost:3000/blog/detail/${id}`)}>
-				<Thumbnail src={thumbnailSrc} alt="thumbnail" />
-			</ThumbnailWrap>
+			<Link href={`/blog/detail/${id}`}>
+				<ThumbnailWrap>
+					<Thumbnail src={thumbnailSrc} alt="thumbnail" />
+				</ThumbnailWrap>
+			</Link>
 			<PostContentsWrap>
-				<Link href={`http://localhost:3000/blog/detail/${id}`}>
+				<Link href={`${server.client_url}/blog/detail/${id}`}>
 					<PostContent type="title">{title}</PostContent>
 				</Link>
-				<Link href={`http://localhost:3000/blog/detail/${id}`}>
+				<Link href={`/blog/detail/${id}`}>
 					{intro ? (
 						<PostContent type="contents">{intro}</PostContent>
 					) : (

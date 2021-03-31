@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
+import { server } from 'config/config';
 import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
 import Loading from 'components/common/Loading';
 
@@ -16,7 +17,7 @@ function GithubLoginCallback() {
 				payload: {
 					code: router.query.code,
 					successCB: () => {
-						router.push('http://localhost:3000');
+						router.push(`${server.client_url}`);
 					},
 				},
 			});
