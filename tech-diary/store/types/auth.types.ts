@@ -7,6 +7,7 @@ export type AuthLogin = {
 export type GitHubLoginRequest = {
 	code: string;
 	successCB?: () => null;
+	failCB?: (memberName: string, memberId: string, githubId: string) => void;
 };
 
 export type TypeDecoded = {
@@ -21,4 +22,14 @@ export type UserInfo = {
 	introduce?: string;
 	memberName: string;
 	memberId: string;
-}
+};
+
+export type UserRegisterWithGithubRequest = {
+	memberId: string;
+	memberName: string;
+	introduce?: string;
+	githubId: string;
+	avatarUrl?: string;
+	successCB?: () => null;
+	failCB?: () => void;
+};

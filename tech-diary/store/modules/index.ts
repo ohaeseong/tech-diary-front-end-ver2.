@@ -6,6 +6,7 @@ import write from './write';
 import theme from './theme.state';
 import toast from './toast';
 import modal from './modal';
+import registerWithGithub from './register.github.auth';
 import postComment from './post.comment.count';
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
 	toast,
 	postComment,
 	modal,
+	registerWithGithub,
 	write,
 });
 

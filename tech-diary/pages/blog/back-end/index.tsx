@@ -5,9 +5,10 @@ import axios from 'axios';
 import MainTemplate from 'components/template/mainTemplate/MainTemplate';
 import PostLayout from 'container/post/PostLayout';
 import { server } from 'config/config';
+import { Post } from 'store/types/post.types';
 
 type Props = {
-	posts: Array<any>;
+	posts: Array<Post>;
 };
 
 function BackEndPage({ posts }: Props) {

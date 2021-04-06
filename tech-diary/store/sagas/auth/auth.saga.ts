@@ -2,6 +2,7 @@ import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import { setStorage } from 'libs/storage';
 import authRepo from './auth.repository';
 import { AUTH_LOGIN_REQUEST, onAuthLogin, setLoginErrorMsg } from '../../modules/auth';
+import { onGithubAuthRegister, GITHUB_REGISTER_REQUEST } from '../../modules/register.github.auth';
 import { GITHUB_AUTH_LOGIN_REQUEST, onGithubAuthLogin } from '../../modules/github.auth';
 
 function* executeCallback(cb?: () => void) {
@@ -47,7 +48,7 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 }
 
 function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.request>) {
-	const { code, successCB } = action.payload;
+	const { code, successCB, failCB } = action.payload;
 
 	const { status, data } = yield call(authRepo.loginWithGithub, {
 		code,
@@ -58,6 +59,9 @@ function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.requ
 	}
 
 	if (status === 404) {
+		const { login, name, id, avatarUrl } = data.data;
+
+		yield executeCallback(failCB(login, name, id, avatarUrl));
 		return;
 	}
 
@@ -76,6 +80,39 @@ function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.requ
 	yield executeCallback(successCB);
 }
 
+function* onRegisterWithGithub(action: ReturnType<typeof onGithubAuthRegister.request>) {
+	const { githubId, memberId, memberName, avatarUrl, introduce, successCB, failCB } = action.payload;
+
+	const { status, data } = yield call(authRepo.registerWithGithub, {
+		githubId,
+		memberId,
+		memberName,
+		avatarUrl,
+		introduce,
+	});
+
+	if (status === 400) {
+		return;
+	}
+
+	if (status === 500) {
+		return;
+	}
+
+	const payload = {
+		token: data.data.token,
+		member: data.data.member,
+	};
+
+	console.log(data);
+	
+
+	setStorage('user-info', payload.member);
+	setStorage('tech-token', payload.token);
+	yield put(onGithubAuthRegister.success());
+	yield executeCallback(successCB);
+}
+
 function* watchOnLogin() {
 	yield takeLatest(AUTH_LOGIN_REQUEST, onLoginSaga);
 }
@@ -84,6 +121,10 @@ function* watchOnLoginWithGitHub() {
 	yield takeLatest(GITHUB_AUTH_LOGIN_REQUEST, onLoginWithGitHubSaga);
 }
 
+function* watchOnRegisterWithGitHub() {
+	yield takeLatest(GITHUB_REGISTER_REQUEST, onRegisterWithGithub);
+}
+
 export default function* authSagas() {
-	yield all([fork(watchOnLogin), fork(watchOnLoginWithGitHub)]);
+	yield all([fork(watchOnLogin), fork(watchOnLoginWithGitHub), fork(watchOnRegisterWithGitHub)]);
 }
