@@ -6,6 +6,7 @@ type GithubAuthState = {
 	loading?: boolean;
 	isLoginSuccess: boolean;
 	successCB: () => null;
+	failCB: (memberName: string, memberId: string, githubId: string) => void;
 	authLoginErrorMsg: string;
 };
 
@@ -13,6 +14,7 @@ const initialState: GithubAuthState = {
 	loading: false,
 	isLoginSuccess: false,
 	authLoginErrorMsg: '',
+	failCB: (memberName: string, memberId: string, githubId: string) => null,
 	successCB: () => null,
 };
 
