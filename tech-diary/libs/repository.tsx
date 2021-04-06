@@ -154,6 +154,7 @@ export const requestCreatePost = (req: CreatePost) =>
 			{
 				title: req.title,
 				contents: req.contents,
+				tags: req.tags,
 			},
 			{
 				headers: {
@@ -173,6 +174,7 @@ export const requestUpdatePostForTemp = (req: PostUpdate) =>
 				id: req.id,
 				title: req.title,
 				contents: req.contents,
+				tags: req.tags,
 			},
 			{
 				headers: {

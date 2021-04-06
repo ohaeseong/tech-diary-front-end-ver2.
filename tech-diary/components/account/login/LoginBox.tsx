@@ -77,6 +77,13 @@ const LoginText = styled.div<{ fontSize: string; color?: string }>`
     	`};
 `;
 
+const LoginTemplateImg = styled.img`
+	width: 350px;
+	height: 400px;
+	margin-top: 2rem;
+	object-fit: contain;
+`;
+
 const WrapForAnimation = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -125,10 +132,10 @@ function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorM
 			<LoginHalfWrap isImage>
 				<LoginTextWrap>
 					<LoginText fontSize="title">Welcom to Tech-Blog!</LoginText>
-					<LoginText fontSize="description">Write your post!</LoginText>
+					<LoginText fontSize="description">당신의 지식을 공유해 주세요!</LoginText>
 				</LoginTextWrap>
 				<WrapForAnimation>
-					<Image src="/image/loginTemplateImage.png" alt="login_template_image.png" width={300} height={450} />
+					<LoginTemplateImg src="/image/loginTemplateImage.png" alt="login_template_image.png" />
 				</WrapForAnimation>
 			</LoginHalfWrap>
 			<LoginHalfWrap isImage={false}>
@@ -156,7 +163,7 @@ function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorM
 					/>
 				</WrapForAnimation>
 				<WrapForAnimation>
-					<ButtonGroup sortDirection="column">
+					<ButtonGroup sortDirection="column" childrenMargin="0.5rem 0 0.5rem 0" margin="1rem 0 2rem 0">
 						<Button width="20rem" onClick={onLogin}>
 							Log in
 						</Button>

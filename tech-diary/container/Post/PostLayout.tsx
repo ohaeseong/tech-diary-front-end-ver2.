@@ -46,7 +46,7 @@ function PostLayout({ posts }: Props) {
 
 		const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
 
-		if (scrollHeight - innerHeight - scrollTop < 100) {
+		if (scrollHeight - innerHeight - scrollTop < 300) {
 			if (postData.length + 10 < limit) {
 				return;
 			}
