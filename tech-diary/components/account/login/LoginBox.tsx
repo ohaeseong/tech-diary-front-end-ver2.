@@ -32,7 +32,7 @@ const LoginHalfWrap = styled.div<{ isImage: boolean }>`
 	${(props) =>
 		props.isImage &&
 		`
-        background-color: ${color.light_purple};
+        	background-color: ${color.light_purple};
     `}
 `;
 
@@ -128,7 +128,7 @@ function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorM
 					<LoginText fontSize="description">Write your post!</LoginText>
 				</LoginTextWrap>
 				<WrapForAnimation>
-					<Image src="/image/loginTemplateImage.png" alt="login_template_image" width={300} height={450} />
+					<Image src="/image/loginTemplateImage.png" alt="login_template_image.png" width={300} height={450} />
 				</WrapForAnimation>
 			</LoginHalfWrap>
 			<LoginHalfWrap isImage={false}>

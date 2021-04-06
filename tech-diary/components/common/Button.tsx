@@ -32,6 +32,18 @@ const Btn = styled.button<{
 			`;
 		}
 
+		if (props.size === 'regular') {
+			return css`
+				font-size: 1rem;
+			`;
+		}
+
+		if (props.size === 'medium') {
+			return css`
+				font-size: 1.3rem;
+			`;
+		}
+
 		if (props.size === 'big') {
 			return css`
 				font-size: 1.5rem;
