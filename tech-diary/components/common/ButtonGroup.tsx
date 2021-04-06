@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 
-const ButtonGroupWrap = styled.div<{ sortDirection: string; margin?: string }>`
+const ButtonGroupWrap = styled.div<{ sortDirection: string; margin?: string; childrenMargin?: string }>`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -24,17 +24,26 @@ const ButtonGroupWrap = styled.div<{ sortDirection: string; margin?: string }>`
 	& > * {
 		margin: 0.5rem;
 	}
+
+	${(props) =>
+		props.childrenMargin &&
+		`
+		& > * {
+			margin: ${props.childrenMargin};
+		}
+    `}
 `;
 
 type Props = {
 	children: ReactNode;
 	sortDirection: string;
+	childrenMargin?: string;
 	margin?: string;
 };
 
-function ButtonGroup({ children, sortDirection, margin }: Props) {
+function ButtonGroup({ children, sortDirection, margin, childrenMargin }: Props) {
 	return (
-		<ButtonGroupWrap sortDirection={sortDirection} margin={margin}>
+		<ButtonGroupWrap sortDirection={sortDirection} margin={margin} childrenMargin={childrenMargin}>
 			{children}
 		</ButtonGroupWrap>
 	);
