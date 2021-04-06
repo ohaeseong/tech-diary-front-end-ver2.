@@ -56,7 +56,7 @@ function SignUpWithGithubContainer() {
 	}, [router.query]);
 
 	useEffect(() => {
-		window.history.replaceState(null, '', '/user/register');
+		window.history.replaceState(null, '', '/register');
 	}, []);
 
 	return (

@@ -1,5 +1,5 @@
 export const server = {
-	host: 'http://13.124.219.166:8888/api',
+	host: 'http://localhost:8888/api',
 	client_url: 'http://localhost:3000',
 };
 

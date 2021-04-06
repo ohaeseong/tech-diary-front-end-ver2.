@@ -93,7 +93,6 @@ const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 	font-size: 1rem;
 	color: ${color.gray_0};
 	padding: 2rem 1rem;
-	font-family: 'Spoqa Han Sans';
 	margin-left: 10rem;
 	font-size: 1.7rem;
 	padding: 1.7rem 1rem;
@@ -141,7 +140,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 
 	const goToProfile = useCallback(() => {
 		const userInfo = getStorage('user-info') as UserInfo;
-		const userPageUrl = `${userInfo.memberName}`;
+		const userPageUrl = `${userInfo.memberId}`;
 
 		router.push(`/user/${userPageUrl}`);
 	}, [router]);

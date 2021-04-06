@@ -13,6 +13,7 @@ export type CreatePost = {
 	title: string;
 	contents: string;
 	token: string;
+	tags?: Array<string>;
 };
 
 export type Post = {
@@ -56,6 +57,7 @@ export type PostUpdate = {
 	title: string;
 	contents: string;
 	token: string;
+	tags?: Array<string>;
 };
 
 export type Comment = {

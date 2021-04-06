@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState, useEffect } from 'react';
+import React, { ChangeEvent, useCallback, useState, useEffect, ReactElement } from 'react';
 import Head from 'next/head';
 import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
@@ -69,9 +69,15 @@ type tagValueType = {
 	};
 };
 
+type tagData = {
+	idx: number;
+	postId: string;
+	tagName: string;
+};
+
 function MarkdownEditorContainer() {
-	const { postId, isTemp, initialBody } = useSelector((root: RootState) => root.write);
-	const [markdownText, setMarkdownText] = useState(initialBody);
+	// const { postId, isTemp, initialBody } = useSelector((root: RootState) => root.write);
+	const [markdownText, setMarkdownText] = useState('');
 	const [title, setTitle] = useState('');
 	const [tagItemList, setTagItemList] = useState([]);
 	const [tagName, setTagName] = useState('');
@@ -146,7 +152,9 @@ function MarkdownEditorContainer() {
 
 	const addTag = useCallback(async () => {
 		if (tagName.length === 0) return;
+
 		let checkIsSame = false;
+
 		tagItemList.forEach((tagValue: tagValueType) => {
 			if (tagName === tagValue.props.tagName) {
 				checkIsSame = true;
@@ -186,6 +194,11 @@ function MarkdownEditorContainer() {
 		let toastMassege = '';
 		const qsId = router.query.id;
 
+		const tags: Array<string> = [];
+		tagItemList.forEach((element: ReactElement) => {
+			tags.push(element.props.tagName);
+		});
+
 		if (!qsId) {
 			if (title.length === 0 || markdownText.length === 0) {
 				toastMassege = '제목 혹은 내용이 비어있습니다.';
@@ -201,6 +214,7 @@ function MarkdownEditorContainer() {
 			const req = {
 				title,
 				contents: markdownText,
+				tags,
 				token,
 			} as CreatePost;
 			const response = await onCreatePost(req);
@@ -217,7 +231,7 @@ function MarkdownEditorContainer() {
 			return;
 		}
 
-		if (isTemp || qsId) {
+		if (qsId) {
 			if (title.length === 0 || markdownText.length === 0) {
 				toastMassege = '제목 혹은 내용이 비어있습니다.';
 				toast.error(toastMassege, {
@@ -228,9 +242,10 @@ function MarkdownEditorContainer() {
 			}
 			const token = getStorage('tech-token');
 			const req = {
-				id: postId || qsId,
+				id: qsId,
 				title,
 				contents: markdownText,
+				tags,
 				token,
 			} as PostUpdate;
 			await onUpdatePost(req);
@@ -240,7 +255,7 @@ function MarkdownEditorContainer() {
 				position: toast.POSITION.BOTTOM_RIGHT,
 			});
 		}
-	}, [dispatch, isTemp, markdownText, onCreatePost, onUpdatePost, postId, router, title]);
+	}, [dispatch, markdownText, onCreatePost, onUpdatePost, router, tagItemList, title]);
 
 	const onSavePost = useCallback(async () => {
 		let { id } = router.query;
@@ -250,7 +265,7 @@ function MarkdownEditorContainer() {
 
 		const reqSlugUrl = `/@${userInfo.memberName}/${escapeForUrl(slugUrl)}`;
 
-		if (!postId && !id) {
+		if (!id) {
 			const saveReq = {
 				title,
 				contents: markdownText,
@@ -269,7 +284,7 @@ function MarkdownEditorContainer() {
 		}
 
 		const publishReq = {
-			id: postId || id,
+			id,
 			kinds,
 			slugUrl: reqSlugUrl,
 			category: 'blog',
@@ -290,7 +305,6 @@ function MarkdownEditorContainer() {
 		markdownText,
 		onCreatePost,
 		onPublishPost,
-		postId,
 		postIntro,
 		router,
 		slugUrl,
@@ -334,10 +348,17 @@ function MarkdownEditorContainer() {
 
 			getLastPost(req);
 		}
-	}, [getLastPost, postId, router.query.id]);
+	}, [getLastPost, router.query.id]);
 
 	useEffect(() => {
 		if (lastPostData) {
+			const initTagList: any = [];
+
+			lastPostData.data.post.tagList.tagData.forEach((tagValue: tagData) => {
+				initTagList.push(<TagItem key={tagValue.tagName} tagName={tagValue.tagName} isLink={false} />);
+			});
+
+			setTagItemList(initTagList);
 			setTitle(lastPostData.data.post.title);
 			setMarkdownText(lastPostData.data.post.contents);
 		}
@@ -348,7 +369,7 @@ function MarkdownEditorContainer() {
 
 		if (changed) {
 			const timeId = setTimeout(() => {
-				if (!postId || title.length === 0 || markdownText.length === 0) return;
+				if (title.length === 0 || markdownText.length === 0) return;
 				onTemporaryStorage();
 			}, 5000);
 
@@ -356,16 +377,17 @@ function MarkdownEditorContainer() {
 				clearTimeout(timeId);
 			};
 		}
-	}, [markdownText, onTemporaryStorage, postId, title]);
+	}, [markdownText, onTemporaryStorage, title]);
 
 	useEffect(() => {
 		const slugUrlDefault = `/${title}`;
 		setSlugUrl(slugUrlDefault);
 	}, [title]);
+
 	return (
 		<>
 			<Head>
-				<title>{title ? `(작성중) ${title}` : 'Blog write'}</title>
+				<title>{title ? `(작성중) ${title}` : '게시글 작성'}</title>
 			</Head>
 			<PostPublishModal
 				isOpen={isOpenModal}
