@@ -19,6 +19,16 @@ function GithubLoginCallback() {
 					successCB: () => {
 						router.push(`${server.client_url}`);
 					},
+					failCB: (memberName: string, memberId: string, githubId: string, profileImage: string) => {
+						router.push({
+							pathname: `${server.client_url}/user/register/${memberId}`,
+							query: {
+								member_name: memberName,
+								github_id: githubId,
+								profile_image: profileImage,
+							},
+						});
+					},
 				},
 			});
 		}

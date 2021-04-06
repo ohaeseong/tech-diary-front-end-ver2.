@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { UserInfo } from 'store/types/auth.types';
+import { color } from 'styles/color';
 
 const UserProfileInfoWrap = styled.div`
 	display: flex;
@@ -8,21 +10,44 @@ const UserProfileInfoWrap = styled.div`
 	align-items: center;
 	width: 20rem;
 	height: 100vh;
-	border: 1px solid black;
+	border-left: 1px solid ${color.gray_1};
+	border-right: 1px solid ${color.gray_1};
 `;
 
 const UserProfileImage = styled.img`
-	width: 14rem;
-	height: 14rem;
+	width: 15rem;
+	height: 15rem;
 	border-radius: 50%;
 	margin-top: 5rem;
-	border: 1px solid black;
+	border: 1px solid ${color.gray_1};
 `;
 
-function UserProfileInfoTemplate() {
+const UserName = styled.div`
+	width: 100%;
+	margin-top: 4rem;
+	padding-left: 6.5rem;
+	font-size: 2rem;
+`;
+
+const UserSubName = styled.div`
+	width: 100%;
+	margin-top: 0.8rem;
+	padding-left: 6.5rem;
+	font-size: 1.2rem;
+
+	font-family: 'Spoqa Han Sans Thin';
+`;
+
+type Props = {
+	userInfo: UserInfo;
+};
+
+function UserProfileInfoTemplate({ userInfo }: Props) {
 	return (
 		<UserProfileInfoWrap>
-			<UserProfileImage />
+			<UserProfileImage src={userInfo.profileImage || '/image/user.png'} alt="profile_image" />
+			<UserName>{userInfo.memberName}</UserName>
+			<UserSubName>{userInfo.memberId}</UserSubName>
 		</UserProfileInfoWrap>
 	);
 }
