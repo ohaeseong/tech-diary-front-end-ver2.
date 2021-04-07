@@ -21,7 +21,7 @@ function GithubLoginCallback() {
 					},
 					failCB: (memberName: string, memberId: string, githubId: string, profileImage: string) => {
 						router.push({
-							pathname: `${server.client_url}/user/register/${memberId}`,
+							pathname: `${server.client_url}/register/${memberId}`,
 							query: {
 								member_name: memberName,
 								github_id: githubId,

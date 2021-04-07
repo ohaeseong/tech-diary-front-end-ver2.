@@ -26,7 +26,7 @@ type Props = {
 
 function PostDetailLayout({ post }: Props) {
 	const { id, like, commentList, memberId, commentCount } = post;
-	const [theme, toggleTheme] = useDarkMode();
+	const [theme, toggleTheme, componentMounted] = useDarkMode();
 
 	const [state, , dispatchForUpdateState] = useForm({
 		isLike: false,
@@ -148,6 +148,10 @@ function PostDetailLayout({ post }: Props) {
 	useEffect(() => {
 		window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 	}, []);
+
+	if (!componentMounted) {
+		return <div />;
+	}
 
 	return (
 		<>
