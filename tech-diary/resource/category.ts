@@ -6,15 +6,15 @@ const categoryItems = [
 		name: 'All',
 	},
 	{
-		href: '/blog/mobile',
+		href: '/mobile',
 		name: 'Mobile',
 	},
 	{
-		href: '/blog/front-end',
+		href: '/front-end',
 		name: 'Front-End',
 	},
 	{
-		href: '/blog/back-end',
+		href: '/back-end',
 		name: 'Back-End',
 	},
 	// {
@@ -22,7 +22,7 @@ const categoryItems = [
 	// 	name: 'Database',
 	// },
 	{
-		href: '/blog/other',
+		href: '/other',
 		name: 'Other',
 	},
 ];

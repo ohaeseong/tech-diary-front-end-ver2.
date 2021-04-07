@@ -1,14 +1,20 @@
 import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import jwt from 'jsonwebtoken';
 import { NavBar } from 'components/base/NavBar';
-import UserPostListTemplate from 'components/user/UserPostListTemplate';
 import UserProfileInfoTemplate from 'components/user/UserProfileInfoTemplate';
 import useDarkMode from 'libs/hooks/useDarkMode';
 import { getStorage } from 'libs/storage';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { color, dark } from 'styles/color';
-import { UserInfo } from 'store/types/auth.types';
+import { TypeDecoded, UserInfo } from 'store/types/auth.types';
+import { Post } from 'store/types/post.types';
+import UserNabBar from 'components/user/UserNavBar';
+import UserNavItem from 'components/user/UserNavItem';
+import { RiBookMarkFill } from 'react-icons/ri';
+import { BiTimeFive } from 'react-icons/bi';
+import { HiOutlineBookOpen } from 'react-icons/hi';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -17,25 +23,49 @@ const UserPageTemplate = styled.div`
 	width: 100%;
 	height: 100vh;
 	margin-top: 5rem;
+
+	background-color: ${(props) => props.theme.white};
+`;
+
+const UserPostListTemplate = styled.div`
+	width: 60rem;
+	height: 100vh;
+	border-right: 1px solid ${(props) => props.theme.gray_1};
 `;
 
 type Props = {
 	userInfo: UserInfo;
+	userPosts: Array<Post>;
 };
 
-function UserProfileContainer({ userInfo }: Props) {
+function UserProfileContainer({ userInfo, userPosts }: Props) {
 	const router = useRouter();
 	const [theme, toggleTheme] = useDarkMode();
+	const [isMine, setIsMine] = useState(false);
+
+	const iconSize = '1.5rem';
 	const themeMode = theme === 'light';
 
+	// useEffect(() => {
+	// 	const token = getStorage('tech-token') as string;
+
+	// 	if (!token) {
+	// 		router.push('/');
+	// 	}
+	// }, [router]);
 
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;
+		const tokenDecoded = jwt.decode(token) as TypeDecoded;
+		// console.log(tokenDecoded.memberId.toString());
+		
 
-		if (!token) {
-			router.push('/');
+		if (token) {
+			if (tokenDecoded.memberId.toString() === userInfo.memberId) {
+				setIsMine(true);
+			}
 		}
-	}, [router]);
+	}, [userInfo.memberId]);
 
 	return (
 		<>
@@ -43,7 +73,25 @@ function UserProfileContainer({ userInfo }: Props) {
 				<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={false} />
 				<UserPageTemplate>
 					<UserProfileInfoTemplate userInfo={userInfo} />
-					<UserPostListTemplate />
+					<UserPostListTemplate>
+						<UserNabBar>
+							<UserNavItem>
+								<HiOutlineBookOpen size={iconSize} /> 게시글
+							</UserNavItem>
+							{isMine ? (
+								<>
+									<UserNavItem>
+										<BiTimeFive size={iconSize} /> 임시저장된 게시글
+									</UserNavItem>
+									<UserNavItem>
+										<RiBookMarkFill size={iconSize} /> 북마크한 게시글
+									</UserNavItem>
+								</>
+							) : (
+								<></>
+							)}
+						</UserNabBar>
+					</UserPostListTemplate>
 				</UserPageTemplate>
 			</ThemeProvider>
 		</>

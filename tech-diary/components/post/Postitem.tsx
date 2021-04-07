@@ -179,11 +179,10 @@ function PostItem({ item }: Props) {
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
 	const profileImage = member.profileImage || '/image/user.png';
-	// const router = useRouter();
 
 	return (
 		<PostItemWrap>
-			<Link href={`/blog/detail/${id}`}>
+			<Link href={`/detail/${id}`}>
 				<ThumbnailWrap>
 					<Thumbnail src={thumbnailSrc} alt="thumbnail" />
 				</ThumbnailWrap>

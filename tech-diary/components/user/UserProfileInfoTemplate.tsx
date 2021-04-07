@@ -27,6 +27,8 @@ const UserName = styled.div`
 	margin-top: 4rem;
 	padding-left: 6.5rem;
 	font-size: 2rem;
+
+	color: ${props => props.theme.black};
 `;
 
 const UserSubName = styled.div`
@@ -34,6 +36,8 @@ const UserSubName = styled.div`
 	margin-top: 0.8rem;
 	padding-left: 6.5rem;
 	font-size: 1.2rem;
+
+	color: ${props => props.theme.black};
 
 	font-family: 'Spoqa Han Sans Thin';
 `;

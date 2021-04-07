@@ -142,7 +142,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		const userInfo = getStorage('user-info') as UserInfo;
 		const userPageUrl = `${userInfo.memberId}`;
 
-		router.push(`/user/${userPageUrl}`);
+		router.push(`/${userPageUrl}`);
 	}, [router]);
 
 	const onLogout = () => {
