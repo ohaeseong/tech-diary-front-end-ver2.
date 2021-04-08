@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 
 const UserNavBarTemplate = styled.div`
 	max-width: 100%;
-	padding: 0rem 3rem;
 	margin-top: 6em;
 `;
 

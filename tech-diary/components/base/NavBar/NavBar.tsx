@@ -198,7 +198,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 						<ProfileImage src={profileImage} onClick={menuToggle} alt="profile_image" />
 						<MenuSlider height={menuHeight}>
 							<MenuItem onClick={goToProfile}>내 정보</MenuItem>
-							<MenuItem onClick={() => router.push('/blog/write')}>글 쓰러 가기</MenuItem>
+							<MenuItem onClick={() => router.push('/write')}>글 쓰러 가기</MenuItem>
 							<MenuItem onClick={() => router.push('/')}>임시글 보러가기</MenuItem>
 							<MenuItem onClick={() => router.push('/')}>북마크한 글 보러가기</MenuItem>
 							<MenuItem onClick={onLogout}>로그아웃</MenuItem>

@@ -182,16 +182,16 @@ function PostItem({ item }: Props) {
 
 	return (
 		<PostItemWrap>
-			<Link href={`/detail/${id}`}>
+			<Link href={`/${memberId}/${id}`}>
 				<ThumbnailWrap>
 					<Thumbnail src={thumbnailSrc} alt="thumbnail" />
 				</ThumbnailWrap>
 			</Link>
 			<PostContentsWrap>
-				<Link href={`${server.client_url}/blog/detail/${id}`}>
+				<Link href={`${server.client_url}/${memberId}/${id}`}>
 					<PostContent type="title">{title}</PostContent>
 				</Link>
-				<Link href={`/blog/detail/${id}`}>
+				<Link href={`/${memberId}/${id}`}>
 					{intro ? (
 						<PostContent type="contents">{intro}</PostContent>
 					) : (
@@ -200,7 +200,9 @@ function PostItem({ item }: Props) {
 				</Link>
 				<PostContent type="info">
 					<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
-					<UserProfile src={profileImage} alt="profile_image" />
+					<Link href={`/${memberId}`}>
+						<UserProfile src={profileImage} alt="profile_image" />
+					</Link>
 				</PostContent>
 				<PostBottomWrap>
 					<IconWrap>

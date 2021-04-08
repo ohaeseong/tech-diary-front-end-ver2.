@@ -12,6 +12,11 @@ const LoadingWrap = styled.div<{ width: string; height: string }>`
 	justify-content: center;
 
 	background-color: ${color.white};
+
+	& > img {
+		width: 100px;
+		height: 100px;
+	}
 `;
 
 type Props = {

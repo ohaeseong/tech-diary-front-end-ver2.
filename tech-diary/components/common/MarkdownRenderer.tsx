@@ -37,6 +37,13 @@ const MarkDownStyle = styled.div<{ type?: string }>`
 				}
 			`;
 		}
+		if (props.type === 'introduce') {
+			return css`
+				& > * > * {
+					font-size: 1rem;
+				}
+			`;
+		}
 		return css`
 			& > * {
 				font-size: 1.125rem;
