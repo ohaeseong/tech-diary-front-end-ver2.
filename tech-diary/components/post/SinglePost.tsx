@@ -84,8 +84,9 @@ function SinglePost({
 	bookMarkToggleValue,
 	shareItemOpenToggleValue,
 }: Props) {
-	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id } = data;
+	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id, memberId } = data;
 	const [userIsLike, setUserIsLike] = useState(false);
+	const [isMine, setIsMine] = useState(false);
 
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;
@@ -98,7 +99,11 @@ function SinglePost({
 				}
 			});
 		}
-	}, [like]);
+
+		if (tokenDecoded.memberId === memberId) {
+			setIsMine(true);
+		}
+	}, [like, memberId]);
 
 	return (
 		<SinglePostTemplate>
@@ -118,7 +123,7 @@ function SinglePost({
 			<SinglePostContentsWrap>
 				{thumbnailAddress ? <Thumbnail src={thumbnailAddress} alt="sigle_post_thumbnail" /> : <></>}
 				<Title>{title}</Title>
-				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} />
+				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} isMine={isMine} />
 				<PostContents markdown={contents} />
 				<PostBottom />
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />

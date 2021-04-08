@@ -9,9 +9,10 @@ const UserProfileInfoWrap = styled.div`
 	/* justify-content: center; */
 	align-items: center;
 	width: 20rem;
-	height: 100vh;
-	border-left: 1px solid ${color.gray_1};
-	border-right: 1px solid ${color.gray_1};
+	min-height: 100vh;
+	margin-right: 2rem;
+	/* border-left: 1px solid ${color.gray_1};
+	border-right: 1px solid ${color.gray_1}; */
 `;
 
 const UserProfileImage = styled.img`
@@ -28,7 +29,7 @@ const UserName = styled.div`
 	padding-left: 6.5rem;
 	font-size: 2rem;
 
-	color: ${props => props.theme.black};
+	color: ${(props) => props.theme.black};
 `;
 
 const UserSubName = styled.div`
@@ -37,7 +38,7 @@ const UserSubName = styled.div`
 	padding-left: 6.5rem;
 	font-size: 1.2rem;
 
-	color: ${props => props.theme.black};
+	color: ${(props) => props.theme.black};
 
 	font-family: 'Spoqa Han Sans Thin';
 `;

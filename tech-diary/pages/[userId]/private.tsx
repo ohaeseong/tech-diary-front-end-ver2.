@@ -10,31 +10,30 @@ import { Post } from 'store/types/post.types';
 
 type Props = {
 	userInfo: UserInfo;
-	userPosts: Array<Post>;
+	posts: Array<Post>;
 };
 
-function UserInfoPage({ userInfo, userPosts }: Props) {
+function UserPrivatePostPage({ userInfo, posts }: Props) {
 	const router = useRouter();
 	const { userId } = router.query;
 
 	return (
 		<>
 			<Head>
-				<title>{userId}</title>
+				<title>{userId} (비공개 게시글)</title>
 			</Head>
-			<UserProfileContainer userInfo={userInfo} userPosts={userPosts} />
+			<UserProfileContainer userInfo={userInfo} posts={posts} />
 		</>
 	);
 }
 
-UserInfoPage.getInitialProps = async ({ query }: NextPageContext) => {
+UserPrivatePostPage.getInitialProps = async ({ query }: NextPageContext) => {
 	const responseUserInfo = await axios.get(`${server.host}/auth/user-info?memberId=${query.userId}`);
-	const responseUserPosts = await axios.get(`${server.host}/post/member?memberId=${query.userId}`);
+	const responsePrivatePosts = await axios.get(`${server.host}/post/state?memberId=${query.userId}&state=${2}`);
 	const userInfo = responseUserInfo.data.data;
-	const userPosts = responseUserPosts.data.data.posts;
+	const { posts } = responsePrivatePosts.data.data;
 
-
-	return { userInfo, userPosts };
+	return { userInfo, posts };
 };
 
-export default UserInfoPage;
+export default UserPrivatePostPage;

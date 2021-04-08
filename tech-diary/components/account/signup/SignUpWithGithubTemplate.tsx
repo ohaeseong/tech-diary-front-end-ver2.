@@ -11,7 +11,7 @@ const GithubSignUpTemplate = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 5rem 20rem 0 20rem;
+	padding: 4rem 20rem 0 20rem;
 	max-width: 100%;
 `;
 
@@ -57,16 +57,14 @@ const Body = styled.div`
 const HalfOfBody = styled.div`
 	width: 100%;
 	height: 100%;
-
-	& > img {
-		padding-bottom: 2rem;
-	}
+	margin-right: 1rem;
 `;
 
 const TemplateImg = styled.img`
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+	margin-left: 2rem;
 `;
 
 const Bottom = styled.div`

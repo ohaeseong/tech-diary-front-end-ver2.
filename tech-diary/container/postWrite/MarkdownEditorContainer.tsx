@@ -220,7 +220,7 @@ function MarkdownEditorContainer() {
 			const response = await onCreatePost(req);
 			const { id } = response.data;
 			dispatch(setWritePostId(id));
-			router.replace(`/blog/write?id=${id}`);
+			router.replace(`/write?id=${id}`);
 
 			toastMassege = '임시저장 완료';
 

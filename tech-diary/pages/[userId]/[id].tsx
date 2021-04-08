@@ -6,7 +6,7 @@ import { NextPageContext } from 'next';
 import axios from 'axios';
 import { server } from 'config/config';
 import { PostDetail } from 'store/types/post.types';
-import Error from 'next/error';
+import NotFoundPage from 'pages/404';
 
 type Props = {
 	post: PostDetail;
@@ -14,7 +14,7 @@ type Props = {
 
 function DetailPage({ post }: Props) {
 	if (!post) {
-		return <Error statusCode={404} />;
+		return <NotFoundPage />;
 	}
 
 	return (

@@ -11,6 +11,8 @@ const PostInfoWrap = styled.div`
 	padding: 1rem;
 	width: 100%;
 	margin-bottom: 1rem;
+
+	/* border: 1px solid black; */
 `;
 
 const PostInfoHeader = styled.div`
@@ -21,6 +23,27 @@ const PostInfoHeader = styled.div`
 	height: 4rem;
 
 	justify-content: space-between;
+`;
+
+const EditPostButtonWrap = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+
+	& > * {
+		margin-left: 0.5rem;
+	}
+`;
+
+const EditPostButton = styled.span`
+	color: ${(props) => props.theme.gray_3};
+	cursor: pointer;
+	font-family: 'Spoqa Han Sans Thin';
+	border-bottom: 1px solid ${(props) => props.theme.gray_2};
+
+	&::hover {
+		color: ${(props) => props.theme.black};
+	}
 `;
 
 const UserInfoWrap = styled.div`
@@ -63,9 +86,10 @@ type Props = {
 	tagData: Tag[];
 	member: Member;
 	createTime: string;
+	isMine: boolean;
 };
 
-function PostInfo({ tagData, member, createTime }: Props) {
+function PostInfo({ tagData, member, createTime, isMine }: Props) {
 	const { profileImage, memberName } = member;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -85,11 +109,19 @@ function PostInfo({ tagData, member, createTime }: Props) {
 				</UserInfoWrap>
 				<InfoTxt>{dateFormat}</InfoTxt>
 			</PostInfoHeader>
+			{isMine ? (
+				<EditPostButtonWrap>
+					<EditPostButton>수정</EditPostButton>
+					<EditPostButton>삭제</EditPostButton>
+				</EditPostButtonWrap>
+			) : (
+				<></>
+			)}
 			{tagData.length !== 0 ? (
 				<TagGroup>
 					{tagData.map((item) => {
 						return <TagItem key={item.idx} tagName={item.tagName} isLink />;
-					})}{' '}
+					})}
 				</TagGroup>
 			) : (
 				<></>
