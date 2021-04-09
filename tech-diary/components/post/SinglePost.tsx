@@ -18,7 +18,9 @@ const SinglePostTemplate = styled.div`
 	width: 100%;
 	min-height: 100vh;
 	background-color: ${(props) => props.theme.white_1};
-
+	&::-webkit-scrollbar {
+		display: none;
+	}
 	margin-top: 5rem;
 `;
 
@@ -57,6 +59,8 @@ type Props = {
 	toggleShareItemOpen: () => void;
 	moveToComment: () => void;
 	closeShareItem: () => void;
+	openConfirmModal: () => void;
+	goEditPostPage: () => void;
 	copyUrl: () => void;
 	dispatchForUpdateState: any;
 	setCommentList: (dispatch: Comment[]) => void;
@@ -74,7 +78,9 @@ function SinglePost({
 	toggleShareItemOpen,
 	closeShareItem,
 	copyUrl,
+	openConfirmModal,
 	moveToComment,
+	goEditPostPage,
 	dispatchForUpdateState,
 	setCommentList,
 
@@ -98,10 +104,10 @@ function SinglePost({
 					setUserIsLike(true);
 				}
 			});
-		}
 
-		if (tokenDecoded.memberId === memberId) {
-			setIsMine(true);
+			if (tokenDecoded.memberId === memberId) {
+				setIsMine(true);
+			}
 		}
 	}, [like, memberId]);
 
@@ -123,7 +129,14 @@ function SinglePost({
 			<SinglePostContentsWrap>
 				{thumbnailAddress ? <Thumbnail src={thumbnailAddress} alt="sigle_post_thumbnail" /> : <></>}
 				<Title>{title}</Title>
-				<PostInfo tagData={tagList.tagData} member={member} createTime={createTime} isMine={isMine} />
+				<PostInfo
+					tagData={tagList.tagData}
+					member={member}
+					createTime={createTime}
+					isMine={isMine}
+					openConfirmModal={openConfirmModal}
+					goEditPostPage={goEditPostPage}
+				/>
 				<PostContents markdown={contents} />
 				<PostBottom />
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />

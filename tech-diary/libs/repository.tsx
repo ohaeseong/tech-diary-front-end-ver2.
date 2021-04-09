@@ -251,3 +251,17 @@ export const requestAddTag = (req: { postId: string; tagName: string; token: str
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestDeletePost = (req: { postId: string; token: string }) =>
+	axios
+		.delete(`${server.host}/post`, {
+			headers: {
+				token: req.token,
+			},
+			params: {
+				id: req.postId,
+			},
+		})
+		.catch((error) => {
+			throw error;
+		});

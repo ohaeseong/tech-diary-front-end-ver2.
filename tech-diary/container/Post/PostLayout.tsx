@@ -17,16 +17,16 @@ function PostLayout({ posts }: Props) {
 
 	// router 별 headname 설정
 	switch (router.pathname) {
-		case '/blog/front-end':
+		case '/front-end':
 			headName = 'Front-End';
 			break;
-		case '/blog/back-end':
+		case '/back-end':
 			headName = 'Back-End';
 			break;
-		case '/blog/database':
+		case '/database':
 			headName = 'Database';
 			break;
-		case '/blog/other':
+		case '/other':
 			headName = 'Other';
 			break;
 
@@ -37,7 +37,7 @@ function PostLayout({ posts }: Props) {
 	const [postList, setPostList] = useState(posts);
 
 	// 우선 blog로 설정 이후에 로직 변경 예정
-	const { postData, setLimit, limit } = usePost('blog', kinds[2]);
+	const { postData, setLimit, limit } = usePost('blog', kinds[1]);
 
 	// 추가 데이터 요청
 	const handlePostData = useCallback(() => {

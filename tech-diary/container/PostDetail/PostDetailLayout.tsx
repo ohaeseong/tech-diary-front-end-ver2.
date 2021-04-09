@@ -9,7 +9,7 @@ import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { requestPostLike } from 'libs/repository';
+import { requestDeletePost, requestPostLike } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 // import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
@@ -17,8 +17,9 @@ import { toast } from 'react-toastify';
 import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
 import useToggle from 'libs/hooks/useToggle';
-import { TypeDecoded } from 'store/types/auth.types';
+import { TypeDecoded, UserInfo } from 'store/types/auth.types';
 import { SET_POST_COMMENT_COUNT } from 'store/modules/post.comment.count';
+import ConfirmModal from 'components/common/ConfirmModal';
 
 type Props = {
 	post: PostDetail;
@@ -39,12 +40,34 @@ function PostDetailLayout({ post }: Props) {
 
 	const [bookMarkToggleValue, bookMarkToggle] = useToggle(false);
 	const [shareItemOpenToggleValue, shareItemToggle] = useToggle(false);
+	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 
-	const [, , onRequest] = useRequest(requestPostLike);
+	const [, , onLikePost] = useRequest(requestPostLike);
+	const [, , onDeleteRequest] = useRequest(requestDeletePost);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
 	const themeMode = theme === 'light';
+
+	const onDeletePost = useCallback(async () => {
+		const token = getStorage('tech-token') as string;
+
+		const req = {
+			token,
+			postId: id,
+		};
+
+		await onDeleteRequest(req);
+
+		router.back();
+	}, [id, onDeleteRequest, router]);
+
+	const goEditPostPage = useCallback(() => {
+		const userInfo = getStorage('user-info') as UserInfo;
+		if (memberId === userInfo.memberId) {
+			router.push(`/write?id=${id}`);
+		}
+	}, [id, memberId, router]);
 
 	const toggleLike = useCallback(() => {
 		const token = getStorage('tech-token');
@@ -78,8 +101,8 @@ function PostDetailLayout({ post }: Props) {
 			token,
 		};
 
-		onRequest(req);
-	}, [state, dispatchForUpdateState, id, onRequest]);
+		onLikePost(req);
+	}, [state, dispatchForUpdateState, id, onLikePost]);
 
 	const toggleBookMark = useCallback(() => {
 		const token = getStorage('tech-token');
@@ -126,17 +149,6 @@ function PostDetailLayout({ post }: Props) {
 	};
 
 	useEffect(() => {
-		const token = getStorage('tech-token') as string;
-		const tokenDecoded = jwt.decode(token) as TypeDecoded;
-
-		if (token) {
-			if (tokenDecoded.memberId === memberId) {
-				// setIsMine(true);
-			}
-		}
-	}, [memberId]);
-
-	useEffect(() => {
 		dispatch({
 			type: SET_POST_COMMENT_COUNT,
 			payload: {
@@ -156,6 +168,15 @@ function PostDetailLayout({ post }: Props) {
 	return (
 		<>
 			<ThemeProvider theme={themeMode ? dark : color}>
+				{modalIsOpenValue ? (
+					<ConfirmModal
+						modalToggle={modalOpenToggle}
+						acceptFuc={onDeletePost}
+						confirmMessage="정말 삭제하시겠습니까?"
+					/>
+				) : (
+					<></>
+				)}
 				<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={false} />
 				<SinglePost
 					toggleLike={toggleLike}
@@ -164,7 +185,8 @@ function PostDetailLayout({ post }: Props) {
 					moveToComment={moveToComment}
 					copyUrl={copyUrl}
 					dispatchForUpdateState={dispatchForUpdateState}
-					// isMine={isMine}
+					openConfirmModal={modalOpenToggle}
+					goEditPostPage={goEditPostPage}
 					bookMarkToggleValue={bookMarkToggleValue}
 					closeShareItem={closeShareItem}
 					shareItemOpenToggleValue={shareItemOpenToggleValue}

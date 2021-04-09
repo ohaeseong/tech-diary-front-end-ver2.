@@ -142,7 +142,7 @@ export const toSmall = keyframes`
 
 export const toBig = keyframes`
     from {
-    transform: scale(0.5);
+    transform: scale(0);
     }
     to {
       transform: scale(1);
