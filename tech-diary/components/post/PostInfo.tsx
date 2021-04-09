@@ -87,9 +87,11 @@ type Props = {
 	member: Member;
 	createTime: string;
 	isMine: boolean;
+	openConfirmModal: () => void;
+	goEditPostPage: () => void;
 };
 
-function PostInfo({ tagData, member, createTime, isMine }: Props) {
+function PostInfo({ tagData, member, createTime, isMine, openConfirmModal, goEditPostPage }: Props) {
 	const { profileImage, memberName } = member;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -111,8 +113,8 @@ function PostInfo({ tagData, member, createTime, isMine }: Props) {
 			</PostInfoHeader>
 			{isMine ? (
 				<EditPostButtonWrap>
-					<EditPostButton>수정</EditPostButton>
-					<EditPostButton>삭제</EditPostButton>
+					<EditPostButton onClick={goEditPostPage}>수정</EditPostButton>
+					<EditPostButton onClick={openConfirmModal}>삭제</EditPostButton>
 				</EditPostButtonWrap>
 			) : (
 				<></>

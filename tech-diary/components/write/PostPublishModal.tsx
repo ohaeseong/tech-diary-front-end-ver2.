@@ -31,7 +31,7 @@ const ModalBox = styled.div`
 	width: 50rem;
 	height: 35rem;
 	background-color: white;
-	animation: ${toBig} 0.7s;
+	animation: ${toBig} 0.5s;
 	border-radius: 5px;
 	padding: 0 1rem;
 `;
@@ -138,7 +138,7 @@ const ThumbnailImage = styled.img`
 const PreviewText = styled.textarea`
 	max-width: 100%;
 	height: 100%;
-	padding: 0.5rem;
+	padding: 1rem;
 	font-family: 'Spoqa Han Sans Thin';
 	font-size: 1rem;
 	margin-top: 1rem;
@@ -163,8 +163,9 @@ const ThumbnailUploadInput = styled.input`
 
 const KindsSelect = styled.select`
 	width: 100%;
-	height: 2rem;
+	height: 4rem;
 	outline: none;
+	padding-left: 0.5rem;
 	border: 1px solid ${color.gray_2};
 
 	& > * {
