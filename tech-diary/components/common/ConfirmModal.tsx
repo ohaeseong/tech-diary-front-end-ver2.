@@ -39,7 +39,7 @@ const Head = styled.div`
 	color: ${color.neon_2};
 	line-height: 3rem;
 	font-size: 1.3rem;
-	margin-top: 1.5rem;
+	margin-top: 2rem;
 	padding-left: 1rem;
 `;
 
