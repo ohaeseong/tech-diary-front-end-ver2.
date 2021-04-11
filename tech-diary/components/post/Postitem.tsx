@@ -2,12 +2,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { FaComment } from 'react-icons/fa';
-import { AiFillBulb } from 'react-icons/ai';
+import { AiTwotoneStar } from 'react-icons/ai';
 
 import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 import Link from 'next/link';
-import { server } from 'config/config';
 import { color } from 'styles/color';
 // import { useRouter } from 'next/router';
 
@@ -173,25 +172,27 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { id, title, contents, createTime, thumbnailAddress, memberId, like, member, commentCount, intro } = item;
+	const { id, title, contents, createTime, thumbnailAddress, memberId, like, member, commentCount, intro, url } = item;
 
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
 	const profileImage = member.profileImage || '/image/user.png';
 
+	const onlySlug = url.split('/');
+
 	return (
 		<PostItemWrap>
-			<Link href={`/${memberId}/${id}`}>
+			<Link href={`/${memberId}/${onlySlug[2]}`}>
 				<ThumbnailWrap>
 					<Thumbnail src={thumbnailSrc} alt="thumbnail" />
 				</ThumbnailWrap>
 			</Link>
 			<PostContentsWrap>
-				<Link href={`${server.client_url}/${memberId}/${id}`}>
+				<Link href={`/${memberId}/${onlySlug[2]}`}>
 					<PostContent type="title">{title}</PostContent>
 				</Link>
-				<Link href={`/${memberId}/${id}`}>
+				<Link href={`/${memberId}/${onlySlug[2]}`}>
 					{intro ? (
 						<PostContent type="contents">{intro}</PostContent>
 					) : (
@@ -206,11 +207,11 @@ function PostItem({ item }: Props) {
 				</PostContent>
 				<PostBottomWrap>
 					<IconWrap>
-						<FaComment size="15" color="#4f95ef" />
+						<FaComment size="15" color={color.cool_blue} />
 						{commentCount}
 					</IconWrap>
 					<IconWrap>
-						<AiFillBulb size="15" color={color.star} />
+						<AiTwotoneStar size="15" color={color.star} />
 						{like}
 					</IconWrap>
 				</PostBottomWrap>

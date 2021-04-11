@@ -263,7 +263,7 @@ function MarkdownEditorContainer() {
 		const token = getStorage('tech-token');
 		const userInfo = getStorage('user-info') as UserInfo;
 
-		const reqSlugUrl = `/@${userInfo.memberName}/${escapeForUrl(slugUrl)}`;
+		const reqSlugUrl = `/${userInfo.memberId}/${escapeForUrl(slugUrl)}`;
 
 		if (!id) {
 			const saveReq = {

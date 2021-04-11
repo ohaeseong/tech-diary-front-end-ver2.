@@ -92,7 +92,7 @@ type Props = {
 };
 
 function PostInfo({ tagData, member, createTime, isMine, openConfirmModal, goEditPostPage }: Props) {
-	const { profileImage, memberName } = member;
+	const { profileImage, memberName, memberId } = member;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 	const profileImageSource = profileImage || '/image/user.png';
@@ -101,10 +101,10 @@ function PostInfo({ tagData, member, createTime, isMine, openConfirmModal, goEdi
 		<PostInfoWrap>
 			<PostInfoHeader>
 				<UserInfoWrap>
-					<Link href="http://localhost:3000/">
+					<Link href={`/${memberId}`}>
 						<ProfileImage src={profileImageSource} alt="profile_image" />
 					</Link>
-					<Link href="http://localhost:3000/">
+					<Link href={`/${memberId}`}>
 						<UserIdTxt>{memberName}</UserIdTxt>
 					</Link>
 					<InfoTxt>1.2k followers</InfoTxt>

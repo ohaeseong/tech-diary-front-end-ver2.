@@ -68,20 +68,21 @@ type Props = {
 };
 
 function UserProfilePostItem({ item }: Props) {
-	const { id, title, contents, intro, memberId, createTime } = item;
+	const { id, title, contents, intro, memberId, createTime, url } = item;
 	const router = useRouter();
 	const date = new Date(createTime);
-	let url;
+	let reqUrl;
+	const onlySlug = url.split('/');
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
 	if (router.pathname === '/[userId]/save') {
-		url = `/write?id=${id}`;
+		reqUrl = `/write?id=${id}`;
 	} else {
-		url = `/${memberId}/${id}`;
+		reqUrl = `/${memberId}/${onlySlug[2]}`;
 	}
 
 	return (
-		<Link href={url}>
+		<Link href={reqUrl}>
 			<UserProfilePostItemWrap>
 				<Head>{title}</Head>
 				<Body>{intro || contents}</Body>

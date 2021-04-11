@@ -9,7 +9,7 @@ import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { requestDeletePost, requestPostLike } from 'libs/repository';
+import { requestDeletePost, requestPostLike, requestBookmark, requestIsCheckBookmark } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 // import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
@@ -44,6 +44,8 @@ function PostDetailLayout({ post }: Props) {
 
 	const [, , onLikePost] = useRequest(requestPostLike);
 	const [, , onDeleteRequest] = useRequest(requestDeletePost);
+	const [, , onBookmark] = useRequest(requestBookmark);
+	const [checkBookmarkRes, , checkBookmark] = useRequest(requestIsCheckBookmark);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -104,7 +106,7 @@ function PostDetailLayout({ post }: Props) {
 		onLikePost(req);
 	}, [state, dispatchForUpdateState, id, onLikePost]);
 
-	const toggleBookMark = useCallback(() => {
+	const toggleBookMark = useCallback(async () => {
 		const token = getStorage('tech-token');
 		if (!token) {
 			alert('로그인 후 이용해 주세요!');
@@ -112,8 +114,15 @@ function PostDetailLayout({ post }: Props) {
 			return;
 		}
 
+		const req = {
+			token,
+			postId: id,
+		};
+
+		await onBookmark(req);
+
 		bookMarkToggle();
-	}, [bookMarkToggle]);
+	}, [bookMarkToggle, id, onBookmark]);
 
 	const toggleShareItemOpen = useCallback(
 		(action?: string) => {
@@ -160,6 +169,26 @@ function PostDetailLayout({ post }: Props) {
 	useEffect(() => {
 		window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 	}, []);
+
+	useEffect(() => {
+		const userInfo = getStorage('user-info') as UserInfo;
+
+		if (!checkBookmarkRes && userInfo) {
+			const req = {
+				memberId: userInfo.memberId,
+				postId: id,
+			};
+			checkBookmark(req);
+		}
+
+		if (checkBookmarkRes && checkBookmarkRes.data.isBookmark) {
+			console.log(checkBookmarkRes);
+			
+			if (!bookMarkToggleValue) {
+				bookMarkToggle(true);
+			}
+		}
+	}, [bookMarkToggle, bookMarkToggleValue, checkBookmark, checkBookmarkRes, id, memberId]);
 
 	if (!componentMounted) {
 		return <div />;
