@@ -265,3 +265,32 @@ export const requestDeletePost = (req: { postId: string; token: string }) =>
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestBookmark = (req: { postId: string; token: string }) =>
+	axios
+		.post(
+			`${server.host}/post/bookmark`,
+			{
+				postId: req.postId,
+			},
+			{
+				headers: {
+					token: req.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});
+
+export const requestIsCheckBookmark = (req: { postId: string; memberId: string }) =>
+	axios
+		.get(`${server.host}/post/bookmark/check`, {
+			params: {
+				postId: req.postId,
+				memberId: req.memberId,
+			},
+		})
+		.catch((error) => {
+			throw error;
+		});

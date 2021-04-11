@@ -32,8 +32,13 @@ function DetailPage({ post }: Props) {
 
 DetailPage.getInitialProps = async ({ query }: NextPageContext) => {
 	let post;
+	// const slug = `${query.userId}-${query.slug}`;
+	console.log(query);
+
 	try {
-		const response = await axios.get(`${server.host}/post/detail/${query.id}`);
+		const response = await axios.get(
+			`${server.host}/post/url?memberId=${query.userId}&slug=${encodeURIComponent(query.slug as string)}`
+		);
 		post = response.data.data.post;
 	} catch (error) {
 		// console.log(error);

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { AiFillBulb, AiOutlineShareAlt } from 'react-icons/ai';
+import { AiTwotoneStar, AiOutlineShareAlt } from 'react-icons/ai';
 import { ImLink } from 'react-icons/im';
 import { FaComment, FaTwitter, FaFacebook } from 'react-icons/fa';
 import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs';
@@ -213,14 +213,14 @@ function PostLikeOption({
 				{isLike ? (
 					<>
 						<MainIconWrap>
-							<AiFillBulb size="1.7rem" color={color.star} cursor="pointer" onClick={toggleLike} />
+							<AiTwotoneStar size="1.7rem" color={color.star} cursor="pointer" onClick={toggleLike} />
 						</MainIconWrap>
 						<CountWrap>{likeCount}</CountWrap>
 					</>
 				) : (
 					<>
 						<MainIconWrap>
-							<AiFillBulb size="1.7rem" color={color.gray_4} cursor="pointer" onClick={toggleLike} />
+							<AiTwotoneStar size="1.7rem" color={color.gray_4} cursor="pointer" onClick={toggleLike} />
 						</MainIconWrap>
 						<CountWrap>{likeCount}</CountWrap>
 					</>
@@ -228,7 +228,7 @@ function PostLikeOption({
 			</ItemWrap>
 			<ItemWrap>
 				<MainIconWrap>
-					<FaComment size="1.2rem" color="#4f95ef" cursor="pointer" onClick={moveToComment} />
+					<FaComment size="1.2rem" color={color.cool_blue} cursor="pointer" onClick={moveToComment} />
 				</MainIconWrap>
 				<CountWrap>{commentCount}</CountWrap>
 			</ItemWrap>
