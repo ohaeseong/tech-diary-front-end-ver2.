@@ -7,6 +7,7 @@ import { server } from 'config/config';
 import { NextPageContext } from 'next';
 import { UserInfo } from 'store/types/auth.types';
 import { Post } from 'store/types/post.types';
+import NotFoundPage from 'pages/404';
 
 type Props = {
 	userInfo: UserInfo;
@@ -16,6 +17,10 @@ type Props = {
 function UserSavePostPage({ userInfo, savePosts }: Props) {
 	const router = useRouter();
 	const { userId } = router.query;
+
+	if (!userInfo || !savePosts) {
+		return <NotFoundPage />;
+	}
 
 	return (
 		<>
@@ -28,10 +33,18 @@ function UserSavePostPage({ userInfo, savePosts }: Props) {
 }
 
 UserSavePostPage.getInitialProps = async ({ query }: NextPageContext) => {
-	const responseUserInfo = await axios.get(`${server.host}/auth/user-info?memberId=${query.userId}`);
-	const responseSavePosts = await axios.get(`${server.host}/post/state?memberId=${query.userId}&state=${0}`);
-	const userInfo = responseUserInfo.data.data;
-	const savePosts = responseSavePosts.data.data.posts;
+	let userInfo;
+	let savePosts;
+
+	try {
+		const responseUserInfo = await axios.get(`${server.host}/auth/user-info?memberId=${query.userId}`);
+		const responseSavePosts = await axios.get(`${server.host}/post/state?memberId=${query.userId}&state=${0}`);
+
+		userInfo = responseUserInfo.data.data;
+		savePosts = responseSavePosts.data.data.posts;
+	} catch (error) {
+		// console.log(error);
+	}
 
 	return { userInfo, savePosts };
 };

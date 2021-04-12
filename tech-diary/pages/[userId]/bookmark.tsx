@@ -6,6 +6,7 @@ import UserProfileContainer from 'container/user/UserInfoContainer';
 import { server } from 'config/config';
 import { NextPageContext } from 'next';
 import { UserInfo } from 'store/types/auth.types';
+import NotFoundPage from 'pages/404';
 import { Post } from 'store/types/post.types';
 
 type Props = {
@@ -16,6 +17,10 @@ type Props = {
 function UserBookmarkPostPage({ userInfo, posts }: Props) {
 	const router = useRouter();
 	const { userId } = router.query;
+
+	if (!posts || !userInfo) {
+		return <NotFoundPage />;
+	}
 
 	return (
 		<>
@@ -28,10 +33,18 @@ function UserBookmarkPostPage({ userInfo, posts }: Props) {
 }
 
 UserBookmarkPostPage.getInitialProps = async ({ query }: NextPageContext) => {
-	const responseUserInfo = await axios.get(`${server.host}/auth/user-info?memberId=${query.userId}`);
-	const responseBookMarkPosts = await axios.get(`${server.host}/post/bookmark?memberId=${query.userId}`);
-	const userInfo = responseUserInfo.data.data;
-	const { posts } = responseBookMarkPosts.data.data;
+	let userInfo;
+	let posts;
+
+	try {
+		const responseUserInfo = await axios.get(`${server.host}/auth/user-info?memberId=${query.userId}`);
+		const responseBookMarkPosts = await axios.get(`${server.host}/post/bookmark?memberId=${query.userId}`);
+
+		userInfo = responseUserInfo.data.data;
+		posts = responseBookMarkPosts.data.data.posts;
+	} catch (error) {
+		// console.log(error);
+	}
 
 	return { userInfo, posts };
 };

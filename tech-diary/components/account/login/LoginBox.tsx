@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 
 import { color } from 'styles/color';

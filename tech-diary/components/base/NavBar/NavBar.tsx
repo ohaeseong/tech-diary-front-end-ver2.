@@ -122,6 +122,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
 	const [profileImage, setProfileImage] = useState('/image/user.png');
+	const [memberId, setMemberId] = useState('');
 	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
 
 	const router = useRouter();
@@ -168,6 +169,8 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 			if (tokenDecoded.profileImage) {
 				setProfileImage(tokenDecoded.profileImage);
 			}
+
+			setMemberId(tokenDecoded.memberId);
 		} else {
 			setIsToken(false);
 		}
@@ -199,8 +202,8 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 						<MenuSlider height={menuHeight}>
 							<MenuItem onClick={goToProfile}>내 정보</MenuItem>
 							<MenuItem onClick={() => router.push('/write')}>글 쓰러 가기</MenuItem>
-							<MenuItem onClick={() => router.push('/')}>임시글 보러가기</MenuItem>
-							<MenuItem onClick={() => router.push('/')}>북마크한 글 보러가기</MenuItem>
+							<MenuItem onClick={() => router.push(`/${memberId}/save`)}>임시글 보러가기</MenuItem>
+							<MenuItem onClick={() => router.push(`/${memberId}/bookmark`)}>북마크한 글 보러가기</MenuItem>
 							<MenuItem onClick={onLogout}>로그아웃</MenuItem>
 						</MenuSlider>
 					</ProfileWrap>

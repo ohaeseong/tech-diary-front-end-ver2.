@@ -14,7 +14,7 @@ const initialState: GithubAuthState = {
 	loading: false,
 	isLoginSuccess: false,
 	authLoginErrorMsg: '',
-	failCB: (memberName: string, memberId: string, githubId: string) => null,
+	failCB: () => null,
 	successCB: () => null,
 };
 

@@ -23,7 +23,7 @@ const Head = styled.div`
 	line-height: 3rem;
 
 	font-family: 'Spoqa Han Sans Regular';
-	font-size: 2rem;
+	font-size: 1.5rem;
 
 	color: ${(props) => props.theme.neon_2};
 	/* border: 1px solid black; */
@@ -40,7 +40,7 @@ const Body = styled.div`
 	/* padding-left: 2rem; */
 	line-height: 1.8rem;
 	font-family: 'Spoqa Han Sans Thin';
-	font-size: 1.1rem;
+	font-size: 0.8rem;
 	color: ${(props) => props.theme.gray_3};
 	margin-top: 0.5rem;
 	/* border: 1px solid black; */
@@ -59,6 +59,7 @@ const BottomInfo = styled.span`
 	color: ${(props) => props.theme.gray_4};
 	font-family: 'Spoqa Han Sans Thin';
 	margin-top: 1.5rem;
+	font-size: 0.8rem;
 	/* margin-left: 1rem; */
 	/* border: 1px solid black; */
 `;
@@ -72,7 +73,7 @@ function UserProfilePostItem({ item }: Props) {
 	const router = useRouter();
 	const date = new Date(createTime);
 	let reqUrl;
-	const onlySlug = url.split('/');
+	const onlySlug = url ? url.split('/') : '';
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
 	if (router.pathname === '/[userId]/save') {

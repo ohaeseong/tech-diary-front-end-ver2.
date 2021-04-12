@@ -6,7 +6,7 @@ import TitleEditor from 'components/write/TitleEditor';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
 import PostPublishModal from 'components/write/PostPublishModal';
 import useToggle from 'libs/hooks/useToggle';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch } from 'react-redux';
 import useRequest from 'libs/hooks/useRequest';
 import {
 	requestCreatePost,
@@ -14,11 +14,9 @@ import {
 	requestPublishPost,
 	requestUpdatePostForTemp,
 	uploadImage,
-	// requestAddTag,
 } from 'libs/repository';
 import { getStorage } from 'libs/storage';
 import { setWritePostId } from 'store/modules/write';
-import { RootState } from 'store/modules';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -177,9 +175,21 @@ function MarkdownEditorContainer() {
 		setTagName(event.target.value);
 	}, []);
 
-	const handleUrl = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-		setSlugUrl(event.target.value);
-	}, []);
+	const handleUrl = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => {
+			if (slugUrl.length === 1) {
+				return;
+			}
+
+			if (event.target.value.length === 0) {
+				setSlugUrl('/');
+
+				return;
+			}
+			setSlugUrl(event.target.value);
+		},
+		[slugUrl.length]
+	);
 
 	const handleTagInputKeypress = useCallback(
 		(event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -262,8 +272,13 @@ function MarkdownEditorContainer() {
 
 		const token = getStorage('tech-token');
 		const userInfo = getStorage('user-info') as UserInfo;
+		let reqSlugUrl;
 
-		const reqSlugUrl = `/${userInfo.memberId}/${escapeForUrl(slugUrl)}`;
+		if (slugUrl === '/') {
+			reqSlugUrl = `/${userInfo.memberId}/${escapeForUrl(title)}`;
+		} else {
+			reqSlugUrl = `/${userInfo.memberId}/${escapeForUrl(slugUrl)}`;
+		}
 
 		if (!id) {
 			const saveReq = {
@@ -360,9 +375,10 @@ function MarkdownEditorContainer() {
 
 			setTagItemList(initTagList);
 			setTitle(lastPostData.data.post.title);
+			setSlugUrl(`/${lastPostData.data.post.url.split('/')[2]}`);
 			setMarkdownText(lastPostData.data.post.contents);
 		}
-	}, [lastPostData]);
+	}, [lastPostData, title]);
 
 	useEffect(() => {
 		const changed = !shallowEqual(title, markdownText);
@@ -371,7 +387,7 @@ function MarkdownEditorContainer() {
 			const timeId = setTimeout(() => {
 				if (title.length === 0 || markdownText.length === 0) return;
 				onTemporaryStorage();
-			}, 5000);
+			}, 100000);
 
 			return () => {
 				clearTimeout(timeId);
@@ -380,9 +396,11 @@ function MarkdownEditorContainer() {
 	}, [markdownText, onTemporaryStorage, title]);
 
 	useEffect(() => {
-		const slugUrlDefault = `/${title}`;
-		setSlugUrl(slugUrlDefault);
-	}, [title]);
+		if (!lastPostData) {
+			const slugUrlDefault = `/${title}`;
+			setSlugUrl(slugUrlDefault);
+		}
+	}, [lastPostData, title]);
 
 	return (
 		<>

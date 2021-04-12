@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import Input from 'components/common/Input';
 import { color } from 'styles/color';
@@ -31,10 +31,9 @@ type Props = {
 	label: string;
 	value: string;
 	placeholder?: string;
-	size?: string;
 };
 
-function LabelInput({ onChange, placeholder, size, label, value }: Props) {
+function LabelInput({ onChange, placeholder, label, value }: Props) {
 	const [onFocus, setOnFocus] = useState(false);
 
 	const handleFocus = useCallback(() => {
@@ -48,14 +47,7 @@ function LabelInput({ onChange, placeholder, size, label, value }: Props) {
 	return (
 		<InputWrap>
 			<Label isFocus={onFocus}>{label}</Label>
-			<Input
-				onChange={onChange}
-				placeholder={placeholder}
-				size={size}
-				handleFocus={handleFocus}
-				isFocus={onFocus}
-				value={value}
-			/>
+			<Input onChange={onChange} placeholder={placeholder} handleFocus={handleFocus} isFocus={onFocus} value={value} />
 		</InputWrap>
 	);
 }

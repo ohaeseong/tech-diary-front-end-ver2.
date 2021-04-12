@@ -116,7 +116,7 @@ const ReplyButton = styled.button`
 	font-family: 'Spoqa Han Sans Regular';
 `;
 
-const EditButton = styled.span`
+const EditButton = styled.div`
 	font-family: 'Spoqa Han Sans Thin';
 	font-size: 0.9rem;
 	margin-left: 0.5rem;

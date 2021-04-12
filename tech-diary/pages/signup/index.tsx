@@ -2,15 +2,15 @@ import React from 'react';
 import Head from 'next/head';
 import SignUpWithGithubContainer from 'container/account/SignUpWithGithubContainer';
 
-function RegisterGithubPage() {
+function SignUpPage() {
 	return (
 		<>
 			<Head>
-				<title>기본 정보 입력</title>
+				<title>회원가입</title>
 			</Head>
 			<SignUpWithGithubContainer />
 		</>
 	);
 }
 
-export default RegisterGithubPage;
+export default SignUpPage;

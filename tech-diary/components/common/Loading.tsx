@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Image from 'next/image';
+// import Image from 'next/image';
 import React from 'react';
 
 import { color } from 'styles/color';

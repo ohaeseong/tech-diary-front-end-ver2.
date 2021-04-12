@@ -18,9 +18,6 @@ const SinglePostTemplate = styled.div`
 	width: 100%;
 	min-height: 100vh;
 	background-color: ${(props) => props.theme.white_1};
-	&::-webkit-scrollbar {
-		display: none;
-	}
 	margin-top: 5rem;
 `;
 

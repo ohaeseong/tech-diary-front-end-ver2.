@@ -5,6 +5,9 @@ import '../styles/font.css';
 
 import { wrapper } from 'store';
 import Head from 'next/head';
+// import useDarkMode from 'libs/hooks/useDarkMode';
+// import { ThemeProvider } from '@emotion/react';
+// import { color, dark } from 'styles/color';
 
 type Props = {
 	Component: any;
@@ -12,6 +15,9 @@ type Props = {
 };
 
 function MyApp({ Component, pageProps }: Props) {
+	// const [theme, , ] = useDarkMode();
+
+	// const themeMode = theme === 'light';
 	return (
 		<>
 			<Head>
@@ -44,7 +50,9 @@ function MyApp({ Component, pageProps }: Props) {
 					crossOrigin="anonymous"
 				/> */}
 			</Head>
+			{/* <ThemeProvider theme={themeMode ? dark : color}> */}
 			<Component {...pageProps} />
+			{/* </ThemeProvider> */}
 		</>
 	);
 }

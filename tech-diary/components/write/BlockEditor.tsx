@@ -20,7 +20,7 @@ import React from 'react';
 
 // type Props = {
 // 	blocks: Array<BlockType>;
-// 	// updatePageHandler: (updatedBlock: InitialBlockType) => void;
+// 	updatePageHandler: (updatedBlock: InitialBlockType) => void;
 // 	addBlockHandler: (currentBlock: CurrentBlockType) => void;
 // 	deleteBlockHandler: (currnetBlock: CurrentBlockType) => void;
 // };
@@ -36,7 +36,7 @@ function BlockEditor() {
 						html={block.html}
 						tag={block.tag}
 						addBLock={addBlockHandler}
-						// updatePage={updatePageHandler}
+						updatePage={updatePageHandler}
 						deleteBlockHandler={deleteBlockHandler}
 					/>
 				);

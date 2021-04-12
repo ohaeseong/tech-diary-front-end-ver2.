@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import { color } from 'styles/color';
+// import { color } from 'styles/color';
 
 const UserPostListWrap = styled.div`
 	display: flex;
