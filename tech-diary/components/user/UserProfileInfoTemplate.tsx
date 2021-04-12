@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { UserInfo } from 'store/types/auth.types';
 import { color } from 'styles/color';
@@ -27,7 +27,7 @@ const UserName = styled.div`
 	width: 100%;
 	margin-top: 4rem;
 	padding-left: 6.5rem;
-	font-size: 2rem;
+	font-size: 1.7rem;
 
 	color: ${(props) => props.theme.black};
 `;
@@ -36,7 +36,7 @@ const UserSubName = styled.div`
 	width: 100%;
 	margin-top: 0.8rem;
 	padding-left: 6.5rem;
-	font-size: 1.2rem;
+	font-size: 1rem;
 
 	color: ${(props) => props.theme.black};
 

@@ -33,7 +33,6 @@ function DetailPage({ post }: Props) {
 DetailPage.getInitialProps = async ({ query }: NextPageContext) => {
 	let post;
 	// const slug = `${query.userId}-${query.slug}`;
-	console.log(query);
 
 	try {
 		const response = await axios.get(

@@ -61,7 +61,7 @@ function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.requ
 	if (status === 404) {
 		const { login, name, id, avatarUrl } = data.data;
 
-		yield executeCallback(failCB(login, name, id, avatarUrl));
+		yield executeCallback(failCB ? failCB(login, name, id, avatarUrl) : null);
 		return;
 	}
 
@@ -81,7 +81,7 @@ function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.requ
 }
 
 function* onRegisterWithGithub(action: ReturnType<typeof onGithubAuthRegister.request>) {
-	const { githubId, memberId, memberName, avatarUrl, introduce, successCB, failCB } = action.payload;
+	const { githubId, memberId, memberName, avatarUrl, introduce, successCB } = action.payload;
 
 	const { status, data } = yield call(authRepo.registerWithGithub, {
 		githubId,
@@ -103,9 +103,6 @@ function* onRegisterWithGithub(action: ReturnType<typeof onGithubAuthRegister.re
 		token: data.data.token,
 		member: data.data.member,
 	};
-
-	console.log(data);
-	
 
 	setStorage('user-info', payload.member);
 	setStorage('tech-token', payload.token);

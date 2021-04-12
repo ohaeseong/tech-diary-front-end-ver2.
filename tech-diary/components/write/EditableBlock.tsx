@@ -50,7 +50,7 @@ import React from 'react';
 // };
 
 // type Props = {
-// 	// updatePage: (updatedBlock: InitialBlockType) => void;
+// 	updatePage: (updatedBlock: InitialBlockType) => void;
 // 	addBLock: (currentBlock: CurrentBlockType) => void;
 // 	deleteBlockHandler: (currentBlock: CurrentBlockType) => void;
 

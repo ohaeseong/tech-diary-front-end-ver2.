@@ -172,11 +172,11 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { id, title, contents, createTime, thumbnailAddress, memberId, like, member, commentCount, intro, url } = item;
+	const { title, contents, createTime, thumbnailAddress, memberId, like, member, commentCount, intro, url } = item;
 
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
+	const thumbnailSrc = thumbnailAddress;
 	const profileImage = member.profileImage || '/image/user.png';
 
 	const onlySlug = url.split('/');

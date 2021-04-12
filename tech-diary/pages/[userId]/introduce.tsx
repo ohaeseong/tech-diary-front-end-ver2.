@@ -6,7 +6,8 @@ import UserProfileContainer from 'container/user/UserInfoContainer';
 import { server } from 'config/config';
 import { NextPageContext } from 'next';
 import { UserInfo } from 'store/types/auth.types';
-import { Post } from 'store/types/post.types';
+import NotFoundPage from 'pages/404';
+// import { Post } from 'store/types/post.types';
 
 type Props = {
 	userInfo: UserInfo;
@@ -15,6 +16,10 @@ type Props = {
 function UserIntroducePage({ userInfo }: Props) {
 	const router = useRouter();
 	const { userId } = router.query;
+
+	if (!userInfo) {
+		return <NotFoundPage />;
+	}
 
 	return (
 		<>
@@ -27,8 +32,15 @@ function UserIntroducePage({ userInfo }: Props) {
 }
 
 UserIntroducePage.getInitialProps = async ({ query }: NextPageContext) => {
-	const responseUserInfo = await axios.get(`${server.host}/auth/user-info?memberId=${query.userId}`);
-	const userInfo = responseUserInfo.data.data;
+	let userInfo;
+
+	try {
+		const responseUserInfo = await axios.get(`${server.host}/auth/user-info?memberId=${query.userId}`);
+
+		userInfo = responseUserInfo.data.data;
+	} catch (error) {
+		// console.log(error);
+	}
 
 	return { userInfo };
 };

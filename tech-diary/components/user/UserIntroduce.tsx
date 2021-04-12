@@ -2,39 +2,34 @@ import React from 'react';
 import styled from '@emotion/styled';
 import MarkdwonRenderer from 'components/common/MarkdownRenderer';
 import { color } from 'styles/color';
+import { FiEdit } from 'react-icons/fi';
 
 const UserIntroduceWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 48rem;
 	min-height: 30rem;
-	margin-top: 3rem;
+	/* margin-top: 3rem; */
 	border-radius: 7px;
 	border: 1px solid ${color.gray_1};
+	margin-top: 0.5rem;
 	padding-left: 2rem;
 `;
 
 const Head = styled.div`
 	display: flex;
-	flex-direction: row;
 	align-items: center;
-	padding-left: 1rem;
-	height: 3rem;
+	justify-content: flex-end;
+	height: 2rem;
+	padding-right: 0.5rem;
+	margin-top: 3rem;
 
-	border-bottom: 1px solid ${color.gray_5};
+	/* border: 1px solid ${color.gray_5}; */
 
 	& > * {
 		margin-right: 0.5rem;
+		cursor: pointer;
 	}
-`;
-
-const CircleForDesign = styled.div<{ color: string }>`
-	width: 1.2rem;
-	height: 1.2rem;
-
-	border-radius: 50%;
-
-	background-color: ${(props) => props.color};
 `;
 
 type Props = {
@@ -43,12 +38,14 @@ type Props = {
 
 function UserIntroduce({ intro }: Props) {
 	return (
-		<UserIntroduceWrap>
-			{/* <Head>
-				<CircleForDesign color="#FF605C" /> <CircleForDesign color="#FFBD44" /> <CircleForDesign color="#00CA4E" />
-			</Head> */}
-			<MarkdwonRenderer markdown={intro} type="introduce" />
-		</UserIntroduceWrap>
+		<>
+			<Head>
+				<FiEdit size="1.5rem" color={color.gray_4} />
+			</Head>
+			<UserIntroduceWrap>
+				<MarkdwonRenderer markdown={intro} type="introduce" />
+			</UserIntroduceWrap>
+		</>
 	);
 }
 

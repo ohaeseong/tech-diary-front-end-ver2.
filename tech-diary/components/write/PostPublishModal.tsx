@@ -41,6 +41,7 @@ const Head = styled.div`
 	align-items: flex-end;
 	justify-content: flex-end;
 	width: 100%;
+	margin-top: 1.5rem;
 	height: 2.5rem;
 
 	& > * {

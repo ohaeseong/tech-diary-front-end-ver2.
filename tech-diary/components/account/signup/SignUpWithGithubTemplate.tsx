@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 import { color } from 'styles/color';
-import Input from 'components/common/Input';
+// import Input from 'components/common/Input';
 import LabelInput from 'components/common/LabelInput';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
@@ -13,6 +13,8 @@ const GithubSignUpTemplate = styled.div`
 	align-items: center;
 	padding: 4rem 20rem 0 20rem;
 	max-width: 100%;
+	height: 100vh;
+	background-color: ${(props) => props.theme.white_1};
 `;
 
 const Haed = styled.div`
@@ -88,6 +90,7 @@ type Props = {
 	memberName: string;
 	introduce: string;
 	errorMsg: string;
+	// isGithub?: boolean;
 };
 
 function SignUpWithGithubTemplate({
@@ -97,6 +100,7 @@ function SignUpWithGithubTemplate({
 	memberId,
 	memberName,
 	introduce,
+	// isGithub,
 	handleIntroduce,
 	handleMemberId,
 	handleMemberName,

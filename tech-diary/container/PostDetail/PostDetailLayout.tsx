@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@emotion/react';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 
 import SinglePost from 'components/post/SinglePost';
 import { PostDetail } from 'store/types/post.types';
@@ -9,7 +9,7 @@ import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { requestDeletePost, requestPostLike, requestBookmark, requestIsCheckBookmark } from 'libs/repository';
+import { requestDeletePost, requestPostLike, requestBookmark } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 // import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
 import useToggle from 'libs/hooks/useToggle';
-import { TypeDecoded, UserInfo } from 'store/types/auth.types';
+import { UserInfo } from 'store/types/auth.types';
 import { SET_POST_COMMENT_COUNT } from 'store/modules/post.comment.count';
 import ConfirmModal from 'components/common/ConfirmModal';
 
@@ -41,11 +41,12 @@ function PostDetailLayout({ post }: Props) {
 	const [bookMarkToggleValue, bookMarkToggle] = useToggle(false);
 	const [shareItemOpenToggleValue, shareItemToggle] = useToggle(false);
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
+	// const [isCheckBookmark, setIsCheckBookmark] = useState(false);
 
 	const [, , onLikePost] = useRequest(requestPostLike);
 	const [, , onDeleteRequest] = useRequest(requestDeletePost);
 	const [, , onBookmark] = useRequest(requestBookmark);
-	const [checkBookmarkRes, , checkBookmark] = useRequest(requestIsCheckBookmark);
+	// const [checkBookmarkRes, , checkBookmark] = useRequest(requestIsCheckBookmark);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -170,25 +171,21 @@ function PostDetailLayout({ post }: Props) {
 		window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 	}, []);
 
-	useEffect(() => {
-		const userInfo = getStorage('user-info') as UserInfo;
+	// useEffect(() => {
+	// 	const userInfo = getStorage('user-info') as UserInfo;
 
-		if (!checkBookmarkRes && userInfo) {
-			const req = {
-				memberId: userInfo.memberId,
-				postId: id,
-			};
-			checkBookmark(req);
-		}
+	// 	if (!checkBookmarkRes && userInfo) {
+	// 		const req = {
+	// 			memberId: userInfo.memberId,
+	// 			postId: id,
+	// 		};
+	// 		checkBookmark(req);
+	// 	}
 
-		if (checkBookmarkRes && checkBookmarkRes.data.isBookmark) {
-			console.log(checkBookmarkRes);
-			
-			if (!bookMarkToggleValue) {
-				bookMarkToggle(true);
-			}
-		}
-	}, [bookMarkToggle, bookMarkToggleValue, checkBookmark, checkBookmarkRes, id, memberId]);
+	// 	if (checkBookmarkRes && checkBookmarkRes.data.isBookmark) {
+	// 		// bookMarkToggle();
+	// 	}
+	// }, [checkBookmark, checkBookmarkRes, id, memberId, bookMarkToggle]);
 
 	if (!componentMounted) {
 		return <div />;

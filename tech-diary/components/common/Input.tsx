@@ -32,13 +32,12 @@ const InputStyled = styled.input<{ size?: string; isFocus?: boolean }>`
 type Props = {
 	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 	placeholder?: string;
-	size?: string;
 	isFocus?: boolean;
 	value: string;
 	handleFocus?: () => void;
 };
 
-function Input({ onChange, size = 'default', placeholder, handleFocus, isFocus, value }: Props) {
+function Input({ onChange, placeholder, handleFocus, isFocus, value }: Props) {
 	return (
 		<InputStyled
 			onChange={onChange}
