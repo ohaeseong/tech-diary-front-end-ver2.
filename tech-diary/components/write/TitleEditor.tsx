@@ -30,4 +30,4 @@ function TitleEditor({ title, onChange }: Props) {
 	return <TitleEditorTextarea value={title} onChange={onChange} placeholder="제목" />;
 }
 
-export default TitleEditor;
+export default React.memo(TitleEditor);

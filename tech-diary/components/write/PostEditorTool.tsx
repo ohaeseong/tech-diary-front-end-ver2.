@@ -18,7 +18,7 @@ const ToolBoxWrap = styled.div`
 	justify-content: space-between;
 	width: 100%;
 	height: 4rem;
-	background-color: white;
+	background-color: ${(props) => props.theme.white};
 	box-shadow: 0 2px 6px 0 ${(props) => props.theme.gray_0};
 `;
 
@@ -42,7 +42,7 @@ const ToolItem = styled.button`
 	margin: 0 0.4rem;
 	font-family: 'Spoqa Han Sans Regular';
 	font-weight: 700;
-	background-color: white;
+	background-color: ${(props) => props.theme.white};
 	font-size: 1rem;
 	color: ${(props) => props.theme.gray_5};
 	border: none;
@@ -123,4 +123,4 @@ function PostEditorTool({ onClick, openModal, requestSave, handleImage }: Props)
 	);
 }
 
-export default PostEditorTool;
+export default React.memo(PostEditorTool);

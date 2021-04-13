@@ -175,21 +175,14 @@ function MarkdownEditorContainer() {
 		setTagName(event.target.value);
 	}, []);
 
-	const handleUrl = useCallback(
-		(event: ChangeEvent<HTMLInputElement>) => {
-			if (slugUrl.length === 1) {
-				return;
-			}
+	const handleUrl = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+		if (event.target.value.length === 0) {
+			setSlugUrl('/');
 
-			if (event.target.value.length === 0) {
-				setSlugUrl('/');
-
-				return;
-			}
-			setSlugUrl(event.target.value);
-		},
-		[slugUrl.length]
-	);
+			return;
+		}
+		setSlugUrl(event.target.value);
+	}, []);
 
 	const handleTagInputKeypress = useCallback(
 		(event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -373,9 +366,11 @@ function MarkdownEditorContainer() {
 				initTagList.push(<TagItem key={tagValue.tagName} tagName={tagValue.tagName} isLink={false} />);
 			});
 
+			const initUrl = lastPostData.data.post.url ? `/${lastPostData.data.post.url.split('/')[2]}` : `/${title}`;
+
 			setTagItemList(initTagList);
 			setTitle(lastPostData.data.post.title);
-			setSlugUrl(`/${lastPostData.data.post.url.split('/')[2]}`);
+			setSlugUrl(initUrl);
 			setMarkdownText(lastPostData.data.post.contents);
 		}
 	}, [lastPostData, title]);
@@ -395,12 +390,20 @@ function MarkdownEditorContainer() {
 		}
 	}, [markdownText, onTemporaryStorage, title]);
 
+	// useEffect(() => {
+	// 	if (!lastPostData) {
+	// 		const slugUrlDefault = `/${title}`;
+	// 		setSlugUrl(slugUrlDefault);
+	// 	}
+	// }, [lastPostData, title]);
+
 	useEffect(() => {
-		if (!lastPostData) {
-			const slugUrlDefault = `/${title}`;
-			setSlugUrl(slugUrlDefault);
+		const token = getStorage('tech-token');
+
+		if (!token) {
+			router.push('/');
 		}
-	}, [lastPostData, title]);
+	}, [router]);
 
 	return (
 		<>

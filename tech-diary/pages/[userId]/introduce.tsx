@@ -39,7 +39,7 @@ UserIntroducePage.getInitialProps = async ({ query }: NextPageContext) => {
 
 		userInfo = responseUserInfo.data.data;
 	} catch (error) {
-		// console.log(error);
+		// return null;
 	}
 
 	return { userInfo };

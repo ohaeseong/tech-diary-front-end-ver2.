@@ -149,7 +149,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const onLogout = () => {
 		removeStorage('tech-token');
 		removeStorage('user-info');
-		window.location.reload();
+		router.reload();
 	};
 
 	useEffect(() => {

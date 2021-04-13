@@ -117,6 +117,8 @@ const TagInput = styled.input`
 	font-size: 1rem;
 	margin-top: 0.5rem;
 	border: 0px solid ${(props) => props.theme.gray_2};
+	background-color: ${(props) => props.theme.white};
+	color: ${(props) => props.theme.black};
 	font-family: 'Spoqa Han Sans Thin';
 	border-radius: 5px;
 `;

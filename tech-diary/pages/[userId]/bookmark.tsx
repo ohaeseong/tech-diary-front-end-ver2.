@@ -43,7 +43,7 @@ UserBookmarkPostPage.getInitialProps = async ({ query }: NextPageContext) => {
 		userInfo = responseUserInfo.data.data;
 		posts = responseBookMarkPosts.data.data.posts;
 	} catch (error) {
-		// console.log(error);
+		// return { props: {userInfo, :nullposts: null } };
 	}
 
 	return { userInfo, posts };
