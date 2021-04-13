@@ -33,8 +33,6 @@ function UserPrivatePostPage({ userInfo, posts }: Props) {
 }
 
 UserPrivatePostPage.getInitialProps = async ({ query }: NextPageContext) => {
-	// const responseUserInfo = await axios.get(`${server.host}/auth/user-info?memberId=${query.userId}`);
-	// const responsePrivatePosts = await axios.get(`${server.host}/post/state?memberId=${query.userId}&state=${2}`);
 	let userInfo;
 	let posts;
 
@@ -43,9 +41,9 @@ UserPrivatePostPage.getInitialProps = async ({ query }: NextPageContext) => {
 		const responsePrivatePosts = await axios.get(`${server.host}/post/state?memberId=${query.userId}&state=${2}`);
 
 		userInfo = responseUserInfo.data.data;
-		posts = responsePrivatePosts.data.data;
+		posts = responsePrivatePosts.data.data.posts;
 	} catch (error) {
-		// console.log(error);
+		// return null;
 	}
 
 	return { userInfo, posts };

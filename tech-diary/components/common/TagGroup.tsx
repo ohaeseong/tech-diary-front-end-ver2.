@@ -7,6 +7,7 @@ const TagGroupWrap = styled.div`
 	align-items: center;
 	width: 100%;
 	flex-wrap: wrap;
+	margin-bottom: 0.5rem;
 `;
 
 type Props = {

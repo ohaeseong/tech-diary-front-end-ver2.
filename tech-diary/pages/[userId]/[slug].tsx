@@ -32,7 +32,6 @@ function DetailPage({ post }: Props) {
 
 DetailPage.getInitialProps = async ({ query }: NextPageContext) => {
 	let post;
-	// const slug = `${query.userId}-${query.slug}`;
 
 	try {
 		const response = await axios.get(
@@ -40,7 +39,7 @@ DetailPage.getInitialProps = async ({ query }: NextPageContext) => {
 		);
 		post = response.data.data.post;
 	} catch (error) {
-		// console.log(error);
+		return { props: { post: null } };
 	}
 
 	return { post };

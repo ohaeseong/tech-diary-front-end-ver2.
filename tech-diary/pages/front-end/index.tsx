@@ -5,12 +5,16 @@ import axios from 'axios';
 import MainTemplate from 'components/template/mainTemplate/MainTemplate';
 import PostLayout from 'container/post/PostLayout';
 import { server } from 'config/config';
+import { GetStaticProps } from 'next';
+import { Post } from 'store/types/post.types';
 
 type Props = {
-	posts: Array<any>;
+	data: {
+		posts: Post[];
+	};
 };
 
-function FrontEndPage({ posts }: Props) {
+function FrontEndPage({ data }: Props) {
 	return (
 		<>
 			<Head>
@@ -18,17 +22,21 @@ function FrontEndPage({ posts }: Props) {
 				<meta name="description" content="블로그 category front-end 페이지입니다." />
 			</Head>
 			<MainTemplate>
-				<PostLayout posts={posts} />
+				<PostLayout posts={data.posts} />
 			</MainTemplate>
 		</>
 	);
 }
 
-FrontEndPage.getInitialProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
 	const response = await axios.get(`${server.host}/post/?limit=30&category=blog&kinds=front-end`);
 	const posts = response.data.data;
 
-	return posts;
+	return {
+		props: {
+			data: { ...posts },
+		},
+	};
 };
 
 export default FrontEndPage;

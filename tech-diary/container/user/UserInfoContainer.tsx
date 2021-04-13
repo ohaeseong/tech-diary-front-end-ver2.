@@ -85,7 +85,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 		) {
 			router.push(`/${userInfo.memberId}`);
 		}
-	}, [posts, router, userInfo.memberId]);
+	}, [router, userInfo.memberId]);
 
 	return (
 		<>

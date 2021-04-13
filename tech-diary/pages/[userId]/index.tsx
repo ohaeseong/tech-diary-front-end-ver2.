@@ -41,7 +41,7 @@ UserInfoPage.getInitialProps = async ({ query }: NextPageContext) => {
 		userInfo = responseUserInfo.data.data;
 		userPosts = responseUserPosts.data.data.posts;
 	} catch (error) {
-		// console.log(error);
+		// return { props: { userInfo: null } };
 	}
 
 	return { userInfo, userPosts };
