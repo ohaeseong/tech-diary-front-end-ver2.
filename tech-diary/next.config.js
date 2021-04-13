@@ -6,5 +6,4 @@ module.exports = {
 		loader: 'imgix',
 		path: 'https://noop/',
 	},
-	// exportTrailingSlash: true,
 };
