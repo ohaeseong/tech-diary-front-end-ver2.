@@ -2,14 +2,61 @@ import React, { ChangeEvent, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import Input from 'components/common/Input';
 import { color } from 'styles/color';
+import { css } from '@emotion/react';
 
-const InputWrap = styled.div`
+const InputWrap = styled.div<{ margin?: string; size?: string; justifyContent?: string }>`
 	width: 25rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	margin-top: 2rem;
+	margin: ${(props) => props.margin};
+
+	${(props) => {
+		if (props.size === 'sm') {
+			return css`
+				& > input {
+					width: 10rem;
+					height: 1rem;
+				}
+
+				& > span {
+					font-size: 1rem;
+				}
+			`;
+		}
+
+		if (props.size === 'regular') {
+			return css`
+				& > input {
+					width: 12rem;
+					height: 1rem;
+				}
+
+				& > span {
+					font-size: 1.2rem;
+				}
+			`;
+		}
+
+		// if (props.size === 'medium') {
+		// 	return css`
+		// 		font-size: 1.3rem;
+		// 	`;
+		// }
+
+		// if (props.size === 'big') {
+		// 	return css`
+		// 		font-size: 1.5rem;
+		// 	`;
+		// }
+
+		return css`
+			font-size: 1rem;
+		`;
+	}}
+
+	${(props) => props.justifyContent && `justify-content: ${props.justifyContent};`}
 `;
 
 const Label = styled.span<{ isFocus: boolean }>`
@@ -27,13 +74,16 @@ const Label = styled.span<{ isFocus: boolean }>`
 `;
 
 type Props = {
-	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	label: string;
 	value: string;
+	margin?: string;
+	size?: string;
+	justifyContent?: string;
 	placeholder?: string;
 };
 
-function LabelInput({ onChange, placeholder, label, value }: Props) {
+function LabelInput({ onChange, placeholder, label, value, margin, size, justifyContent }: Props) {
 	const [onFocus, setOnFocus] = useState(false);
 
 	const handleFocus = useCallback(() => {
@@ -45,9 +95,16 @@ function LabelInput({ onChange, placeholder, label, value }: Props) {
 	}, [onFocus]);
 
 	return (
-		<InputWrap>
+		<InputWrap margin={margin} size={size} justifyContent={justifyContent}>
 			<Label isFocus={onFocus}>{label}</Label>
-			<Input onChange={onChange} placeholder={placeholder} handleFocus={handleFocus} isFocus={onFocus} value={value} />
+			<Input
+				fontSize={size}
+				onChange={onChange}
+				placeholder={placeholder}
+				handleFocus={handleFocus}
+				isFocus={onFocus}
+				value={value}
+			/>
 		</InputWrap>
 	);
 }
