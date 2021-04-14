@@ -90,6 +90,16 @@ const WrapForAnimation = styled.div`
 	animation: ${fadein} 2s;
 `;
 
+const Text = styled.div`
+	color: ${color.gray_4};
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+
+	&:hover {
+		color: ${color.gray_2};
+	}
+`;
+
 const LinkWrap = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -121,12 +131,13 @@ type Props = {
 	onLoginWithGithub: () => void;
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
+	openModal: () => void;
 
 	errorMsg: string;
 	form: loginForm;
 };
 
-function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorMsg, form }: Props) {
+function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorMsg, form, openModal }: Props) {
 	return (
 		<LoginBoxWrap>
 			<LoginHalfWrap isImage>
@@ -179,9 +190,7 @@ function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorM
 						</Link>
 					</LinkWrap>
 					<LinkWrap>
-						<Link href="/signup">
-							<LinkText>Sign up/</LinkText>
-						</Link>
+						<Text onClick={openModal}>Sign up/</Text>
 						<Link href="/signup">
 							<LinkText>Forgot the password?</LinkText>
 						</Link>
@@ -192,4 +201,4 @@ function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorM
 	);
 }
 
-export default LoginBox;
+export default React.memo(LoginBox);

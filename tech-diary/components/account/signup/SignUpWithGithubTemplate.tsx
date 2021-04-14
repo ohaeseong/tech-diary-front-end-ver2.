@@ -113,9 +113,9 @@ function SignUpWithGithubTemplate({
 			</Haed>
 			<Body>
 				<HalfOfBody>
-					<LabelInput label="이름" value={memberName} onChange={handleMemberName} />
-					<LabelInput label="아이디" value={memberId} onChange={handleMemberId} />
-					<LabelInput label="한줄소개" value={introduce} onChange={handleIntroduce} />
+					<LabelInput label="이름" margin="2rem 0 0 0" value={memberName} onChange={handleMemberName} />
+					<LabelInput label="아이디" margin="2rem 0 0 0" value={memberId} onChange={handleMemberId} />
+					<LabelInput label="한줄소개" margin="2rem 0 0 0" value={introduce} onChange={handleIntroduce} />
 				</HalfOfBody>
 				<HalfOfBody>
 					<TemplateImg src="/image/loginTemplateImage.png" alt="sign_up_template_image.png" />

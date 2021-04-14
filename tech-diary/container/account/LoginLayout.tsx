@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import AccountPageTemplate from 'components/account/AccountPageTemplate';
 import LoginBox from 'components/account/login/LoginBox';
@@ -8,6 +8,12 @@ import { RootState } from 'store/modules';
 import useForm from 'libs/hooks/useForm';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import { server } from 'config/config';
+import ModalBox from 'components/common/ModalBox';
+import LabelInput from 'components/common/LabelInput';
+import useToggle from 'libs/hooks/useToggle';
+import Button from 'components/common/Button';
+import { color } from 'styles/color';
+import ButtonGroup from 'components/common/ButtonGroup';
 
 type LoginForm = {
 	memberId: string;
@@ -19,10 +25,17 @@ function LoginLayout() {
 	const router = useRouter();
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
 
+	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
+	const [email, setEmail] = useState('');
+
 	const [form, onChange] = useForm<LoginForm>({
 		memberId: '',
 		pw: '',
 	});
+
+	const handleEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+		setEmail(e.target.value);
+	}, []);
 
 	const onLogin = useCallback(() => {
 		const { memberId, pw } = form;
@@ -55,8 +68,31 @@ function LoginLayout() {
 
 	return (
 		<AccountPageTemplate>
+			{modalIsOpenValue ? (
+				<ModalBox>
+					<LabelInput
+						label="이메일 인증"
+						margin="2.5rem 0 1rem 0"
+						value={email}
+						onChange={handleEmail}
+						size="regular"
+						justifyContent="center"
+					/>
+					<ButtonGroup sortDirection="row" margin="3rem 0 0 0" childrenMargin="0 0 0 2rem">
+						<Button size="sm" margin="2rem 0 0 0">
+							취소
+						</Button>
+						<Button size="sm" margin="2rem 0 0 0" btnColor={color.neon_2}>
+							메일 보내기
+						</Button>
+					</ButtonGroup>
+				</ModalBox>
+			) : (
+				<></>
+			)}
 			<LoginBox
 				onLogin={onLogin}
+				openModal={modalOpenToggle}
 				onLoginWithGithub={onLoginWithGithub}
 				handleKeypress={handleKeypress}
 				onChange={onChange}
