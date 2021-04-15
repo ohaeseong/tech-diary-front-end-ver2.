@@ -72,13 +72,13 @@ function LoginLayout() {
 				<ModalBox>
 					<LabelInput
 						label="이메일 인증"
-						margin="2.5rem 0 1rem 0"
+						margin="2rem 0 1rem 0"
 						value={email}
 						onChange={handleEmail}
 						size="regular"
 						justifyContent="center"
 					/>
-					<ButtonGroup sortDirection="row" margin="3rem 0 0 0" childrenMargin="0 0 0 2rem">
+					<ButtonGroup sortDirection="row" margin="2rem 0 0 0" childrenMargin="0 0 0 2rem">
 						<Button size="sm" margin="2rem 0 0 0">
 							취소
 						</Button>
