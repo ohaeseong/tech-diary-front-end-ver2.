@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
+// import { Controlled as CodeMirror } from 'react-codemirror2';
+
 import { color } from 'styles/color';
-import PostEditorTool from 'components/write/PostEditorTool';
+// import PostEditorTool from 'components/write/PostEditorTool';
+const PostEditorTool = dynamic(() => import('../write/PostEditorTool'), { ssr: false });
+
+const CodeMirror = dynamic(() => import('../common/CodeMirrorComponent'), { ssr: false });
 
 const MarkdownEditorWrap = styled.div`
 	width: 100%;
@@ -150,7 +153,7 @@ function MarkdownEditor({
 	const handleToolbarClick = (mode: string) => {
 		if (!codemirror) return;
 
-		const { doc } = codemirror.editor;
+		const { doc } = codemirror;
 
 		switch (mode) {
 			case 'H1':
@@ -184,42 +187,46 @@ function MarkdownEditor({
 
 	return (
 		<>
-			<PostEditorTool
-				onClick={handleToolbarClick}
-				openModal={openModal}
-				requestSave={requestSave}
-				handleImage={handleImage}
-			/>
-			<TagInput
-				placeholder="Enter를 눌러 tag를 추가해 보세요!"
-				onChange={tagInputOnChage}
-				onKeyDown={handleTagInputKeypress}
-				value={tagName}
-			/>
-			<MarkdownEditorWrap>
-				<CodeMirror
-					value={markdownText}
-					ref={(ref: any) => {
-						setCodemirror(ref);
-					}}
-					options={{
-						mode: 'markdown',
-						lineNumbers: false,
-						placeholder: '블로그 작성...',
-						lineWrapping: true,
-					}}
-					onBeforeChange={(_editor, _data, value) => {
-						setMarkdownText(value);
-					}}
-					editorWillUnmount={() => {
-						import('codemirror/mode/markdown/markdown');
-						import('codemirror/addon/display/placeholder');
-						import('codemirror/mode/javascript/javascript');
-						import('codemirror/mode/jsx/jsx');
-					}}
-				/>
-				<textarea ref={editorElement} style={{ display: 'none' }} />
-			</MarkdownEditorWrap>
+			{typeof window !== 'undefined' && (
+				<>
+					<PostEditorTool
+						onClick={handleToolbarClick}
+						openModal={openModal}
+						requestSave={requestSave}
+						handleImage={handleImage}
+					/>
+					<TagInput
+						placeholder="Enter를 눌러 tag를 추가해 보세요!"
+						onChange={tagInputOnChage}
+						onKeyDown={handleTagInputKeypress}
+						value={tagName}
+					/>
+					<MarkdownEditorWrap>
+						<CodeMirror
+							value={markdownText}
+							options={{
+								mode: 'markdown',
+								lineNumbers: false,
+								placeholder: '블로그 작성...',
+								lineWrapping: true,
+							}}
+							onBeforeChange={(_editor, _data, value) => {
+								setMarkdownText(value);
+							}}
+							editorDidMount={(editor) => {
+								setCodemirror(editor);
+							}}
+							editorWillUnmount={() => {
+								import('codemirror/mode/markdown/markdown');
+								import('codemirror/addon/display/placeholder');
+								import('codemirror/mode/javascript/javascript');
+								import('codemirror/mode/jsx/jsx');
+							}}
+						/>
+						<textarea ref={editorElement} style={{ display: 'none' }} />
+					</MarkdownEditorWrap>
+				</>
+			)}
 		</>
 	);
 }

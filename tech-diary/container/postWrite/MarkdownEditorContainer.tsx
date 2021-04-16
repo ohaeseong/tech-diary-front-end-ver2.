@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useCallback, useState, useEffect, ReactElement } from 'react';
 import Head from 'next/head';
-import MarkdownEditor from 'components/write/MarkdownEditor';
+import dynamic from 'next/dynamic';
+// import MarkdownEditor from 'components/write/MarkdownEditor';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
@@ -25,6 +26,8 @@ import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 import { escapeForUrl } from 'libs/utils';
 import { UserInfo } from 'store/types/auth.types';
+
+const MarkdownEditor = dynamic(() => import('components/write/MarkdownEditor'), { ssr: false });
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
