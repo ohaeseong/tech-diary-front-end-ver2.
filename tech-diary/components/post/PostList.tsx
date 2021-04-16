@@ -44,7 +44,7 @@ function PostList({ postList }: Props) {
 			</PostListTemplate>
 			{postList.length === 0 ? (
 				<NonePost>
-					None Post <br /> Please write your story!{' '}
+					None Post <br /> Please write your story!
 				</NonePost>
 			) : (
 				<></>

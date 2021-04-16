@@ -5,7 +5,7 @@ RUN mkdir -p /tech-diary-front
 WORKDIR /tech-diary-front
 
 COPY package*.json ./
-COPY package-lock*.json ./
+COPY package-lock.json ./
 COPY tsconfig.json ./
 
 COPY . .
