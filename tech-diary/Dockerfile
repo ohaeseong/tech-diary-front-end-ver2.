@@ -17,7 +17,7 @@ FROM node:12.18.3-alpine3.11
 ENV NODE_ENV=production
 
 COPY package*.json ./
-COPY package-lock*.json ./
+COPY yarn.lock ./
 RUN yarn install --production
 
 COPY --from=build /tech-diary-front .
