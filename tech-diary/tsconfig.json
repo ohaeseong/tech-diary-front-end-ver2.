@@ -12,7 +12,7 @@
     "allowJs": true,
     "alwaysStrict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": false,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
