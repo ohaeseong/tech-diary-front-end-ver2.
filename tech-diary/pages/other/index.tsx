@@ -5,7 +5,6 @@ import axios from 'axios';
 import MainTemplate from 'components/template/mainTemplate/MainTemplate';
 import PostLayout from 'container/post/PostLayout';
 import { server } from 'config/config';
-import { GetStaticProps } from 'next';
 import { Post } from 'store/types/post.types';
 
 type Props = {
@@ -27,14 +26,12 @@ function OtherPage({ data }: Props) {
 	);
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+OtherPage.getInitialProps = async () => {
 	const response = await axios.get(`${server.host}/post/?limit=30&category=blog$kinds=etc`);
 	const posts = response.data.data;
 
 	return {
-		props: {
-			data: { ...posts },
-		},
+		data: { ...posts },
 	};
 };
 

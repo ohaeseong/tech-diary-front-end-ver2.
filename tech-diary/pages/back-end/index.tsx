@@ -6,7 +6,6 @@ import MainTemplate from 'components/template/mainTemplate/MainTemplate';
 import PostLayout from 'container/post/PostLayout';
 import { server } from 'config/config';
 import { Post } from 'store/types/post.types';
-import { GetStaticProps } from 'next';
 
 type Props = {
 	data: {
@@ -28,14 +27,12 @@ function BackEndPage({ data }: Props) {
 	);
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+BackEndPage.getInitialProps = async () => {
 	const response = await axios.get(`${server.host}/post/?limit=30&category=blog&kinds=back-end`);
 	const posts = response.data.data;
 
 	return {
-		props: {
-			data: { ...posts },
-		},
+		data: { ...posts },
 	};
 };
 
