@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
-// import { Controlled as CodeMirror } from 'react-codemirror2';
-
-import { color } from 'styles/color';
 import PostEditorTool from 'components/write/PostEditorTool';
 
 const CodeMirror = dynamic(() => import('../common/CodeMirrorComponent'), { ssr: false });
@@ -20,11 +17,6 @@ const MarkdownEditorWrap = styled.div`
 		height: 100%;
 	}
 
-	.CodeMirror-lines {
-		padding: 4px 0;
-		padding-bottom: 3rem;
-	}
-
 	.CodeMirror {
 		background-color: ${(props) => props.theme.white_1};
 		min-height: 100%;
@@ -37,7 +29,7 @@ const MarkdownEditorWrap = styled.div`
 		& > * span {
 			font-family: 'Spoqa Han Sans Thin';
 			word-break: break-all;
-			white-space: pre-line;
+			/* white-space: pre-line; */
 			color: ${(props) => props.theme.black};
 			font-size: 1.125rem;
 		}
@@ -94,11 +86,6 @@ const MarkdownEditorWrap = styled.div`
 
 		.cm-comment {
 			white-space: pre-line;
-		}
-
-		.CodeMirror-placeholder {
-			color: ${color.black};
-			font-style: italic;
 		}
 
 		.cm-strong {
@@ -349,9 +336,9 @@ function MarkdownEditor({
 				break;
 			case 'ITALIC':
 				if (!doc.getSelection()) {
-					const cursorEnd = doc.getCorsor('end');
+					const cursorEnd = doc.getCursor('end');
 					doc.replaceSelection(`_text_`);
-					doc.setSelections({ line: cursorEnd.line, ch: cursorEnd + 1 }, { line: cursorEnd.line, ch: cursorEnd + 4 });
+					doc.setSelection({ line: cursorEnd.line, ch: cursorEnd + 1 }, { line: cursorEnd.line, ch: cursorEnd + 4 });
 				} else {
 					doc.replaceSelection(`_${doc.getSelection()}_`);
 				}
@@ -372,8 +359,14 @@ function MarkdownEditor({
 				break;
 			case 'QUOTE':
 				if (!doc.getSelection()) {
-					doc.replaceSelection('> ');
+					const lineText = line.trim();
+					if (lineText === '>') {
+						doc.replaceRange(``, { line: cursorLine, ch: 0 }, { line: cursorLine + 1, ch: 0 });
+					} else {
+						doc.replaceSelection('> ');
+					}
 				} else {
+					// const text = doc.getSelection().split('\n');
 					doc.replaceSelection(`> ${doc.getSelection()}`);
 				}
 				break;
@@ -388,12 +381,6 @@ function MarkdownEditor({
 			});
 		}, 0);
 	};
-
-	useEffect(() => {
-		if (codemirror) {
-			codemirror.focus();
-		}
-	}, [codemirror]);
 
 	return (
 		<>
@@ -419,19 +406,8 @@ function MarkdownEditor({
 								lineNumbers: false,
 								placeholder: '블로그 작성...',
 								lineWrapping: true,
-								tabSize: 6,
-								extraKeys: {
-									Tab: (cm) => {
-										if (cm.getMode().name === 'null') {
-											cm.execCommand('insertTab');
-										} else if (cm.somethingSelected()) {
-											cm.execCommand('indentMore');
-										} else {
-											cm.execCommand('insertSoftTab');
-										}
-									},
-									'Shift-Tab': (cm) => cm.execCommand('indentLess'),
-								},
+								tabSize: 8,
+								autofocus: true,
 							}}
 							onBeforeChange={(_editor, _data, value) => {
 								setMarkdownText(value);

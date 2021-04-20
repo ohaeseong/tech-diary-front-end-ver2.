@@ -74,9 +74,9 @@ const Label = styled.span<{ isFocus: boolean }>`
 `;
 
 type Props = {
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 	label: string;
-	value: string;
+	value?: string;
 	margin?: string;
 	size?: string;
 	justifyContent?: string;

@@ -84,10 +84,10 @@ type Props = {
 	onSubmit: () => void;
 	handleMemberName: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleMemberId: (e: ChangeEvent<HTMLInputElement>) => void;
-	handleMemberPw: (e: ChangeEvent<HTMLInputElement>) => void;
+	handleMemberPw?: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleIntroduce: (e: ChangeEvent<HTMLInputElement>) => void;
 	memberId: string;
-	memberPw: string;
+	memberPw?: string;
 	memberName: string;
 	introduce: string;
 	errorMsg: string;

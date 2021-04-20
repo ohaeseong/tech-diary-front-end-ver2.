@@ -59,10 +59,10 @@ const InputStyled = styled.input<{ fontSize?: string; isFocus?: boolean }>`
 `;
 
 type Props = {
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 	placeholder?: string;
 	isFocus?: boolean;
-	value: string;
+	value?: string;
 	fontSize?: string;
 	handleFocus?: () => void;
 };
