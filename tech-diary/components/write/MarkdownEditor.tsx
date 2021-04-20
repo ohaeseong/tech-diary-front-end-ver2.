@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
 // import { Controlled as CodeMirror } from 'react-codemirror2';
 
 import { color } from 'styles/color';
-// import PostEditorTool from 'components/write/PostEditorTool';
-const PostEditorTool = dynamic(() => import('../write/PostEditorTool'), { ssr: false });
+import PostEditorTool from 'components/write/PostEditorTool';
 
 const CodeMirror = dynamic(() => import('../common/CodeMirrorComponent'), { ssr: false });
 
@@ -154,36 +153,247 @@ function MarkdownEditor({
 		if (!codemirror) return;
 
 		const { doc } = codemirror;
+		const cursor = doc.getCursor();
+		const cursorLine = cursor.line;
+		const line = doc.getLine(cursorLine);
+
+		// heading text 처리 함수
+		const handleReplaceText = (replaceLength: number, heading: number) => {
+			const lineText = line.trim();
+			const headingList = ['#', '##', '###', '####'];
+			let replaceText = lineText.substring(replaceLength, lineText.length);
+			if (replaceText[1] === ' ') {
+				replaceText = lineText.substring(replaceLength + 1, lineText.length);
+			}
+
+			doc.replaceRange(
+				`${headingList[heading - 1]} ${replaceText}\n`,
+				{ line: cursorLine, ch: 0 },
+				{ line: cursorLine + 1, ch: 0 }
+			);
+		};
 
 		switch (mode) {
 			case 'H1':
-				doc.replaceSelection(` \n # Heading1`);
+				// 드래그 한 text가 없을 경우
+				if (!doc.getSelection()) {
+					const lineText = line.trim();
+					if (lineText.split(' ')[0]) {
+						if (line.split(' ')[0] === '#') {
+							return;
+						}
+						if (lineText.split(' ')[0] === '##') {
+							handleReplaceText(2, 1);
+						} else if (lineText.split(' ')[0] === '###') {
+							handleReplaceText(3, 1);
+						} else if (lineText.split(' ')[0] === '####') {
+							handleReplaceText(4, 1);
+						} else {
+							doc.replaceRange(`# `, { line: cursorLine, ch: 0 }, { line: cursorLine, ch: 0 });
+						}
+					}
+
+					if (!lineText) {
+						doc.replaceRange(`# `, { line: cursorLine, ch: 0 }, { line: cursorLine, ch: 0 });
+					}
+				} else {
+					// 드래그한 text가 있을 경우
+					let selected = doc.getSelection();
+					selected = selected.trim();
+
+					if (selected.split(' ')[0]) {
+						if (selected.split(' ')[0] === '#') {
+							return;
+						}
+						if (selected.split(' ')[0] === '##') {
+							handleReplaceText(2, 1);
+						} else if (selected.split(' ')[0] === '###') {
+							handleReplaceText(3, 1);
+						} else if (selected.split(' ')[0] === '####') {
+							handleReplaceText(4, 1);
+						} else {
+							doc.replaceSelection(`# ${doc.getSelection()}`);
+						}
+					}
+				}
 				break;
 			case 'H2':
-				doc.replaceSelection(` \n ## Heading2`);
+				if (!doc.getSelection()) {
+					const lineText = line.trim();
+					if (lineText.split(' ')[0]) {
+						if (line.split(' ')[0] === '##') {
+							return;
+						}
+						if (lineText.split(' ')[0] === '#') {
+							handleReplaceText(2, 2);
+						} else if (lineText.split(' ')[0] === '###') {
+							handleReplaceText(3, 2);
+						} else if (lineText.split(' ')[0] === '####') {
+							handleReplaceText(4, 2);
+						} else {
+							doc.replaceRange(`## `, { line: cursorLine, ch: 0 }, { line: cursorLine, ch: 0 });
+						}
+					}
+
+					if (!lineText) {
+						doc.replaceRange(`## `, { line: cursorLine, ch: 0 }, { line: cursorLine, ch: 0 });
+					}
+				} else {
+					let selected = doc.getSelection();
+					selected = selected.trim();
+
+					if (selected.split(' ')[0]) {
+						if (selected.split(' ')[0] === '##') {
+							return;
+						}
+						if (selected.split(' ')[0] === '#') {
+							handleReplaceText(2, 2);
+						} else if (selected.split(' ')[0] === '###') {
+							handleReplaceText(3, 2);
+						} else if (selected.split(' ')[0] === '####') {
+							handleReplaceText(4, 2);
+						} else {
+							doc.replaceSelection(`## ${doc.getSelection()}\n`);
+						}
+					}
+				}
 				break;
 			case 'H3':
-				doc.replaceSelection(` \n ### Heading3`);
+				if (!doc.getSelection()) {
+					const lineText = line.trim();
+					if (lineText.split(' ')[0]) {
+						if (line.split(' ')[0] === '###') {
+							return;
+						}
+						if (lineText.split(' ')[0] === '#') {
+							handleReplaceText(2, 3);
+						} else if (lineText.split(' ')[0] === '##') {
+							handleReplaceText(3, 3);
+						} else if (lineText.split(' ')[0] === '####') {
+							handleReplaceText(4, 3);
+						} else {
+							doc.replaceRange(`### `, { line: cursorLine, ch: 0 }, { line: cursorLine, ch: 0 });
+						}
+					}
+
+					if (!lineText) {
+						doc.replaceRange(`### `, { line: cursorLine, ch: 0 }, { line: cursorLine, ch: 0 });
+					}
+				} else {
+					let selected = doc.getSelection();
+					selected = selected.trim();
+
+					if (selected.split(' ')[0]) {
+						if (selected.split(' ')[0] === '###') {
+							return;
+						}
+						if (selected.split(' ')[0] === '#') {
+							handleReplaceText(2, 3);
+						} else if (selected.split(' ')[0] === '##') {
+							handleReplaceText(3, 3);
+						} else if (selected.split(' ')[0] === '####') {
+							handleReplaceText(4, 3);
+						} else {
+							doc.replaceSelection(`### ${doc.getSelection()}`);
+						}
+					}
+				}
 				break;
 			case 'H4':
-				doc.replaceSelection(` \n #### Heading4`);
+				if (!doc.getSelection()) {
+					const lineText = line.trim();
+					if (lineText.split(' ')[0]) {
+						if (line.split(' ')[0] === '####') {
+							return;
+						}
+						if (lineText.split(' ')[0] === '#') {
+							handleReplaceText(2, 4);
+						} else if (lineText.split(' ')[0] === '##') {
+							handleReplaceText(3, 4);
+						} else if (lineText.split(' ')[0] === '###') {
+							handleReplaceText(4, 4);
+						} else {
+							doc.replaceRange(`#### `, { line: cursorLine, ch: 0 }, { line: cursorLine, ch: 0 });
+						}
+					}
+
+					if (!lineText) {
+						doc.replaceRange(`#### `, { line: cursorLine, ch: 0 }, { line: cursorLine, ch: 0 });
+					}
+				} else {
+					let selected = doc.getSelection();
+					selected = selected.trim();
+
+					if (selected.split(' ')[0]) {
+						if (selected.split(' ')[0] === '####') {
+							return;
+						}
+						if (selected.split(' ')[0] === '#') {
+							handleReplaceText(2, 4);
+						} else if (selected.split(' ')[0] === '##') {
+							handleReplaceText(3, 4);
+						} else if (selected.split(' ')[0] === '###') {
+							handleReplaceText(4, 4);
+						} else {
+							doc.replaceSelection(`#### ${doc.getSelection()}`);
+						}
+					}
+				}
 				break;
 			case 'BOLD':
-				doc.replaceSelection(` \n **text**`);
+				if (!doc.getSelection()) {
+					doc.replaceSelection(`**text**`);
+				} else {
+					doc.replaceSelection(`**${doc.getSelection()}**`);
+				}
 				break;
 			case 'ITALIC':
-				doc.replaceSelection(` \n _text_`);
+				if (!doc.getSelection()) {
+					const cursorEnd = doc.getCorsor('end');
+					doc.replaceSelection(`_text_`);
+					doc.setSelections({ line: cursorEnd.line, ch: cursorEnd + 1 }, { line: cursorEnd.line, ch: cursorEnd + 4 });
+				} else {
+					doc.replaceSelection(`_${doc.getSelection()}_`);
+				}
 				break;
 			case 'DEL':
-				doc.replaceSelection(` \n ~text~`);
+				if (!doc.getSelection()) {
+					doc.replaceSelection(`~text~`);
+				} else {
+					doc.replaceSelection(`~${doc.getSelection()}~`);
+				}
 				break;
 			case 'CODE':
-				doc.replaceSelection(' \n ```\ncode\n``` ');
+				if (!doc.getSelection()) {
+					doc.replaceSelection(' \n ```\ncode\n``` ');
+				} else {
+					doc.replaceSelection(`\`\`\`\n${doc.getSelection()}\n\`\`\``);
+				}
+				break;
+			case 'QUOTE':
+				if (!doc.getSelection()) {
+					doc.replaceSelection('> ');
+				} else {
+					doc.replaceSelection(`> ${doc.getSelection()}`);
+				}
 				break;
 			default:
 				break;
 		}
+
+		setTimeout(() => {
+			codemirror.focus();
+			codemirror.setCursor({
+				line: cursor.line,
+			});
+		}, 0);
 	};
+
+	useEffect(() => {
+		if (codemirror) {
+			codemirror.focus();
+		}
+	}, [codemirror]);
 
 	return (
 		<>
@@ -209,6 +419,19 @@ function MarkdownEditor({
 								lineNumbers: false,
 								placeholder: '블로그 작성...',
 								lineWrapping: true,
+								tabSize: 6,
+								extraKeys: {
+									Tab: (cm) => {
+										if (cm.getMode().name === 'null') {
+											cm.execCommand('insertTab');
+										} else if (cm.somethingSelected()) {
+											cm.execCommand('indentMore');
+										} else {
+											cm.execCommand('insertSoftTab');
+										}
+									},
+									'Shift-Tab': (cm) => cm.execCommand('indentLess'),
+								},
 							}}
 							onBeforeChange={(_editor, _data, value) => {
 								setMarkdownText(value);

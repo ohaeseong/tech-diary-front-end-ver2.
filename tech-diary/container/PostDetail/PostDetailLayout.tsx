@@ -9,7 +9,7 @@ import useDarkMode from 'libs/hooks/useDarkMode';
 import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { requestDeletePost, requestPostLike, requestBookmark } from 'libs/repository';
+import { requestDeletePost, requestPostLike, requestBookmark, requestIsCheckBookmark } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 // import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
@@ -38,15 +38,15 @@ function PostDetailLayout({ post }: Props) {
 
 	// const [isMine, setIsMine] = useState(false);
 
-	const [bookMarkToggleValue, bookMarkToggle] = useToggle(false);
 	const [shareItemOpenToggleValue, shareItemToggle] = useToggle(false);
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
-	// const [isCheckBookmark, setIsCheckBookmark] = useState(false);
+	const [bookMarkToggleValue, bookMarkToggle] = useState(false);
+	const [isCheckBookmark, setIsCheckBookmark] = useState(false);
 
 	const [, , onLikePost] = useRequest(requestPostLike);
 	const [, , onDeleteRequest] = useRequest(requestDeletePost);
 	const [, , onBookmark] = useRequest(requestBookmark);
-	// const [checkBookmarkRes, , checkBookmark] = useRequest(requestIsCheckBookmark);
+	const [checkBookmarkRes, , checkBookmark] = useRequest(requestIsCheckBookmark);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -122,8 +122,8 @@ function PostDetailLayout({ post }: Props) {
 
 		await onBookmark(req);
 
-		bookMarkToggle();
-	}, [bookMarkToggle, id, onBookmark]);
+		bookMarkToggle(!bookMarkToggleValue);
+	}, [bookMarkToggleValue, id, onBookmark]);
 
 	const toggleShareItemOpen = useCallback(
 		(action?: string) => {
@@ -171,21 +171,25 @@ function PostDetailLayout({ post }: Props) {
 		window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 	}, []);
 
-	// useEffect(() => {
-	// 	const userInfo = getStorage('user-info') as UserInfo;
+	useEffect(() => {
+		const userInfo = getStorage('user-info') as UserInfo;
 
-	// 	if (!checkBookmarkRes && userInfo) {
-	// 		const req = {
-	// 			memberId: userInfo.memberId,
-	// 			postId: id,
-	// 		};
-	// 		checkBookmark(req);
-	// 	}
+		if (!checkBookmarkRes && userInfo) {
+			const req = {
+				memberId: userInfo.memberId,
+				postId: id,
+			};
+			checkBookmark(req);
+		}
 
-	// 	if (checkBookmarkRes && checkBookmarkRes.data.isBookmark) {
-	// 		// bookMarkToggle();
-	// 	}
-	// }, [checkBookmark, checkBookmarkRes, id, memberId, bookMarkToggle]);
+		if (checkBookmarkRes && checkBookmarkRes.data.isBookmark) {
+			setIsCheckBookmark(true);
+		}
+	}, [checkBookmark, checkBookmarkRes, id, memberId]);
+
+	useEffect(() => {
+		bookMarkToggle(isCheckBookmark);
+	}, [isCheckBookmark]);
 
 	if (!componentMounted) {
 		return <div />;

@@ -4,6 +4,10 @@ export type AuthLogin = {
 	successCB?: () => null;
 };
 
+export type LoginSuccess = {
+	token: string;
+};
+
 export type GitHubLoginRequest = {
 	code: string;
 	successCB?: () => null;

@@ -1,11 +1,12 @@
 import { createAsyncAction, ActionType, createReducer, createAction } from 'typesafe-actions';
 import { AxiosError } from 'axios';
-import { AuthLogin } from '../types/auth.types';
+import { AuthLogin, LoginSuccess } from '../types/auth.types';
 
 type AuthState = {
 	loading?: boolean;
 	isLoginSuccess: boolean;
 	successCB: () => null;
+	// token: string;
 	authLoginErrorMsg: string;
 };
 
@@ -13,6 +14,7 @@ const initialState: AuthState = {
 	loading: false,
 	isLoginSuccess: false,
 	authLoginErrorMsg: '',
+	// token: '',
 	successCB: () => null,
 };
 
@@ -41,8 +43,9 @@ export default createReducer<AuthState, AuthAction>(initialState, {
 		loading: true,
 	}),
 
-	[AUTH_LOGIN_SUCCESS]: (state) => ({
+	[AUTH_LOGIN_SUCCESS]: (state, action) => ({
 		...state,
+		// token: action.payload.token,
 		loading: false,
 		isLoginSucces: true,
 	}),

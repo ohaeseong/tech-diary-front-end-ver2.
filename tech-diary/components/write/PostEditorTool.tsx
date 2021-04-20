@@ -105,7 +105,7 @@ function PostEditorTool({ onClick, openModal, requestSave, handleImage }: Props)
 							onChange={handleImage}
 						/>
 					</ToolItem>
-					<ToolItem>
+					<ToolItem onClick={() => onClick('QUOTE')}>
 						<MdFormatQuote size={ICON_SIZE} />
 					</ToolItem>
 				</ToolItemGroup>

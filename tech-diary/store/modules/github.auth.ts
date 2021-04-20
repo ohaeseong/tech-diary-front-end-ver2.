@@ -1,10 +1,11 @@
 import { createAsyncAction, ActionType, createReducer } from 'typesafe-actions';
 import { AxiosError } from 'axios';
-import { GitHubLoginRequest } from 'store/types/auth.types';
+import { GitHubLoginRequest, LoginSuccess } from 'store/types/auth.types';
 
 type GithubAuthState = {
 	loading?: boolean;
 	isLoginSuccess: boolean;
+	// token: string;
 	successCB: () => null;
 	failCB: (memberName: string, memberId: string, githubId: string) => void;
 	authLoginErrorMsg: string;
@@ -14,6 +15,7 @@ const initialState: GithubAuthState = {
 	loading: false,
 	isLoginSuccess: false,
 	authLoginErrorMsg: '',
+	// token: '',
 	failCB: () => null,
 	successCB: () => null,
 };
@@ -42,8 +44,9 @@ export default createReducer<GithubAuthState, GihubAuthAction>(initialState, {
 		loading: true,
 	}),
 
-	[GITHUB_AUTH_LOGIN_SUCCESS]: (state) => ({
+	[GITHUB_AUTH_LOGIN_SUCCESS]: (state, action) => ({
 		...state,
+		// token: action.payload.token,
 		loading: false,
 		isLoginSucces: true,
 	}),
