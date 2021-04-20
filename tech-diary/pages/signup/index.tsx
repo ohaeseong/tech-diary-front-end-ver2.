@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import SignUpWithGithubContainer from 'container/account/SignUpWithGithubContainer';
+import SignUpContainer from 'container/account/SignUpContainer';
 
 function SignUpPage() {
 	return (
@@ -8,7 +8,7 @@ function SignUpPage() {
 			<Head>
 				<title>회원가입</title>
 			</Head>
-			<SignUpWithGithubContainer />
+			<SignUpContainer />
 		</>
 	);
 }

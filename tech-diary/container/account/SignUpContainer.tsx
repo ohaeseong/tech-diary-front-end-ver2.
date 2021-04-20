@@ -1,16 +1,16 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import SignUpWithGithubTemplate from 'components/account/signup/SignUpWithGithubTemplate';
 import { useRouter } from 'next/router';
-// import useRequest from 'libs/hooks/useRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import { GITHUB_REGISTER_REQUEST } from 'store/modules/register.github.auth';
 import { RootState } from 'store/modules';
+import SignUpTemplate from 'components/account/signup/SignUpTemplate';
 
-function SignUpWithGithubContainer() {
+function SignUpContainer() {
 	const router = useRouter();
 
 	const [memberId, setMemberId] = useState('');
 	const [memberName, setMemberName] = useState('');
+	const [memberPw, setMemberPw] = useState('');
 	const [introduce, setIntroduce] = useState('');
 
 	const errorMsg = useSelector((state: RootState) => state.registerWithGithub.authRegisterErrorMsg);
@@ -22,6 +22,10 @@ function SignUpWithGithubContainer() {
 
 	const handleMemberName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		setMemberName(e.target.value);
+	}, []);
+
+	const handleMemberPw = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+		setMemberPw(e.target.value);
 	}, []);
 
 	const handleIntroduce = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +49,7 @@ function SignUpWithGithubContainer() {
 	}, [dispatch, introduce, memberId, memberName, router]);
 
 	const cancleRegister = useCallback(() => {
-		router.push('/login');
+		router.push('/');
 	}, [router]);
 
 	useEffect(() => {
@@ -56,16 +60,20 @@ function SignUpWithGithubContainer() {
 	}, [router.query]);
 
 	useEffect(() => {
-		window.history.replaceState(null, '', '/register');
-	}, []);
+		if (router.query) {
+			console.log(router.query.code);
+		}
+	}, [router.query]);
 
 	return (
-		<SignUpWithGithubTemplate
+		<SignUpTemplate
 			cancleRegister={cancleRegister}
 			memberId={memberId}
 			memberName={memberName}
+			memberPw={memberPw}
 			introduce={introduce}
 			errorMsg={errorMsg}
+			handleMemberPw={handleMemberPw}
 			handleMemberId={handleMemberId}
 			handleIntroduce={handleIntroduce}
 			handleMemberName={handleMemberName}
@@ -74,4 +82,4 @@ function SignUpWithGithubContainer() {
 	);
 }
 
-export default SignUpWithGithubContainer;
+export default SignUpContainer;

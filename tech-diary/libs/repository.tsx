@@ -294,3 +294,12 @@ export const requestIsCheckBookmark = (req: { postId: string; memberId: string }
 		.catch((error) => {
 			throw error;
 		});
+
+export const reqeustSignUpEmailSend = (req: { email: string }) =>
+	axios
+		.post(`${server.host}/auth/send-email/sign-up`, {
+			email: req.email,
+		})
+		.catch((error) => {
+			throw error;
+		});

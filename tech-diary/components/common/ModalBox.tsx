@@ -7,6 +7,7 @@ const ModalTemplate = styled.div`
 	position: absolute;
 	z-index: 99;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
@@ -36,16 +37,33 @@ const BoxWrap = styled.div`
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
 `;
 
+const Message = styled.p<{ isError?: boolean }>`
+	text-align: center;
+	width: 100%;
+	height: 2rem;
+	line-height: 2rem;
+	font-family: 'Spoqa Han Sans Thin';
+	color: ${color.neon_2};
+
+	${(props) => props.isError && `color: ${color.emphasis}`};
+`;
+
 type Props = {
 	children: ReactNode;
+	msg?: {
+		isError?: boolean;
+		message: string;
+	};
 };
 
-function ModalBox({ children }: Props) {
+function ModalBox({ children, msg }: Props) {
 	return (
 		<>
 			<ModalOver />
 			<ModalTemplate>
-				<BoxWrap>{children}</BoxWrap>
+				<BoxWrap>
+					<Message isError={msg?.isError}>{msg?.message}</Message> {children}
+				</BoxWrap>
 			</ModalTemplate>
 		</>
 	);

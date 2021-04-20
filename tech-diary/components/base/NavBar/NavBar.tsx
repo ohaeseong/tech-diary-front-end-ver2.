@@ -14,6 +14,8 @@ import MenuItem from 'components/common/MenuItem';
 import { TypeDecoded, UserInfo } from 'store/types/auth.types';
 import { useRouter } from 'next/router';
 import useMenuSliderHeight from 'libs/hooks/useMenuSliderHeight';
+// import { useSelector } from 'react-redux';
+// import { RootState } from 'store/modules';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -125,6 +127,9 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [memberId, setMemberId] = useState('');
 	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
 
+	// const token = useSelector((state: RootState) => state.auth.token);
+	// const githubLoginToken = useSelector((state: RootState) => state.githubAuth.token);
+
 	const router = useRouter();
 
 	const handleIsScrollEvent = useCallback(() => {
@@ -149,7 +154,12 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const onLogout = () => {
 		removeStorage('tech-token');
 		removeStorage('user-info');
-		router.reload();
+
+		if (router.pathname === '/') {
+			router.reload();
+		} else {
+			router.push('/');
+		}
 	};
 
 	useEffect(() => {

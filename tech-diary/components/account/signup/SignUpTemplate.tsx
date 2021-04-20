@@ -1,13 +1,12 @@
 import React, { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 import { color } from 'styles/color';
-// import Input from 'components/common/Input';
 import LabelInput from 'components/common/LabelInput';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import { fadein } from 'styles/animation';
 
-const GithubSignUpTemplate = styled.div`
+const SignUpWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -85,37 +84,52 @@ type Props = {
 	onSubmit: () => void;
 	handleMemberName: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleMemberId: (e: ChangeEvent<HTMLInputElement>) => void;
+	handleMemberPw: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleIntroduce: (e: ChangeEvent<HTMLInputElement>) => void;
 	memberId: string;
+	memberPw: string;
 	memberName: string;
 	introduce: string;
 	errorMsg: string;
-	// isGithub?: boolean;
+	isGithub?: boolean;
 };
 
-function SignUpWithGithubTemplate({
+function SignUpTemplate({
 	cancleRegister,
 	errorMsg,
 	onSubmit,
 	memberId,
 	memberName,
 	introduce,
-	// isGithub,
+	isGithub,
+	memberPw,
 	handleIntroduce,
+	handleMemberPw,
 	handleMemberId,
 	handleMemberName,
 }: Props) {
 	return (
-		<GithubSignUpTemplate>
+		<SignUpWrap>
 			<Haed>
 				<Title>Tech Diary에 오신걸 환영합니다!</Title>
 				<Description>기본 회원 정보를 등록해주세요.</Description>
 			</Haed>
 			<Body>
 				<HalfOfBody>
-					<LabelInput label="이름" margin="2rem 0 0 0" value={memberName} onChange={handleMemberName} />
-					<LabelInput label="아이디" margin="2rem 0 0 0" value={memberId} onChange={handleMemberId} />
-					<LabelInput label="한줄소개" margin="2rem 0 0 0" value={introduce} onChange={handleIntroduce} />
+					{isGithub ? (
+						<>
+							<LabelInput label="이름" margin="2rem 0 0 0" value={memberName} onChange={handleMemberName} />
+							<LabelInput label="아이디" margin="2rem 0 0 0" value={memberId} onChange={handleMemberId} />
+							<LabelInput label="한줄소개" margin="2rem 0 0 0" value={introduce} onChange={handleIntroduce} />
+						</>
+					) : (
+						<>
+							<LabelInput label="이름" margin="2rem 0 0 0" value={memberName} onChange={handleMemberName} />
+							<LabelInput label="아이디" margin="2rem 0 0 0" value={memberId} onChange={handleMemberId} />
+							<LabelInput label="비밀번호" margin="2rem 0 0 0" value={memberPw} onChange={handleMemberPw} />
+							<LabelInput label="한줄소개" margin="2rem 0 0 0" value={introduce} onChange={handleIntroduce} />
+						</>
+					)}
 				</HalfOfBody>
 				<HalfOfBody>
 					<TemplateImg src="/image/loginTemplateImage.png" alt="sign_up_template_image.png" />
@@ -132,8 +146,8 @@ function SignUpWithGithubTemplate({
 					</Button>
 				</ButtonGroup>
 			</Bottom>
-		</GithubSignUpTemplate>
+		</SignUpWrap>
 	);
 }
 
-export default SignUpWithGithubTemplate;
+export default SignUpTemplate;

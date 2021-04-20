@@ -168,7 +168,7 @@ function MarkdownEditorContainer() {
 
 		const tagList: any = [...tagItemList];
 
-		tagList.push(<TagItem tagName={tagName} isLink={false} />);
+		tagList.push(<TagItem key={tagName} tagName={tagName} isLink={false} />);
 		setTagItemList(tagList);
 
 		setTagName('');
@@ -385,7 +385,7 @@ function MarkdownEditorContainer() {
 			const timeId = setTimeout(() => {
 				if (title.length === 0 || markdownText.length === 0) return;
 				onTemporaryStorage();
-			}, 100000);
+			}, 10000);
 
 			return () => {
 				clearTimeout(timeId);

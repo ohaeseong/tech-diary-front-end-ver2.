@@ -30,7 +30,7 @@ const ModalOver = styled.div`
 const ModalBox = styled.div`
 	width: 50rem;
 	height: 35rem;
-	background-color: white;
+	background-color: ${(props) => props.theme.white_1};
 	animation: ${toBig} 0.5s;
 	border-radius: 5px;
 	padding: 0 1rem;
@@ -65,7 +65,6 @@ const PostPublishContentWrap = styled.div`
 	padding: 1rem;
 	width: 100%;
 	height: 100%;
-	/* border: 1px solid black; */
 `;
 
 const PostPublishSetCardWrap = styled.div`
@@ -75,7 +74,6 @@ const PostPublishSetCardWrap = styled.div`
 
 	width: 100%;
 	height: 100%;
-	/* border: 1px solid black; */
 `;
 
 const ThumbnailUploadLabel = styled.label`
@@ -133,7 +131,6 @@ const ThumbnailImage = styled.img`
 	height: 100%;
 	object-fit: cover;
 	border-radius: 3px;
-	/* border: 1px solid black; */
 `;
 
 const PreviewText = styled.textarea`
@@ -143,7 +140,9 @@ const PreviewText = styled.textarea`
 	font-family: 'Spoqa Han Sans Thin';
 	font-size: 1rem;
 	margin-top: 1rem;
+	background-color: ${(props) => props.theme.white_1};
 	border-radius: 3px;
+	color: ${(props) => props.theme.black};
 	border: 1px solid ${(props) => props.theme.gray_2};
 	resize: none;
 `;
@@ -178,6 +177,7 @@ const ContentLabel = styled.span`
 	width: 100%;
 	font-size: 1rem;
 	margin: 0.5rem 0;
+	color: ${(props) => props.theme.black};
 	font-family: 'Spoqa Han Sans Regular';
 `;
 
@@ -188,8 +188,6 @@ const PublishSettingWrap = styled.div`
 	height: 10rem;
 	align-items: center;
 	justify-content: space-between;
-	/* margin-bottom: 1rem; */
-	/* border: 1px solid black; */
 `;
 
 const PublishSettingItem = styled.div<{ isActive: boolean }>`
@@ -199,7 +197,6 @@ const PublishSettingItem = styled.div<{ isActive: boolean }>`
 	width: 100%;
 	height: 3rem;
 	color: ${(props) => props.theme.gray_3};
-	/* border: 1px solid ${color.gray_2}; */
 	background-color: ${(props) => props.theme.white_1};
 	cursor: pointer;
 	transition: ease-in-out 0.2s;
@@ -208,10 +205,8 @@ const PublishSettingItem = styled.div<{ isActive: boolean }>`
 		props.isActive &&
 		`
 			background-color: ${props.theme.emphasis};
-			// opacity: 0.7;
 			border-radius: 5px;
-			color: ${props.theme.white};
-			// border: 1px solid ${color.purple};
+			color: ${props.theme.white_1};
 	`}
 `;
 
@@ -311,7 +306,6 @@ function PostPublishModal({
 											onChange={handlePostIntro}
 										/>
 									</PostPublishSetCardWrap>
-									{/* <PostPreviewBottom>*미리보기</PostPreviewBottom> */}
 								</PostPublishContentWrap>
 								<PostPublishContentWrap>
 									<PostPublishSetCardWrap>

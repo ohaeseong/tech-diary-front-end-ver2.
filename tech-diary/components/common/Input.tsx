@@ -75,7 +75,7 @@ function Input({ onChange, placeholder, handleFocus, isFocus, value, fontSize }:
 			onFocus={handleFocus}
 			onBlur={handleFocus}
 			fontSize={fontSize}
-			value={value}
+			value={value || ''}
 			isFocus={isFocus}
 		/>
 	);

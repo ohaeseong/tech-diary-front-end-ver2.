@@ -30,6 +30,17 @@ const BlockQuoteStyle = styled.div`
 		font-family: 'Spoqa Han Sans Thin';
 		/* font-size: 0.9rem; */
 	}
+
+	ul,
+	ol {
+		padding-left: 1rem;
+	}
+	*:first-child {
+		margin-top: 0;
+	}
+	*:last-child {
+		margin-bottom: 0;
+	}
 `;
 
 export function BlockQuote(children: { children: React.ReactNode }) {

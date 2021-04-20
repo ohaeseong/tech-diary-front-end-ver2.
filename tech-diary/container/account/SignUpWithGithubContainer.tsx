@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import SignUpWithGithubTemplate from 'components/account/signup/SignUpWithGithubTemplate';
+import SignUpWithGithubTemplate from 'components/account/signup/SignUpTemplate';
 import { useRouter } from 'next/router';
 // import useRequest from 'libs/hooks/useRequest';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,7 +45,7 @@ function SignUpWithGithubContainer() {
 	}, [dispatch, introduce, memberId, memberName, router]);
 
 	const cancleRegister = useCallback(() => {
-		router.push('/login');
+		router.push('/');
 	}, [router]);
 
 	useEffect(() => {
@@ -62,6 +62,7 @@ function SignUpWithGithubContainer() {
 	return (
 		<SignUpWithGithubTemplate
 			cancleRegister={cancleRegister}
+			isGithub
 			memberId={memberId}
 			memberName={memberName}
 			introduce={introduce}
