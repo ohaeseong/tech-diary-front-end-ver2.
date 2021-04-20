@@ -1,6 +1,6 @@
 import { createAsyncAction, ActionType, createReducer } from 'typesafe-actions';
 import { AxiosError } from 'axios';
-import { GitHubLoginRequest, LoginSuccess } from 'store/types/auth.types';
+import { GitHubLoginRequest } from 'store/types/auth.types';
 
 type GithubAuthState = {
 	loading?: boolean;
@@ -44,7 +44,7 @@ export default createReducer<GithubAuthState, GihubAuthAction>(initialState, {
 		loading: true,
 	}),
 
-	[GITHUB_AUTH_LOGIN_SUCCESS]: (state, action) => ({
+	[GITHUB_AUTH_LOGIN_SUCCESS]: (state) => ({
 		...state,
 		// token: action.payload.token,
 		loading: false,
