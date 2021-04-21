@@ -8,7 +8,7 @@ const Template = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	width: 80%;
+	width: 90%;
 	height: 100%;
 	margin: 3rem auto;
 `;
@@ -17,7 +17,7 @@ const Header = styled.div`
 	height: 3rem;
 	font-size: 2rem;
 	line-height: 50px;
-	margin: 1rem 1rem;
+	margin: 1rem 1.5rem;
 
 	color: ${(props) => props.theme.black};
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { mediaQuery } from 'components/layout/responsive';
+import { media } from 'components/layout/responsive';
 
 const Banner = styled.div`
 	width: 100%;
@@ -14,7 +14,7 @@ const Banner = styled.div`
 		`;
 	}}
 
-	${mediaQuery.sm} {
+	${media.sm} {
 		display: none;
 	}
 `;

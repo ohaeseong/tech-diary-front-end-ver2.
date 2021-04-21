@@ -27,7 +27,7 @@ import TagItem from 'components/common/TagItem';
 import { escapeForUrl } from 'libs/utils';
 import { UserInfo } from 'store/types/auth.types';
 
-const MarkdownEditor = dynamic(() => import('components/write/MarkdownEditor'), { ssr: false });
+const MarkdownEditorWrite = dynamic(() => import('components/write/MarkdownEditorWrite'), { ssr: false });
 
 const MarkdownEditorTemplate = styled.div`
 	display: flex;
@@ -432,7 +432,7 @@ function MarkdownEditorContainer() {
 				<EditorWrap>
 					<TitleEditor title={title} onChange={handleTitleLength} />
 					<TagGroup>{tagItemList}</TagGroup>
-					<MarkdownEditor
+					<MarkdownEditorWrite
 						markdownText={markdownText}
 						setMarkdownText={setMarkdownText}
 						handleTagInputKeypress={handleTagInputKeypress}

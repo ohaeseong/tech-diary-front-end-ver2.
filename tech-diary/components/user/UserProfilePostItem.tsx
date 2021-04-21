@@ -9,8 +9,8 @@ const UserProfilePostItemWrap = styled.div`
 	flex-direction: column;
 	width: 100%;
 	/* height: 10rem; */
-	padding: 3rem 0rem;
-	margin-bottom: 2rem;
+	padding: 2.5rem 0rem;
+	/* margin-bottom: 1rem; */
 
 	border-bottom: 1px solid ${(props) => props.theme.gray_1};
 	cursor: pointer;
@@ -22,7 +22,7 @@ const Head = styled.div`
 	/* padding-left: 2rem; */
 	line-height: 3rem;
 
-	font-family: 'Spoqa Han Sans Regular';
+	font-family: 'Spoqa Han Sans Medium';
 	font-size: 1.5rem;
 
 	color: ${(props) => props.theme.neon_2};

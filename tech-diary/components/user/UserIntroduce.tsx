@@ -3,17 +3,18 @@ import styled from '@emotion/styled';
 import MarkdwonRenderer from 'components/common/MarkdownRenderer';
 import { color } from 'styles/color';
 import { FiEdit } from 'react-icons/fi';
+import MarkdownEditor from 'components/write/MarkdownEditor';
+import Button from 'components/common/Button';
 
 const UserIntroduceWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 48rem;
-	min-height: 30rem;
-	/* margin-top: 3rem; */
+	height: 30rem;
 	border-radius: 7px;
 	border: 1px solid ${color.gray_1};
-	margin-top: 0.5rem;
-	padding-left: 2rem;
+	/* margin-top: 0.5rem; */
+	padding: 0rem 2rem 1rem;
 `;
 
 const Head = styled.div`
@@ -22,9 +23,7 @@ const Head = styled.div`
 	justify-content: flex-end;
 	height: 2rem;
 	padding-right: 0.5rem;
-	margin-top: 3rem;
-
-	/* border: 1px solid ${color.gray_5}; */
+	/* margin-top: 3rem; */
 
 	& > * {
 		margin-right: 0.5rem;
@@ -32,19 +31,58 @@ const Head = styled.div`
 	}
 `;
 
+const Bottom = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding-right: 1rem;
+	margin-bottom: 6rem;
+
+	& > * {
+		margin-top: 2rem;
+	}
+`;
+
 type Props = {
-	intro: string;
+	introText: string;
+	isReadOnly: boolean;
+	setIntroText: (value: string) => void;
+	isReadOnlyToggle: () => void;
+	onSaveUserInfo: () => void;
 };
 
-function UserIntroduce({ intro }: Props) {
+function UserIntroduce({ introText, isReadOnly, setIntroText, isReadOnlyToggle, onSaveUserInfo }: Props) {
 	return (
 		<>
-			<Head>
-				<FiEdit size="1.5rem" color={color.gray_4} />
-			</Head>
+			<Head>{isReadOnly ? <FiEdit size="1.5rem" color={color.gray_4} onClick={isReadOnlyToggle} /> : <></>}</Head>
 			<UserIntroduceWrap>
-				<MarkdwonRenderer markdown={intro} type="introduce" />
+				{isReadOnly ? (
+					<MarkdwonRenderer markdown={introText} type="introduce" />
+				) : (
+					<MarkdownEditor
+						markdownText={introText}
+						option={{
+							mode: 'markdown',
+							lineNumbers: false,
+							placeholder: '소개글 작성...',
+							lineWrapping: true,
+							tabSize: 8,
+							autofocus: true,
+						}}
+						onChangeMarkdownText={setIntroText}
+						minHeight="30rem"
+					/>
+				)}
 			</UserIntroduceWrap>
+			<Bottom>
+				{isReadOnly ? (
+					<></>
+				) : (
+					<Button width="5rem" height="2.5rem" btnColor={color.neon_2} onClick={onSaveUserInfo}>
+						저장
+					</Button>
+				)}
+			</Bottom>
 		</>
 	);
 }
