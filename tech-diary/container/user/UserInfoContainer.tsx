@@ -6,7 +6,7 @@ import { NavBar } from 'components/base/NavBar';
 import UserProfileInfoTemplate from 'components/user/UserProfileInfoTemplate';
 import useDarkMode from 'libs/hooks/useDarkMode';
 import { getStorage } from 'libs/storage';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { color, dark } from 'styles/color';
 import { TypeDecoded, UserInfo } from 'store/types/auth.types';
 import { Post } from 'store/types/post.types';
@@ -19,6 +19,7 @@ import { IoMdPerson } from 'react-icons/io';
 import { HiOutlineBookOpen } from 'react-icons/hi';
 import UserProfilePostItem from 'components/user/UserProfilePostItem';
 import UserIntroduce from 'components/user/UserIntroduce';
+import useToggle from 'libs/hooks/useToggle';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -39,7 +40,7 @@ const UserPostListTemplate = styled.div`
 const NonePostTemplate = styled.div`
 	width: 100%;
 
-	font-size: 2rem;
+	font-size: 1.825rem;
 	padding-top: 20rem;
 	color: ${(props) => props.theme.gray_4};
 	text-align: center;
@@ -55,9 +56,15 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 	const router = useRouter();
 	const [theme, toggleTheme] = useDarkMode();
 	const [isMine, setIsMine] = useState(false);
+	const [isReadOnly, isReadOnlyToggle] = useToggle(true);
+	const [introText, setIntroText] = useState(userInfo.introduce || '소개글을 작성해 보세요!');
 
 	const iconSize = '1.5rem';
 	const themeMode = theme === 'light';
+
+	const onSaveUserInfo = useCallback(() => {
+		isReadOnlyToggle();
+	}, [isReadOnlyToggle]);
 
 	// useEffect(() => {
 	// 	const token = getStorage('tech-token') as string;
@@ -131,7 +138,13 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 								)}
 							</>
 						) : (
-							<UserIntroduce intro={userInfo.introduce || '소개글을 작성해 자신을 소개해 보세요!'} />
+							<UserIntroduce
+								introText={introText}
+								setIntroText={setIntroText}
+								isReadOnly={isReadOnly}
+								onSaveUserInfo={onSaveUserInfo}
+								isReadOnlyToggle={isReadOnlyToggle}
+							/>
 						)}
 					</UserPostListTemplate>
 				</UserPageTemplate>

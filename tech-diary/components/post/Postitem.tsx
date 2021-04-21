@@ -8,19 +8,38 @@ import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { color } from 'styles/color';
+import { mediaQuery } from 'components/layout/responsive';
 // import { useRouter } from 'next/router';
 
 const PostItemWrap = styled.div`
-	width: 100%;
+	width: 30rem;
 	height: 23.5rem;
 
 	border-radius: 7px;
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
-	transition: 0.3s ease-in-out;
+	transition: 0.2s ease-in-out;
 
 	background-color: ${(props) => props.theme.white};
 	&:hover {
 		transform: translate(0, -10px);
+	}
+
+	${mediaQuery(1440)} {
+		width: calc(25% - 2rem);
+	}
+	${mediaQuery(1312)} {
+		width: calc(33% - 1.8125rem);
+	}
+
+	${mediaQuery(1056)} {
+		width: calc(50% - 2rem);
+	}
+	${mediaQuery(767)} {
+		margin: 0;
+		width: 100%;
+		& + & {
+			margin-top: 2rem;
+		}
 	}
 `;
 
@@ -176,7 +195,7 @@ function PostItem({ item }: Props) {
 
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
+	const thumbnailSrc = thumbnailAddress || '';
 	const profileImage = member.profileImage || '/image/user.png';
 
 	const onlySlug = url.split('/');

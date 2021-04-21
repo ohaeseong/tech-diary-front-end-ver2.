@@ -2,19 +2,19 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Post } from 'store/types/post.types';
 import PostItem from 'components/post/PostItem';
-import { mediaQuery } from 'components/layout/responsive';
 
 const PostListTemplate = styled.div`
-	display: grid;
+	display: flex;
 	width: 100%;
-	grid-template-columns: repeat(auto-fit, minmax(16rem, auto));
-	grid-template-rows: repeat(auto-fit, 1fr);
-	column-gap: 2rem;
-	row-gap: 2rem;
+	flex-wrap: wrap;
+	/* grid-template-columns: repeat(auto-fit, minmax(16rem, auto));
+	grid-template-rows: repeat(auto-fit, 1fr); */
+	/* column-gap: 2rem;
+	row-gap: 2rem; */
 	place-items: center;
-
-	${mediaQuery.over} {
-		grid-template-columns: repeat(5, auto);
+	/* border: 1px solid black; */
+	& > * {
+		margin: 1rem;
 	}
 `;
 

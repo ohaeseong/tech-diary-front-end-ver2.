@@ -167,10 +167,8 @@ const KindsSelect = styled.select`
 	outline: none;
 	padding-left: 0.5rem;
 	border: 1px solid ${color.gray_2};
-
-	& > * {
-		color: black;
-	}
+	background-color: ${(props) => props.theme.white_1};
+	color: ${(props) => props.theme.black};
 `;
 
 const ContentLabel = styled.span`
@@ -204,9 +202,9 @@ const PublishSettingItem = styled.div<{ isActive: boolean }>`
 	${(props) =>
 		props.isActive &&
 		`
-			background-color: ${props.theme.emphasis};
+			background-color: ${props.theme.neon_2};
 			border-radius: 5px;
-			color: ${props.theme.white_1};
+			color:${color.white};
 	`}
 `;
 
@@ -217,6 +215,8 @@ const SlugUrlSettingInput = styled.input`
 	font-family: 'Spoqa Han Sans Thin';
 	padding: 0.4rem 0.5rem;
 	border: 1px solid ${color.gray_2};
+	background-color: ${(props) => props.theme.white_1};
+	color: ${(props) => props.theme.black};
 `;
 
 type Props = {
@@ -314,7 +314,7 @@ function PostPublishModal({
 											<PublishSettingItem isActive={isPublic} onClick={handlePublicState}>
 												공개
 											</PublishSettingItem>
-											<PublishSettingItem isActive={!isPublic} onClick={handlePublicState}>
+											<PublishSettingItem isActive={isPublic} onClick={handlePublicState}>
 												비공개
 											</PublishSettingItem>
 										</PublishSettingWrap>
