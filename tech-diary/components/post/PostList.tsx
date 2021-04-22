@@ -6,14 +6,7 @@ import { mediaQuery } from 'components/layout/responsive';
 
 const PostListTemplate = styled.div`
 	display: flex;
-	/* width: 100%; */
 	flex-wrap: wrap;
-	/* grid-template-columns: repeat(auto-fit, minmax(16rem, auto));
-	grid-template-rows: repeat(auto-fit, 1fr); */
-	/* column-gap: 2rem;
-	row-gap: 2rem; */
-	margin: -1rem;
-	/* border: 1px solid black; */
 	& > * {
 		margin: 1rem;
 	}
@@ -24,10 +17,12 @@ const PostListTemplate = styled.div`
 	${mediaQuery(1919)} {
 		width: 1408px;
 	}
+
 	${mediaQuery(1440)} {
 		width: 1224px;
 	}
-	${mediaQuery(1340)} {
+
+	${mediaQuery(1310)} {
 		width: 1024px;
 	}
 	${mediaQuery(1056)} {

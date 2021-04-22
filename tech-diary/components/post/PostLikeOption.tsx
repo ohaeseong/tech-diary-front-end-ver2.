@@ -168,6 +168,8 @@ type Props = {
 	moveToComment: () => void;
 	closeShareItem: () => void;
 	copyUrl: () => void;
+	sharePostToFacebook: () => void;
+	sharePostToTwitter: () => void;
 	dispatchForUpdateState: any;
 
 	optionState: OptionState;
@@ -183,6 +185,8 @@ function PostLikeOption({
 	toggleShareItemOpen,
 	closeShareItem,
 	copyUrl,
+	sharePostToTwitter,
+	sharePostToFacebook,
 	moveToComment,
 	dispatchForUpdateState,
 
@@ -249,10 +253,10 @@ function PostLikeOption({
 					<AiOutlineShareAlt size="2rem" cursor="pointer" />
 				</ShareIconWrap>
 				<ShareItemWrap isOpen={shareItemOpenToggleValue}>
-					<ShareItem>
+					<ShareItem onClick={sharePostToTwitter}>
 						<FaTwitter size="100%" />
 					</ShareItem>
-					<ShareItem>
+					<ShareItem onClick={sharePostToFacebook}>
 						<FaFacebook size="100%" />
 					</ShareItem>
 					<ShareItem onClick={copyUrl}>

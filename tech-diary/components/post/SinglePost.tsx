@@ -59,6 +59,8 @@ type Props = {
 	openConfirmModal: () => void;
 	goEditPostPage: () => void;
 	copyUrl: () => void;
+	sharePostToFacebook: () => void;
+	sharePostToTwitter: () => void;
 	dispatchForUpdateState: any;
 	setCommentList: (dispatch: Comment[]) => void;
 
@@ -75,6 +77,8 @@ function SinglePost({
 	toggleShareItemOpen,
 	closeShareItem,
 	copyUrl,
+	sharePostToFacebook,
+	sharePostToTwitter,
 	openConfirmModal,
 	moveToComment,
 	goEditPostPage,
@@ -120,6 +124,8 @@ function SinglePost({
 				bookMarkToggleValue={bookMarkToggleValue}
 				closeShareItem={closeShareItem}
 				copyUrl={copyUrl}
+				sharePostToTwitter={sharePostToTwitter}
+				sharePostToFacebook={sharePostToFacebook}
 				moveToComment={moveToComment}
 				dispatchForUpdateState={dispatchForUpdateState}
 			/>
@@ -138,9 +144,9 @@ function SinglePost({
 				<PostBottom />
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
 			</SinglePostContentsWrap>
-			<ToastContainer autoClose={1000} key="adf" />
+			<ToastContainer autoClose={1000} />
 		</SinglePostTemplate>
 	);
 }
 
-export default SinglePost;
+export default React.memo(SinglePost);

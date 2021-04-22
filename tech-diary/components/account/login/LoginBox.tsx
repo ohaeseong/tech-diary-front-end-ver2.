@@ -3,6 +3,9 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 // import Image from 'next/image';
 import Link from 'next/link';
+import { AiFillGithub } from 'react-icons/ai';
+import { TiSocialFacebook } from 'react-icons/ti';
+import { FcGoogle } from 'react-icons/fc';
 
 import { color } from 'styles/color';
 import { fadein } from 'styles/animation';
@@ -39,7 +42,7 @@ const LoginHalfWrap = styled.div<{ isImage: boolean }>`
 const LoginTextWrap = styled.div`
 	width: 100%;
 	height: 5rem;
-	margin-bottom: 1rem;
+	margin-bottom: 3rem;
 
 	& > * {
 		margin-top: 1rem;
@@ -75,6 +78,36 @@ const LoginText = styled.div<{ fontSize: string; color?: string }>`
 		`
             color: ${props.color};
     	`};
+`;
+
+const OauthButtonsWrap = styled.div`
+	display: flex;
+	justify-content: space-around;
+	/* width: 100%; */
+	margin: 0.5rem 0rem 3rem 0rem;
+	/* padding: 0rem 1rem; */
+	/* border: 1px solid black; */
+
+	& > * {
+		cursor: pointer;
+	}
+`;
+
+const OauthCircle = styled.div<{ isFacebook?: boolean }>`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	border: 1px solid ${color.gray_1};
+
+	${(props) =>
+		props.isFacebook &&
+		`
+		background-color: ${color.facebook};
+		border: 0px solid ${color.gray_2};
+	`}
 `;
 
 const LoginTemplateImg = styled.img`
@@ -174,14 +207,20 @@ function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorM
 					/>
 				</WrapForAnimation>
 				<WrapForAnimation>
-					<ButtonGroup sortDirection="column" childrenMargin="0.5rem 0 0.5rem 0" margin="1rem 0 2rem 0">
-						<Button width="20rem" onClick={onLogin}>
+					<ButtonGroup sortDirection="column" childrenMargin="0.5rem 0 0.5rem 0" margin="1.5rem 0 1rem 0">
+						<Button width="20.5rem" onClick={onLogin} btnColor={color.neon_2}>
 							Log in
 						</Button>
-						<Button width="20rem" onClick={onLoginWithGithub}>
-							Log in with GitHub
-						</Button>
 					</ButtonGroup>
+					<OauthButtonsWrap>
+						<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
+						<OauthCircle isFacebook>
+							<TiSocialFacebook size="2.5rem" color="white" />
+						</OauthCircle>
+						<OauthCircle>
+							<FcGoogle size="2.3rem" />
+						</OauthCircle>
+					</OauthButtonsWrap>
 				</WrapForAnimation>
 				<WrapForAnimation>
 					<LinkWrap>
