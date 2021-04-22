@@ -24,7 +24,7 @@ const TitleEditorTextarea = styled(TextareaAutosize)`
 type Props = {
 	title: string;
 	onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-}
+};
 
 function TitleEditor({ title, onChange }: Props) {
 	return <TitleEditorTextarea value={title} onChange={onChange} placeholder="제목" />;

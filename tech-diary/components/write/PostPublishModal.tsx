@@ -229,7 +229,7 @@ type Props = {
 	handleThumbnailImage: (event: ChangeEvent<HTMLInputElement>) => void;
 	handlePostIntro: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 	resetThumbnail: () => void;
-	handlePublicState: () => void;
+	handlePublicState: (publicState: boolean) => void;
 	isPublic: boolean;
 	thumbnailImage: string;
 	slugUrl: string;
@@ -311,10 +311,10 @@ function PostPublishModal({
 									<PostPublishSetCardWrap>
 										<ContentLabel>공개 설정</ContentLabel>
 										<PublishSettingWrap>
-											<PublishSettingItem isActive={isPublic} onClick={handlePublicState}>
+											<PublishSettingItem isActive={isPublic} onClick={() => handlePublicState(true)}>
 												공개
 											</PublishSettingItem>
-											<PublishSettingItem isActive={isPublic} onClick={handlePublicState}>
+											<PublishSettingItem isActive={!isPublic} onClick={() => handlePublicState(false)}>
 												비공개
 											</PublishSettingItem>
 										</PublishSettingWrap>
