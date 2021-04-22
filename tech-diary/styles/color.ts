@@ -18,7 +18,7 @@ export const color = {
 	warning: '#eca95c',
 	info: '#F9F9FB',
 	shadow: 'rgba(0, 0, 0, 0.16)',
-	facebook: '#4196e4',
+	facebook: '#4267B2',
 	light_purple: '#F7F6FD',
 	emphasis: '#D2BCF9',
 	star: 'f1e05b',
@@ -51,7 +51,7 @@ export const dark = {
 	star: 'f1e05b',
 	cool_blue: '#189ad3',
 	purple: '#6155a6',
-	facebook: '#4196e4',
+	facebook: '#4267B2',
 	gradation: `background: #360033; background: -webkit-linear-gradient(to right, #0b8793, #360033); background: linear-gradient(to right, #0b8793, #360033);`,
 };
 

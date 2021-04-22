@@ -12,8 +12,8 @@ import { useDispatch } from 'react-redux';
 import { requestDeletePost, requestPostLike, requestBookmark, requestIsCheckBookmark } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
-// import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
 import useToggle from 'libs/hooks/useToggle';
@@ -75,7 +75,10 @@ function PostDetailLayout({ post }: Props) {
 	const toggleLike = useCallback(() => {
 		const token = getStorage('tech-token');
 		if (!token) {
-			alert('로그인 후 이용해 주세요!');
+			const toastMassege = '로그인 후 이용해 주세요!';
+			toast.warning(toastMassege, {
+				position: toast.POSITION.TOP_RIGHT,
+			});
 
 			return;
 		}
@@ -136,11 +139,11 @@ function PostDetailLayout({ post }: Props) {
 		[shareItemOpenToggleValue, shareItemToggle]
 	);
 
-	const closeShareItem = () => {
+	const closeShareItem = useCallback(() => {
 		if (shareItemOpenToggleValue) {
 			shareItemToggle();
 		}
-	};
+	}, [shareItemOpenToggleValue, shareItemToggle]);
 	const moveToComment = () => {
 		if (document.querySelector('body')) {
 			const location = document.querySelector('body')?.clientHeight;
@@ -148,7 +151,7 @@ function PostDetailLayout({ post }: Props) {
 		}
 	};
 
-	const copyUrl = () => {
+	const copyUrl = useCallback(() => {
 		navigator.clipboard.writeText(`${server.client_url}${router.asPath}`);
 
 		const toastMassege = '링크 주소 복사';
@@ -156,7 +159,23 @@ function PostDetailLayout({ post }: Props) {
 		toast.success(toastMassege, {
 			position: toast.POSITION.TOP_RIGHT,
 		});
-	};
+	}, [router.asPath]);
+
+	const sharePostToFacebook = useCallback(() => {
+		window.open(
+			`https://www.facebook.com/sharer/sharer.php?u=${server.client_url}`,
+			'new',
+			'width=600, height=700, left=0, top=0 '
+		);
+	}, []);
+
+	const sharePostToTwitter = useCallback(() => {
+		window.open(
+			`https://www.twitter.com/intent/tweet?&url=${server.client_url}`,
+			'new',
+			'width=600, height=700, left=0, top=0 '
+		);
+	}, []);
 
 	useEffect(() => {
 		dispatch({
@@ -214,6 +233,8 @@ function PostDetailLayout({ post }: Props) {
 					toggleShareItemOpen={toggleShareItemOpen}
 					moveToComment={moveToComment}
 					copyUrl={copyUrl}
+					sharePostToFacebook={sharePostToFacebook}
+					sharePostToTwitter={sharePostToTwitter}
 					dispatchForUpdateState={dispatchForUpdateState}
 					openConfirmModal={modalOpenToggle}
 					goEditPostPage={goEditPostPage}
