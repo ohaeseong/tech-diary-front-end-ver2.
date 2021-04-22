@@ -326,6 +326,7 @@ function MarkdownEditorContainer() {
 	const handleTitleLength = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event.target.value.length <= 50) {
 			setTitle(event.target.value);
+			setSlugUrl(`/${event.target.value}`);
 		}
 	}, []);
 
@@ -346,9 +347,12 @@ function MarkdownEditorContainer() {
 		}
 	}, [isOpenModal, markdownText.length, modalToggle, title.length]);
 
-	const handlePublicState = useCallback(() => {
+	const handlePublicState = (publicState: boolean) => {
+		if ((isPublic && publicState) || (!isPublic && !publicState)) {
+			return;
+		}
 		isPublicToggle();
-	}, [isPublicToggle]);
+	};
 
 	useEffect(() => {
 		const qsId = router.query.id;
@@ -369,14 +373,20 @@ function MarkdownEditorContainer() {
 				initTagList.push(<TagItem key={tagValue.tagName} tagName={tagValue.tagName} isLink={false} />);
 			});
 
-			const initUrl = lastPostData.data.post.url ? `/${lastPostData.data.post.url.split('/')[2]}` : `/${title}`;
+			const initUrl = lastPostData.data.post.url ? `/${lastPostData.data.post.url.split('/')[2]}` : ``;
 
 			setTagItemList(initTagList);
 			setTitle(lastPostData.data.post.title);
 			setSlugUrl(initUrl);
 			setMarkdownText(lastPostData.data.post.contents);
 		}
-	}, [lastPostData, title]);
+	}, [lastPostData]);
+
+	useEffect(() => {
+		if (!slugUrl) {
+			setSlugUrl(`/${title}`);
+		}
+	}, [title, slugUrl]);
 
 	useEffect(() => {
 		const changed = !shallowEqual(title, markdownText);

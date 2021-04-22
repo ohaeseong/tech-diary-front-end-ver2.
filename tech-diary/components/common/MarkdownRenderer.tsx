@@ -66,6 +66,21 @@ const MarkDownStyle = styled.div<{ type?: string }>`
 		font-family: 'Spoqa Han Sans Regular';
 	}
 
+	& > * h1 {
+		line-height: 3rem;
+	}
+
+	& > * h2 {
+		line-height: 2.5rem;
+	}
+
+	& > * h3,
+	h4,
+	h5,
+	h6 {
+		line-height: 2rem;
+	}
+
 	& > pre code {
 		font-size: 0.9rem;
 		word-break: break-all;

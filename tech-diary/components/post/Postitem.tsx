@@ -12,7 +12,7 @@ import { mediaQuery } from 'components/layout/responsive';
 // import { useRouter } from 'next/router';
 
 const PostItemWrap = styled.div`
-	width: 30rem;
+	width: 20rem;
 	height: 23.5rem;
 
 	border-radius: 7px;

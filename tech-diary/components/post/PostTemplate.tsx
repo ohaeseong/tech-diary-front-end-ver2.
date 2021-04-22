@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { Post } from 'store/types/post.types';
 
 import PostList from 'components/post/PostList';
+import { mediaQuery } from 'components/layout/responsive';
 
 const Template = styled.div`
 	display: flex;
@@ -17,9 +18,25 @@ const Header = styled.div`
 	height: 3rem;
 	font-size: 2rem;
 	line-height: 50px;
-	margin: 1rem 1.5rem;
+	/* margin: 1rem 1.5rem; */
 
 	color: ${(props) => props.theme.black};
+	width: 1660px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1rem;
+	${mediaQuery(1919)} {
+		width: 1308px;
+	}
+	${mediaQuery(1440)} {
+		width: 1124px;
+	}
+	${mediaQuery(1340)} {
+		width: 924px;
+	}
+	${mediaQuery(1056)} {
+		width: calc(100% - 9rem);
+	}
 `;
 
 type Props = {
