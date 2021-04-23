@@ -41,7 +41,7 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 	};
 
 	setStorage('user-info', payload.member);
-	// setStorage('tech-token', payload.token);
+	setStorage('tech-token', payload.token);
 	yield put(onAuthLogin.success());
 	yield put(setLoginErrorMsg(''));
 	yield executeCallback(successCB);
