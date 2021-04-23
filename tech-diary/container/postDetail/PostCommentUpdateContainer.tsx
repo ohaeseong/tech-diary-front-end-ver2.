@@ -65,6 +65,8 @@ function PostCommentUpdateContainer({
 		if (commentState) {
 			setCommentList(commentState.data.commentData);
 			toggleOpenEditor();
+
+			// return () => {  };
 		}
 	}, [commentState, setCommentList, toggleOpenEditor]);
 

@@ -187,7 +187,7 @@ function PostCommentItem({ item, isReply, deleteComment, setCommentList }: Props
 						<>
 							{isMine && !openEdit ? (
 								<>
-									<SubButtonWrap />
+									{/* <SubButtonWrap /> */}
 									<SubButtonWrap>
 										<EditButton onClick={toggleOpenEdit}>수정</EditButton>
 										<EditButton onClick={deleteComment}>삭제</EditButton>
