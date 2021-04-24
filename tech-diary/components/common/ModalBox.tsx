@@ -4,7 +4,7 @@ import { toBig } from 'styles/animation';
 import { color } from 'styles/color';
 
 const ModalTemplate = styled.div`
-	position: absolute;
+	position: fixed;
 	z-index: 99;
 	display: flex;
 	flex-direction: column;
@@ -15,7 +15,7 @@ const ModalTemplate = styled.div`
 `;
 
 const ModalOver = styled.div`
-	position: absolute;
+	position: fixed;
 	z-index: 98;
 	opacity: 0.6;
 	width: 100%;
@@ -28,7 +28,7 @@ const BoxWrap = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	width: 25rem;
+	min-width: 25rem;
 	min-height: 15rem;
 	background-color: ${color.white};
 	animation: ${toBig} 0.5s;
@@ -45,7 +45,7 @@ const Message = styled.p<{ isError?: boolean }>`
 	font-family: 'Spoqa Han Sans Thin';
 	color: ${color.neon_2};
 
-	${(props) => props.isError && `color: ${color.emphasis}`};
+	${(props) => props.isError && `color: ${color.neon_1}`};
 `;
 
 type Props = {
@@ -62,7 +62,8 @@ function ModalBox({ children, msg }: Props) {
 			<ModalOver />
 			<ModalTemplate>
 				<BoxWrap>
-					<Message isError={msg?.isError}>{msg?.message}</Message> {children}
+					{msg ? <Message isError={msg?.isError}>{msg?.message}</Message> : <></>}
+					{children}
 				</BoxWrap>
 			</ModalTemplate>
 		</>

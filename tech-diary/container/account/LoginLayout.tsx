@@ -117,7 +117,7 @@ function LoginLayout() {
 				<ModalBox msg={modalMsg}>
 					<LabelInput
 						label="이메일 인증"
-						margin="2rem 0 1.5rem 0"
+						margin="1rem 0 2rem 0"
 						value={email}
 						onChange={handleEmail}
 						size="regular"
@@ -129,10 +129,10 @@ function LoginLayout() {
 						childrenMargin="0rem 0rem 0rem 2rem"
 						width="100%"
 					>
-						<Button size="sm" onClick={closeModalBox}>
+						<Button size="sm" onClick={closeModalBox} margin="0rem 2rem 0 0">
 							취소
 						</Button>
-						<Button size="sm" btnColor={color.neon_2} onClick={onSendEmail}>
+						<Button size="sm" btnColor={color.neon_2} onClick={onSendEmail} margin="0rem 0rem 0 2rem">
 							메일 보내기
 						</Button>
 					</ButtonGroup>

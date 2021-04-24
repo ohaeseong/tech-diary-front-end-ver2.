@@ -36,10 +36,10 @@ const Head = styled.div`
 	text-align: center;
 	height: 3rem;
 	font-family: 'Spoqa Han Sans Regular';
-	color: ${color.neon_2};
+	color: ${(props) => props.theme.neon_2};
 	line-height: 3rem;
 	font-size: 1.3rem;
-	margin-top: 2rem;
+	margin-top: 3rem;
 	padding-left: 1rem;
 `;
 
@@ -65,10 +65,10 @@ function ConfirmModal({ modalToggle, acceptFuc, confirmMessage }: Props) {
 				<ModalBox>
 					<Head>{confirmMessage}</Head>
 					<Body>
-						<Button width="11rem" height="3rem" btnColor={color.gray_3} onClick={modalToggle}>
+						<Button width="10rem" height="2.5rem" btnColor={color.gray_3} onClick={modalToggle}>
 							취소
 						</Button>
-						<Button width="11rem" height="3rem" btnColor={color.neon_2} onClick={acceptFuc}>
+						<Button width="10rem" height="2.5rem" btnColor={color.neon_2} onClick={acceptFuc}>
 							확인
 						</Button>
 					</Body>

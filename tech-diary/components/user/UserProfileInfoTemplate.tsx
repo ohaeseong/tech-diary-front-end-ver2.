@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { UserInfo } from 'store/types/auth.types';
 import { color } from 'styles/color';
+import Button from 'components/common/Button';
+import ModalBox from 'components/common/ModalBox';
 
 const UserProfileInfoWrap = styled.div`
 	display: flex;
@@ -53,6 +55,9 @@ function UserProfileInfoTemplate({ userInfo }: Props) {
 			<UserProfileImage src={userInfo.profileImage || '/image/user.png'} alt="profile_image" />
 			<UserName>{userInfo.memberName}</UserName>
 			<UserSubName>{userInfo.memberId}</UserSubName>
+			<Button width="70%" height="2.5rem" margin="3rem 0rem 0rem 0rem" btnColor={color.gray_4}>
+				프로필 수정
+			</Button>
 		</UserProfileInfoWrap>
 	);
 }
