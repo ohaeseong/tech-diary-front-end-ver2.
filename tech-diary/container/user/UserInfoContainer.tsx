@@ -20,6 +20,8 @@ import { HiOutlineBookOpen } from 'react-icons/hi';
 import UserProfilePostItem from 'components/user/UserProfilePostItem';
 import UserIntroduce from 'components/user/UserIntroduce';
 import useToggle from 'libs/hooks/useToggle';
+import ModalBox from 'components/common/ModalBox';
+import UserEditProfileModal from 'components/user/UserEditProfileModal';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -99,6 +101,9 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 			<ThemeProvider theme={themeMode ? dark : color}>
 				<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={false} />
 				<UserPageTemplate>
+				<UserEditProfileModal>
+
+				</UserEditProfileModal>
 					<UserProfileInfoTemplate userInfo={userInfo} />
 					<UserPostListTemplate>
 						<UserNabBar>
