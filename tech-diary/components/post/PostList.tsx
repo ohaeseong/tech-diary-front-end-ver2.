@@ -10,23 +10,11 @@ const PostListTemplate = styled.div`
 	& > * {
 		margin: 1rem;
 	}
-
-	width: 1760px;
-	margin-left: auto;
-	margin-right: auto;
-	${mediaQuery(1919)} {
-		width: 1408px;
-	}
-
-	${mediaQuery(1440)} {
-		width: 1224px;
-	}
-
-	${mediaQuery(1310)} {
-		width: 1024px;
-	}
-	${mediaQuery(1056)} {
-		width: calc(100% - 3rem);
+	display: flex;
+	margin: -1rem;
+	flex-wrap: wrap;
+	${mediaQuery(767)} {
+		margin: 0;
 	}
 `;
 

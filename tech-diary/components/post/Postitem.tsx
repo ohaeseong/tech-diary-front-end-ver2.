@@ -24,7 +24,7 @@ const PostItemWrap = styled.div`
 		transform: translate(0, -10px);
 	}
 
-	${mediaQuery(1440)} {
+	${mediaQuery(1408)} {
 		width: calc(25% - 2rem);
 	}
 	${mediaQuery(1312)} {
