@@ -26,6 +26,7 @@ export type UserInfo = {
 	introduce?: string;
 	memberName: string;
 	memberId: string;
+	email: string;
 };
 
 export type UserRegisterWithGithubRequest = {

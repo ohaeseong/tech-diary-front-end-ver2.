@@ -15,13 +15,13 @@ export const Template = styled.div`
 `;
 
 export const Container = styled.div`
-	width: 100%;
+	/* width: 100%; */
 	display: flex;
 	flex-direction: column;
 `;
 
 export const MainContents = styled.div`
-	width: 100%;
+	/* width: 100%; */
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;

@@ -6,7 +6,7 @@ import { NavBar } from 'components/base/NavBar';
 import UserProfileInfoTemplate from 'components/user/UserProfileInfoTemplate';
 import useDarkMode from 'libs/hooks/useDarkMode';
 import { getStorage } from 'libs/storage';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { color, dark } from 'styles/color';
 import { TypeDecoded, UserInfo } from 'store/types/auth.types';
 import { Post } from 'store/types/post.types';
@@ -20,8 +20,8 @@ import { HiOutlineBookOpen } from 'react-icons/hi';
 import UserProfilePostItem from 'components/user/UserProfilePostItem';
 import UserIntroduce from 'components/user/UserIntroduce';
 import useToggle from 'libs/hooks/useToggle';
-import ModalBox from 'components/common/ModalBox';
-import UserEditProfileModal from 'components/user/UserEditProfileModal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -59,7 +59,10 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 	const [theme, toggleTheme] = useDarkMode();
 	const [isMine, setIsMine] = useState(false);
 	const [isReadOnly, isReadOnlyToggle] = useToggle(true);
+	const [isProfileEdit, isProfileEditToggle] = useToggle(false);
 	const [introText, setIntroText] = useState(userInfo.introduce || '소개글을 작성해 보세요!');
+
+	const [userEmail, setUserEmail] = useState(userInfo.email);
 
 	const iconSize = '1.5rem';
 	const themeMode = theme === 'light';
@@ -68,13 +71,18 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 		isReadOnlyToggle();
 	}, [isReadOnlyToggle]);
 
-	// useEffect(() => {
-	// 	const token = getStorage('tech-token') as string;
+	const handleUserEmail = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+		setUserEmail(event.target.value);
+	}, []);
 
-	// 	if (!token) {
-	// 		router.push('/');
-	// 	}
-	// }, [router]);
+	const onSubmitUserInfoUpdate = useCallback(() => {
+		isProfileEditToggle();
+
+		const toastMassege = '유저 정보 수정 성공!';
+		toast.success(toastMassege, {
+			position: toast.POSITION.TOP_RIGHT,
+		});
+	}, [isProfileEditToggle]);
 
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;
@@ -101,10 +109,14 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 			<ThemeProvider theme={themeMode ? dark : color}>
 				<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={false} />
 				<UserPageTemplate>
-				<UserEditProfileModal>
-
-				</UserEditProfileModal>
-					<UserProfileInfoTemplate userInfo={userInfo} />
+					<UserProfileInfoTemplate
+						userInfo={userInfo}
+						isEditToggle={isProfileEditToggle}
+						isEdit={isProfileEdit}
+						handleUserEmail={handleUserEmail}
+						onSubmitUserInfoUpdate={onSubmitUserInfoUpdate}
+						userEmail={userEmail}
+					/>
 					<UserPostListTemplate>
 						<UserNabBar>
 							<UserNavItem href="/[userId]" memberId={userInfo.memberId} url="">
@@ -153,6 +165,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 						)}
 					</UserPostListTemplate>
 				</UserPageTemplate>
+				<ToastContainer autoClose={1000} />
 			</ThemeProvider>
 		</>
 	);

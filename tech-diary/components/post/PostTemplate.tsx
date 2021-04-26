@@ -9,16 +9,27 @@ const Template = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	width: 90%;
+	align-items: center;
 	height: 100%;
 	margin: 3rem auto;
+	width: 1728px;
+	${mediaQuery(1919)} {
+		width: 1376px;
+	}
+
+	${mediaQuery(1440)} {
+		width: 1024px;
+	}
+
+	${mediaQuery(1056)} {
+		width: calc(100% - 2rem);
+	}
 `;
 
 const Header = styled.div`
 	height: 3rem;
 	font-size: 2rem;
 	line-height: 50px;
-	/* margin: 1rem 1.5rem; */
 
 	color: ${(props) => props.theme.black};
 	width: 1660px;
@@ -26,16 +37,15 @@ const Header = styled.div`
 	margin-right: auto;
 	margin-bottom: 1rem;
 	${mediaQuery(1919)} {
-		width: 1308px;
+		width: 1336px;
 	}
+
 	${mediaQuery(1440)} {
-		width: 1124px;
+		width: 1024px;
 	}
-	${mediaQuery(1340)} {
-		width: 924px;
-	}
+
 	${mediaQuery(1056)} {
-		width: calc(100% - 9rem);
+		width: calc(100% - 2rem);
 	}
 `;
 
