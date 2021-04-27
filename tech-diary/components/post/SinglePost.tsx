@@ -9,7 +9,7 @@ import PostContents from 'components/post/PostContents';
 import { getStorage } from 'libs/storage';
 import PostComment from 'components/post/PostCommentTemplate';
 import { TypeDecoded } from 'store/types/auth.types';
-import PostBottom from 'components/post/PostBottom';
+// import PostBottom from 'components/post/PostBottom';
 import { ToastContainer } from 'react-toastify';
 
 const SinglePostTemplate = styled.div`
@@ -141,7 +141,7 @@ function SinglePost({
 					goEditPostPage={goEditPostPage}
 				/>
 				<PostContents markdown={contents} />
-				<PostBottom />
+				{/* <PostBottom /> */}
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
 			</SinglePostContentsWrap>
 			<ToastContainer autoClose={1000} />

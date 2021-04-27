@@ -303,3 +303,46 @@ export const reqeustSignUpEmailSend = (req: { email: string }) =>
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestUserInfoUpdate = (req: {
+	email: string;
+	memberName: string;
+	profileImage: string;
+	introduce: string;
+	token: string;
+}) =>
+	axios
+		.put(
+			`${server.host}/auth/user-info`,
+			{
+				email: req.email,
+				memberName: req.memberName,
+				profileImage: req.profileImage,
+				introduce: req.introduce,
+			},
+			{
+				headers: {
+					token: req.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});
+
+export const requestUserIntroduceUpdate = (req: { introduce: string; token: string }) =>
+	axios
+		.put(
+			`${server.host}/auth/user-intro`,
+			{
+				introduce: req.introduce,
+			},
+			{
+				headers: {
+					token: req.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});

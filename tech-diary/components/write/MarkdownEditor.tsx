@@ -27,7 +27,6 @@ const MarkdownEditorWrap = styled.div<{ minHeight?: string }>`
 		& > * span {
 			font-family: 'Spoqa Han Sans Thin';
 			word-break: break-all;
-			/* white-space: pre-line; */
 			color: ${(props) => props.theme.black};
 			font-size: 1.125rem;
 		}

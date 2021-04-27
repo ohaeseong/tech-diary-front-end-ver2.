@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ThemeProvider } from '@emotion/react';
+// import { ThemeProvider } from '@emotion/react';
 // import jwt from 'jsonwebtoken';
 
 import SinglePost from 'components/post/SinglePost';
 import { PostDetail } from 'store/types/post.types';
-import { NavBar } from 'components/base/NavBar';
-import useDarkMode from 'libs/hooks/useDarkMode';
-import { color, dark } from 'styles/color';
+// import { NavBar } from 'components/base/NavBar';
+// import useDarkMode from 'libs/hooks/useDarkMode';
+// import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { requestDeletePost, requestPostLike, requestBookmark, requestIsCheckBookmark } from 'libs/repository';
@@ -27,7 +27,7 @@ type Props = {
 
 function PostDetailLayout({ post }: Props) {
 	const { id, like, commentList, memberId, commentCount } = post;
-	const [theme, toggleTheme, componentMounted] = useDarkMode();
+	// const [theme, toggleTheme, componentMounted] = useDarkMode();
 
 	const [state, , dispatchForUpdateState] = useForm({
 		isLike: false,
@@ -50,7 +50,7 @@ function PostDetailLayout({ post }: Props) {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	const themeMode = theme === 'light';
+	// const themeMode = theme === 'light';
 
 	const onDeletePost = useCallback(async () => {
 		const token = getStorage('tech-token') as string;
@@ -210,43 +210,37 @@ function PostDetailLayout({ post }: Props) {
 		bookMarkToggle(isCheckBookmark);
 	}, [isCheckBookmark]);
 
-	if (!componentMounted) {
-		return <div />;
-	}
+	// if (!componentMounted) {
+	// 	return <div />;
+	// }
 
 	return (
 		<>
-			<ThemeProvider theme={themeMode ? dark : color}>
-				{modalIsOpenValue ? (
-					<ConfirmModal
-						modalToggle={modalOpenToggle}
-						acceptFuc={onDeletePost}
-						confirmMessage="정말 삭제하시겠습니까?"
-					/>
-				) : (
-					<></>
-				)}
-				<NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={false} />
-				<SinglePost
-					toggleLike={toggleLike}
-					toggleBookMark={toggleBookMark}
-					toggleShareItemOpen={toggleShareItemOpen}
-					moveToComment={moveToComment}
-					copyUrl={copyUrl}
-					sharePostToFacebook={sharePostToFacebook}
-					sharePostToTwitter={sharePostToTwitter}
-					dispatchForUpdateState={dispatchForUpdateState}
-					openConfirmModal={modalOpenToggle}
-					goEditPostPage={goEditPostPage}
-					bookMarkToggleValue={bookMarkToggleValue}
-					closeShareItem={closeShareItem}
-					shareItemOpenToggleValue={shareItemOpenToggleValue}
-					optionState={state}
-					setCommentList={setCommentListData}
-					commentList={commentListData}
-					data={post}
-				/>
-			</ThemeProvider>
+			{modalIsOpenValue ? (
+				<ConfirmModal modalToggle={modalOpenToggle} acceptFuc={onDeletePost} confirmMessage="정말 삭제하시겠습니까?" />
+			) : (
+				<></>
+			)}
+			{/* <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={false} /> */}
+			<SinglePost
+				toggleLike={toggleLike}
+				toggleBookMark={toggleBookMark}
+				toggleShareItemOpen={toggleShareItemOpen}
+				moveToComment={moveToComment}
+				copyUrl={copyUrl}
+				sharePostToFacebook={sharePostToFacebook}
+				sharePostToTwitter={sharePostToTwitter}
+				dispatchForUpdateState={dispatchForUpdateState}
+				openConfirmModal={modalOpenToggle}
+				goEditPostPage={goEditPostPage}
+				bookMarkToggleValue={bookMarkToggleValue}
+				closeShareItem={closeShareItem}
+				shareItemOpenToggleValue={shareItemOpenToggleValue}
+				optionState={state}
+				setCommentList={setCommentListData}
+				commentList={commentListData}
+				data={post}
+			/>
 		</>
 	);
 }

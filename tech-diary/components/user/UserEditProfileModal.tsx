@@ -31,9 +31,9 @@ const Body = styled.div`
 	border: 1px solid black;
 `;
 
-const Bottom = styled.div`
-	border: 1px solid black;
-`;
+// const Bottom = styled.div`
+// 	border: 1px solid black;
+// `;
 
 function UserEditProfileModal() {
 	return (

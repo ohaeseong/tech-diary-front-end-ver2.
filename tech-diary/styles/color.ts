@@ -38,7 +38,7 @@ export const dark = {
 	gray_3: '#C7C8C8',
 	gray_4: '#D9DADA',
 	gray_5: '#ECEDED',
-	gray_6: '#20201F',
+	gray_6: '#ECEDED',
 	success: '#75d701',
 	neon_0: '#9900FF',
 	neon_1: '#9900FF',

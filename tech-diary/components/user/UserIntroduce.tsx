@@ -10,10 +10,10 @@ const UserIntroduceWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 48rem;
-	height: 30rem;
+	min-height: 30rem;
 	border-radius: 7px;
 	border: 1px solid ${color.gray_1};
-	/* margin-top: 0.5rem; */
+	margin-top: 0.5rem;
 	padding: 0rem 2rem 1rem;
 `;
 
@@ -23,7 +23,7 @@ const Head = styled.div`
 	justify-content: flex-end;
 	height: 2rem;
 	padding-right: 0.5rem;
-	/* margin-top: 3rem; */
+	margin-top: 3rem;
 
 	& > * {
 		margin-right: 0.5rem;
@@ -37,24 +37,46 @@ const Bottom = styled.div`
 	justify-content: flex-end;
 	padding-right: 1rem;
 	margin-bottom: 6rem;
+	height: 4rem;
 
 	& > * {
 		margin-top: 2rem;
 	}
 `;
 
+const IntroTextLength = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: ${(props) => props.theme.gray_3};
+	margin-right: 1rem;
+	font-size: 1.08rem;
+
+	font-family: 'Spoqa Han Sans Thin';
+`;
+
 type Props = {
 	introText: string;
 	isReadOnly: boolean;
-	setIntroText: (value: string) => void;
+	isMine: boolean;
+	handleUserIntroText: (value: string) => void;
 	isReadOnlyToggle: () => void;
 	onSaveUserInfo: () => void;
 };
 
-function UserIntroduce({ introText, isReadOnly, setIntroText, isReadOnlyToggle, onSaveUserInfo }: Props) {
+function UserIntroduce({
+	introText,
+	isReadOnly,
+	isMine,
+	handleUserIntroText,
+	isReadOnlyToggle,
+	onSaveUserInfo,
+}: Props) {
 	return (
 		<>
-			<Head>{isReadOnly ? <FiEdit size="1.5rem" color={color.gray_4} onClick={isReadOnlyToggle} /> : <></>}</Head>
+			<Head>
+				{isReadOnly && isMine ? <FiEdit size="1.5rem" color={color.gray_4} onClick={isReadOnlyToggle} /> : <></>}
+			</Head>
 			<UserIntroduceWrap>
 				{isReadOnly ? (
 					<MarkdwonRenderer markdown={introText} type="introduce" />
@@ -69,7 +91,7 @@ function UserIntroduce({ introText, isReadOnly, setIntroText, isReadOnlyToggle, 
 							tabSize: 8,
 							autofocus: true,
 						}}
-						onChangeMarkdownText={setIntroText}
+						onChangeMarkdownText={handleUserIntroText}
 						minHeight="30rem"
 					/>
 				)}
@@ -78,9 +100,12 @@ function UserIntroduce({ introText, isReadOnly, setIntroText, isReadOnlyToggle, 
 				{isReadOnly ? (
 					<></>
 				) : (
-					<Button width="5rem" height="2.5rem" btnColor={color.neon_2} onClick={onSaveUserInfo}>
-						저장
-					</Button>
+					<>
+						<IntroTextLength>{`${introText.length}/1000`}</IntroTextLength>
+						<Button width="5rem" height="2.5rem" btnColor={color.neon_2} onClick={onSaveUserInfo}>
+							저장
+						</Button>
+					</>
 				)}
 			</Bottom>
 		</>

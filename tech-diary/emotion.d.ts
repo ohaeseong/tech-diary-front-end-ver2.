@@ -41,6 +41,7 @@ declare module '@emotion/react' {
 		gray_3: string;
 		gray_4: string;
 		gray_5: string;
+		gray_6: string;
 		success: string;
 		neon_0: string;
 		neon_1: string;
