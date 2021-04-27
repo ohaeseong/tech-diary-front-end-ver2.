@@ -4,17 +4,20 @@ import { UserInfo } from 'store/types/auth.types';
 import { color } from 'styles/color';
 import Button from 'components/common/Button';
 import { MdEmail } from 'react-icons/md';
+import { css } from '@emotion/react';
+import { FiUpload } from 'react-icons/fi';
 
 const UserProfileInfoWrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	/* justify-content: center; */
 	align-items: center;
 	width: 20rem;
 	min-height: 100vh;
 	margin-right: 2rem;
-	/* border-left: 1px solid ${color.gray_1};
-	border-right: 1px solid ${color.gray_1}; */
+`;
+
+const ProfileImageWrap = styled.div`
+	position: relative;
 `;
 
 const UserProfileImage = styled.img`
@@ -23,6 +26,29 @@ const UserProfileImage = styled.img`
 	border-radius: 50%;
 	margin-top: 5rem;
 	border: 1px solid ${color.gray_1};
+`;
+
+const UserProfileImageUploadInput = styled.input`
+	display: none;
+`;
+
+const UserProfileImageLabel = styled.label`
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border: 1px solid ${(props) => props.theme.gray_1};
+	background-color: ${color.white};
+	border-radius: 50%;
+	margin-top: 17rem;
+	margin-left: 12rem;
+	cursor: pointer;
+
+	& > * {
+		color: ${color.gray_5};
+	}
 `;
 
 const UserName = styled.div`
@@ -35,11 +61,10 @@ const UserName = styled.div`
 `;
 
 const UserSubName = styled.div`
-	width: 100%;
+	width: 68%;
 	margin-top: 0.8rem;
-	padding-left: 6.5rem;
 	font-size: 1rem;
-
+	word-break: break-all;
 	color: ${(props) => props.theme.black};
 
 	font-family: 'Spoqa Han Sans Thin';
@@ -54,71 +79,131 @@ const InfoWrap = styled.div`
 	margin-top: 2rem;
 
 	& > * {
-		color: ${(props) => props.theme.gray_5};
+		color: ${(props) => props.theme.black};
 	}
 `;
 
-const InfoUpdateInput = styled.input`
-	font-size: 1rem;
+const InfoUpdateInput = styled.input<{ type?: string }>`
+	font-size: 0.8rem;
 	font-family: 'Spoqa Han Sans Thin';
 
 	border: 1px solid ${(props) => props.theme.gray_2};
-	/* padding: 0.2rem; */
-	border-radius: 2px;
+	padding: 0.5rem;
+	border-radius: 7px;
 	margin-left: 1.5rem;
+	background-color: ${(props) => props.theme.white};
+
+	${(props) => {
+		if (props.type === 'name') {
+			return css`
+				width: 70%;
+				color: ${props.theme.black};
+				font-size: 1rem;
+				font-family: 'Spoqa Han Sans Thin';
+				word-break: break-all;
+				margin-top: 1rem;
+			`;
+		}
+
+		return '';
+	}}
 `;
 
 const InfoContents = styled.span`
 	font-size: 1rem;
 	font-family: 'Spoqa Han Sans Thin';
-
 	margin-left: 1.5rem;
+	word-break: break-all;
 `;
 
 type Props = {
 	userInfo: UserInfo;
 	isEdit: boolean;
 	userEmail: string;
+	userName: string;
+	isMine: boolean;
+	userProfileImage: string;
 	isEditToggle: () => void;
 	handleUserEmail: (event: ChangeEvent<HTMLInputElement>) => void;
+	handleUserName: (event: ChangeEvent<HTMLInputElement>) => void;
 	onSubmitUserInfoUpdate: () => void;
+	handleProfileImage: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 function UserProfileInfoTemplate({
 	userInfo,
 	isEdit,
 	userEmail,
+	userName,
+	isMine,
+	userProfileImage,
 	isEditToggle,
 	handleUserEmail,
 	onSubmitUserInfoUpdate,
+	handleUserName,
+	handleProfileImage,
 }: Props) {
 	return (
 		<UserProfileInfoWrap>
-			<UserProfileImage src={userInfo.profileImage || '/image/user.png'} alt="profile_image" />
-			<UserName>{userInfo.memberName}</UserName>
-			<UserSubName>{userInfo.memberId}</UserSubName>
+			<ProfileImageWrap>
+				{isEdit ? (
+					<>
+						<UserProfileImageLabel htmlFor="profile_image_upload">
+							<FiUpload />
+						</UserProfileImageLabel>
+						<UserProfileImageUploadInput
+							id="profile_image_upload"
+							type="file"
+							multiple={false}
+							onChange={handleProfileImage}
+							accept="image/gif, image/jpeg, image/jpg, image/png"
+						/>
+					</>
+				) : (
+					<></>
+				)}
+				<UserProfileImage src={userProfileImage} alt="profile_image" />
+			</ProfileImageWrap>
+			<UserName>{userInfo.memberId}</UserName>
+			{isEdit ? (
+				<InfoUpdateInput onChange={handleUserName} value={userName} type="name" />
+			) : (
+				<UserSubName>{userName}</UserSubName>
+			)}
 			<InfoWrap>
 				<MdEmail size="1.5rem" />
 				{isEdit ? (
 					<InfoUpdateInput onChange={handleUserEmail} value={userEmail} />
 				) : (
-					<InfoContents>{userInfo.email}</InfoContents>
+					<InfoContents>{userEmail}</InfoContents>
 				)}
 			</InfoWrap>
-			{isEdit ? (
-				<Button
-					width="70%"
-					height="2.5rem"
-					margin="3rem 0rem 0rem 0rem"
-					btnColor={color.gray_4}
-					onClick={onSubmitUserInfoUpdate}
-				>
-					프로필 저장
-				</Button>
+			{isMine ? (
+				<>
+					{isEdit ? (
+						<Button
+							width="70%"
+							height="2.5rem"
+							margin="3rem 0rem 0rem 0rem"
+							btnColor={color.gray_4}
+							onClick={onSubmitUserInfoUpdate}
+						>
+							프로필 저장
+						</Button>
+					) : (
+						<Button
+							width="70%"
+							height="2.5rem"
+							margin="3rem 0rem 0rem 0rem"
+							btnColor={color.gray_4}
+							onClick={isEditToggle}
+						>
+							프로필 수정
+						</Button>
+					)}
+				</>
 			) : (
-				<Button width="70%" height="2.5rem" margin="3rem 0rem 0rem 0rem" btnColor={color.gray_4} onClick={isEditToggle}>
-					프로필 수정
-				</Button>
+				<></>
 			)}
 		</UserProfileInfoWrap>
 	);

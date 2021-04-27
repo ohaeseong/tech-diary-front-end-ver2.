@@ -9,8 +9,7 @@ const MenuItemWrap = styled.p`
 
 	font-size: 0.8rem;
 	line-height: 2rem;
-
-	color: ${(props) => props.theme.black};
+	color: ${(props) => props.theme.gray_6};
 
 	&:hover {
 		cursor: pointer;

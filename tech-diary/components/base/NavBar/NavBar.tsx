@@ -4,14 +4,13 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Switch from 'react-switch';
 import { RiMoonClearFill } from 'react-icons/ri';
 import { FaSun } from 'react-icons/fa';
-import jwt from 'jsonwebtoken';
 
 import { color } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
 import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
-import { TypeDecoded, UserInfo } from 'store/types/auth.types';
+import { UserInfo } from 'store/types/auth.types';
 import { useRouter } from 'next/router';
 import useMenuSliderHeight from 'libs/hooks/useMenuSliderHeight';
 // import { useSelector } from 'react-redux';
@@ -125,7 +124,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isToken, setIsToken] = useState(false);
 	const [profileImage, setProfileImage] = useState('/image/user.png');
 	const [memberId, setMemberId] = useState('');
-	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(180);
+	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
 
 	// const token = useSelector((state: RootState) => state.auth.token);
 	// const githubLoginToken = useSelector((state: RootState) => state.githubAuth.token);
@@ -172,15 +171,15 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;
-		const tokenDecoded = jwt.decode(token) as TypeDecoded;
+		const userInfo = getStorage('user-info') as UserInfo;
 
-		if (token && tokenDecoded) {
+		if (token && userInfo) {
 			setIsToken(true);
-			if (tokenDecoded.profileImage) {
-				setProfileImage(tokenDecoded.profileImage);
+			if (userInfo.profileImage) {
+				setProfileImage(userInfo.profileImage);
 			}
 
-			setMemberId(tokenDecoded.memberId);
+			setMemberId(userInfo.memberId);
 		} else {
 			setIsToken(false);
 		}
@@ -214,7 +213,6 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 							<MenuItem onClick={() => router.push('/write')}>글 쓰러 가기</MenuItem>
 							<MenuItem onClick={() => router.push(`/${memberId}/save`)}>임시글 보러가기</MenuItem>
 							<MenuItem onClick={() => router.push(`/${memberId}/bookmark`)}>북마크한 글 보러가기</MenuItem>
-							<MenuItem onClick={() => router.push('/config')}>설정</MenuItem>
 							<MenuItem onClick={onLogout}>로그아웃</MenuItem>
 						</MenuSlider>
 					</ProfileWrap>

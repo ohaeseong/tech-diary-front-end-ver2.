@@ -13,7 +13,7 @@ import { mediaQuery } from 'components/layout/responsive';
 
 const PostItemWrap = styled.div`
 	width: 20rem;
-	height: 23.5rem;
+	height: 28rem;
 
 	border-radius: 7px;
 	box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.12);
@@ -90,10 +90,9 @@ const PostContent = styled.div<{ type: string }>`
 	${(props) => {
 		if (props.type === 'title') {
 			return css`
-				height: 2rem;
+				height: 4.5rem;
 				font-size: 0.9rem;
 				font-weight: 500;
-				padding-top: 5px;
 				-webkit-line-clamp: 1;
 
 				&:hover {
@@ -105,10 +104,10 @@ const PostContent = styled.div<{ type: string }>`
 		if (props.type === 'contents') {
 			return css`
 				font-size: 0.5rem;
-				height: 5rem;
+				height: 12.3rem;
 				line-height: 1.2rem;
 				color: ${props.theme.gray_5};
-				-webkit-line-clamp: 4;
+				-webkit-line-clamp: 5;
 
 				&:hover {
 					cursor: pointer;
@@ -121,6 +120,7 @@ const PostContent = styled.div<{ type: string }>`
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
+				margin-top: 1rem;
 			`;
 		}
 
@@ -130,8 +130,8 @@ const PostContent = styled.div<{ type: string }>`
 
 const PostInfo = styled.div`
 	font-size: 0.5rem;
-	height: 1.5rem;
-	padding-top: 0.3rem;
+	height: 4rem;
+	padding-top: 0.5rem;
 	color: ${(props) => props.theme.gray_3};
 
 	&:hover {
@@ -162,7 +162,8 @@ const PostBottomWrap = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
-	height: 3rem;
+	/* height: 4rem; */
+	margin-bottom: -4.5rem;
 
 	& > * {
 		margin: 0.8rem;
@@ -182,7 +183,7 @@ const IconWrap = styled.div`
 	& > * {
 		padding: 0.3rem;
 		margin-top: 0.3rem;
-		margin-bottom: 0.1rem;
+		margin-bottom: 0.3rem;
 	}
 `;
 
@@ -195,7 +196,7 @@ function PostItem({ item }: Props) {
 
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-	const thumbnailSrc = thumbnailAddress || '';
+	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
 	const profileImage = member.profileImage || '/image/user.png';
 
 	const onlySlug = url.split('/');
@@ -226,11 +227,11 @@ function PostItem({ item }: Props) {
 				</PostContent>
 				<PostBottomWrap>
 					<IconWrap>
-						<FaComment size="15" color={color.cool_blue} />
+						<FaComment size="15" color={color.black} />
 						{commentCount}
 					</IconWrap>
 					<IconWrap>
-						<AiTwotoneStar size="15" color={color.star} />
+						<AiTwotoneStar size="15" color={color.black} />
 						{like}
 					</IconWrap>
 				</PostBottomWrap>
