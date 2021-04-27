@@ -25,6 +25,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useRequest from 'libs/hooks/useRequest';
 import { requestUserInfoUpdate, requestUserIntroduceUpdate, uploadImage } from 'libs/repository';
+import { useDispatch } from 'react-redux';
+import { UPDATE_PROFILE_IMAGE } from 'store/modules/auth';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -63,6 +65,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 	const [isMine, setIsMine] = useState(false);
 	const [isReadOnly, isReadOnlyToggle] = useToggle(true);
 	const [isProfileEdit, isProfileEditToggle] = useToggle(false);
+	const dispatch = useDispatch();
 
 	const [, , updateUserInfo, ,] = useRequest(requestUserInfoUpdate);
 	const [, , updateUserIntro, ,] = useRequest(requestUserIntroduceUpdate);
@@ -190,8 +193,15 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 			position: toast.POSITION.TOP_RIGHT,
 		});
 
+		dispatch({
+			type: UPDATE_PROFILE_IMAGE,
+			payload: {
+				profileImage: userProfileImage,
+			},
+		});
 		isProfileEditToggle();
 	}, [
+		dispatch,
 		isProfileEditToggle,
 		updateUserInfo,
 		userEmail,

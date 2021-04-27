@@ -13,6 +13,8 @@ import MenuItem from 'components/common/MenuItem';
 import { UserInfo } from 'store/types/auth.types';
 import { useRouter } from 'next/router';
 import useMenuSliderHeight from 'libs/hooks/useMenuSliderHeight';
+import { RootState } from 'store/modules';
+import { useSelector } from 'react-redux';
 // import { useSelector } from 'react-redux';
 // import { RootState } from 'store/modules';
 
@@ -122,9 +124,10 @@ type Props = {
 function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
-	const [profileImage, setProfileImage] = useState('/image/user.png');
+	const [userProfileImage, setUserProfileImage] = useState('/image/user.png');
 	const [memberId, setMemberId] = useState('');
 	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
+	const { profileImage } = useSelector((state: RootState) => state.auth);
 
 	// const token = useSelector((state: RootState) => state.auth.token);
 	// const githubLoginToken = useSelector((state: RootState) => state.githubAuth.token);
@@ -144,8 +147,8 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	}, [isMain]);
 
 	const goToProfile = useCallback(() => {
-		const userInfo = getStorage('user-info') as UserInfo;
-		const userPageUrl = `${userInfo.memberId}`;
+		const userStorageInfo = getStorage('user-info') as UserInfo;
+		const userPageUrl = `${userStorageInfo.memberId}`;
 
 		router.push(`/${userPageUrl}`);
 	}, [router]);
@@ -171,19 +174,25 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;
-		const userInfo = getStorage('user-info') as UserInfo;
+		const userStorageInfo = getStorage('user-info') as UserInfo;
 
-		if (token && userInfo) {
+		if (token && userStorageInfo) {
 			setIsToken(true);
-			if (userInfo.profileImage) {
-				setProfileImage(userInfo.profileImage);
+			if (userStorageInfo.profileImage) {
+				setUserProfileImage(userStorageInfo.profileImage);
 			}
 
-			setMemberId(userInfo.memberId);
+			setMemberId(userStorageInfo.memberId);
 		} else {
 			setIsToken(false);
 		}
 	}, [isToken]);
+
+	useEffect(() => {
+		if (profileImage) {
+			setUserProfileImage(profileImage);
+		}
+	}, [profileImage]);
 
 	useEffect(() => {
 		document.body.addEventListener('click', closeMenu);
@@ -207,7 +216,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 				</NavBarItem> */}
 				{isToken ? (
 					<ProfileWrap>
-						<ProfileImage src={profileImage} onClick={menuToggle} alt="profile_image" />
+						<ProfileImage src={userProfileImage} onClick={menuToggle} alt="profile_image" />
 						<MenuSlider height={menuHeight}>
 							<MenuItem onClick={goToProfile}>내 정보</MenuItem>
 							<MenuItem onClick={() => router.push('/write')}>글 쓰러 가기</MenuItem>
