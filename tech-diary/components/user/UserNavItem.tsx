@@ -60,4 +60,4 @@ function UserNavItem({ children, href, memberId, url }: Props) {
 	);
 }
 
-export default UserNavItem;
+export default React.memo(UserNavItem);

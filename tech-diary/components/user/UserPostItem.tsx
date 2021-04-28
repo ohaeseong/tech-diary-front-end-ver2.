@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Post } from 'store/types/post.types';
+import { Post, PostDetail, Tag } from 'store/types/post.types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import TagGroup from 'components/common/TagGroup';
+import TagItem from 'components/common/TagItem';
 
 const UserProfilePostItemWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	/* height: 10rem; */
-	padding: 2.5rem 0rem;
+	padding: 2rem 0rem;
 	/* margin-bottom: 1rem; */
 
 	border-bottom: 1px solid ${(props) => props.theme.gray_1};
@@ -43,6 +45,7 @@ const Body = styled.div`
 	font-size: 0.8rem;
 	color: ${(props) => props.theme.gray_3};
 	margin-top: 0.5rem;
+	margin-bottom: 2rem;
 	/* border: 1px solid black; */
 `;
 
@@ -50,16 +53,16 @@ const Bottom = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	height: 2rem;
+	/* height: 1rem; */
 	/* border: 1px solid black; */
 `;
 
 const BottomInfo = styled.span`
-	line-height: 2rem;
+	/* line-height: 2rem; */
 	color: ${(props) => props.theme.gray_4};
 	font-family: 'Spoqa Han Sans Thin';
-	margin-top: 1.5rem;
-	font-size: 0.8rem;
+	/* margin-top: 1.5rem; */
+	font-size: 0.7rem;
 	/* margin-left: 1rem; */
 	/* border: 1px solid black; */
 `;
@@ -69,7 +72,8 @@ type Props = {
 };
 
 function UserProfilePostItem({ item }: Props) {
-	const { id, title, contents, intro, memberId, createTime, url } = item;
+	const { id, title, contents, intro, memberId, createTime, url, tagList } = item;
+
 	const router = useRouter();
 	const date = new Date(createTime);
 	let reqUrl;
@@ -87,6 +91,15 @@ function UserProfilePostItem({ item }: Props) {
 			<UserProfilePostItemWrap>
 				<Head>{title}</Head>
 				<Body>{intro || contents}</Body>
+				{tagList?.tagData.length !== 0 ? (
+					<TagGroup margin="0.5rem 0rem 1.2rem 0rem">
+						{tagList?.tagData.map((tagItem: Tag) => {
+							return <TagItem key={tagItem.idx} tagName={tagItem.tagName} isLink />;
+						})}
+					</TagGroup>
+				) : (
+					<></>
+				)}
 				<Bottom>
 					<BottomInfo>{memberId}</BottomInfo>
 					<BottomInfo>{dateFormat}</BottomInfo>
@@ -96,4 +109,4 @@ function UserProfilePostItem({ item }: Props) {
 	);
 }
 
-export default UserProfilePostItem;
+export default React.memo(UserProfilePostItem);

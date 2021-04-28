@@ -69,7 +69,6 @@ const SwitchWrap = styled.div`
 	width: 5rem;
 	height: 100%;
 	margin-right: 2.5rem;
-	
 	${mediaQuery(767)} {
 		margin-right: 1rem;
 	}

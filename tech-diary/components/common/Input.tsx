@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { color } from 'styles/color';
 import { css } from '@emotion/react';
 
-const InputStyled = styled.input<{ fontSize?: string; isFocus?: boolean }>`
+const InputStyled = styled.input<{ fontSize?: string; isFocus?: boolean; height?: string; width?: string }>`
 	width: 15rem;
 	height: 2rem;
 
@@ -32,7 +32,7 @@ const InputStyled = styled.input<{ fontSize?: string; isFocus?: boolean }>`
 	${(props) => {
 		if (props.fontSize === 'sm') {
 			return css`
-				font-size: 0.7rem;
+				font-size: 0.8rem;
 			`;
 		}
 
@@ -56,6 +56,18 @@ const InputStyled = styled.input<{ fontSize?: string; isFocus?: boolean }>`
 
 		return '';
 	}}
+
+	${(props) =>
+		props.width &&
+		`
+        width: ${props.width};
+    `}
+
+    ${(props) =>
+		props.height &&
+		`
+        height: ${props.height};
+    `}
 `;
 
 type Props = {
@@ -64,10 +76,12 @@ type Props = {
 	isFocus?: boolean;
 	value?: string;
 	fontSize?: string;
+	width?: string;
+	height?: string;
 	handleFocus?: () => void;
 };
 
-function Input({ onChange, placeholder, handleFocus, isFocus, value, fontSize }: Props) {
+function Input({ onChange, placeholder, width, height, handleFocus, isFocus, value, fontSize }: Props) {
 	return (
 		<InputStyled
 			onChange={onChange}
@@ -77,8 +91,10 @@ function Input({ onChange, placeholder, handleFocus, isFocus, value, fontSize }:
 			fontSize={fontSize}
 			value={value || ''}
 			isFocus={isFocus}
+			width={width}
+			height={height}
 		/>
 	);
 }
 
-export default Input;
+export default React.memo(Input);
