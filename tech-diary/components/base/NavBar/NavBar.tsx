@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import useMenuSliderHeight from 'libs/hooks/useMenuSliderHeight';
 import { RootState } from 'store/modules';
 import { useSelector } from 'react-redux';
+import { mediaQuery } from 'components/layout/responsive';
 // import { useSelector } from 'react-redux';
 // import { RootState } from 'store/modules';
 
@@ -47,6 +48,12 @@ const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
         background-color: ${props.theme.white};
 		box-shadow: 0 2px 6px 0 ${color.shadow};
     `}
+
+	${mediaQuery(767)} {
+		z-index: 100;
+		background-color: ${(props) => props.theme.white};
+		box-shadow: 0 2px 6px 0 ${color.shadow};
+	}
 `;
 
 const AccountButtonWrap = styled.div`
@@ -62,6 +69,10 @@ const SwitchWrap = styled.div`
 	width: 5rem;
 	height: 100%;
 	margin-right: 2.5rem;
+	
+	${mediaQuery(767)} {
+		margin-right: 1rem;
+	}
 `;
 
 const IconWrap = styled.div`
@@ -78,6 +89,9 @@ const ProfileWrap = styled.div`
 	height: 2rem;
 
 	margin: auto 5rem auto auto;
+	${mediaQuery(767)} {
+		margin: auto 1rem auto auto;
+	}
 `;
 
 const ProfileImage = styled.img`
@@ -93,12 +107,10 @@ const ProfileImage = styled.img`
 
 const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 	display: block;
-	font-size: 1rem;
 	color: ${color.gray_0};
-	padding: 2rem 1rem;
 	margin-left: 10rem;
-	font-size: 1.7rem;
-	padding: 1.7rem 1rem;
+	font-size: 1.3rem;
+	padding: 2rem 1rem;
 	cursor: pointer;
 	transition: 0.3s ease-in-out;
 
@@ -113,6 +125,12 @@ const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 		`
         color: ${props.theme.black};
 	`}
+
+	${mediaQuery(767)} {
+		margin-left: 1rem;
+		font-size: 1rem;
+		color: ${(props) => props.theme.black};
+	}
 `;
 
 type Props = {
@@ -205,7 +223,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 			<NavBarContent isScroll={isScroll} isMain={isMain}>
 				<Link href="/">
 					<Logo isScroll={isScroll} isMain={isMain}>
-						Tech
+						Walk It
 					</Logo>
 				</Link>
 				{/* <NavBarItem url="/" isScroll={isScroll} isMain={isMain}>

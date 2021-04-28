@@ -152,7 +152,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 	const onSubmitUserInfoUpdate = useCallback(async () => {
 		const token = getStorage('tech-token') as string;
 
-		if (!isEmail(userEmail)) {
+		if (!isEmail(userEmail) && userEmail) {
 			const toastMassege = '이메일 형식이 잘못 되었습니다.';
 			toast.error(toastMassege, {
 				position: toast.POSITION.TOP_RIGHT,
@@ -195,9 +195,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 
 		dispatch({
 			type: UPDATE_PROFILE_IMAGE,
-			payload: {
-				profileImage: userProfileImage,
-			},
+			payload: userProfileImage,
 		});
 		isProfileEditToggle();
 	}, [

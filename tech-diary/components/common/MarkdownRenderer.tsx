@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import emoji from 'emoji-dictionary';
 
 import {
 	InlineCodeBlock,
@@ -20,6 +21,8 @@ import {
 	TbodyMarkdownRender,
 } from 'libs/markdownCustomRender';
 import { css } from '@emotion/react';
+
+const emojiSupport = (text: any) => text.value.replace(/:\w+:/gi, (name: string) => emoji.getUnicode(name));
 
 const MarkDownStyle = styled.div<{ type?: string }>`
 	color: ${(props) => props.theme.white};
@@ -113,6 +116,7 @@ function MarkdwonRenderer({ markdown, type }: Props) {
 					table: TableMarkdownRender,
 					tableHead: TheadMarkdownRender,
 					tableBody: TbodyMarkdownRender,
+					text: emojiSupport,
 				}}
 			/>
 		</MarkDownStyle>

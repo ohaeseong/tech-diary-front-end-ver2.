@@ -71,16 +71,18 @@ const UserSubName = styled.div`
 `;
 
 const InfoWrap = styled.div`
+	width: 68%;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: center;
 	padding: 1rem;
 	margin-top: 2rem;
 
 	& > * {
-		color: ${(props) => props.theme.black};
+		color: ${(props) => props.theme.gray_4};
 	}
+
 `;
 
 const InfoUpdateInput = styled.input<{ type?: string }>`
@@ -110,6 +112,7 @@ const InfoUpdateInput = styled.input<{ type?: string }>`
 `;
 
 const InfoContents = styled.span`
+	max-width: 100%;
 	font-size: 1rem;
 	font-family: 'Spoqa Han Sans Thin';
 	margin-left: 1.5rem;
@@ -171,11 +174,17 @@ function UserProfileInfoTemplate({
 				<UserSubName>{userName}</UserSubName>
 			)}
 			<InfoWrap>
-				<MdEmail size="1.5rem" />
-				{isEdit ? (
-					<InfoUpdateInput onChange={handleUserEmail} value={userEmail} />
+				{userEmail || isEdit ? (
+					<>
+						<MdEmail size="1.5rem" />
+						{isEdit ? (
+							<InfoUpdateInput onChange={handleUserEmail} value={userEmail} />
+						) : (
+							<InfoContents>{userEmail}</InfoContents>
+						)}
+					</>
 				) : (
-					<InfoContents>{userEmail}</InfoContents>
+					<></>
 				)}
 			</InfoWrap>
 			{isMine ? (
