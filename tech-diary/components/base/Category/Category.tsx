@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 
 import CategoryItem from 'components/base/Category/CategoryItem';
+import { mediaQuery } from 'components/layout/responsive';
 
 const CategoryWrap = styled.div`
 	display: flex;
@@ -15,6 +16,10 @@ const CategoryWrap = styled.div`
 
 	& > * {
 		margin: 0rem 3rem;
+	}
+
+	${mediaQuery(767)} {
+		display: none;
 	}
 `;
 

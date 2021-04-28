@@ -24,6 +24,11 @@ const Template = styled.div`
 	${mediaQuery(1056)} {
 		width: calc(100% - 2rem);
 	}
+
+	${mediaQuery(767)} {
+		margin-left: 1rem;
+		margin: 8rem auto;
+	}
 `;
 
 const Header = styled.div`

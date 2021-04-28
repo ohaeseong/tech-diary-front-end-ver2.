@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { media } from 'components/layout/responsive';
+import { media, mediaQuery } from 'components/layout/responsive';
 
 const Banner = styled.div`
 	width: 100%;
@@ -13,6 +13,10 @@ const Banner = styled.div`
 			${props.theme.gradation}
 		`;
 	}}
+
+	${mediaQuery(767)} {
+		display: none;
+	}
 
 	${media.sm} {
 		display: none;

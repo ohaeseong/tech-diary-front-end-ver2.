@@ -17,7 +17,7 @@ type Props = {
 };
 
 function MyApp({ Component, pageProps }: Props) {
-	const [theme, toggleTheme] = useDarkMode();
+	const [theme, toggleTheme, componentMounted] = useDarkMode();
 	const [isMain, setIsMain] = useState(false);
 	const [isNotNav, setIsNotNav] = useState(false);
 	const router = useRouter();
@@ -41,13 +41,17 @@ function MyApp({ Component, pageProps }: Props) {
 			router.pathname === '/write' ||
 			router.pathname === '/login' ||
 			router.pathname === '/signup' ||
-			router.pathname === '/login/github-callback'
+			router.pathname === '/login/github-callback' ||
+			router.pathname === '/register'
 		) {
 			setIsNotNav(true);
 		} else {
 			setIsNotNav(false);
 		}
 	}, [router.pathname]);
+
+	if (!componentMounted) return <></>;
+
 	return (
 		<>
 			<Head>
