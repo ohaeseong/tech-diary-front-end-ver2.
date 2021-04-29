@@ -13,6 +13,7 @@ const UserNavBarWrap = styled.div`
 
 	width: 100%;
 	border-bottom: 1px solid ${(props) => props.theme.gray_1};
+	margin-bottom: 4rem;
 `;
 
 type Props = {

@@ -6,6 +6,7 @@ import { toBig } from 'styles/animation';
 const TagItemWrap = styled.a`
 	padding: 0.5rem 1rem;
 	margin: 0.3rem;
+	font-size: 0.8rem;
 
 	background-color: ${(props) => props.theme.neon_2};
 	color: white;

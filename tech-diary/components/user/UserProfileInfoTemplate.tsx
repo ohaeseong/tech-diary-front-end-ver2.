@@ -82,7 +82,6 @@ const InfoWrap = styled.div`
 	& > * {
 		color: ${(props) => props.theme.gray_4};
 	}
-
 `;
 
 const InfoUpdateInput = styled.input<{ type?: string }>`
@@ -218,4 +217,4 @@ function UserProfileInfoTemplate({
 	);
 }
 
-export default UserProfileInfoTemplate;
+export default React.memo(UserProfileInfoTemplate);

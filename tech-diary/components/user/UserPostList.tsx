@@ -7,7 +7,7 @@ const UserPostListWrap = styled.div`
 	flex-direction: column;
 	width: 50rem;
 	min-height: 100vh;
-	margin-top: 3rem;
+	/* margin-top: 3rem; */
 	margin-bottom: 5rem;
 `;
 
@@ -19,4 +19,4 @@ function UserPostList({ children }: Props) {
 	return <UserPostListWrap>{children}</UserPostListWrap>;
 }
 
-export default UserPostList;
+export default React.memo(UserPostList);

@@ -7,6 +7,7 @@ import isEmail from 'libs/regEx';
 import UserProfileInfoTemplate from 'components/user/UserProfileInfoTemplate';
 // import useDarkMode from 'libs/hooks/useDarkMode';
 import { getStorage } from 'libs/storage';
+import { AiOutlineSearch } from 'react-icons/ai';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 // import { color, dark } from 'styles/color';
 import { TypeDecoded, UserInfo } from 'store/types/auth.types';
@@ -18,7 +19,7 @@ import { RiBookMarkFill } from 'react-icons/ri';
 import { BiTimeFive, BiHide } from 'react-icons/bi';
 import { IoMdPerson } from 'react-icons/io';
 import { HiOutlineBookOpen } from 'react-icons/hi';
-import UserProfilePostItem from 'components/user/UserProfilePostItem';
+import UserProfilePostItem from 'components/user/UserPostItem';
 import UserIntroduce from 'components/user/UserIntroduce';
 import useToggle from 'libs/hooks/useToggle';
 import { ToastContainer, toast } from 'react-toastify';
@@ -27,6 +28,8 @@ import useRequest from 'libs/hooks/useRequest';
 import { requestUserInfoUpdate, requestUserIntroduceUpdate, uploadImage } from 'libs/repository';
 import { useDispatch } from 'react-redux';
 import { UPDATE_PROFILE_IMAGE } from 'store/modules/auth';
+import Input from 'components/common/Input';
+import { color } from 'styles/color';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -37,6 +40,17 @@ const UserPageTemplate = styled.div`
 	margin-top: 5rem;
 
 	background-color: ${(props) => props.theme.white_1};
+`;
+
+const SearchInputTemplate = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	width: 100%;
+
+	& > * {
+		margin-left: 0.5rem;
+	}
 `;
 
 const UserPostListTemplate = styled.div`
@@ -63,6 +77,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 	const router = useRouter();
 	// const [theme, toggleTheme] = useDarkMode();
 	const [isMine, setIsMine] = useState(false);
+	const [searchWord, setSearchWord] = useState('');
 	const [isReadOnly, isReadOnlyToggle] = useToggle(true);
 	const [isProfileEdit, isProfileEditToggle] = useToggle(false);
 	const dispatch = useDispatch();
@@ -93,6 +108,10 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 			position: toast.POSITION.TOP_RIGHT,
 		});
 	}, [introText, isReadOnlyToggle, updateUserIntro]);
+
+	const handleSearchWord = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+		setSearchWord(event.target.value);
+	}, []);
 
 	const uploadImageUtil = useCallback(
 		async (imageFile: any) => {
@@ -276,11 +295,24 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 					{!isIntro ? (
 						<>
 							{posts.length !== 0 ? (
-								<UserPostList>
-									{posts.map((item: Post) => {
-										return <UserProfilePostItem key={item.id} item={item} />;
-									})}
-								</UserPostList>
+								<>
+									<SearchInputTemplate>
+										<AiOutlineSearch size="1.5rem" color={color.gray_3} />
+										<Input
+											value={searchWord}
+											onChange={handleSearchWord}
+											fontSize="sm"
+											width="10rem"
+											height="1rem"
+											placeholder="게시글 검색.."
+										/>
+									</SearchInputTemplate>
+									<UserPostList>
+										{posts.map((item: Post) => {
+											return <UserProfilePostItem key={item.id} item={item} />;
+										})}
+									</UserPostList>
+								</>
 							) : (
 								<NonePostTemplate>게시글이 없어요!</NonePostTemplate>
 							)}
@@ -303,4 +335,4 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 	);
 }
 
-export default UserProfileContainer;
+export default React.memo(UserProfileContainer);

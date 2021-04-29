@@ -31,6 +31,10 @@ export type Post = {
 	commentCount: number;
 	url: string;
 	intro: string;
+
+	tagList?: {
+		tagData: Tag[];
+	};
 };
 
 export type PostDetail = {
