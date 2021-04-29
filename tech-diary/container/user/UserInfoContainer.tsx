@@ -25,7 +25,12 @@ import useToggle from 'libs/hooks/useToggle';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useRequest from 'libs/hooks/useRequest';
-import { requestUserInfoUpdate, requestUserIntroduceUpdate, uploadImage } from 'libs/repository';
+import {
+	requestUserInfoUpdate,
+	requestUserIntroduceUpdate,
+	uploadImage,
+	requestSearchMemberPosts,
+} from 'libs/repository';
 import { useDispatch } from 'react-redux';
 import { UPDATE_PROFILE_IMAGE } from 'store/modules/auth';
 import Input from 'components/common/Input';
@@ -84,11 +89,13 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 
 	const [, , updateUserInfo, ,] = useRequest(requestUserInfoUpdate);
 	const [, , updateUserIntro, ,] = useRequest(requestUserIntroduceUpdate);
+	const [searchPosts, , searchMemberPosts, ,] = useRequest(requestSearchMemberPosts, true);
 	const [, , onUploadImage, ,] = useRequest(uploadImage, true);
 	const [introText, setIntroText] = useState(userInfo.introduce || '소개글을 작성해 보세요!');
 	const [userEmail, setUserEmail] = useState(userInfo.email);
 	const [userName, setUserName] = useState(userInfo.memberName);
 	const [userProfileImage, setUserProfileImage] = useState(userInfo.profileImage || '/image/user.png');
+	const [userPosts, setUserPosts] = useState(posts || []);
 	const iconSize = '1.5rem';
 	// const themeMode = theme === 'light';
 
@@ -109,9 +116,18 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 		});
 	}, [introText, isReadOnlyToggle, updateUserIntro]);
 
-	const handleSearchWord = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-		setSearchWord(event.target.value);
-	}, []);
+	const handleSearchWord = useCallback(
+		async (event: ChangeEvent<HTMLInputElement>) => {
+			setSearchWord(event.target.value);
+
+			const req = {
+				memberId: userInfo.memberId,
+				searchWord: event.target.value,
+			};
+			await searchMemberPosts(req);
+		},
+		[searchMemberPosts, userInfo.memberId]
+	);
 
 	const uploadImageUtil = useCallback(
 		async (imageFile: any) => {
@@ -249,6 +265,14 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 		}
 	}, [router, userInfo.memberId, userProfileImage]);
 
+	useEffect(() => {
+		if (!searchWord) {
+			setUserPosts(posts);
+		} else if (searchPosts) {
+			setUserPosts(searchPosts.data.posts);
+		}
+	}, [posts, searchPosts, searchWord]);
+
 	return (
 		<>
 			{/* <ThemeProvider theme={themeMode ? dark : color}> */}
@@ -294,21 +318,25 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 
 					{!isIntro ? (
 						<>
-							{posts.length !== 0 ? (
+							{router.pathname === '/[userId]' ? (
+								<SearchInputTemplate>
+									<AiOutlineSearch size="1.5rem" color={color.gray_3} />
+									<Input
+										value={searchWord}
+										onChange={handleSearchWord}
+										fontSize="sm"
+										width="10rem"
+										height="1rem"
+										placeholder="게시글 검색.."
+									/>
+								</SearchInputTemplate>
+							) : (
+								<></>
+							)}
+							{userPosts.length !== 0 ? (
 								<>
-									<SearchInputTemplate>
-										<AiOutlineSearch size="1.5rem" color={color.gray_3} />
-										<Input
-											value={searchWord}
-											onChange={handleSearchWord}
-											fontSize="sm"
-											width="10rem"
-											height="1rem"
-											placeholder="게시글 검색.."
-										/>
-									</SearchInputTemplate>
 									<UserPostList>
-										{posts.map((item: Post) => {
+										{userPosts.map((item: Post) => {
 											return <UserProfilePostItem key={item.id} item={item} />;
 										})}
 									</UserPostList>
