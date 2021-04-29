@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Post, PostDetail, Tag } from 'store/types/post.types';
+import { Post, Tag } from 'store/types/post.types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import TagGroup from 'components/common/TagGroup';

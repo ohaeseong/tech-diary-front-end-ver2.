@@ -346,3 +346,15 @@ export const requestUserIntroduceUpdate = (req: { introduce: string; token: stri
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestSearchMemberPosts = (req: { memberId: string; searchWord: string }) =>
+	axios
+		.get(`${server.host}/post/search/memberId`, {
+			params: {
+				searchWord: req.searchWord,
+				memberId: req.memberId,
+			},
+		})
+		.catch((error) => {
+			throw error;
+		});
