@@ -71,7 +71,7 @@ type Props = {
 	item: Post;
 };
 
-function UserProfilePostItem({ item }: Props) {
+function UserPostItem({ item }: Props) {
 	const { id, title, contents, intro, memberId, createTime, url, tagList } = item;
 
 	const router = useRouter();
@@ -109,4 +109,4 @@ function UserProfilePostItem({ item }: Props) {
 	);
 }
 
-export default React.memo(UserProfilePostItem);
+export default React.memo(UserPostItem);
