@@ -33,7 +33,7 @@ const ModalBox = styled.div`
 	background-color: ${(props) => props.theme.white_1};
 	animation: ${toBig} 0.5s;
 	border-radius: 5px;
-	padding: 0 1rem;
+	padding: 0 2rem;
 `;
 
 const Head = styled.div`

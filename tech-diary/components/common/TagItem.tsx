@@ -22,9 +22,10 @@ const TagItemWrap = styled.a`
 type Props = {
 	tagName: string;
 	isLink: boolean;
+	deleteTag?: (tag?: string) => void;
 };
 
-function TagItem({ tagName, isLink }: Props) {
+function TagItem({ tagName, isLink, deleteTag }: Props) {
 	return (
 		<>
 			{isLink ? (
@@ -34,7 +35,7 @@ function TagItem({ tagName, isLink }: Props) {
 					</Link>
 				</>
 			) : (
-				<TagItemWrap>{tagName}</TagItemWrap>
+				<>{deleteTag ? <TagItemWrap onClick={() => deleteTag(tagName)}>{tagName}</TagItemWrap> : <></>}</>
 			)}
 		</>
 	);

@@ -21,7 +21,7 @@ const PostInfoHeader = styled.div`
 	align-items: center;
 	width: 100%;
 	height: 4rem;
-
+	margin-bottom: 1rem;
 	justify-content: space-between;
 `;
 
@@ -29,6 +29,7 @@ const EditPostButtonWrap = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	width: 100%;
+	margin-bottom: 2rem;
 
 	& > * {
 		margin-left: 0.5rem;

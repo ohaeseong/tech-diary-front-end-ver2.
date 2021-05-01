@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { CreatePost, PostUpdate } from 'store/types/post.types';
+import { CreatePost, PostUpdate, Tag } from 'store/types/post.types';
 
 export const requestPostLike = (req: { postId: string; token: string }) =>
 	axios
@@ -200,6 +200,7 @@ export const requestPublishPost = (req: {
 	thumbnailAddress: string;
 	intro: string;
 	publishType: number;
+	tags: Tag[];
 }) =>
 	axios
 		.put(
@@ -211,6 +212,7 @@ export const requestPublishPost = (req: {
 				slugUrl: req.slugUrl,
 				thumbnailAddress: req.thumbnailAddress,
 				intro: req.intro,
+				tags: req.tags,
 				publishType: req.publishType,
 			},
 			{
@@ -353,6 +355,17 @@ export const requestSearchMemberPosts = (req: { memberId: string; searchWord: st
 			params: {
 				searchWord: req.searchWord,
 				memberId: req.memberId,
+			},
+		})
+		.catch((error) => {
+			throw error;
+		});
+
+export const requestSearchPosts = (req: { searchWord: string }) =>
+	axios
+		.get(`${server.host}/post/search`, {
+			params: {
+				searchWord: req.searchWord,
 			},
 		})
 		.catch((error) => {

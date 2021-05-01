@@ -5,6 +5,7 @@ import Switch from 'react-switch';
 import { RiMoonClearFill } from 'react-icons/ri';
 import { FaSun } from 'react-icons/fa';
 
+import { AiOutlineSearch } from 'react-icons/ai';
 import { color } from 'styles/color';
 import { getStorage, removeStorage } from 'libs/storage';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
@@ -31,6 +32,7 @@ const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 	height: 5rem;
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	transition: 0.3s ease-in-out;
 
 	${(props) =>
@@ -87,7 +89,7 @@ const ProfileWrap = styled.div`
 	width: 2rem;
 	height: 2rem;
 
-	margin: auto 5rem auto auto;
+	margin-right: 5rem;
 	${mediaQuery(767)} {
 		margin: auto 1rem auto auto;
 	}
@@ -129,6 +131,17 @@ const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 		margin-left: 1rem;
 		font-size: 1rem;
 		color: ${(props) => props.theme.black};
+	}
+`;
+
+const SearchIconWrap = styled.div`
+	width: 2rem;
+	height: 2rem;
+
+	margin: auto 5rem auto auto;
+
+	& > * {
+		cursor: pointer;
 	}
 `;
 
@@ -231,6 +244,11 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 				<NavBarItem url="/portfolio" isScroll={isScroll} isMain={isMain}>
 					Portfolio
 				</NavBarItem> */}
+				<Link href="/search">
+					<SearchIconWrap>
+						<AiOutlineSearch size="1.8rem" color={!isScroll && isMain ? color.gray_1 : color.gray_5} />
+					</SearchIconWrap>
+				</Link>
 				{isToken ? (
 					<ProfileWrap>
 						<ProfileImage src={userProfileImage} onClick={menuToggle} alt="profile_image" />
