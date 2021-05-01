@@ -2,21 +2,22 @@ import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 // import { color } from 'styles/color';
 
-const UserPostListWrap = styled.div`
+const InventoryPostListWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 50rem;
 	min-height: 100vh;
 	/* margin-top: 3rem; */
 	margin-bottom: 5rem;
+	/* border: 1px solid black; */
 `;
 
 type Props = {
 	children: ReactNode;
 };
 
-function UserPostList({ children }: Props) {
-	return <UserPostListWrap>{children}</UserPostListWrap>;
+function InventoryPostList({ children }: Props) {
+	return <InventoryPostListWrap>{children}</InventoryPostListWrap>;
 }
 
-export default React.memo(UserPostList);
+export default React.memo(InventoryPostList);

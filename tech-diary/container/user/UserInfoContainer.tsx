@@ -14,12 +14,12 @@ import { TypeDecoded, UserInfo } from 'store/types/auth.types';
 import { Post } from 'store/types/post.types';
 import UserNabBar from 'components/user/UserNavBar';
 import UserNavItem from 'components/user/UserNavItem';
-import UserPostList from 'components/user/UserPostList';
+import InventoryPostList from 'components/post/InventoryPostList';
 import { RiBookMarkFill } from 'react-icons/ri';
 import { BiTimeFive, BiHide } from 'react-icons/bi';
 import { IoMdPerson } from 'react-icons/io';
 import { HiOutlineBookOpen } from 'react-icons/hi';
-import UserProfilePostItem from 'components/user/UserPostItem';
+import InventoryPostItem from 'components/post/InventoryPostItem';
 import UserIntroduce from 'components/user/UserIntroduce';
 import useToggle from 'libs/hooks/useToggle';
 import { ToastContainer, toast } from 'react-toastify';
@@ -58,7 +58,7 @@ const SearchInputTemplate = styled.div`
 	}
 `;
 
-const UserPostListTemplate = styled.div`
+const InventoryPostListTemplate = styled.div`
 	max-width: 60rem;
 	min-height: 100vh;
 `;
@@ -291,7 +291,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 					handleProfileImage={handleProfileImage}
 					userProfileImage={userProfileImage}
 				/>
-				<UserPostListTemplate>
+				<InventoryPostListTemplate>
 					<UserNabBar>
 						<UserNavItem href="/[userId]" memberId={userInfo.memberId} url="">
 							<HiOutlineBookOpen size={iconSize} /> 게시글
@@ -335,11 +335,11 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 							)}
 							{userPosts.length !== 0 ? (
 								<>
-									<UserPostList>
+									<InventoryPostList>
 										{userPosts.map((item: Post) => {
-											return <UserProfilePostItem key={item.id} item={item} />;
+											return <InventoryPostItem key={item.id} item={item} />;
 										})}
-									</UserPostList>
+									</InventoryPostList>
 								</>
 							) : (
 								<NonePostTemplate>게시글이 없어요!</NonePostTemplate>
@@ -355,7 +355,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 							isMine={isMine}
 						/>
 					)}
-				</UserPostListTemplate>
+				</InventoryPostListTemplate>
 			</UserPageTemplate>
 			<ToastContainer autoClose={1000} />
 			{/* </ThemeProvider> */}

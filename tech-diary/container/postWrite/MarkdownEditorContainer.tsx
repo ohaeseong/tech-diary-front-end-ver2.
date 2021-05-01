@@ -1,4 +1,5 @@
-import React, { ChangeEvent, useCallback, useState, useEffect, ReactElement } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { ChangeEvent, useCallback, useState, useEffect } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 // import MarkdownEditor from 'components/write/MarkdownEditor';
@@ -64,11 +65,11 @@ const TitlePreview = styled.span`
 	font-family: 'Spoqa Han Sans Regular';
 `;
 
-type tagValueType = {
-	props: {
-		tagName: string;
-	};
-};
+// type tagValueType = {
+// 	props: {
+// 		tagName: string;
+// 	};
+// };
 
 type tagData = {
 	idx: number;
@@ -92,7 +93,7 @@ function MarkdownEditorContainer() {
 	const [, , onCreatePost, ,] = useRequest(requestCreatePost, true);
 	const [, , onUpdatePost, ,] = useRequest(requestUpdatePostForTemp, true);
 	const [, , onPublishPost, ,] = useRequest(requestPublishPost);
-	// const [, , onRequestAddTag, ,] = useRequest(requestAddTag);
+
 	const [lastPostData, , getLastPost, ,] = useRequest(requestGetDetail, true);
 	const [, , onUploadImage, ,] = useRequest(uploadImage, true);
 	const router = useRouter();
@@ -151,13 +152,19 @@ function MarkdownEditorContainer() {
 		[uploadImageUtil]
 	);
 
+	const deleteTag = (tag?: string) => {
+		const newTags = tagItemList.filter((t) => t !== tag);
+
+		setTagItemList(newTags);
+	};
+
 	const addTag = useCallback(async () => {
 		if (tagName.length === 0) return;
 
 		let checkIsSame = false;
 
-		tagItemList.forEach((tagValue: tagValueType) => {
-			if (tagName === tagValue.props.tagName) {
+		tagItemList.forEach((tagValue: string) => {
+			if (tagName === tagValue) {
 				checkIsSame = true;
 			}
 		});
@@ -168,7 +175,7 @@ function MarkdownEditorContainer() {
 
 		const tagList: any = [...tagItemList];
 
-		tagList.push(<TagItem key={tagName} tagName={tagName} isLink={false} />);
+		tagList.push(tagName);
 		setTagItemList(tagList);
 
 		setTagName('');
@@ -188,9 +195,9 @@ function MarkdownEditorContainer() {
 	}, []);
 
 	const handleTagInputKeypress = useCallback(
-		(event: React.KeyboardEvent<HTMLInputElement>) => {
+		async (event: React.KeyboardEvent<HTMLInputElement>) => {
 			if (event.key === 'Enter') {
-				addTag();
+				await addTag();
 			}
 		},
 		[addTag]
@@ -201,8 +208,8 @@ function MarkdownEditorContainer() {
 		const qsId = router.query.id;
 
 		const tags: Array<string> = [];
-		tagItemList.forEach((element: ReactElement) => {
-			tags.push(element.props.tagName);
+		tagItemList.forEach((tag: string) => {
+			tags.push(tag);
 		});
 
 		if (!qsId) {
@@ -286,6 +293,11 @@ function MarkdownEditorContainer() {
 			id = response.data.id;
 		}
 
+		const tags: Array<string> = [];
+		tagItemList.forEach((tag: string) => {
+			tags.push(tag);
+		});
+
 		let publishType;
 
 		if (isPublic) {
@@ -301,6 +313,7 @@ function MarkdownEditorContainer() {
 			category: 'blog',
 			thumbnailAddress: thumbnailImage,
 			intro: postIntro,
+			tags,
 			token,
 			publishType,
 		};
@@ -319,6 +332,7 @@ function MarkdownEditorContainer() {
 		postIntro,
 		router,
 		slugUrl,
+		tagItemList,
 		thumbnailImage,
 		title,
 	]);
@@ -367,15 +381,15 @@ function MarkdownEditorContainer() {
 
 	useEffect(() => {
 		if (lastPostData) {
-			const initTagList: any = [];
+			const initTagList: any = lastPostData.data.post.tagList.tagData;
+			const tags: any = [];
 
-			lastPostData.data.post.tagList.tagData.forEach((tagValue: tagData) => {
-				initTagList.push(<TagItem key={tagValue.tagName} tagName={tagValue.tagName} isLink={false} />);
+			initTagList.forEach((tagValue: tagData) => {
+				tags.push(tagValue.tagName);
 			});
-
 			const initUrl = lastPostData.data.post.url ? `/${lastPostData.data.post.url.split('/')[2]}` : ``;
 
-			setTagItemList(initTagList);
+			setTagItemList(tags);
 			setTitle(lastPostData.data.post.title);
 			setSlugUrl(initUrl);
 			setMarkdownText(lastPostData.data.post.contents);
@@ -441,7 +455,11 @@ function MarkdownEditorContainer() {
 			<MarkdownEditorTemplate>
 				<EditorWrap>
 					<TitleEditor title={title} onChange={handleTitleLength} />
-					<TagGroup>{tagItemList}</TagGroup>
+					<TagGroup>
+						{tagItemList.map((tag: string) => {
+							return <TagItem deleteTag={deleteTag} key={tag} tagName={tag} isLink={false} />;
+						})}
+					</TagGroup>
 					<MarkdownEditorWrite
 						markdownText={markdownText}
 						setMarkdownText={setMarkdownText}
