@@ -221,6 +221,8 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	useEffect(() => {
 		if (profileImage) {
 			setUserProfileImage(profileImage);
+			console.log("test");
+			
 		}
 	}, [profileImage]);
 

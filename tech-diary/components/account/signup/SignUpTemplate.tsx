@@ -132,7 +132,7 @@ function SignUpTemplate({
 					)}
 				</HalfOfBody>
 				<HalfOfBody>
-					<TemplateImg src="/image/loginTemplateImage.png" alt="sign_up_template_image.png" />
+					<TemplateImg src="/static/loginTemplateImage.png" alt="sign_up_template_image.png" />
 				</HalfOfBody>
 			</Body>
 			{errorMsg}

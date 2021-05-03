@@ -179,7 +179,7 @@ function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorM
 					<LoginText fontSize="description">당신의 지식을 공유해 주세요!</LoginText>
 				</LoginTextWrap>
 				<WrapForAnimation>
-					<LoginTemplateImg src="/image/loginTemplateImage.png" alt="login_template_image.png" />
+					<LoginTemplateImg src="/static/loginTemplateImage.png" alt="login_template_image.png" />
 				</WrapForAnimation>
 			</LoginHalfWrap>
 			<LoginHalfWrap isImage={false}>

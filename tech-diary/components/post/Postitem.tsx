@@ -196,8 +196,8 @@ function PostItem({ item }: Props) {
 
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-	const thumbnailSrc = thumbnailAddress || '/image/loginTemplateImage.png';
-	const profileImage = member.profileImage || '/image/user.png';
+	const thumbnailSrc = thumbnailAddress || '/static/loginTemplateImage.png';
+	const profileImage = member.profileImage || '/static/user.png';
 
 	const onlySlug = url.split('/');
 

@@ -27,7 +27,7 @@ type Props = {
 function Loading({ width = '100%', height = '100vh' }: Props) {
 	return (
 		<LoadingWrap width={width} height={height}>
-			<img src="/image/loading_gif.gif" alt="loading.gif" />
+			<img src="/static/loading_gif.gif" alt="loading.gif" />
 		</LoadingWrap>
 	);
 }
