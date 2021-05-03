@@ -177,7 +177,7 @@ function UserProfileInfoTemplate({
 					<>
 						<MdEmail size="1.5rem" />
 						{isEdit ? (
-							<InfoUpdateInput onChange={handleUserEmail} value={userEmail} />
+							<InfoUpdateInput value={userEmail || ''} onChange={handleUserEmail} />
 						) : (
 							<InfoContents>{userEmail}</InfoContents>
 						)}

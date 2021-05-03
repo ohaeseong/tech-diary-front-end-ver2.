@@ -48,7 +48,6 @@ function MyApp({ Component, pageProps }: Props) {
 		} else {
 			setIsNotNav(false);
 		}
-
 	}, [router.pathname]);
 
 	if (!componentMounted) return <></>;

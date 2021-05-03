@@ -9,7 +9,7 @@ import Button from 'components/common/Button';
 const UserIntroduceWrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 48rem;
+	width: 46rem;
 	min-height: 30rem;
 	border-radius: 7px;
 	border: 1px solid ${color.gray_1};
