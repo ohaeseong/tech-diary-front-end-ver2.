@@ -1,6 +1,6 @@
 export const server = {
-	host: 'http://localhost:8888/api',
-	client_url: 'http://13.125.130.198:3000',
+	host: 'https://work-it.co.kr:8080/api',
+	client_url: 'https://work-it.co.kr',
 };
 
 export const env = {

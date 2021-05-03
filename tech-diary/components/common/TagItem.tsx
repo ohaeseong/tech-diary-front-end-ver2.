@@ -30,7 +30,7 @@ function TagItem({ tagName, isLink, deleteTag }: Props) {
 		<>
 			{isLink ? (
 				<>
-					<Link href="http://localhost:3000">
+					<Link href={`/tag/${tagName}`}>
 						<TagItemWrap>{tagName}</TagItemWrap>
 					</Link>
 				</>

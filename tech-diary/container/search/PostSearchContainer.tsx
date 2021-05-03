@@ -35,6 +35,15 @@ const SearchInputWrap = styled.div`
 	}
 `;
 
+const PostCount = styled.div`
+	width: 55%;
+
+	& > * {
+		font-family: 'Spoqa Han Sans Thin';
+		color: ${(props) => props.theme.gray_4};
+	}
+`;
+
 function PostSearchContainer() {
 	const [searchPosts, setSearchPosts] = useState([]);
 	const [searchWord, setSearchWord] = useState('');
@@ -77,6 +86,13 @@ function PostSearchContainer() {
 					value={searchWord}
 				/>
 			</SearchInputWrap>
+			{searchPosts.length !== 0 ? (
+				<PostCount>
+					<div> 총 {searchPosts.length}개의 포스트</div>
+				</PostCount>
+			) : (
+				<></>
+			)}
 			<InventoryPostList>
 				{searchPosts.map((item: Post) => {
 					return <InventoryPostItem key={item.id} item={item} />;
