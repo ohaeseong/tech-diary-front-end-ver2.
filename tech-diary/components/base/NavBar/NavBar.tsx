@@ -134,7 +134,7 @@ const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 	}
 `;
 
-const SearchIconWrap = styled.div`
+const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 	width: 2rem;
 	height: 2rem;
 
@@ -142,6 +142,25 @@ const SearchIconWrap = styled.div`
 
 	& > * {
 		cursor: pointer;
+		color: ${props => props.theme.gray_0};
+	}
+
+
+	${(props) =>
+		props.isScroll &&
+		`
+        color: ${props.theme.black};
+	`}
+
+	${(props) =>
+		props.isMain === false &&
+		`
+        color: ${props.theme.black};
+	`}
+
+
+	${mediaQuery(767)} {
+		margin: auto 0rem auto 25.5rem;
 	}
 `;
 
@@ -221,8 +240,6 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	useEffect(() => {
 		if (profileImage) {
 			setUserProfileImage(profileImage);
-			console.log("test");
-			
 		}
 	}, [profileImage]);
 
@@ -237,7 +254,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 			<NavBarContent isScroll={isScroll} isMain={isMain}>
 				<Link href="/">
 					<Logo isScroll={isScroll} isMain={isMain}>
-						Walk It
+						Work It
 					</Logo>
 				</Link>
 				{/* <NavBarItem url="/" isScroll={isScroll} isMain={isMain}>
@@ -247,8 +264,8 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 					Portfolio
 				</NavBarItem> */}
 				<Link href="/search">
-					<SearchIconWrap>
-						<AiOutlineSearch size="1.8rem" color={!isScroll && isMain ? color.gray_1 : color.gray_5} />
+					<SearchIconWrap isScroll={isScroll} isMain={isMain}>
+						<AiOutlineSearch size="1.8rem" />
 					</SearchIconWrap>
 				</Link>
 				{isToken ? (
