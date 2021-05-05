@@ -1,5 +1,5 @@
 export const server = {
-	host: 'https://work-it.co.kr:8080/api',
+	host: 'http://localhost:8888/api',
 	client_url: 'https://work-it.co.kr',
 };
 

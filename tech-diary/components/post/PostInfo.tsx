@@ -96,7 +96,7 @@ function PostInfo({ tagData, member, createTime, isMine, openConfirmModal, goEdi
 	const { profileImage, memberName, memberId } = member;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-	const profileImageSource = profileImage || '/image/user.png';
+	const profileImageSource = profileImage || '/static/user.png';
 
 	return (
 		<PostInfoWrap>

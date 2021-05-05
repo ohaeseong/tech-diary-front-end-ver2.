@@ -303,7 +303,7 @@ export const reqeustSignUpEmailSend = (req: { email: string }) =>
 			email: req.email,
 		})
 		.catch((error) => {
-			throw error;
+			return error.response;
 		});
 
 export const requestUserInfoUpdate = (req: {

@@ -55,21 +55,16 @@ function MyApp({ Component, pageProps }: Props) {
 	return (
 		<>
 			<Head>
+				{/* <meta charSet="utf-8" />
 				<link
 					rel="preload"
 					href="/fonts/Spoqa Han Sans Neo Light.woff2"
 					as="font"
 					type="font/woff2"
 					crossOrigin="anonymous"
-				/>
-				<link
-					rel="preload"
-					href="/fonts/Spoqa Han Sans Neo Regular.woff2"
-					as="font"
-					type="font/woff2"
-					crossOrigin="anonymous"
-				/>
-				<link
+				/> */}
+				{/* <link rel="preload" href="/fonts/Spoqa Han Sans Neo Regular.woff2" as="font" type="font/woff2" crossOrigin="" /> */}
+				{/* <link
 					rel="preload"
 					href="/fonts/Spoqa Han Sans Neo Medium.woff2"
 					as="font"
@@ -82,7 +77,7 @@ function MyApp({ Component, pageProps }: Props) {
 					as="font"
 					type="font/woff2"
 					crossOrigin="anonymous"
-				/>
+				/> */}
 			</Head>
 			<ThemeProvider theme={themeMode ? dark : color}>
 				{isNotNav ? <></> : <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={isMain} />}

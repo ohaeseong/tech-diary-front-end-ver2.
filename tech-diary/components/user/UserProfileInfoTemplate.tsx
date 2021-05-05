@@ -148,7 +148,7 @@ function UserProfileInfoTemplate({
 	return (
 		<UserProfileInfoWrap>
 			<ProfileImageWrap>
-				{isEdit ? (
+				{isMine ? (
 					<>
 						<UserProfileImageLabel htmlFor="profile_image_upload">
 							<FiUpload />
