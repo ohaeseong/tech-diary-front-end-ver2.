@@ -29,7 +29,7 @@ function LoginLayout() {
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
 
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
-	const [, , onRequestSendEmail, ,] = useRequest(reqeustSignUpEmailSend);
+	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
 	const [email, setEmail] = useState('');
 	const [modalMsg, setModalMsg] = useState({
 		isError: false,
@@ -77,7 +77,16 @@ function LoginLayout() {
 			email,
 		};
 
-		await onRequestSendEmail(req);
+		const response = await onRequestSendEmail(req);
+
+		if (response.status === 403) {
+			setModalMsg({
+				isError: true,
+				message: '이미 가입된 이메일 입니다.',
+			});
+
+			return;
+		}
 
 		closeModalBox();
 	}, [closeModalBox, email, onRequestSendEmail]);

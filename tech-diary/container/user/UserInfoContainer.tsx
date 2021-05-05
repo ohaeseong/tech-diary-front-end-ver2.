@@ -6,7 +6,7 @@ import isEmail from 'libs/regEx';
 // import { NavBar } from 'components/base/NavBar';
 import UserProfileInfoTemplate from 'components/user/UserProfileInfoTemplate';
 // import useDarkMode from 'libs/hooks/useDarkMode';
-import { getStorage } from 'libs/storage';
+import { getStorage, setStorage } from 'libs/storage';
 import { AiOutlineSearch } from 'react-icons/ai';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 // import { color, dark } from 'styles/color';
@@ -178,10 +178,30 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 		async (event: ChangeEvent<HTMLInputElement>) => {
 			const imageFile = event.target.files;
 			const imageAddress = await uploadImageUtil(imageFile);
+			const token = getStorage('tech-token') as string;
+			const userStorageInfo = getStorage('user-info') as UserInfo;
 
+			const req = {
+				// email: userEmail,
+				// memberName: userName,
+				profileImage: imageAddress,
+				token,
+			};
+
+			await updateUserInfo(req);
 			setUserProfileImage(imageAddress);
+			dispatch({
+				type: UPDATE_PROFILE_IMAGE,
+				payload: imageAddress,
+			});
+			const newUserInfo = {
+				...userStorageInfo,
+			};
+
+			newUserInfo.profileImage = imageAddress;
+			setStorage('user-info', newUserInfo);
 		},
-		[uploadImageUtil]
+		[dispatch, updateUserInfo, uploadImageUtil]
 	);
 
 	const onSubmitUserInfoUpdate = useCallback(async () => {
@@ -205,11 +225,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 			return;
 		}
 
-		if (
-			userInfo.email === userEmail &&
-			userInfo.memberName === userName &&
-			userInfo.profileImage === userProfileImage
-		) {
+		if (userInfo.email === userEmail && userInfo.memberName === userName) {
 			isProfileEditToggle();
 			return;
 		}
@@ -217,7 +233,6 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 		const req = {
 			email: userEmail,
 			memberName: userName,
-			profileImage: userProfileImage,
 			token,
 		};
 
@@ -228,22 +243,8 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 			position: toast.POSITION.TOP_RIGHT,
 		});
 
-		dispatch({
-			type: UPDATE_PROFILE_IMAGE,
-			payload: userProfileImage,
-		});
 		isProfileEditToggle();
-	}, [
-		dispatch,
-		isProfileEditToggle,
-		updateUserInfo,
-		userEmail,
-		userInfo.email,
-		userInfo.memberName,
-		userInfo.profileImage,
-		userName,
-		userProfileImage,
-	]);
+	}, [isProfileEditToggle, updateUserInfo, userEmail, userInfo.email, userInfo.memberName, userName]);
 
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;

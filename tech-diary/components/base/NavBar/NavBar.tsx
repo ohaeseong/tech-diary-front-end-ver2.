@@ -61,7 +61,8 @@ const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 const AccountButtonWrap = styled.div`
 	display: flex;
 	flex-direction: row;
-	margin: 0rem 5rem auto auto;
+	margin-right: 5rem;
+	/* margin: 0rem 5rem auto auto; */
 `;
 
 const SwitchWrap = styled.div`
@@ -142,20 +143,23 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 
 	& > * {
 		cursor: pointer;
-		color: ${props => props.theme.gray_0};
+		color: ${(props) => props.theme.gray_0};
 	}
-
 
 	${(props) =>
 		props.isScroll &&
 		`
-        color: ${props.theme.black};
+		& > * {
+			color: ${props.theme.gray_4};	
+		}
 	`}
 
 	${(props) =>
 		props.isMain === false &&
 		`
-        color: ${props.theme.black};
+			& > * {
+				color: ${props.theme.gray_4};	
+			}
 	`}
 
 
