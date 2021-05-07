@@ -7,6 +7,7 @@ function Login() {
 		<>
 			<Head>
 				<title>login</title>
+				<meta name="description" content="로그인 페이지" />
 			</Head>
 			<LoginLayout />
 		</>

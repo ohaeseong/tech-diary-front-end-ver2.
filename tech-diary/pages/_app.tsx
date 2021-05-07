@@ -55,6 +55,7 @@ function MyApp({ Component, pageProps }: Props) {
 	return (
 		<>
 			<Head>
+				<meta charSet="utf-8" />
 				{/* <meta charSet="utf-8" />
 				<link
 					rel="preload"
