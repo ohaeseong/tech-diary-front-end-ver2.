@@ -7,6 +7,7 @@ function RegisterGithubPage() {
 		<>
 			<Head>
 				<title>기본 정보 입력</title>
+				<meta name="description" content="회원 정보 저장 페이지" />
 			</Head>
 			<SignUpWithGithubContainer />
 		</>

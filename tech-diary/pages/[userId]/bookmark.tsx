@@ -26,6 +26,7 @@ function UserBookmarkPostPage({ userInfo, posts }: Props) {
 		<>
 			<Head>
 				<title>{userId} (북마크)</title>
+				<meta name="description" content="북마크 게시글 페이지" />
 			</Head>
 			<UserProfileContainer userInfo={userInfo} posts={posts} />
 		</>

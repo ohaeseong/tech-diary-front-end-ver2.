@@ -21,9 +21,7 @@ function DetailPage({ post }: Props) {
 		<>
 			<Head>
 				<title>{post.title}</title>
-				<meta name="title" property="og:title" content={post.title} />
 				<meta name="description" content="블로그 상세조회 페이지입니다." />
-				<meta property="og::url" content={post.title} />
 			</Head>
 			<PostDetailLayout post={post} />
 		</>
