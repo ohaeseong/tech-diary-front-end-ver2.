@@ -10,6 +10,7 @@ const Btn = styled.button<{
 	width?: string;
 	height?: string;
 	color?: string;
+	fontSize?: string;
 }>`
 	display: flex;
 	align-items: center;
@@ -51,7 +52,7 @@ const Btn = styled.button<{
 		}
 
 		return css`
-			font-size: 1rem;
+			font-size: ${props.fontSize};
 		`;
 	}}
 
@@ -91,12 +92,21 @@ type Props = {
 	width?: string;
 	height?: string;
 	btnColor?: string;
+	fontSize?: string;
 	onClick?: () => void;
 };
 
-function Button({ size = 'default', margin = '', children, width, height, onClick, btnColor }: Props) {
+function Button({ size = 'default', margin = '', children, width, height, onClick, btnColor, fontSize }: Props) {
 	return (
-		<Btn size={size} margin={margin} width={width} height={height} onClick={onClick} color={btnColor}>
+		<Btn
+			size={size}
+			margin={margin}
+			width={width}
+			height={height}
+			onClick={onClick}
+			color={btnColor}
+			fontSize={fontSize}
+		>
 			{children}
 		</Btn>
 	);

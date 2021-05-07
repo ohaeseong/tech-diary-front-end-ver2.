@@ -62,6 +62,7 @@ export type PostUpdate = {
 	title: string;
 	contents: string;
 	token: string;
+	thumbnailAddress?: string;
 	tags?: Array<string>;
 };
 
