@@ -1,9 +1,13 @@
 import React from 'react';
-import { Post } from 'store/types/post.types';
 import PostTagSearch from 'components/post/PostTagSearch';
+import { Post } from 'store/types/post.types';
+
+interface TagPost extends Post {
+	tagName: string;
+}
 
 type Props = {
-	posts: Array<Post>;
+	posts: Array<TagPost>;
 };
 
 function PostTagSearchContainer({ posts }: Props) {

@@ -7,8 +7,12 @@ import PostTagSearchContainer from 'container/search/PostTagSearchContainer';
 import { NextPageContext } from 'next';
 import { useRouter } from 'next/router';
 
+interface TagPost extends Post {
+	tagName: string;
+}
+
 type Props = {
-	posts: Post[];
+	posts: TagPost[];
 };
 
 function SearchTagPage({ posts }: Props) {

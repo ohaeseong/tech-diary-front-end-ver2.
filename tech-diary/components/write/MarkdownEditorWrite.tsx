@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import PostEditorTool from 'components/write/PostEditorTool';
 import MarkdownEditor from 'components/write/MarkdownEditor';
@@ -104,8 +104,6 @@ function MarkdownEditorWrite({
 		if (!codemirror) return;
 
 		const { doc } = codemirror;
-		const cursor = doc.getCursor();
-		const cursorLine = cursor.line;
 
 		let link;
 
