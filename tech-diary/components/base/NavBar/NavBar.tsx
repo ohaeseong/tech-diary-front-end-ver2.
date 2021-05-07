@@ -112,9 +112,10 @@ const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 	color: ${color.gray_0};
 	margin-left: 10rem;
 	font-size: 1.3rem;
-	padding: 2rem 1rem;
+	/* padding: 2rem 1rem; */
 	cursor: pointer;
 	transition: 0.3s ease-in-out;
+	/* border: 1px solid black; */
 
 	${(props) =>
 		props.isScroll &&
@@ -164,7 +165,10 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 
 
 	${mediaQuery(767)} {
-		margin: auto 0rem auto 25.5rem;
+		margin: auto 0rem auto auto;
+		& > * {
+			color: ${(props) => props.theme.gray_4};
+		}
 	}
 `;
 

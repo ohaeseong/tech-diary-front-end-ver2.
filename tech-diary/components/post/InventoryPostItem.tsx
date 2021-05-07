@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 
-const UserProfilePostItemWrap = styled.div`
+const InventoryPostItemWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -14,6 +14,13 @@ const UserProfilePostItemWrap = styled.div`
 
 	border-bottom: 1px solid ${(props) => props.theme.gray_1};
 	cursor: pointer;
+`;
+
+const ThumbnailWrap = styled.img`
+	width: 20rem;
+	height: 10rem;
+	margin-left: 1rem;
+	object-fit: contain;
 `;
 
 const Head = styled.div`
@@ -26,7 +33,13 @@ const Head = styled.div`
 	color: ${(props) => props.theme.neon_2};
 `;
 
+const BodyWrap = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
 const Body = styled.div`
+	width: 100%;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
@@ -38,7 +51,7 @@ const Body = styled.div`
 	font-family: 'Spoqa Han Sans Thin';
 	font-size: 0.8rem;
 	color: ${(props) => props.theme.gray_3};
-	margin-top: 0.5rem;
+	margin-top: 2.5rem;
 	margin-bottom: 2rem;
 `;
 
@@ -59,7 +72,7 @@ type Props = {
 };
 
 function InventoryPostItem({ item }: Props) {
-	const { id, title, contents, intro, memberId, createTime, url, tagList } = item;
+	const { id, title, contents, intro, memberId, createTime, url, tagList, thumbnailAddress } = item;
 
 	const router = useRouter();
 	const date = new Date(createTime);
@@ -75,9 +88,12 @@ function InventoryPostItem({ item }: Props) {
 
 	return (
 		<Link href={reqUrl}>
-			<UserProfilePostItemWrap>
+			<InventoryPostItemWrap>
 				<Head>{title}</Head>
-				<Body>{intro || contents}</Body>
+				<BodyWrap>
+					<Body>{intro || contents}</Body>
+					<ThumbnailWrap src={thumbnailAddress || '/static/loginTemplateImage.png'} alt="post_thumbnail_image" />
+				</BodyWrap>
 				{tagList?.tagData.length !== 0 ? (
 					<TagGroup margin="0.5rem 0rem 1.2rem 0rem">
 						{tagList?.tagData.map((tagItem: Tag) => {
@@ -91,7 +107,7 @@ function InventoryPostItem({ item }: Props) {
 					<BottomInfo>{memberId}</BottomInfo>
 					<BottomInfo>{dateFormat}</BottomInfo>
 				</Bottom>
-			</UserProfilePostItemWrap>
+			</InventoryPostItemWrap>
 		</Link>
 	);
 }

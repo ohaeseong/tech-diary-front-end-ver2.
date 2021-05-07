@@ -253,12 +253,14 @@ function MarkdownEditorContainer() {
 
 				return;
 			}
+
 			const token = getStorage('tech-token');
 			const req = {
 				id: qsId,
 				title,
 				contents: markdownText,
 				tags,
+				thumbnailAddress: thumbnailImage,
 				token,
 			} as PostUpdate;
 			await onUpdatePost(req);
@@ -268,7 +270,7 @@ function MarkdownEditorContainer() {
 				position: toast.POSITION.BOTTOM_RIGHT,
 			});
 		}
-	}, [dispatch, markdownText, onCreatePost, onUpdatePost, router, tagItemList, title]);
+	}, [dispatch, markdownText, onCreatePost, onUpdatePost, router, tagItemList, title, thumbnailImage]);
 
 	const onSavePost = useCallback(async () => {
 		let { id } = router.query;
@@ -283,20 +285,23 @@ function MarkdownEditorContainer() {
 			reqSlugUrl = `/${userInfo.memberId}/${escapeForUrl(slugUrl)}`;
 		}
 
+		const tags: Array<string> = [];
+		tagItemList.forEach((tag: string) => {
+			tags.push(tag);
+		});
+
 		if (!id) {
 			const saveReq = {
 				title,
 				contents: markdownText,
 				token,
+				tags,
 			} as CreatePost;
 			const response = await onCreatePost(saveReq);
 			id = response.data.id;
-		}
 
-		const tags: Array<string> = [];
-		tagItemList.forEach((tag: string) => {
-			tags.push(tag);
-		});
+			return;
+		}
 
 		let publishType;
 
@@ -389,6 +394,7 @@ function MarkdownEditorContainer() {
 			});
 			const initUrl = lastPostData.data.post.url ? `/${lastPostData.data.post.url.split('/')[2]}` : ``;
 
+			setThumbnailAddress(lastPostData.data.post.thumbnailAddress);
 			setTagItemList(tags);
 			setTitle(lastPostData.data.post.title);
 			setSlugUrl(initUrl);

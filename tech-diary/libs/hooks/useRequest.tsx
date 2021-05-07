@@ -12,8 +12,6 @@ function useRequest(request: any, getResponseToCB?: boolean) {
 				setLoading(true);
 				const response = await request(params);
 				setData(response.data);
-				console.log(response);
-				
 				if (getResponseToCB) {
 					return response.data;
 				}

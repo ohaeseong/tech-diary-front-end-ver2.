@@ -174,6 +174,7 @@ export const requestUpdatePostForTemp = (req: PostUpdate) =>
 				id: req.id,
 				title: req.title,
 				contents: req.contents,
+				thumbnailAddress: req.thumbnailAddress,
 				tags: req.tags,
 			},
 			{

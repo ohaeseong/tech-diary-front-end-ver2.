@@ -20,31 +20,48 @@ const SearchPageTemplate = styled.div`
 `;
 
 const PostCount = styled.div`
-	width: 55%;
-
-	& > * {
-		font-family: 'Spoqa Han Sans Thin';
-		color: ${(props) => props.theme.gray_4};
-	}
+	width: 56%;
+	font-family: 'Spoqa Han Sans Thin';
+	margin-top: 3rem;
+	color: ${(props) => props.theme.gray_4};
 `;
 
+const Head = styled.div`
+	display: flex;
+	flex-direction: row;
+	width: 56%;
+	/* border: 1px solid black; */
+`;
+
+const TagName = styled.div`
+	font-size: 2.5rem;
+	font-family: 'Spoqa Han Sans Medium';
+	margin-top: 3rem;
+	color: ${(props) => props.theme.black};
+`;
+
+interface TagPost extends Post {
+	tagName: string;
+}
+
 type Props = {
-	posts: Array<Post>;
+	posts: Array<TagPost>;
 };
 
 function PostTagSearch({ posts }: Props) {
 	return (
 		<SearchPageTemplate>
-			{posts.length !== 0 ? (
-				<PostCount>
-					<div> 총 {posts.length}개의 포스트</div>
-				</PostCount>
-			) : (
-				<></>
-			)}
+			<Head>
+				<TagName># {posts[0].tagName}</TagName>
+			</Head>
+			{posts.length !== 0 ? <PostCount>총 {posts.length}개의 포스트</PostCount> : <></>}
 			<InventoryPostList>
 				{posts.map((item: any) => {
-					return <InventoryPostItem key={item.postId} item={item.post} />;
+					const postItem = {
+						tagList: item.tagList,
+						...item.post,
+					};
+					return <InventoryPostItem key={item.postId} item={postItem} />;
 				})}
 			</InventoryPostList>
 		</SearchPageTemplate>

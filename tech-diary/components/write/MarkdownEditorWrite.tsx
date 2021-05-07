@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import PostEditorTool from 'components/write/PostEditorTool';
 import MarkdownEditor from 'components/write/MarkdownEditor';
+import LinkEditor from 'components/write/LinkEditor';
 
 const TagInput = styled.input`
 	padding: 0.5rem 0.5rem;
@@ -13,6 +14,47 @@ const TagInput = styled.input`
 	color: ${(props) => props.theme.black};
 	font-family: 'Spoqa Han Sans Thin';
 	border-radius: 5px;
+`;
+
+const LinkEditorWrap = styled.div<{
+	addLinkPos: { left: string; top: string; right: string; bottom: string };
+	addLinkIsDisplay: string;
+}>`
+	display: none;
+
+	position: absolute;
+	z-index: 1000;
+	width: 15rem;
+
+	${(props) =>
+		props.addLinkIsDisplay &&
+		`
+			display: ${props.addLinkIsDisplay};
+	`};
+
+	${(props) =>
+		props.addLinkPos.top &&
+		`
+			top: ${props.addLinkPos.top}px;
+	`};
+
+	${(props) =>
+		props.addLinkPos.left &&
+		`
+			left: ${props.addLinkPos.left}px;
+	`};
+
+	${(props) =>
+		props.addLinkPos.bottom &&
+		`
+			bottom: ${props.addLinkPos.bottom}px;
+	`};
+
+	${(props) =>
+		props.addLinkPos.right &&
+		`
+			right: ${props.addLinkPos.right}px;
+	`};
 `;
 
 type Props = {
@@ -37,7 +79,63 @@ function MarkdownEditorWrite({
 	markdownText,
 }: Props) {
 	const [codemirror, setCodemirror] = useState<any>();
+	const [linkUrl, setLinkUrl] = useState('');
+	const [linkText, setLinkText] = useState('');
+
+	const [addLinkPos, setAddLinkPos] = useState({
+		top: '0rem',
+		left: '0rem',
+		bottom: '0rem',
+		right: '0rem',
+	});
+
+	const [addLinkIsDisplay, setAddLinkIsDisplay] = useState('none');
 	// const editorElement = React.createRef<HTMLTextAreaElement>();
+
+	const handdleLinkUrl = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+		setLinkUrl(event.target.value);
+	}, []);
+
+	const handleLinkText = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+		setLinkText(event.target.value);
+	}, []);
+
+	const addLink = useCallback(() => {
+		if (!codemirror) return;
+
+		const { doc } = codemirror;
+		const cursor = doc.getCursor();
+		const cursorLine = cursor.line;
+
+		let link;
+
+		if (!linkText) {
+			link = `[${linkUrl}](${linkUrl})`;
+		} else {
+			link = `[${linkText}](${linkUrl})`;
+		}
+
+		doc.replaceSelection(` ${link}`);
+
+		setLinkText('');
+		setLinkUrl('');
+		setAddLinkIsDisplay('none');
+	}, [codemirror, linkText, linkUrl]);
+
+	const handleLinkKeyEvent = useCallback(
+		(event: React.KeyboardEvent<HTMLInputElement>) => {
+			if (event.key === 'Enter') {
+				addLink();
+			}
+		},
+		[addLink]
+	);
+
+	const closeAddLink = useCallback(() => {
+		setLinkText('');
+		setLinkUrl('');
+		setAddLinkIsDisplay('none');
+	}, []);
 
 	const handleToolbarClick = (mode: string) => {
 		if (!codemirror) return;
@@ -45,6 +143,7 @@ function MarkdownEditorWrite({
 		const { doc } = codemirror;
 		const cursor = doc.getCursor();
 		const cursorLine = cursor.line;
+		const cursorPos = codemirror.cursorCoords(cursor);
 		const line = doc.getLine(cursorLine);
 
 		// heading text 처리 함수
@@ -281,6 +380,16 @@ function MarkdownEditorWrite({
 					doc.replaceSelection(`> ${doc.getSelection()}`);
 				}
 				break;
+			case 'LINK':
+				setAddLinkPos({
+					left: cursorPos.left,
+					right: cursorPos.right,
+					top: cursorPos.top + 30,
+					bottom: cursorPos.bottom,
+				});
+
+				setAddLinkIsDisplay('block');
+				break;
 			default:
 				break;
 		}
@@ -293,10 +402,27 @@ function MarkdownEditorWrite({
 		}, 0);
 	};
 
+	// useEffect(() => {
+	// 	document.body.addEventListener('click', closeAddLink);
+
+	// 	return () => document.body.removeEventListener('click', closeAddLink);
+	// }, [closeAddLink]);
+
 	return (
 		<>
 			{typeof window !== 'undefined' && (
 				<>
+					<LinkEditorWrap addLinkPos={addLinkPos} addLinkIsDisplay={addLinkIsDisplay}>
+						<LinkEditor
+							linkText={linkText}
+							linkUrl={linkUrl}
+							handleLinkText={handleLinkText}
+							handleLinkUrl={handdleLinkUrl}
+							handleLinkKeyEvent={handleLinkKeyEvent}
+							addLink={addLink}
+							onClose={closeAddLink}
+						/>
+					</LinkEditorWrap>
 					<PostEditorTool
 						onClick={handleToolbarClick}
 						openModal={openModal}
@@ -306,7 +432,7 @@ function MarkdownEditorWrite({
 					<TagInput
 						placeholder="Enter를 눌러 tag를 추가해 보세요!"
 						onChange={tagInputOnChage}
-						onKeyDown={handleTagInputKeypress}
+						onKeyPress={handleTagInputKeypress}
 						value={tagName}
 					/>
 					<MarkdownEditor
@@ -328,4 +454,4 @@ function MarkdownEditorWrite({
 	);
 }
 
-export default MarkdownEditorWrite;
+export default React.memo(MarkdownEditorWrite);

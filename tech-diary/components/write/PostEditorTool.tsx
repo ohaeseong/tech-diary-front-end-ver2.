@@ -89,7 +89,7 @@ function PostEditorTool({ onClick, openModal, requestSave, handleImage }: Props)
 					<ToolItem onClick={() => onClick('CODE')}>
 						<HiCode size={ICON_SIZE} />
 					</ToolItem>
-					<ToolItem>
+					<ToolItem onClick={() => onClick('LINK')}>
 						<BiLinkAlt size={ICON_SIZE} />
 					</ToolItem>
 					<ToolItem>
