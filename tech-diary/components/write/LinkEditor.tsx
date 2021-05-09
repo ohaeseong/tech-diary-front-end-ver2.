@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import HnadleClickOutSide from 'react-outside-click-handler';
 import Button from 'components/common/Button';
@@ -22,7 +22,7 @@ const LinkInput = styled.input`
 	width: 100%;
 	height: 100%;
 	font-size: 0.8rem;
-	border: 1px solid ${(props) => props.theme.gray_2};
+	border: 1px solid ${(props) => props.theme.gray_1};
 	background-color: ${(props) => props.theme.gray_0};
 	padding: 0.2rem;
 	font-family: 'Spoqa Han Sans Thin';
@@ -47,6 +47,11 @@ type Props = {
 };
 
 function LinkEditor({ handleLinkText, handleLinkUrl, handleLinkKeyEvent, addLink, onClose, linkText, linkUrl }: Props) {
+	const input = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (!input.current) return;
+		input.current.focus();
+	}, []);
 	return (
 		<>
 			<HnadleClickOutSide onOutsideClick={onClose}>
@@ -61,6 +66,7 @@ function LinkEditor({ handleLinkText, handleLinkUrl, handleLinkKeyEvent, addLink
 						value={linkUrl}
 						onChange={handleLinkUrl}
 						onKeyPress={handleLinkKeyEvent}
+						ref={input}
 					/>
 					<ButtonWrap>
 						<Button fontSize="0.7rem" btnColor={color.neon_2} margin="0.5rem 0 0 0" height="1.5rem" onClick={addLink}>

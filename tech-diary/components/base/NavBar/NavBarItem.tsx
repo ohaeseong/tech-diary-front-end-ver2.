@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { mediaQuery } from 'components/layout/responsive';
 import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
@@ -6,7 +7,7 @@ import { color } from 'styles/color';
 
 const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }>`
 	display: block;
-	font-size: 1rem;
+	/* font-size: 1rem; */
 	padding: 2rem 1rem;
 	font-family: 'Spoqa Han Sans';
 	color: ${color.gray_0};
@@ -39,6 +40,12 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }
 		`
         color: ${props.theme.black};
 	`}
+
+	${mediaQuery(767)} {
+		/* margin-right: 1rem; */
+		padding: 0rem;
+		font-size: 0.8rem;
+	}
 `;
 
 type Props = {

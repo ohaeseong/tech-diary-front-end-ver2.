@@ -3,6 +3,9 @@ import React, { ChangeEvent, useCallback, useState } from 'react';
 import AccountPageTemplate from 'components/account/AccountPageTemplate';
 import LoginBox from 'components/account/login/LoginBox';
 import { useDispatch, useSelector } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { RootState } from 'store/modules';
 import useForm from 'libs/hooks/useForm';
@@ -67,7 +70,7 @@ function LoginLayout() {
 		if (!isEmail(email)) {
 			setModalMsg({
 				isError: true,
-				message: '이메일을 형식이 아니에요.',
+				message: '이메일 형식이 아니에요.',
 			});
 
 			return;
@@ -89,6 +92,9 @@ function LoginLayout() {
 		}
 
 		closeModalBox();
+		toast.success('메일함을 확인해 주세요!', {
+			position: toast.POSITION.TOP_RIGHT,
+		});
 	}, [closeModalBox, email, onRequestSendEmail]);
 
 	const onLogin = useCallback(() => {
@@ -158,6 +164,7 @@ function LoginLayout() {
 				errorMsg={errorMsg}
 				form={form}
 			/>
+			<ToastContainer autoClose={1500} />
 		</AccountPageTemplate>
 	);
 }

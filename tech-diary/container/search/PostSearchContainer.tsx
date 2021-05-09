@@ -9,6 +9,7 @@ import { requestSearchPosts } from 'libs/repository';
 import { Post } from 'store/types/post.types';
 import Input from 'components/common/Input';
 import { color } from 'styles/color';
+import { mediaQuery } from 'components/layout/responsive';
 
 const SearchPageTemplate = styled.div`
 	display: flex;
@@ -20,6 +21,25 @@ const SearchPageTemplate = styled.div`
 	margin-top: 5rem;
 	background-color: ${(props) => props.theme.white};
 
+
+	${mediaQuery(1919)} {
+		/* & > * {
+			width: 25rem;
+		} */
+	}
+
+	${mediaQuery(1440)} {
+		/* & > * {
+			width: 25rem;
+		} */
+	}
+
+	${mediaQuery(1056)} {
+		& > * {
+			width: calc(100% - 2rem);
+		}
+	}
+
 	& > * {
 		margin-top: 3rem;
 	}
@@ -29,9 +49,17 @@ const SearchInputWrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: center;
+`;
 
-	& > * {
-		margin-right: 1rem;
+const IconWrap = styled.div`
+	margin-right: 1rem;
+	${mediaQuery(1056)} {
+		width: 2rem;
+		& > * {
+			width: 2rem;
+			margin-right: 1rem;
+		}
 	}
 `;
 
@@ -77,7 +105,9 @@ function PostSearchContainer() {
 	return (
 		<SearchPageTemplate>
 			<SearchInputWrap>
-				<AiOutlineSearch size="2.5rem" color={color.gray_3} />
+				<IconWrap>
+					<AiOutlineSearch size="2.5rem" color={color.gray_3} />
+				</IconWrap>
 				<Input
 					fontSize="regular"
 					placeholder="게시글 검색..."

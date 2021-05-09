@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { AuthLogin, GitHubLoginRequest, UserRegisterWithGithubRequest } from 'store/types/auth.types';
+import { AuthLogin, GitHubLoginRequest, UserRegisterRequest, UserRegisterWithGithubRequest } from 'store/types/auth.types';
 // import {  } from 'store/'
 
 class authRepository {
@@ -28,6 +28,18 @@ class authRepository {
 				memberName: req.memberName,
 				githubId: req.githubId,
 				avatarUrl: req.avatarUrl,
+			})
+			.catch((error) => error.response);
+	}
+
+	public async registerAuth(req: UserRegisterRequest) {
+		return axios
+			.post(`${server.host}/auth/register/`, {
+				memberId: req.memberId,
+				memberName: req.memberName,
+				intro: req.introduce,
+				code: req.code,
+				pw: req.pw,
 			})
 			.catch((error) => error.response);
 	}
