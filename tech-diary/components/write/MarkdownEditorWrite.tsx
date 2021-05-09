@@ -18,19 +18,10 @@ const TagInput = styled.input`
 
 const LinkEditorWrap = styled.div<{
 	addLinkPos: { left: string; top: string; right: string; bottom: string };
-	addLinkIsDisplay: string;
 }>`
-	display: none;
-
 	position: absolute;
 	z-index: 1000;
 	width: 15rem;
-
-	${(props) =>
-		props.addLinkIsDisplay &&
-		`
-			display: ${props.addLinkIsDisplay};
-	`};
 
 	${(props) =>
 		props.addLinkPos.top &&
@@ -89,7 +80,7 @@ function MarkdownEditorWrite({
 		right: '0rem',
 	});
 
-	const [addLinkIsDisplay, setAddLinkIsDisplay] = useState('none');
+	const [addLinkIsDisplay, setAddLinkIsDisplay] = useState(false);
 	// const editorElement = React.createRef<HTMLTextAreaElement>();
 
 	const handdleLinkUrl = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +108,7 @@ function MarkdownEditorWrite({
 
 		setLinkText('');
 		setLinkUrl('');
-		setAddLinkIsDisplay('none');
+		setAddLinkIsDisplay(false);
 	}, [codemirror, linkText, linkUrl]);
 
 	const handleLinkKeyEvent = useCallback(
@@ -132,7 +123,7 @@ function MarkdownEditorWrite({
 	const closeAddLink = useCallback(() => {
 		setLinkText('');
 		setLinkUrl('');
-		setAddLinkIsDisplay('none');
+		setAddLinkIsDisplay(false);
 	}, []);
 
 	const handleToolbarClick = (mode: string) => {
@@ -386,18 +377,20 @@ function MarkdownEditorWrite({
 					bottom: cursorPos.bottom,
 				});
 
-				setAddLinkIsDisplay('block');
+				setAddLinkIsDisplay(true);
 				break;
 			default:
 				break;
 		}
 
-		setTimeout(() => {
-			codemirror.focus();
-			codemirror.setCursor({
-				line: cursor.line,
-			});
-		}, 0);
+		if (mode !== 'LINK') {
+			setTimeout(() => {
+				codemirror.focus();
+				codemirror.setCursor({
+					line: cursor.line,
+				});
+			}, 0);
+		}
 	};
 
 	// useEffect(() => {
@@ -410,16 +403,20 @@ function MarkdownEditorWrite({
 		<>
 			{typeof window !== 'undefined' && (
 				<>
-					<LinkEditorWrap addLinkPos={addLinkPos} addLinkIsDisplay={addLinkIsDisplay}>
-						<LinkEditor
-							linkText={linkText}
-							linkUrl={linkUrl}
-							handleLinkText={handleLinkText}
-							handleLinkUrl={handdleLinkUrl}
-							handleLinkKeyEvent={handleLinkKeyEvent}
-							addLink={addLink}
-							onClose={closeAddLink}
-						/>
+					<LinkEditorWrap addLinkPos={addLinkPos}>
+						{addLinkIsDisplay ? (
+							<LinkEditor
+								linkText={linkText}
+								linkUrl={linkUrl}
+								handleLinkText={handleLinkText}
+								handleLinkUrl={handdleLinkUrl}
+								handleLinkKeyEvent={handleLinkKeyEvent}
+								addLink={addLink}
+								onClose={closeAddLink}
+							/>
+						) : (
+							<></>
+						)}
 					</LinkEditorWrap>
 					<PostEditorTool
 						onClick={handleToolbarClick}

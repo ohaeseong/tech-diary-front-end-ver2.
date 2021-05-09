@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: Props) {
 			router.pathname === '/login' ||
 			router.pathname === '/signup' ||
 			router.pathname === '/login/github-callback' ||
-			router.pathname === '/register'
+			router.pathname === '/register/[memberId]'
 		) {
 			setIsNotNav(true);
 		} else {

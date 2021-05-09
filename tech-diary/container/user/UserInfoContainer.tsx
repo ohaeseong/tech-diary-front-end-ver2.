@@ -64,7 +64,7 @@ const InventoryPostListTemplate = styled.div`
 `;
 
 const NonePostTemplate = styled.div`
-	width: 100%;
+	width: 50rem;
 
 	font-size: 1.825rem;
 	padding-top: 20rem;
@@ -94,7 +94,7 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 	const [introText, setIntroText] = useState(userInfo.introduce || '소개글을 작성해 보세요!');
 	const [userEmail, setUserEmail] = useState(userInfo.email);
 	const [userName, setUserName] = useState(userInfo.memberName);
-	const [userProfileImage, setUserProfileImage] = useState(userInfo.profileImage || '/image/user.png');
+	const [userProfileImage, setUserProfileImage] = useState(userInfo.profileImage || '/static/user.png');
 	const [userPosts, setUserPosts] = useState(posts || []);
 	const iconSize = '1.5rem';
 	// const themeMode = theme === 'light';

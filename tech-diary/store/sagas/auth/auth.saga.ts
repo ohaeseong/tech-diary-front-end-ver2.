@@ -1,5 +1,6 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import { setStorage } from 'libs/storage';
+import { AUTH_REGISTER_REQUEST, onAuthRegister, setRegisterErrorMsg } from 'store/modules/register.auth';
 import authRepo from './auth.repository';
 import { AUTH_LOGIN_REQUEST, onAuthLogin, setLoginErrorMsg } from '../../modules/auth';
 import { onGithubAuthRegister, GITHUB_REGISTER_REQUEST } from '../../modules/register.github.auth';
@@ -110,6 +111,41 @@ function* onRegisterWithGithub(action: ReturnType<typeof onGithubAuthRegister.re
 	yield executeCallback(successCB);
 }
 
+function* onRegisterAuth(action: ReturnType<typeof onAuthRegister.request>) {
+	const { memberId, memberName, pw, introduce, code, successCB } = action.payload;
+
+	const { status, data } = yield call(authRepo.registerAuth, {
+		memberId,
+		memberName,
+		pw,
+		code,
+		introduce,
+	});
+
+	if (status === 403) {
+		yield put(setRegisterErrorMsg('이미 가입된 아이디 입니다.'));
+		return;
+	}
+
+	if (status === 400) {
+		return;
+	}
+
+	if (status === 500) {
+		return;
+	}
+
+	const payload = {
+		token: data.data.token,
+		member: data.data.member,
+	};
+
+	setStorage('user-info', payload.member);
+	setStorage('tech-token', payload.token);
+	yield put(onAuthRegister.success());
+	yield executeCallback(successCB);
+}
+
 function* watchOnLogin() {
 	yield takeLatest(AUTH_LOGIN_REQUEST, onLoginSaga);
 }
@@ -122,6 +158,10 @@ function* watchOnRegisterWithGitHub() {
 	yield takeLatest(GITHUB_REGISTER_REQUEST, onRegisterWithGithub);
 }
 
+function* watchOnRegister() {
+	yield takeLatest(AUTH_REGISTER_REQUEST, onRegisterAuth);
+}
+
 export default function* authSagas() {
-	yield all([fork(watchOnLogin), fork(watchOnLoginWithGitHub), fork(watchOnRegisterWithGitHub)]);
+	yield all([fork(watchOnLogin), fork(watchOnLoginWithGitHub), fork(watchOnRegisterWithGitHub), fork(watchOnRegister)]);
 }

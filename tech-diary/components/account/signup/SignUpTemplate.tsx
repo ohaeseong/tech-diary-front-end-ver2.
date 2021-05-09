@@ -10,7 +10,7 @@ const SignUpWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 4rem 20rem 0 20rem;
+	padding: 6rem 20rem 0 20rem;
 	max-width: 100%;
 	height: 100vh;
 	background-color: ${(props) => props.theme.white_1};
@@ -66,6 +66,16 @@ const TemplateImg = styled.img`
 	height: 100%;
 	object-fit: contain;
 	margin-left: 2rem;
+`;
+
+const ErrorMsgWrap = styled.div`
+	width: 100%;
+	margin-top: 5rem;
+	font-size: 1.3rem;
+	text-align: center;
+	color: ${color.neon_1};
+
+	/* border: 1px solid black; */
 `;
 
 const Bottom = styled.div`
@@ -130,12 +140,12 @@ function SignUpTemplate({
 							<LabelInput label="한줄소개" margin="2rem 0 0 0" value={introduce} onChange={handleIntroduce} />
 						</>
 					)}
+					<ErrorMsgWrap>{errorMsg}</ErrorMsgWrap>
 				</HalfOfBody>
 				<HalfOfBody>
 					<TemplateImg src="/static/loginTemplateImage.png" alt="sign_up_template_image.png" />
 				</HalfOfBody>
 			</Body>
-			{errorMsg}
 			<Bottom>
 				<ButtonGroup sortDirection="row" childrenMargin="0rem 2rem 0rem 0rem">
 					<Button btnColor={color.gray_3} size="medium" onClick={cancleRegister}>

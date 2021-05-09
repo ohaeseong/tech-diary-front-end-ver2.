@@ -26,6 +26,7 @@ function UserSavePostPage({ userInfo, savePosts }: Props) {
 		<>
 			<Head>
 				<title>{userId} (임시저장 글)</title>
+				<meta name="description" content="사용자 임시저장 글 페이지" />
 			</Head>
 			<UserProfileContainer userInfo={userInfo} posts={savePosts} />
 		</>

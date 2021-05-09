@@ -7,6 +7,7 @@ import theme from './theme.state';
 import toast from './toast';
 import modal from './modal';
 import registerWithGithub from './register.github.auth';
+import registerAuth from './register.auth';
 import postComment from './post.comment.count';
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
 	modal,
 	registerWithGithub,
 	write,
+	registerAuth,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

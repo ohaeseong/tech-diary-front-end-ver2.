@@ -38,3 +38,13 @@ export type UserRegisterWithGithubRequest = {
 	successCB?: () => null;
 	failCB?: () => void;
 };
+
+export type UserRegisterRequest = {
+	memberId: string;
+	memberName: string;
+	introduce?: string;
+	code: string;
+	pw: string;
+	successCB?: () => null;
+	failCB?: () => void;
+};
