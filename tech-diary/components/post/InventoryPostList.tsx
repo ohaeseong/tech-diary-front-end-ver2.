@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 const InventoryPostListWrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	min-width: 50rem;
+	width: 60rem;
 	min-height: 100vh;
 	/* margin-top: 3rem; */
 	margin-bottom: 5rem;

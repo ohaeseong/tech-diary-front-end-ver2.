@@ -27,10 +27,10 @@ function MyApp({ Component, pageProps }: Props) {
 	useEffect(() => {
 		if (
 			router.pathname === '/' ||
-			router.pathname === '/mobeil' ||
-			router.pathname === 'frontend' ||
-			router.pathname === 'backend' ||
-			router.pathname === 'other'
+			router.pathname === '/mobile' ||
+			router.pathname === '/front-end' ||
+			router.pathname === '/back-end' ||
+			router.pathname === '/other'
 		) {
 			setIsMain(true);
 		} else {
