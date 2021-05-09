@@ -299,8 +299,6 @@ function MarkdownEditorContainer() {
 			} as CreatePost;
 			const response = await onCreatePost(saveReq);
 			id = response.data.id;
-
-			return;
 		}
 
 		let publishType;
