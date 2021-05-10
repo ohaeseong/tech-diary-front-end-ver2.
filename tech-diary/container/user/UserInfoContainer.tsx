@@ -11,7 +11,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 // import { color, dark } from 'styles/color';
 import { TypeDecoded, UserInfo } from 'store/types/auth.types';
-import { Post } from 'store/types/post.types';
+import { Member, Post } from 'store/types/post.types';
 import UserNabBar from 'components/user/UserNavBar';
 import UserNavItem from 'components/user/UserNavItem';
 import InventoryPostList from 'components/post/InventoryPostList';
@@ -35,6 +35,8 @@ import { useDispatch } from 'react-redux';
 import { UPDATE_PROFILE_IMAGE } from 'store/modules/auth';
 import Input from 'components/common/Input';
 import { color } from 'styles/color';
+import FollowList from 'components/user/FollowList';
+import FollowItem from 'components/user/FollowItem';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -76,9 +78,11 @@ type Props = {
 	userInfo: UserInfo;
 	posts: Array<Post>;
 	isIntro?: boolean;
+	isSocial?: boolean;
+	memberList?: Member[];
 };
 
-function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
+function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial }: Props) {
 	const router = useRouter();
 	// const [theme, toggleTheme] = useDarkMode();
 	const [isMine, setIsMine] = useState(false);
@@ -317,44 +321,54 @@ function UserProfileContainer({ userInfo, posts, isIntro }: Props) {
 						)}
 					</UserNabBar>
 
-					{!isIntro ? (
+					{isSocial ? (
+						<FollowList>
+							{memberList?.map((item: Member) => {
+								return <FollowItem key={item.idx} item={item} isFollowers />;
+							})}
+						</FollowList>
+					) : (
 						<>
-							{router.pathname === '/[userId]' ? (
-								<SearchInputTemplate>
-									<AiOutlineSearch size="1.5rem" color={color.gray_3} />
-									<Input
-										value={searchWord}
-										onChange={handleSearchWord}
-										fontSize="sm"
-										width="10rem"
-										height="1rem"
-										placeholder="게시글 검색.."
-									/>
-								</SearchInputTemplate>
-							) : (
-								<></>
-							)}
-							{userPosts.length !== 0 ? (
+							{!isIntro ? (
 								<>
-									<InventoryPostList>
-										{userPosts.map((item: Post) => {
-											return <InventoryPostItem key={item.id} item={item} />;
-										})}
-									</InventoryPostList>
+									{router.pathname === '/[userId]' ? (
+										<SearchInputTemplate>
+											<AiOutlineSearch size="1.5rem" color={color.gray_3} />
+											<Input
+												value={searchWord}
+												onChange={handleSearchWord}
+												fontSize="sm"
+												width="10rem"
+												height="1rem"
+												placeholder="게시글 검색.."
+											/>
+										</SearchInputTemplate>
+									) : (
+										<></>
+									)}
+									{userPosts.length !== 0 ? (
+										<>
+											<InventoryPostList>
+												{userPosts.map((item: Post) => {
+													return <InventoryPostItem key={item.id} item={item} />;
+												})}
+											</InventoryPostList>
+										</>
+									) : (
+										<NonePostTemplate>게시글이 없어요!</NonePostTemplate>
+									)}
 								</>
 							) : (
-								<NonePostTemplate>게시글이 없어요!</NonePostTemplate>
+								<UserIntroduce
+									introText={introText}
+									handleUserIntroText={handleUserIntroText}
+									isReadOnly={isReadOnly}
+									onSaveUserInfo={onSaveUserInfo}
+									isReadOnlyToggle={isReadOnlyToggle}
+									isMine={isMine}
+								/>
 							)}
 						</>
-					) : (
-						<UserIntroduce
-							introText={introText}
-							handleUserIntroText={handleUserIntroText}
-							isReadOnly={isReadOnly}
-							onSaveUserInfo={onSaveUserInfo}
-							isReadOnlyToggle={isReadOnlyToggle}
-							isMine={isMine}
-						/>
 					)}
 				</InventoryPostListTemplate>
 			</UserPageTemplate>
