@@ -89,6 +89,7 @@ export type Like = {
 };
 
 export type Member = {
+	idx?: number;
 	memberId: string;
 	memberName: string;
 	profileImage: string;

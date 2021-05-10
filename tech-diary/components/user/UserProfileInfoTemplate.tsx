@@ -5,7 +5,8 @@ import { color } from 'styles/color';
 import Button from 'components/common/Button';
 import { MdEmail } from 'react-icons/md';
 import { css } from '@emotion/react';
-import { FiUpload } from 'react-icons/fi';
+import { FiUpload, FiUsers } from 'react-icons/fi';
+import Link from 'next/link';
 
 const UserProfileInfoWrap = styled.div`
 	display: flex;
@@ -52,12 +53,18 @@ const UserProfileImageLabel = styled.label`
 `;
 
 const UserName = styled.div`
-	width: 100%;
+	/* width: 100%; */
+	display: flex;
+	justify-content: flex-start;
 	margin-top: 4rem;
-	padding-left: 6.5rem;
+	/* padding-left: 6.5rem; */
+	margin-right: 5rem;
 	font-size: 1.7rem;
+	/* border: 1px solid black; */
 
 	color: ${(props) => props.theme.black};
+
+	cursor: pointer;
 `;
 
 const UserSubName = styled.div`
@@ -73,11 +80,17 @@ const UserSubName = styled.div`
 const InfoWrap = styled.div`
 	width: 68%;
 	display: flex;
+	flex-direction: column;
+	margin-top: 3rem;
+`;
+
+const EmailInputWrap = styled.div`
+	width: 100%;
+	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1rem;
-	margin-top: 2rem;
+	margin-top: 1.5rem;
 
 	& > * {
 		color: ${(props) => props.theme.gray_4};
@@ -108,6 +121,23 @@ const InfoUpdateInput = styled.input<{ type?: string }>`
 
 		return '';
 	}}
+`;
+
+const FollowWrap = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	color: ${(props) => props.theme.gray_6};
+	font-family: 'Spoqa Han Sans Medium';
+	font-size: 0.8rem;
+	& > * {
+		font-size: 0.8rem;
+	}
+
+	& > div {
+		cursor: pointer;
+	}
 `;
 
 const InfoContents = styled.span`
@@ -166,22 +196,34 @@ function UserProfileInfoTemplate({
 				)}
 				<UserProfileImage src={userProfileImage} alt="profile_image" />
 			</ProfileImageWrap>
-			<UserName>{userInfo.memberId}</UserName>
+			<Link href={`/${userInfo.memberId}`}>
+				<UserName>{userInfo.memberId}</UserName>
+			</Link>
 			{isEdit ? (
 				<InfoUpdateInput onChange={handleUserName} value={userName} type="name" />
 			) : (
 				<UserSubName>{userName}</UserSubName>
 			)}
 			<InfoWrap>
+				<FollowWrap>
+					<FiUsers size="1rem" />
+					<Link href={`/${userInfo.memberId}/followers`}>
+						<div>0 followers</div>
+					</Link>{' '}
+					•
+					<Link href={`${userInfo.memberId}/followings`}>
+						<div>0 followings</div>
+					</Link>
+				</FollowWrap>
 				{userEmail || isEdit ? (
-					<>
+					<EmailInputWrap>
 						<MdEmail size="1.5rem" />
 						{isEdit ? (
 							<InfoUpdateInput value={userEmail || ''} onChange={handleUserEmail} />
 						) : (
 							<InfoContents>{userEmail}</InfoContents>
 						)}
-					</>
+					</EmailInputWrap>
 				) : (
 					<></>
 				)}
