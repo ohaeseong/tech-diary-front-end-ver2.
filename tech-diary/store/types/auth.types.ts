@@ -27,6 +27,8 @@ export type UserInfo = {
 	memberName: string;
 	memberId: string;
 	email: string;
+	followers: number;
+	followings: number;
 };
 
 export type UserRegisterWithGithubRequest = {

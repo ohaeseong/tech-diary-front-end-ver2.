@@ -162,7 +162,7 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 
 	& > * {
 		cursor: pointer;
-		color: ${(props) => props.theme.gray_0};
+		color: ${color.gray_0};
 	}
 
 	${(props) =>

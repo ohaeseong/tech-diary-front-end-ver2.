@@ -55,6 +55,7 @@ export type PostDetail = {
 	like: Like[];
 	member: Member;
 	commentCount: number;
+	followers: number;
 };
 
 export type PostUpdate = {
@@ -94,4 +95,12 @@ export type Member = {
 	memberName: string;
 	profileImage: string;
 	accessLevel?: number;
+};
+
+export type FollowInfo = {
+	idx: number;
+	follower?: string;
+	following?: string;
+	createTime: string;
+	member: Member;
 };

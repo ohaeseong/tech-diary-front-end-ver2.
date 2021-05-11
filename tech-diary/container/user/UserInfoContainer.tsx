@@ -11,7 +11,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 // import { color, dark } from 'styles/color';
 import { TypeDecoded, UserInfo } from 'store/types/auth.types';
-import { Member, Post } from 'store/types/post.types';
+import { FollowInfo, Post } from 'store/types/post.types';
 import UserNabBar from 'components/user/UserNavBar';
 import UserNavItem from 'components/user/UserNavItem';
 import InventoryPostList from 'components/post/InventoryPostList';
@@ -22,7 +22,7 @@ import { HiOutlineBookOpen } from 'react-icons/hi';
 import InventoryPostItem from 'components/post/InventoryPostItem';
 import UserIntroduce from 'components/user/UserIntroduce';
 import useToggle from 'libs/hooks/useToggle';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useRequest from 'libs/hooks/useRequest';
 import {
@@ -79,16 +79,18 @@ type Props = {
 	posts: Array<Post>;
 	isIntro?: boolean;
 	isSocial?: boolean;
-	memberList?: Member[];
+	isFollowers?: boolean;
+	memberList?: FollowInfo[];
 };
 
-function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial }: Props) {
+function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, isFollowers }: Props) {
 	const router = useRouter();
 	// const [theme, toggleTheme] = useDarkMode();
 	const [isMine, setIsMine] = useState(false);
 	const [searchWord, setSearchWord] = useState('');
 	const [isReadOnly, isReadOnlyToggle] = useToggle(true);
 	const [isProfileEdit, isProfileEditToggle] = useToggle(false);
+	const [followList, setFollowList] = useState(memberList);
 	const dispatch = useDispatch();
 
 	const [, , updateUserInfo, ,] = useRequest(requestUserInfoUpdate);
@@ -186,8 +188,6 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial }
 			const userStorageInfo = getStorage('user-info') as UserInfo;
 
 			const req = {
-				// email: userEmail,
-				// memberName: userName,
 				profileImage: imageAddress,
 				token,
 			};
@@ -280,8 +280,6 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial }
 
 	return (
 		<>
-			{/* <ThemeProvider theme={themeMode ? dark : color}> */}
-			{/* <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={false} /> */}
 			<UserPageTemplate>
 				<UserProfileInfoTemplate
 					userInfo={userInfo}
@@ -323,9 +321,22 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial }
 
 					{isSocial ? (
 						<FollowList>
-							{memberList?.map((item: Member) => {
-								return <FollowItem key={item.idx} item={item} isFollowers />;
-							})}
+							{followList?.length !== 0 ? (
+								<>
+									{followList?.map((item: FollowInfo) => {
+										return (
+											<FollowItem
+												key={item.idx}
+												item={item}
+												isFollowers={isFollowers || false}
+												setFollowList={setFollowList}
+											/>
+										);
+									})}
+								</>
+							) : (
+								<NonePostTemplate>팔로우 활동을 시작해보세요!</NonePostTemplate>
+							)}
 						</FollowList>
 					) : (
 						<>
@@ -372,8 +383,6 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial }
 					)}
 				</InventoryPostListTemplate>
 			</UserPageTemplate>
-			<ToastContainer autoClose={1000} />
-			{/* </ThemeProvider> */}
 		</>
 	);
 }

@@ -4,6 +4,7 @@ import { Member, Tag } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 import Link from 'next/link';
+import { UserInfo } from 'store/types/auth.types';
 
 const PostInfoWrap = styled.div`
 	display: flex;
@@ -88,11 +89,12 @@ type Props = {
 	member: Member;
 	createTime: string;
 	isMine: boolean;
+	followers: number;
 	openConfirmModal: () => void;
 	goEditPostPage: () => void;
 };
 
-function PostInfo({ tagData, member, createTime, isMine, openConfirmModal, goEditPostPage }: Props) {
+function PostInfo({ tagData, member, createTime, isMine, followers, openConfirmModal, goEditPostPage }: Props) {
 	const { profileImage, memberName, memberId } = member;
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -108,7 +110,7 @@ function PostInfo({ tagData, member, createTime, isMine, openConfirmModal, goEdi
 					<Link href={`/${memberId}`}>
 						<UserIdTxt>{memberName}</UserIdTxt>
 					</Link>
-					<InfoTxt>1.2k followers</InfoTxt>
+					<InfoTxt>{followers} followers</InfoTxt>
 				</UserInfoWrap>
 				<InfoTxt>{dateFormat}</InfoTxt>
 			</PostInfoHeader>

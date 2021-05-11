@@ -2,7 +2,7 @@ import { getStorage, setStorage } from 'libs/storage';
 import { useEffect, useState } from 'react';
 
 export default function useDarkMode() {
-	const [theme, setTheme] = useState('light');
+	const [theme, setTheme] = useState('dark');
 	const [componentMounted, setComponentMounted] = useState(false);
 
 	const setMode = (mode: string) => {

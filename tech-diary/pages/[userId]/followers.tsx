@@ -6,12 +6,12 @@ import { server } from 'config/config';
 import { NextPageContext } from 'next';
 import UserProfileContainer from 'container/user/UserInfoContainer';
 import NotFoundPage from 'pages/404';
-import { Member } from 'store/types/post.types';
+import { FollowInfo } from 'store/types/post.types';
 import { UserInfo } from 'store/types/auth.types';
 // import { Post } from 'store/types/post.types';
 
 type Props = {
-	followers: { memberList: Member[] };
+	followers: { memberList: FollowInfo[] };
 	userInfo: UserInfo;
 };
 
@@ -28,7 +28,7 @@ function FollowersPage({ followers, userInfo }: Props) {
 			<Head>
 				<title>{userId} (팔로우) </title>
 			</Head>
-			<UserProfileContainer userInfo={userInfo} posts={[]} isSocial memberList={followers.memberList} />
+			<UserProfileContainer userInfo={userInfo} posts={[]} isSocial memberList={followers.memberList} isFollowers />
 		</>
 	);
 }

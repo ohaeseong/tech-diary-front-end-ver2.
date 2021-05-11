@@ -137,6 +137,11 @@ const PostInfo = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
+
+	& > a {
+		color: ${(props) => props.theme.gray_3};
+		text-decoration: none;
+	}
 `;
 
 const UserProfile = styled.img`
@@ -220,7 +225,9 @@ function PostItem({ item }: Props) {
 					)}
 				</Link>
 				<PostContent type="info">
-					<PostInfo>{`${dateFormat} / ${memberId}`}</PostInfo>
+					<PostInfo>
+						{`${dateFormat} /`} <Link href={`/${memberId}`}>{memberId}</Link>
+					</PostInfo>
 					<Link href={`/${memberId}`}>
 						<UserProfile src={profileImage} alt="profile_image" />
 					</Link>

@@ -170,6 +170,7 @@ type Props = {
 	copyUrl: () => void;
 	sharePostToFacebook: () => void;
 	sharePostToTwitter: () => void;
+	isFollowMember: () => void;
 	dispatchForUpdateState: any;
 
 	optionState: OptionState;
@@ -187,6 +188,7 @@ function PostLikeOption({
 	copyUrl,
 	sharePostToTwitter,
 	sharePostToFacebook,
+	isFollowMember,
 	moveToComment,
 	dispatchForUpdateState,
 
@@ -238,12 +240,27 @@ function PostLikeOption({
 			</ItemWrap>
 			<FollowWrap>
 				{userIsFollow ? (
-					<Button size="sm" margin="0" btnColor={color.neon_2} height="1.8rem">
+					<Button
+						width="4.5rem"
+						margin="0"
+						btnColor={color.white}
+						border={`2px solid ${color.neon_2}`}
+						height="1.8rem"
+						fontColor={color.neon_2}
+						fontSize="0.8rem"
+						onClick={isFollowMember}
+					>
 						Following
-						<MdArrowDropDown size="1rem" />
 					</Button>
 				) : (
-					<Button size="sm" margin="0" btnColor={color.neon_2} height="1.8rem">
+					<Button
+						width="4.5rem"
+						fontSize="0.8rem"
+						margin="0"
+						btnColor={color.neon_2}
+						height="1.8rem"
+						onClick={isFollowMember}
+					>
 						Follow
 					</Button>
 				)}

@@ -24,10 +24,10 @@ const NonePost = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 2rem;
+	font-size: 1.7rem;
 	text-align: center;
 
-	color: ${(props) => props.theme.black};
+	color: ${(props) => props.theme.gray_6};
 `;
 
 type Props = {
@@ -44,7 +44,7 @@ function PostList({ postList }: Props) {
 			</PostListTemplate>
 			{postList.length === 0 ? (
 				<NonePost>
-					None Post <br /> Please write your story!
+					게시글이 없습니다. <br /> 게시글을 작성해보세요!
 				</NonePost>
 			) : (
 				<></>

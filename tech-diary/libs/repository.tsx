@@ -372,3 +372,33 @@ export const requestSearchPosts = (req: { searchWord: string }) =>
 		.catch((error) => {
 			throw error;
 		});
+
+export const requestIsFollow = (req: { followMemberId: string; memberId: string; token: string }) =>
+	axios
+		.post(
+			`${server.host}/social`,
+			{
+				followMemberId: req.followMemberId,
+				memberId: req.memberId,
+			},
+			{
+				headers: {
+					token: req.token,
+				},
+			}
+		)
+		.catch((error) => {
+			throw error;
+		});
+
+export const requestGetFollowInfo = (req: { type: string; memberId: string }) =>
+	axios
+		.get(`${server.host}/social`, {
+			params: {
+				memberId: req.memberId,
+				type: req.type,
+			},
+		})
+		.catch((error) => {
+			throw error;
+		});
