@@ -10,8 +10,6 @@ import { getStorage } from 'libs/storage';
 import PostComment from 'components/post/PostCommentTemplate';
 import { TypeDecoded } from 'store/types/auth.types';
 // import PostBottom from 'components/post/PostBottom';
-import { ToastContainer } from 'react-toastify';
-
 const SinglePostTemplate = styled.div`
 	display: flex;
 	justify-content: center;
@@ -41,6 +39,8 @@ const Title = styled.div`
 `;
 
 const Thumbnail = styled.img`
+	width: 50rem;
+	height: 25rem;
 	margin-top: 8rem;
 	object-fit: contain;
 `;
@@ -61,7 +61,9 @@ type Props = {
 	copyUrl: () => void;
 	sharePostToFacebook: () => void;
 	sharePostToTwitter: () => void;
+	isFollowMember: () => void;
 	dispatchForUpdateState: any;
+	userIsFollow: boolean;
 	setCommentList: (dispatch: Comment[]) => void;
 
 	optionState: OptionState;
@@ -82,6 +84,8 @@ function SinglePost({
 	openConfirmModal,
 	moveToComment,
 	goEditPostPage,
+	isFollowMember,
+	userIsFollow,
 	dispatchForUpdateState,
 	setCommentList,
 
@@ -91,7 +95,7 @@ function SinglePost({
 	bookMarkToggleValue,
 	shareItemOpenToggleValue,
 }: Props) {
-	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id, memberId } = data;
+	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id, memberId, followers } = data;
 	const [userIsLike, setUserIsLike] = useState(false);
 	const [isMine, setIsMine] = useState(false);
 
@@ -119,10 +123,12 @@ function SinglePost({
 				optionState={optionState}
 				shareItemOpenToggleValue={shareItemOpenToggleValue}
 				toggleLike={toggleLike}
+				isFollowMember={isFollowMember}
 				toggleBookMark={toggleBookMark}
 				toggleShareItemOpen={toggleShareItemOpen}
 				bookMarkToggleValue={bookMarkToggleValue}
 				closeShareItem={closeShareItem}
+				userIsFollow={userIsFollow}
 				copyUrl={copyUrl}
 				sharePostToTwitter={sharePostToTwitter}
 				sharePostToFacebook={sharePostToFacebook}
@@ -137,6 +143,7 @@ function SinglePost({
 					member={member}
 					createTime={createTime}
 					isMine={isMine}
+					followers={followers}
 					openConfirmModal={openConfirmModal}
 					goEditPostPage={goEditPostPage}
 				/>
@@ -144,7 +151,6 @@ function SinglePost({
 				{/* <PostBottom /> */}
 				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
 			</SinglePostContentsWrap>
-			<ToastContainer autoClose={1000} />
 		</SinglePostTemplate>
 	);
 }

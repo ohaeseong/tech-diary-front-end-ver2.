@@ -11,6 +11,8 @@ const Btn = styled.button<{
 	height?: string;
 	color?: string;
 	fontSize?: string;
+	border?: string;
+	fontColor?: string;
 }>`
 	display: flex;
 	align-items: center;
@@ -22,7 +24,6 @@ const Btn = styled.button<{
 	color: ${color.light_purple};
 	padding: 0.5rem 1rem;
 	transform: 0.3s ease-in-out;
-	font-family: 'Spoqa Han Sans';
 	cursor: pointer;
 	border-radius: 5px;
 
@@ -79,6 +80,18 @@ const Btn = styled.button<{
 		`
         background-color: ${props.color};
 	`}
+
+	${(props) =>
+		props.border &&
+		`
+        border: ${props.border};
+	`}
+
+	${(props) =>
+		props.fontColor &&
+		`
+        color: ${props.fontColor};
+	`}
 	
 	& > * {
 		margin-left: 0.4rem;
@@ -93,10 +106,23 @@ type Props = {
 	height?: string;
 	btnColor?: string;
 	fontSize?: string;
-	onClick?: () => void;
+	border?: string;
+	fontColor?: string;
+	onClick?: (params?: any) => void;
 };
 
-function Button({ size = 'default', margin = '', children, width, height, onClick, btnColor, fontSize }: Props) {
+function Button({
+	size = 'default',
+	margin = '',
+	children,
+	width,
+	height,
+	onClick,
+	btnColor,
+	fontColor,
+	fontSize,
+	border,
+}: Props) {
 	return (
 		<Btn
 			size={size}
@@ -106,6 +132,8 @@ function Button({ size = 'default', margin = '', children, width, height, onClic
 			onClick={onClick}
 			color={btnColor}
 			fontSize={fontSize}
+			border={border}
+			fontColor={fontColor}
 		>
 			{children}
 		</Btn>

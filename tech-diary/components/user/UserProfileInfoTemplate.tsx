@@ -11,8 +11,7 @@ import Link from 'next/link';
 const UserProfileInfoWrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	width: 20rem;
+	width: 17rem;
 	min-height: 100vh;
 	margin-right: 2rem;
 `;
@@ -53,14 +52,10 @@ const UserProfileImageLabel = styled.label`
 `;
 
 const UserName = styled.div`
-	/* width: 100%; */
 	display: flex;
 	justify-content: flex-start;
 	margin-top: 4rem;
-	/* padding-left: 6.5rem; */
-	margin-right: 5rem;
 	font-size: 1.7rem;
-	/* border: 1px solid black; */
 
 	color: ${(props) => props.theme.black};
 
@@ -104,7 +99,6 @@ const InfoUpdateInput = styled.input<{ type?: string }>`
 	border: 1px solid ${(props) => props.theme.gray_2};
 	padding: 0.5rem;
 	border-radius: 7px;
-	margin-left: 1.5rem;
 	background-color: ${(props) => props.theme.white};
 
 	${(props) => {
@@ -208,11 +202,11 @@ function UserProfileInfoTemplate({
 				<FollowWrap>
 					<FiUsers size="1rem" />
 					<Link href={`/${userInfo.memberId}/followers`}>
-						<div>0 followers</div>
+						<div>{userInfo.followers} followers</div>
 					</Link>{' '}
 					•
-					<Link href={`${userInfo.memberId}/followings`}>
-						<div>0 followings</div>
+					<Link href={`/${userInfo.memberId}/followings`}>
+						<div>{userInfo.followings} followings</div>
 					</Link>
 				</FollowWrap>
 				{userEmail || isEdit ? (

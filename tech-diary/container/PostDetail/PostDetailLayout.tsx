@@ -9,7 +9,13 @@ import { PostDetail } from 'store/types/post.types';
 // import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { requestDeletePost, requestPostLike, requestBookmark, requestIsCheckBookmark } from 'libs/repository';
+import {
+	requestDeletePost,
+	requestPostLike,
+	requestBookmark,
+	requestIsCheckBookmark,
+	requestIsFollow,
+} from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 import { toast } from 'react-toastify';
@@ -42,6 +48,7 @@ function PostDetailLayout({ post }: Props) {
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [bookMarkToggleValue, bookMarkToggle] = useState(false);
 	const [isCheckBookmark, setIsCheckBookmark] = useState(false);
+	const [userIsFollow, setUserIsFollow] = useState(false);
 
 	const [, , onLikePost] = useRequest(requestPostLike);
 	const [, , onDeleteRequest] = useRequest(requestDeletePost);
@@ -49,6 +56,8 @@ function PostDetailLayout({ post }: Props) {
 	const [checkBookmarkRes, , checkBookmark] = useRequest(requestIsCheckBookmark);
 	const router = useRouter();
 	const dispatch = useDispatch();
+
+	const [, , onRequestIsFollow, ,] = useRequest(requestIsFollow);
 
 	// const themeMode = theme === 'light';
 
@@ -75,8 +84,7 @@ function PostDetailLayout({ post }: Props) {
 	const toggleLike = useCallback(() => {
 		const token = getStorage('tech-token');
 		if (!token) {
-			const toastMassege = '로그인 후 이용해 주세요!';
-			toast.warning(toastMassege, {
+			toast.warning('로그인 후 이용해 주세요!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 
@@ -113,7 +121,9 @@ function PostDetailLayout({ post }: Props) {
 	const toggleBookMark = useCallback(async () => {
 		const token = getStorage('tech-token');
 		if (!token) {
-			alert('로그인 후 이용해 주세요!');
+			toast.warning('로그인 후 이용해 주세요', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
 
 			return;
 		}
@@ -160,6 +170,37 @@ function PostDetailLayout({ post }: Props) {
 			position: toast.POSITION.TOP_RIGHT,
 		});
 	}, [router.asPath]);
+
+	const isFollowMember = useCallback(async () => {
+		const token = getStorage('tech-token');
+
+		if (!token) {
+			toast.warning('로그인 후 이용해 주세요', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+
+			return;
+		}
+
+		const requestMemberId = getStorage('user-info') as UserInfo;
+		const followMemberId = memberId;
+
+		if (requestMemberId.memberId === followMemberId) return;
+
+		const req = {
+			memberId: requestMemberId.memberId,
+			followMemberId,
+			token,
+		};
+
+		await onRequestIsFollow(req);
+
+		setUserIsFollow(!userIsFollow);
+
+		// toast.success(`${memberId} 팔로우!`, {
+		// 	position: toast.POSITION.TOP_RIGHT,
+		// });
+	}, [memberId, onRequestIsFollow, userIsFollow]);
 
 	const sharePostToFacebook = useCallback(() => {
 		window.open(
@@ -238,6 +279,8 @@ function PostDetailLayout({ post }: Props) {
 				shareItemOpenToggleValue={shareItemOpenToggleValue}
 				optionState={state}
 				setCommentList={setCommentListData}
+				userIsFollow={userIsFollow}
+				isFollowMember={isFollowMember}
 				commentList={commentListData}
 				data={post}
 			/>
