@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import React, { ReactNode } from 'react';
-import { color } from 'styles/color';
 
 const AccountTemplateBackground = styled.div`
 	display: flex;
