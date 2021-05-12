@@ -8,7 +8,7 @@ const AccountTemplateBackground = styled.div`
 	height: 100vh;
 	align-items: center;
 	justify-content: center;
-	${color.gradation};
+	${(props) => props.theme.gradation};
 `;
 
 type Props = {
