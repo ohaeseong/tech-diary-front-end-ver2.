@@ -5,7 +5,6 @@ import { AiTwotoneStar, AiOutlineShareAlt } from 'react-icons/ai';
 import { ImLink } from 'react-icons/im';
 import { FaComment, FaTwitter, FaFacebook } from 'react-icons/fa';
 import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs';
-import { MdArrowDropDown } from 'react-icons/md';
 
 import { color } from 'styles/color';
 import { moveLeft, moveDown, moveAngle } from 'styles/animation';
@@ -47,7 +46,7 @@ const SubIconWrap = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
-	padding-top: 1rem;
+	/* padding-top: 1rem; */
 
 	& > * {
 		color: ${(props) => props.theme.gray_4};
@@ -173,6 +172,7 @@ type Props = {
 	isFollowMember: () => void;
 	dispatchForUpdateState: any;
 
+	isMine: boolean;
 	optionState: OptionState;
 	userIsLike: boolean;
 	userIsFollow?: boolean;
@@ -194,6 +194,7 @@ function PostLikeOption({
 
 	optionState,
 	userIsLike,
+	isMine,
 	userIsFollow,
 	bookMarkToggleValue,
 	shareItemOpenToggleValue,
@@ -239,30 +240,36 @@ function PostLikeOption({
 				<CountWrap>{commentCount}</CountWrap>
 			</ItemWrap>
 			<FollowWrap>
-				{userIsFollow ? (
-					<Button
-						width="4.5rem"
-						margin="0"
-						btnColor={color.white}
-						border={`2px solid ${color.neon_2}`}
-						height="1.8rem"
-						fontColor={color.neon_2}
-						fontSize="0.8rem"
-						onClick={isFollowMember}
-					>
-						Following
-					</Button>
+				{isMine ? (
+					<></>
 				) : (
-					<Button
-						width="4.5rem"
-						fontSize="0.8rem"
-						margin="0"
-						btnColor={color.neon_2}
-						height="1.8rem"
-						onClick={isFollowMember}
-					>
-						Follow
-					</Button>
+					<>
+						{userIsFollow ? (
+							<Button
+								width="4.5rem"
+								margin="0 0 0.5rem 0"
+								btnColor={color.white}
+								border={`2px solid ${color.neon_2}`}
+								height="1.8rem"
+								fontColor={color.neon_2}
+								fontSize="0.8rem"
+								onClick={isFollowMember}
+							>
+								Following
+							</Button>
+						) : (
+							<Button
+								width="4.5rem"
+								fontSize="0.8rem"
+								margin="0 0 0.5rem 0"
+								btnColor={color.neon_2}
+								height="1.8rem"
+								onClick={isFollowMember}
+							>
+								Follow
+							</Button>
+						)}
+					</>
 				)}
 			</FollowWrap>
 			<SubIconWrap>

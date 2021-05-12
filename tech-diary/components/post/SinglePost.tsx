@@ -39,8 +39,8 @@ const Title = styled.div`
 `;
 
 const Thumbnail = styled.img`
-	width: 50rem;
-	height: 25rem;
+	/* width: 50rem;
+	height: 25rem; */
 	margin-top: 8rem;
 	object-fit: contain;
 `;
@@ -131,6 +131,7 @@ function SinglePost({
 				userIsFollow={userIsFollow}
 				copyUrl={copyUrl}
 				sharePostToTwitter={sharePostToTwitter}
+				isMine={isMine}
 				sharePostToFacebook={sharePostToFacebook}
 				moveToComment={moveToComment}
 				dispatchForUpdateState={dispatchForUpdateState}

@@ -79,16 +79,16 @@ function LoginLayout() {
 			email,
 		};
 
-		const response = await onRequestSendEmail(req);
+		await onRequestSendEmail(req);
 
-		if (response.status === 403) {
-			setModalMsg({
-				isError: true,
-				message: '이미 가입된 이메일 입니다.',
-			});
+		// if (response.status === 403) {
+		// 	setModalMsg({
+		// 		isError: true,
+		// 		message: '이미 가입된 이메일 입니다.',
+		// 	});
 
-			return;
-		}
+		// 	return;
+		// }
 
 		closeModalBox();
 		toast.success('메일함을 확인해 주세요!', {
@@ -134,6 +134,7 @@ function LoginLayout() {
 						margin="1rem 0 2rem 0"
 						value={email}
 						onChange={handleEmail}
+						placeholder="이미 가입된 이메일로 요청할 경우 해당 계정으로 로그인 링크가 전송됩니다."
 						size="regular"
 						justifyContent="center"
 					/>

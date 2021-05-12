@@ -79,10 +79,11 @@ type Props = {
 	fontSize?: string;
 	width?: string;
 	height?: string;
+	isPassword?: boolean;
 	handleFocus?: () => void;
 };
 
-function Input({ onChange, placeholder, width, height, handleFocus, isFocus, value, fontSize }: Props) {
+function Input({ onChange, placeholder, width, height, handleFocus, isFocus, value, fontSize, isPassword }: Props) {
 	return (
 		<InputStyled
 			onChange={onChange}
@@ -90,6 +91,7 @@ function Input({ onChange, placeholder, width, height, handleFocus, isFocus, val
 			onFocus={handleFocus}
 			onBlur={handleFocus}
 			fontSize={fontSize}
+			type={isPassword ? 'password' : ''}
 			value={value || ''}
 			isFocus={isFocus}
 			width={width}

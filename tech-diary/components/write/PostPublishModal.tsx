@@ -230,6 +230,7 @@ type Props = {
 	handlePostIntro: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 	resetThumbnail: () => void;
 	handlePublicState: (publicState: boolean) => void;
+	isEdit: boolean;
 	isPublic: boolean;
 	thumbnailImage: string;
 	slugUrl: string;
@@ -245,6 +246,7 @@ function PostPublishModal({
 	handlePostIntro,
 	resetThumbnail,
 	handlePublicState,
+	isEdit,
 	isPublic,
 	thumbnailImage,
 	slugUrl,
@@ -329,7 +331,7 @@ function PostPublishModal({
 										</KindsSelect>
 										<ButtonGroup sortDirection="row" margin="7rem 0 0 0">
 											<Button btnColor={color.neon_2} onClick={onPublishPost} width="100%">
-												출간 하기
+												{!isEdit ? '출간 하기' : '수정 하기'}
 											</Button>
 										</ButtonGroup>
 									</PostPublishSetCardWrap>

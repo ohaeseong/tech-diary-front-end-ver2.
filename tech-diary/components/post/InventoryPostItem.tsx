@@ -17,7 +17,7 @@ const InventoryPostItemWrap = styled.div`
 `;
 
 const ThumbnailWrap = styled.img`
-	width: 20rem;
+	width: 15rem;
 	height: 10rem;
 	margin-left: 1rem;
 	object-fit: contain;

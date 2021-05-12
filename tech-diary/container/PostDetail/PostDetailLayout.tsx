@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 // import { ThemeProvider } from '@emotion/react';
 // import jwt from 'jsonwebtoken';
 
 import SinglePost from 'components/post/SinglePost';
-import { PostDetail } from 'store/types/post.types';
+import { FollowInfo, PostDetail } from 'store/types/post.types';
 // import { NavBar } from 'components/base/NavBar';
 // import useDarkMode from 'libs/hooks/useDarkMode';
 // import { color, dark } from 'styles/color';
@@ -15,6 +15,7 @@ import {
 	requestBookmark,
 	requestIsCheckBookmark,
 	requestIsFollow,
+	requestGetFollowInfo,
 } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
@@ -54,6 +55,7 @@ function PostDetailLayout({ post }: Props) {
 	const [, , onDeleteRequest] = useRequest(requestDeletePost);
 	const [, , onBookmark] = useRequest(requestBookmark);
 	const [checkBookmarkRes, , checkBookmark] = useRequest(requestIsCheckBookmark);
+	const [, , onGetFollowInfo, ,] = useRequest(requestGetFollowInfo, true);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -77,7 +79,7 @@ function PostDetailLayout({ post }: Props) {
 	const goEditPostPage = useCallback(() => {
 		const userInfo = getStorage('user-info') as UserInfo;
 		if (memberId === userInfo.memberId) {
-			router.push(`/write?id=${id}`);
+			router.push(`/write?id=${id}&update=1`);
 		}
 	}, [id, memberId, router]);
 
@@ -226,6 +228,26 @@ function PostDetailLayout({ post }: Props) {
 			},
 		});
 	}, [commentCount, dispatch]);
+
+	useLayoutEffect(() => {
+		const userInfo = getStorage('user-info') as UserInfo;
+		if (userInfo) {
+			const req = {
+				memberId: userInfo.memberId,
+				type: 'following',
+			};
+			const response = onGetFollowInfo(req);
+			if (response) {
+				response.then((data) => {
+					data.data.memberList.forEach((member: FollowInfo) => {
+						if (member.following === memberId) {
+							setUserIsFollow(true);
+						}
+					});
+				});
+			}
+		}
+	}, [commentCount, memberId, onGetFollowInfo, userIsFollow]);
 
 	useEffect(() => {
 		window.scrollTo({ top: 0, left: 0, behavior: 'auto' });

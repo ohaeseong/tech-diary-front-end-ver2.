@@ -20,7 +20,7 @@ const ModalOver = styled.div`
 	opacity: 0.6;
 	width: 100%;
 	height: 100%;
-	background-color: ${color.gray_0};
+	background-color: ${(props) => props.theme.gray_0};
 `;
 
 const BoxWrap = styled.div`
@@ -30,7 +30,7 @@ const BoxWrap = styled.div`
 	flex-direction: column;
 	min-width: 25rem;
 	min-height: 15rem;
-	background-color: ${color.white};
+	background-color: ${(props) => props.theme.white};
 	animation: ${toBig} 0.5s;
 	border-radius: 5px;
 	padding: 0 1rem;

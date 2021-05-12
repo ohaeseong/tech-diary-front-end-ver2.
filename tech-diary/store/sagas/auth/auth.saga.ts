@@ -112,7 +112,7 @@ function* onRegisterWithGithub(action: ReturnType<typeof onGithubAuthRegister.re
 }
 
 function* onRegisterAuth(action: ReturnType<typeof onAuthRegister.request>) {
-	const { memberId, memberName, pw, introduce, code, successCB } = action.payload;
+	const { memberId, memberName, pw, introduce, code, successCB, failCB } = action.payload;
 
 	const { status, data } = yield call(authRepo.registerAuth, {
 		memberId,
@@ -122,12 +122,19 @@ function* onRegisterAuth(action: ReturnType<typeof onAuthRegister.request>) {
 		introduce,
 	});
 
+	if (status === 401) {
+		// yield put(setRegisterErrorMsg('잘못된 접근입니다.'));
+		yield executeCallback(failCB);
+		return;
+	}
+
 	if (status === 403) {
 		yield put(setRegisterErrorMsg('이미 가입된 아이디 입니다.'));
 		return;
 	}
 
 	if (status === 400) {
+		yield put(setRegisterErrorMsg('잘못된 요청입니다.'));
 		return;
 	}
 

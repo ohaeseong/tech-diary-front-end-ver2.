@@ -98,7 +98,7 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 	const [searchPosts, , searchMemberPosts, ,] = useRequest(requestSearchMemberPosts, true);
 	const [, , onUploadImage, ,] = useRequest(uploadImage, true);
 	const [introText, setIntroText] = useState(userInfo.introduce || '소개글을 작성해 보세요!');
-	const [userEmail, setUserEmail] = useState(userInfo.email);
+	const [userEmail, setUserEmail] = useState(userInfo.displayEmail);
 	const [userName, setUserName] = useState(userInfo.memberName);
 	const [userProfileImage, setUserProfileImage] = useState(userInfo.profileImage || '/static/user.png');
 	const [userPosts, setUserPosts] = useState(posts || []);
