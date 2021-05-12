@@ -81,14 +81,14 @@ function LoginLayout() {
 
 		await onRequestSendEmail(req);
 
-		// if (response.status === 403) {
-		// 	setModalMsg({
-		// 		isError: true,
-		// 		message: '이미 가입된 이메일 입니다.',
-		// 	});
+		if (response.status === 403) {
+			setModalMsg({
+				isError: true,
+				message: '이미 가입된 이메일 입니다.',
+			});
 
-		// 	return;
-		// }
+			return;
+		}
 
 		closeModalBox();
 		toast.success('메일함을 확인해 주세요!', {
