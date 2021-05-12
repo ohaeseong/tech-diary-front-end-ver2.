@@ -25,6 +25,7 @@ const UserProfileImage = styled.img`
 	height: 15rem;
 	border-radius: 50%;
 	margin-top: 5rem;
+	object-fit: cover;
 	border: 1px solid ${color.gray_1};
 `;
 
@@ -85,7 +86,7 @@ const EmailInputWrap = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin-top: 1.5rem;
+	margin-top: 2rem;
 
 	& > * {
 		color: ${(props) => props.theme.gray_4};
@@ -136,7 +137,7 @@ const FollowWrap = styled.div`
 
 const InfoContents = styled.span`
 	max-width: 100%;
-	font-size: 1rem;
+	font-size: 0.8rem;
 	font-family: 'Spoqa Han Sans Thin';
 	margin-left: 1.5rem;
 	word-break: break-all;

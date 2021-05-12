@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { RootState } from 'store/modules';
 import SignUpTemplate from 'components/account/signup/SignUpTemplate';
 import { AUTH_REGISTER_REQUEST } from 'store/modules/register.auth';
@@ -43,6 +45,13 @@ function SignUpContainer() {
 				pw: memberPw,
 				successCB: () => {
 					router.push('/');
+				},
+				failCB: () => {
+					router.push('/');
+
+					toast.error('잘못된 접근입니다.', {
+						position: toast.POSITION.TOP_RIGHT,
+					});
 				},
 			},
 		});

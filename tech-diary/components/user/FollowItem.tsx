@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
-import { FollowInfo, Member } from 'store/types/post.types';
+import { FollowInfo } from 'store/types/post.types';
 import Button from 'components/common/Button';
 import { color } from 'styles/color';
 import { getStorage } from 'libs/storage';
@@ -42,6 +42,7 @@ const ProfileImage = styled.img`
 	height: 3rem;
 	border-radius: 50%;
 	margin-right: 1.5rem;
+	object-fit: cover;
 	cursor: pointer;
 `;
 
@@ -82,6 +83,7 @@ function FollowItem({ item, isFollowers, setFollowList }: Props) {
 	const [, , onRequestIsFollow, ,] = useRequest(requestIsFollow);
 	const [, , onGetFollowInfo, ,] = useRequest(requestGetFollowInfo, true);
 	const { memberId, memberName, profileImage } = item.member;
+	const { isFollow } = item;
 
 	const isFollowMember = useCallback(async () => {
 		const token = getStorage('tech-token');
@@ -127,7 +129,7 @@ function FollowItem({ item, isFollowers, setFollowList }: Props) {
 				</InfoWrap>
 			</ProfileWrap>
 			<Button height="2rem" btnColor={color.neon_2} margin="0 1rem 0 0" onClick={isFollowMember}>
-				{isFollowers ? 'Follow' : 'UnFollow'}
+				{!isFollowers || isFollow ? 'UnFollow' : 'Follow'}
 			</Button>
 		</FollowItemWrap>
 	);

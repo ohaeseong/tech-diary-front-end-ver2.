@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Member, Tag } from 'store/types/post.types';
+import { FollowInfo, Member, Tag } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 import Link from 'next/link';
-import { UserInfo } from 'store/types/auth.types';
 
 const PostInfoWrap = styled.div`
 	display: flex;
@@ -89,7 +88,7 @@ type Props = {
 	member: Member;
 	createTime: string;
 	isMine: boolean;
-	followers: number;
+	followers: FollowInfo[];
 	openConfirmModal: () => void;
 	goEditPostPage: () => void;
 };
@@ -110,7 +109,7 @@ function PostInfo({ tagData, member, createTime, isMine, followers, openConfirmM
 					<Link href={`/${memberId}`}>
 						<UserIdTxt>{memberName}</UserIdTxt>
 					</Link>
-					<InfoTxt>{followers} followers</InfoTxt>
+					<InfoTxt>{followers.length} followers</InfoTxt>
 				</UserInfoWrap>
 				<InfoTxt>{dateFormat}</InfoTxt>
 			</PostInfoHeader>

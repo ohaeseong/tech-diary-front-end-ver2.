@@ -119,6 +119,7 @@ const ProfileImage = styled.img`
 	height: 100%;
 
 	border-radius: 50%;
+	object-fit: cover;
 
 	&:hover {
 		cursor: pointer;
@@ -296,7 +297,6 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 			router.reload();
 		} else {
 			router.push('/');
-			router.reload();
 		}
 	}, [router]);
 
@@ -322,7 +322,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		} else {
 			setIsToken(false);
 		}
-	}, [isToken]);
+	}, [isToken, router]);
 
 	useEffect(() => {
 		if (profileImage) {
@@ -368,7 +368,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 			<NavBarContent isScroll={isScroll} isMain={isMain}>
 				<Link href="/">
 					<Logo isScroll={isScroll} isMain={isMain}>
-						Work It
+						Work-It
 					</Logo>
 				</Link>
 				<Link href="/search">

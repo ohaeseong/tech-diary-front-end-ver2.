@@ -87,6 +87,7 @@ function MarkdownEditorContainer() {
 	const [slugUrl, setSlugUrl] = useState(title);
 	const [thumbnailImage, setThumbnailAddress] = useState('');
 	const [postIntro, setPostIntro] = useState('');
+	const [isEdit, setIsEdit] = useState(false);
 
 	const [isOpenModal, modalToggle] = useToggle(false);
 	const [isPublic, isPublicToggle] = useToggle(true);
@@ -138,6 +139,7 @@ function MarkdownEditorContainer() {
 			body = `${body} \n ![](${imageAddress})`;
 
 			setMarkdownText(body);
+			if (!thumbnailImage) setThumbnailAddress(imageAddress);
 		},
 		[markdownText, uploadImageUtil]
 	);
@@ -309,6 +311,18 @@ function MarkdownEditorContainer() {
 			publishType = 2;
 		}
 
+		if (isEdit) {
+			const req = {
+				id,
+				title,
+				contents: markdownText,
+				tags,
+				thumbnailAddress: thumbnailImage,
+				token,
+			} as PostUpdate;
+			await onUpdatePost(req);
+		}
+
 		const publishReq = {
 			id,
 			kinds,
@@ -383,6 +397,13 @@ function MarkdownEditorContainer() {
 	}, [getLastPost, router.query.id]);
 
 	useEffect(() => {
+		const isUpdate = router.query.update;
+		if (isUpdate) {
+			setIsEdit(true);
+		}
+	}, [router]);
+
+	useEffect(() => {
 		if (lastPostData) {
 			const initTagList: any = lastPostData.data.post.tagList.tagData;
 			const tags: any = [];
@@ -446,6 +467,7 @@ function MarkdownEditorContainer() {
 				slugUrl={slugUrl}
 				modalToggle={modalToggle}
 				onPublishPost={onSavePost}
+				isEdit={isEdit}
 				handleKindsValue={handleKindsValue}
 				thumbnailImage={thumbnailImage}
 				handleUrl={handleUrl}

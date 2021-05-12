@@ -55,7 +55,7 @@ export type PostDetail = {
 	like: Like[];
 	member: Member;
 	commentCount: number;
-	followers: number;
+	followers: FollowInfo[];
 };
 
 export type PostUpdate = {
@@ -63,6 +63,7 @@ export type PostUpdate = {
 	title: string;
 	contents: string;
 	token: string;
+	state: number;
 	thumbnailAddress?: string;
 	tags?: Array<string>;
 };
@@ -103,4 +104,5 @@ export type FollowInfo = {
 	following?: string;
 	createTime: string;
 	member: Member;
+	isFollow?: boolean;
 };

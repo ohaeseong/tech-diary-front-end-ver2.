@@ -27,6 +27,7 @@ export type UserInfo = {
 	memberName: string;
 	memberId: string;
 	email: string;
+	displayEmail: string;
 	followers: number;
 	followings: number;
 };

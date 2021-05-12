@@ -69,7 +69,7 @@ const Label = styled.span<{ isFocus: boolean }>`
 		if (props.isFocus) {
 			return `color: ${color.neon_2}`;
 		}
-		return `color: ${color.gray_5}`;
+		return `color: ${props.theme.gray_5}`;
 	}}
 `;
 
@@ -80,10 +80,11 @@ type Props = {
 	margin?: string;
 	size?: string;
 	justifyContent?: string;
+	isPassword?: boolean;
 	placeholder?: string;
 };
 
-function LabelInput({ onChange, placeholder, label, value, margin, size, justifyContent }: Props) {
+function LabelInput({ onChange, placeholder, label, value, margin, size, justifyContent, isPassword }: Props) {
 	const [onFocus, setOnFocus] = useState(false);
 
 	const handleFocus = useCallback(() => {
@@ -99,6 +100,7 @@ function LabelInput({ onChange, placeholder, label, value, margin, size, justify
 			<Label isFocus={onFocus}>{label}</Label>
 			<Input
 				fontSize={size}
+				isPassword={isPassword}
 				onChange={onChange}
 				placeholder={placeholder}
 				handleFocus={handleFocus}

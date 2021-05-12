@@ -121,7 +121,7 @@ function SignUpTemplate({
 	return (
 		<SignUpWrap>
 			<Haed>
-				<Title>Tech Diary에 오신걸 환영합니다!</Title>
+				<Title>Work-It 오신걸 환영합니다!</Title>
 				<Description>기본 회원 정보를 등록해주세요.</Description>
 			</Haed>
 			<Body>
@@ -136,7 +136,7 @@ function SignUpTemplate({
 						<>
 							<LabelInput label="이름" margin="2rem 0 0 0" value={memberName} onChange={handleMemberName} />
 							<LabelInput label="아이디" margin="2rem 0 0 0" value={memberId} onChange={handleMemberId} />
-							<LabelInput label="비밀번호" margin="2rem 0 0 0" value={memberPw} onChange={handleMemberPw} />
+							<LabelInput label="비밀번호" margin="2rem 0 0 0" value={memberPw} onChange={handleMemberPw} isPassword />
 							<LabelInput label="한줄소개" margin="2rem 0 0 0" value={introduce} onChange={handleIntroduce} />
 						</>
 					)}
