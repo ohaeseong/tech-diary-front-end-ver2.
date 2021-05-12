@@ -79,7 +79,7 @@ function LoginLayout() {
 			email,
 		};
 
-		await onRequestSendEmail(req);
+		const response = await onRequestSendEmail(req);
 
 		if (response.status === 403) {
 			setModalMsg({
