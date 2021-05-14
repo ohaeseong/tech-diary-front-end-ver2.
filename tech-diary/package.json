@@ -27,7 +27,7 @@
     "codemirror": "^5.59.2",
     "immer": "^8.0.0",
     "jsonwebtoken": "^8.5.1",
-    "next": "^10.2.1-canary.2",
+    "next": "^10.2.0",
     "next-compose-plugins": "^2.2.1",
     "next-redux-wrapper": "^6.0.2",
     "next-transpile-modules": "^6.0.0",

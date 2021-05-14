@@ -34,8 +34,8 @@ const ModalBox = styled.div`
 
 const Head = styled.div`
 	text-align: center;
-	height: 3rem;
 	font-family: 'Spoqa Han Sans Regular';
+	height: 3rem;
 	color: ${(props) => props.theme.neon_2};
 	line-height: 3rem;
 	font-size: 1.3rem;

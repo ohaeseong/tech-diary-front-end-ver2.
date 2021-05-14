@@ -60,7 +60,6 @@ const InputWrap = styled.div<{ margin?: string; size?: string; justifyContent?: 
 `;
 
 const Label = styled.span<{ isFocus: boolean }>`
-	font-family: 'Spoqa Han Sans Regular';
 	font-size: 1.5rem;
 	margin-right: 1rem;
 	transition: 0.2s ease-in-out;

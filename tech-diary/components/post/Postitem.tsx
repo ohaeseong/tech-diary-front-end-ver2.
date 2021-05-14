@@ -3,6 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { FaComment } from 'react-icons/fa';
 import { AiTwotoneStar } from 'react-icons/ai';
+import Image from 'next/image';
 
 import { Post } from 'store/types/post.types';
 import { css } from '@emotion/react';
@@ -34,6 +35,10 @@ const PostItemWrap = styled.div`
 	${mediaQuery(1056)} {
 		width: calc(50% - 2rem);
 	}
+
+	${mediaQuery(1024)} {
+		height: 30rem;
+	}
 	${mediaQuery(767)} {
 		margin: 0;
 		width: 100%;
@@ -58,17 +63,31 @@ const ThumbnailWrap = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
+	/* 
+	${mediaQuery(1408)} {
+		height: calc(25% - 2rem);
+	}
+	${mediaQuery(1312)} {
+		height: calc(33% - 1.8125rem);
+	} */
+
+	${mediaQuery(1024)} {
+		height: 12rem;
+	}
+	/* ${mediaQuery(767)} {
+		height: 15rem;
+	} */
 `;
 
-const Thumbnail = styled.img`
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;
+// const Thumbnail = styled.img`
+// 	position: absolute;
+// 	top: 0px;
+// 	left: 0px;
+// 	width: 100%;
+// 	height: 100%;
 
-	object-fit: cover;
-`;
+// 	object-fit: cover;
+// `;
 
 const PostContentsWrap = styled.div`
 	display: flex;
@@ -210,7 +229,16 @@ function PostItem({ item }: Props) {
 		<PostItemWrap>
 			<Link href={`/${memberId}/${onlySlug[2]}`}>
 				<ThumbnailWrap>
-					<Thumbnail src={thumbnailSrc} alt="thumbnail" />
+					<Image
+						src={thumbnailSrc}
+						alt="thumbnail"
+						// width={500}
+						// height={300}
+						objectFit="cover"
+						className="thumbnail"
+						layout="fill"
+						// priority
+					/>
 				</ThumbnailWrap>
 			</Link>
 			<PostContentsWrap>

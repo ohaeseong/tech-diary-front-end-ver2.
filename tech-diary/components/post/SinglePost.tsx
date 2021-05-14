@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import Image from 'next/image';
 import jwt from 'jsonwebtoken';
 
 import { Comment, PostDetail } from 'store/types/post.types';
@@ -26,6 +27,7 @@ const SinglePostContentsWrap = styled.div`
 	flex-direction: column;
 	margin-left: 3rem;
 	background-color: ${(props) => props.theme.white_1};
+	margin-top: 5rem;
 `;
 
 const Title = styled.div`
@@ -36,13 +38,6 @@ const Title = styled.div`
 	margin-bottom: 1rem;
 
 	color: ${(props) => props.theme.black};
-`;
-
-const Thumbnail = styled.img`
-	/* width: 50rem;
-	height: 25rem; */
-	margin-top: 8rem;
-	object-fit: contain;
 `;
 
 type OptionState = {
@@ -137,7 +132,20 @@ function SinglePost({
 				dispatchForUpdateState={dispatchForUpdateState}
 			/>
 			<SinglePostContentsWrap>
-				{thumbnailAddress ? <Thumbnail src={thumbnailAddress} alt="sigle_post_thumbnail" /> : <></>}
+				{thumbnailAddress ? (
+					<Image
+						src={thumbnailAddress}
+						alt="sigle_post_thumbnail"
+						width={500}
+						height={400}
+						objectFit="contain"
+						loading="eager"
+						priority
+						// priority
+					/>
+				) : (
+					<></>
+				)}
 				<Title>{title}</Title>
 				<PostInfo
 					tagData={tagList.tagData}

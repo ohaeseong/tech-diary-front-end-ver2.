@@ -13,6 +13,7 @@ const Template = styled.div`
 	height: 100%;
 	margin: 3rem auto;
 	width: 1728px;
+
 	${mediaQuery(1919)} {
 		width: 1376px;
 	}

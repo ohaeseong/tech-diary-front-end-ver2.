@@ -16,7 +16,7 @@ const PostLikeOptionBlock = styled.div`
 	position: sticky;
 	width: 5rem;
 	height: 12rem;
-	margin-top: 15rem;
+	margin-top: 25rem;
 	margin-left: -5rem;
 	top: 9rem;
 	display: flex;

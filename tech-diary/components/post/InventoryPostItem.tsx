@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { Post, Tag } from 'store/types/post.types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 
@@ -16,17 +17,16 @@ const InventoryPostItemWrap = styled.div`
 	cursor: pointer;
 `;
 
-const ThumbnailWrap = styled.img`
-	width: 15rem;
-	height: 10rem;
-	margin-left: 1rem;
-	object-fit: contain;
-`;
+// const ThumbnailWrap = styled.img`
+// 	width: 15rem;
+// 	height: 10rem;
+// 	margin-left: 1rem;
+// 	object-fit: contain;
+// `;
 
 const Head = styled.div`
 	height: 3rem;
 	line-height: 3rem;
-
 	font-family: 'Spoqa Han Sans Medium';
 	font-size: 1.5rem;
 
@@ -92,7 +92,20 @@ function InventoryPostItem({ item }: Props) {
 				<Head>{title}</Head>
 				<BodyWrap>
 					<Body>{intro || contents}</Body>
-					<ThumbnailWrap src={thumbnailAddress || '/static/loginTemplateImage.png'} alt="post_thumbnail_image" />
+					<Image
+						src={thumbnailAddress || '/static/loginTemplateImage.png'}
+						width={350}
+						height={250}
+						alt="post_thumbnail_image"
+						objectFit="contain"
+						className="inventoryPostThumbnail"
+						priority
+					/>
+					<style>{`
+						.inventoryPostThumbnail {
+							margin-left: 1rem !important;
+						}
+					`}</style>
 				</BodyWrap>
 				{tagList?.tagData.length !== 0 ? (
 					<TagGroup margin="0.5rem 0rem 1.2rem 0rem">

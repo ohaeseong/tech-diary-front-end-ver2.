@@ -56,29 +56,32 @@ function MyApp({ Component, pageProps }: Props) {
 		<>
 			<Head>
 				<meta charSet="utf-8" />
-				{/* <meta charSet="utf-8" />
-				<link
-					rel="preload"
-					href="/fonts/Spoqa Han Sans Neo Light.woff2"
-					as="font"
-					type="font/woff2"
-					crossOrigin="anonymous"
-				/> */}
-				{/* <link rel="preload" href="/fonts/Spoqa Han Sans Neo Regular.woff2" as="font" type="font/woff2" crossOrigin="" /> */}
-				{/* <link
-					rel="preload"
-					href="/fonts/Spoqa Han Sans Neo Medium.woff2"
-					as="font"
-					type="font/woff2"
-					crossOrigin="anonymous"
-				/>
-				<link
-					rel="preload"
-					href="/fonts/Spoqa Han Sans Neo Bold.woff2"
-					as="font"
-					type="font/woff2"
-					crossOrigin="anonymous"
-				/> */}
+				<style>{`
+						@font-face {
+							font-family: 'Spoqa Han Sans Regular';
+							font-weight: 400;
+							font-display: swap;
+							src: local('Spoqa Han Sans Regular'), url('/fonts/Spoqa Han Sans Neo Regular.woff2') format('woff2');
+						}
+						@font-face {
+							font-family: 'Spoqa Han Sans Thin';
+							font-weight: 400;
+							font-display: swap;
+							src: local('Spoqa Han Sans Thin'), url('/fonts/Spoqa Han Sans Neo Light.woff2') format('woff2');
+						}
+						@font-face {
+							font-family: 'Spoqa Han Sans Medium';
+							font-weight: 400;
+							font-display: swap;
+							src: local('Spoqa Han Sans Medium'), url('/fonts/Spoqa Han Sans Neo Medium.woff2') format('woff2');
+						}
+						@font-face {
+							font-family: 'Spoqa Han Sans Bold';
+							font-weight: 400;
+							font-display: swap;
+							src: local('Spoqa Han Sans Bold'), url('/fonts/Spoqa Han Sans Neo Bold.woff2') format('woff2');
+						}
+				`}</style>
 			</Head>
 			<ThemeProvider theme={themeMode ? dark : color}>
 				{isNotNav ? <></> : <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={isMain} />}

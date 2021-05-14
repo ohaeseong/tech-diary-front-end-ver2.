@@ -51,7 +51,6 @@ const IntroTextLength = styled.div`
 	color: ${(props) => props.theme.gray_3};
 	margin-right: 1rem;
 	font-size: 1.08rem;
-
 	font-family: 'Spoqa Han Sans Thin';
 `;
 
