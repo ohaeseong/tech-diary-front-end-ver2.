@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { requestGetFollowInfo, requestIsFollow } from 'libs/repository';
 import { UserInfo } from 'store/types/auth.types';
+import Link from 'next/link';
 
 const FollowItemWrap = styled.div`
 	display: flex;
@@ -120,11 +121,17 @@ function FollowItem({ item, isFollowers, setFollowList }: Props) {
 	return (
 		<FollowItemWrap>
 			<ProfileWrap>
-				<ProfileImage src={profileImage || '/static/user.png'} />
+				<Link href={`/${memberId}`}>
+					<ProfileImage src={profileImage || '/static/user.png'} />
+				</Link>
 				<InfoWrap>
 					<NameWrap>
-						<MemberId>{memberId}</MemberId>
-						<MemberName>{memberName}</MemberName>
+						<Link href={`/${memberId}`}>
+							<MemberId>{memberId}</MemberId>
+						</Link>
+						<Link href={`/${memberId}`}>
+							<MemberName>{memberName}</MemberName>
+						</Link>
 					</NameWrap>
 				</InfoWrap>
 			</ProfileWrap>

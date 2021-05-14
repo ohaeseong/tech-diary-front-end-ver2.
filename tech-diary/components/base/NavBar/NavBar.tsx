@@ -391,8 +391,6 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 							height={60}
 							objectFit="cover"
 							className="profileImage"
-							quality={100}
-							// priority
 						/>
 						<style>{`
 							.profileImage {

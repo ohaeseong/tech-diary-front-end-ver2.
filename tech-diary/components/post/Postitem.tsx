@@ -229,16 +229,7 @@ function PostItem({ item }: Props) {
 		<PostItemWrap>
 			<Link href={`/${memberId}/${onlySlug[2]}`}>
 				<ThumbnailWrap>
-					<Image
-						src={thumbnailSrc}
-						alt="thumbnail"
-						// width={500}
-						// height={300}
-						objectFit="cover"
-						className="thumbnail"
-						layout="fill"
-						// priority
-					/>
+					<Image src={thumbnailSrc} alt="thumbnail" objectFit="cover" className="thumbnail" layout="fill" />
 				</ThumbnailWrap>
 			</Link>
 			<PostContentsWrap>
