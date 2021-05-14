@@ -17,7 +17,7 @@ function DatabasePage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Blog database page</title>
+				<title>Work-it (database)</title>
 				<meta name="description" content="블로그 category database 페이지입니다." />
 			</Head>
 			<MainTemplate>

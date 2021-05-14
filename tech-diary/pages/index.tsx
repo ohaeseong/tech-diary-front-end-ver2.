@@ -16,7 +16,7 @@ function IndexPage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Main page</title>
+				<title>Work-It</title>
 				<meta name="description" content="인덱스 페이지입니다." />
 			</Head>
 			<MainTemplate>

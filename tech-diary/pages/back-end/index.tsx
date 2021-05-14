@@ -17,7 +17,7 @@ function BackEndPage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Blog back-end page</title>
+				<title>Work-it (back-end)</title>
 				<meta name="description" content="블로그 category back-end 페이지입니다." />
 			</Head>
 			<MainTemplate>
