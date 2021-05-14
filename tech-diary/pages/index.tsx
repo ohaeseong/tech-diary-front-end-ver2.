@@ -17,7 +17,7 @@ function IndexPage({ data }: Props) {
 		<>
 			<Head>
 				<title>Work-It</title>
-				<meta name="description" content="인덱스 페이지입니다." />
+				<meta name="description" content="Work-It 당신의 지식을 공유해 주세요!" />
 			</Head>
 			<MainTemplate>
 				<PostLayout posts={data.posts} />

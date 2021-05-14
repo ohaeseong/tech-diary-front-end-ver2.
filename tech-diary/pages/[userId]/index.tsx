@@ -25,8 +25,8 @@ function UserInfoPage({ userInfo, userPosts }: Props) {
 	return (
 		<>
 			<Head>
-				<title>{userId}</title>
-				<meta name="description" content="사용자 페이지" />
+				<title>Work-It ({userId})</title>
+				<meta name="description" content={`${userInfo.memberId}님의 게시글을 확인해보세요!`} />
 			</Head>
 			<UserProfileContainer userInfo={userInfo} posts={userPosts} />
 		</>
