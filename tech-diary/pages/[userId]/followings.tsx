@@ -27,6 +27,7 @@ function FollowingsPage({ followings, userInfo }: Props) {
 		<>
 			<Head>
 				<title>{userId} (팔로잉) </title>
+				<meta name="description" content={`${userInfo.memberId}님의 팔로잉 목록`} />
 			</Head>
 			<UserProfileContainer
 				userInfo={userInfo}

@@ -7,6 +7,7 @@ function GitHubLoginCallback() {
 		<>
 			<Head>
 				<title>github-login-callback</title>
+				<meta name="robots" content="noindex" />
 			</Head>
 			<GitHubCallbackComponent />
 		</>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Head from 'next/head';
 
 const NotFoundPageTemplate = styled.div`
 	display: flex;
@@ -11,7 +12,16 @@ const NotFoundPageTemplate = styled.div`
 `;
 
 function Custom404() {
-	return <NotFoundPageTemplate>404 - Page Not Found</NotFoundPageTemplate>;
+	return (
+		<>
+			<>
+				<Head>
+					<meta name="robots" content="noindex" />
+				</Head>
+			</>
+			<NotFoundPageTemplate>404 - Page Not Found</NotFoundPageTemplate>
+		</>
+	);
 }
 
 export default Custom404;
