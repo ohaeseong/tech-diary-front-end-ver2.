@@ -41,10 +41,12 @@ export type PostDetail = {
 	id: string;
 	title: string;
 	contents: string;
+	url: string;
 	memberId: string;
 	thumbnailAddress: string;
 	series?: string;
 	category: string;
+	intro: string;
 	createTime: string;
 	commentList: {
 		commentData: Comment[];
