@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
+import { server } from 'config/config';
 
 const InventoryPostItemWrap = styled.div`
 	display: flex;
@@ -16,13 +17,6 @@ const InventoryPostItemWrap = styled.div`
 	border-bottom: 1px solid ${(props) => props.theme.gray_1};
 	cursor: pointer;
 `;
-
-// const ThumbnailWrap = styled.img`
-// 	width: 15rem;
-// 	height: 10rem;
-// 	margin-left: 1rem;
-// 	object-fit: contain;
-// `;
 
 const Head = styled.div`
 	height: 3rem;
@@ -93,13 +87,12 @@ function InventoryPostItem({ item }: Props) {
 				<BodyWrap>
 					<Body>{intro || contents}</Body>
 					<Image
-						src={thumbnailAddress || '/static/loginTemplateImage.png'}
+						src={thumbnailAddress || `${server.client_url}/static/loginTemplateImage.png`}
 						width={350}
 						height={250}
 						alt="post_thumbnail_image"
 						objectFit="contain"
 						className="inventoryPostThumbnail"
-						priority
 					/>
 					<style>{`
 						.inventoryPostThumbnail {

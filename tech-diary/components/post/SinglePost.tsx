@@ -140,8 +140,6 @@ function SinglePost({
 						height={400}
 						objectFit="contain"
 						loading="eager"
-						priority
-						// priority
 					/>
 				) : (
 					<></>
