@@ -6,7 +6,7 @@ function SearchPage() {
 	return (
 		<>
 			<Head>
-				<title>게시글 검색</title>
+				<title>Work-It (게시글 검색)</title>
 				<meta name="description" content="게시글 검색 페이지" />
 			</Head>
 			<PostSearchContainer />

@@ -9,8 +9,8 @@ function BlogWritePage() {
 	return (
 		<>
 			<Head>
-				<title>(작성중) Blog write page</title>
 				<meta name="description" content="블로그 작성 페이지 입니다." />
+				<meta name="robots" content="noindex" />
 			</Head>
 			<PostEditorContainer />
 		</>

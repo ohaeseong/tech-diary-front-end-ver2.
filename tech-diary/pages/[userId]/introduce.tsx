@@ -25,6 +25,7 @@ function UserIntroducePage({ userInfo }: Props) {
 		<>
 			<Head>
 				<title>{userId} (소개) </title>
+				<meta name="description" content={`${userId}님의 소개글 보고 가세요!`} />
 			</Head>
 			<UserProfileContainer userInfo={userInfo} posts={[]} isIntro />
 		</>

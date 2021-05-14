@@ -21,7 +21,7 @@ function SearchTagPage({ posts }: Props) {
 		<>
 			<Head>
 				<title>{router.query.tag}</title>
-				<meta name="description" content="태그 검색 페이지" />
+				<meta name="description" content="Work-It 태그 검색 페이지" />
 			</Head>
 			<PostTagSearchContainer posts={posts} />
 		</>
