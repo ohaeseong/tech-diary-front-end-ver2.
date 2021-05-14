@@ -17,7 +17,7 @@ function FrontEndPage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Blog front-end page</title>
+				<title>Work-it (front-end)</title>
 				<meta name="description" content="블로그 category front-end 페이지입니다." />
 			</Head>
 			<MainTemplate>
