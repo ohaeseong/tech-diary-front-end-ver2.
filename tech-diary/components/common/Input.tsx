@@ -9,15 +9,14 @@ const InputStyled = styled.input<{ fontSize?: string; isFocus?: boolean; height?
 
 	padding: 0.5rem;
 	transition: 0.2s ease-in-out;
-	font-family: 'Spoqa Han Sans Regular';
 	font-size: 1.32em;
 
 	border-radius: 5px;
-	color: ${props => props.theme.gray_5};
+	color: ${(props) => props.theme.gray_5};
 
 	outline: 0;
 	border: 1px solid ${color.gray_2};
-	background-color: ${props => props.theme.white};
+	background-color: ${(props) => props.theme.white};
 
 	${(props) => {
 		if (props.isFocus) {

@@ -21,7 +21,6 @@ const SearchPageTemplate = styled.div`
 	margin-top: 5rem;
 	background-color: ${(props) => props.theme.white};
 
-
 	${mediaQuery(1919)} {
 		/* & > * {
 			width: 25rem;

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+// import Image from 'next/image';
 
 export function CodeBlock(children: { value: string; language: string }) {
 	if (!children.value) {
@@ -58,9 +59,9 @@ const ImageWrap = styled.span`
 
 const ImageStyle = styled.img`
 	max-width: 100%;
-	height: auto;
+	/* height: auto; */
 
-	margin: 1rem auto;
+	margin: 1.5rem auto;
 
 	object-fit: contain;
 `;
@@ -69,6 +70,11 @@ export function ImageMarkdownRender(children: { src: string }) {
 	return (
 		<ImageWrap>
 			<ImageStyle src={children.src} alt="post_image" />
+			{/* <style>{`
+				.postImage {
+					margin: 1rem auto;
+				}
+			`}</style> */}
 		</ImageWrap>
 	);
 }

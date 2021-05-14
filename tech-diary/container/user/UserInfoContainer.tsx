@@ -100,9 +100,10 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 	const [introText, setIntroText] = useState(userInfo.introduce || '소개글을 작성해 보세요!');
 	const [userEmail, setUserEmail] = useState(userInfo.displayEmail);
 	const [userName, setUserName] = useState(userInfo.memberName);
-	const [userProfileImage, setUserProfileImage] = useState(userInfo.profileImage || '/static/user.png');
+	const [profileImage, setProfileImage] = useState(userInfo.profileImage || '/static/user.png');
 	const [userPosts, setUserPosts] = useState(posts || []);
 	const iconSize = '1.5rem';
+
 	// const themeMode = theme === 'light';
 
 	const onSaveUserInfo = useCallback(async () => {
@@ -193,7 +194,7 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 			};
 
 			await updateUserInfo(req);
-			setUserProfileImage(imageAddress);
+			setProfileImage(imageAddress);
 			dispatch({
 				type: UPDATE_PROFILE_IMAGE,
 				payload: imageAddress,
@@ -268,7 +269,13 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 		) {
 			router.push(`/${userInfo.memberId}`);
 		}
-	}, [router, userInfo.memberId, userProfileImage]);
+	}, [router, userInfo.memberId]);
+
+	useEffect(() => {
+		if (userInfo) {
+			setProfileImage(userInfo.profileImage as string);
+		}
+	}, [userInfo]);
 
 	useEffect(() => {
 		if (!searchWord) {
@@ -292,7 +299,7 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 					handleUserName={handleUserName}
 					isMine={isMine}
 					handleProfileImage={handleProfileImage}
-					userProfileImage={userProfileImage}
+					userProfileImage={profileImage}
 				/>
 				<InventoryPostListTemplate>
 					<UserNabBar>

@@ -7,6 +7,7 @@ import { MdEmail } from 'react-icons/md';
 import { css } from '@emotion/react';
 import { FiUpload, FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
+// import Image from 'next/image';
 
 const UserProfileInfoWrap = styled.div`
 	display: flex;
@@ -24,9 +25,9 @@ const UserProfileImage = styled.img`
 	width: 15rem;
 	height: 15rem;
 	border-radius: 50%;
+	border: 1px solid ${color.gray_1};
 	margin-top: 5rem;
 	object-fit: cover;
-	border: 1px solid ${color.gray_1};
 `;
 
 const UserProfileImageUploadInput = styled.input`
@@ -189,7 +190,21 @@ function UserProfileInfoTemplate({
 				) : (
 					<></>
 				)}
-				<UserProfileImage src={userProfileImage} alt="profile_image" />
+				<UserProfileImage
+					src={userProfileImage}
+					alt="profile_image"
+					// width={500}
+					// height={500}
+					// objectFit="cover"
+					// className="profileImageInPage"
+				/>
+				{/* <style>{`
+						.profileImageInPage {
+							margin-top: 5rem !important;
+							border-radius: 50%;
+							border: 1px solid ${color.gray_1};
+						}
+				`}</style> */}
 			</ProfileImageWrap>
 			<Link href={`/${userInfo.memberId}`}>
 				<UserName>{userInfo.memberId}</UserName>

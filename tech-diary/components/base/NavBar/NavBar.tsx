@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback, ChangeEvent } from 'react';
 import Switch from 'react-switch';
 import { RiMoonClearFill } from 'react-icons/ri';
 import { FaSun } from 'react-icons/fa';
+import Image from 'next/image';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { color } from 'styles/color';
@@ -112,19 +113,23 @@ const ProfileWrap = styled.div`
 	${mediaQuery(767)} {
 		margin: auto 1rem auto auto;
 	}
-`;
 
-const ProfileImage = styled.img`
-	width: 100%;
-	height: 100%;
-
-	border-radius: 50%;
-	object-fit: cover;
-
-	&:hover {
-		cursor: pointer;
+	& > img {
+		border-radius: 50%;
 	}
 `;
+
+// const ProfileImage = styled.img`
+// 	width: 100%;
+// 	height: 100%;
+
+// 	border-radius: 50%;
+// 	object-fit: cover;
+
+// 	&:hover {
+// 		cursor: pointer;
+// 	}
+// `;
 
 const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 	display: block;
@@ -378,7 +383,23 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 				</Link>
 				{isToken ? (
 					<ProfileWrap>
-						<ProfileImage src={userProfileImage} onClick={menuToggle} alt="profile_image" />
+						<Image
+							src={userProfileImage}
+							onClick={menuToggle}
+							alt="profile_image"
+							width={60}
+							height={60}
+							objectFit="cover"
+							className="profileImage"
+							quality={100}
+							// priority
+						/>
+						<style>{`
+							.profileImage {
+								border-radius: 50%;
+								cursor: pointer;
+							}
+						`}</style>
 						<MenuSlider height={menuHeight}>
 							<MenuItem onClick={goToProfile}>내 정보</MenuItem>
 							<MenuItem onClick={() => router.push('/write')}>글 쓰러 가기</MenuItem>
