@@ -17,11 +17,23 @@ function DetailPage({ post }: Props) {
 		return <NotFoundPage />;
 	}
 
+	const url = `${server.client_url}${post.url}`;
+
 	return (
 		<>
 			<Head>
 				<title>{post.title}</title>
-				<meta name="description" content="블로그 상세조회 페이지입니다." />
+				<meta name="description" content={post.intro || post.contents} />
+				<link rel="canonical" href={url} />
+				<meta property="og:url" content={url} />
+				<meta property="og:type" content="article" />
+				<meta property="og:title" content={post.title} />
+				<meta property="og:description" content={post.intro || post.contents} />
+				{post.thumbnailAddress && <meta property="og:image" content={post.thumbnailAddress} />}
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content={post.title} />
+				<meta name="twitter:description" content={post.intro || post.contents} />
+				{post.thumbnailAddress && <meta name="twitter:image" content={post.thumbnailAddress} />}
 			</Head>
 			<PostDetailLayout post={post} />
 		</>
