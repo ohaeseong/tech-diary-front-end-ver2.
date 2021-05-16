@@ -43,7 +43,8 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }
 	${mediaQuery(767)} {
 		/* margin-right: 1rem; */
 		padding: 0rem;
-		font-size: 0.8rem;
+		font-size: 0.6rem;
+		color: ${(props) => props.theme.black}
 	}
 `;
 

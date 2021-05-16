@@ -56,6 +56,10 @@ function MyApp({ Component, pageProps }: Props) {
 		<>
 			<Head>
 				<meta charSet="utf-8" />
+				<title>work-it</title>
+				{/* <meta name="description" content="당신의 지식을 공유해 주세요! 지식욕을 작동시켜줄 블로그 \"워크"\ 잇입니다." />
+				<meta property="fb:app_id" content="203040656938507" />
+				<meta property="og:image" content="https://images.velog.io/velog.png" /> */}
 				<style>{`
 						@font-face {
 							font-family: 'Spoqa Han Sans Regular';

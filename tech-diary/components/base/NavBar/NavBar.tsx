@@ -73,7 +73,6 @@ const AccountButtonWrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-right: 5rem;
-	/* border: 1px solid black; */
 	${mediaQuery(767)} {
 		margin-right: 1rem;
 	}
@@ -88,11 +87,11 @@ const SwitchWrap = styled.div`
 	height: 100%;
 	margin-right: 2.5rem;
 	${mediaQuery(767)} {
-		margin-right: 1rem;
+		/* margin-right: 1rem; */
 		display: none;
-		& > * {
+		/* & > * {
 			width: 1rem;
-		}
+		} */
 	}
 `;
 
@@ -109,7 +108,7 @@ const ProfileWrap = styled.div`
 	width: 2rem;
 	height: 2rem;
 
-	margin-right: 5rem;
+	/* margin-right: 5rem; */
 	${mediaQuery(767)} {
 		margin: auto 1rem auto auto;
 	}
@@ -164,7 +163,7 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 	width: 2rem;
 	height: 2rem;
 
-	margin: auto 5rem auto auto;
+	margin: auto 5rem auto auto;s
 
 	& > * {
 		cursor: pointer;
@@ -189,10 +188,9 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 
 
 	${mediaQuery(767)} {
-		margin: auto 0rem auto auto;
 		& > * {
-			size: 0.5rem;
 			color: ${(props) => props.theme.gray_4};
+			width: 1.1rem;
 		}
 	}
 `;

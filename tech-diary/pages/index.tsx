@@ -16,7 +16,7 @@ function IndexPage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Work-It</title>
+				<title>work-it</title>
 				<meta name="description" content="Work-It 당신의 지식을 공유해 주세요!" />
 			</Head>
 			<MainTemplate>
