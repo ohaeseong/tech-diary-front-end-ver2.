@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import AccountPageTemplate from 'components/account/AccountPageTemplate';
 import LoginBox from 'components/account/login/LoginBox';
@@ -19,6 +19,7 @@ import { color } from 'styles/color';
 import ButtonGroup from 'components/common/ButtonGroup';
 import useRequest from 'libs/hooks/useRequest';
 import { reqeustSignUpEmailSend } from 'libs/repository';
+import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
 
 type LoginForm = {
 	memberId: string;
@@ -111,19 +112,47 @@ function LoginLayout() {
 		});
 	}, [dispatch, form, router]);
 
-	const onLoginWithGithub = async () => {
+	const facebookLoginCallback = useCallback(() => {
+		// window.location.href = `https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0&appId=2111760498954706&autoLogAppEvents=1`;
+	}, []);
+
+	const onLoginWithGithub = useCallback(() => {
 		const GIT_HUB_LOGIN_URL = 'https://github.com/login/oauth/authorize?';
 		const CLIENT_ID = '38450a3f2fd57007603a';
-		const REDIRECT_URI = `${server.client_url}/login/github-callback`;
+		const REDIRECT_URI = `${server.client_url}/login`;
 
 		window.location.href = `${GIT_HUB_LOGIN_URL}client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
-	};
+	}, []);
 
 	const handleKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			onLogin();
 		}
 	};
+
+	useEffect(() => {
+		if (router.query.code) {
+			dispatch({
+				type: GITHUB_AUTH_LOGIN_REQUEST,
+				payload: {
+					code: router.query.code,
+					successCB: () => {
+						router.push(`${server.client_url}`);
+					},
+					failCB: (memberName: string, memberId: string, githubId: string, profileImage: string) => {
+						router.push({
+							pathname: `${server.client_url}/register/${memberId}`,
+							query: {
+								member_name: memberName,
+								github_id: githubId,
+								profile_image: profileImage,
+							},
+						});
+					},
+				},
+			});
+		}
+	}, [dispatch, router, router.query.code]);
 
 	return (
 		<AccountPageTemplate>
@@ -161,6 +190,7 @@ function LoginLayout() {
 				onLoginWithGithub={onLoginWithGithub}
 				handleKeypress={handleKeypress}
 				onChange={onChange}
+				facebookLoginCallback={facebookLoginCallback}
 				errorMsg={errorMsg}
 				form={form}
 			/>

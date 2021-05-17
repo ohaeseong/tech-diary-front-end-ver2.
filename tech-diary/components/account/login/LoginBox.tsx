@@ -4,8 +4,9 @@ import styled from '@emotion/styled';
 // import Image from 'next/image';
 import Link from 'next/link';
 import { AiFillGithub } from 'react-icons/ai';
-import { TiSocialFacebook } from 'react-icons/ti';
+import { TiSocialFacebookCircular } from 'react-icons/ti';
 import { FcGoogle } from 'react-icons/fc';
+import FacebookLogin from 'react-facebook-login';
 
 import { color } from 'styles/color';
 import { fadein } from 'styles/animation';
@@ -165,12 +166,22 @@ type Props = {
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 	openModal: () => void;
+	facebookLoginCallback: () => void;
 
 	errorMsg: string;
 	form: loginForm;
 };
 
-function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorMsg, form, openModal }: Props) {
+function LoginBox({
+	onLogin,
+	onLoginWithGithub,
+	handleKeypress,
+	onChange,
+	errorMsg,
+	form,
+	openModal,
+	facebookLoginCallback,
+}: Props) {
 	return (
 		<LoginBoxWrap>
 			<LoginHalfWrap isImage>
@@ -214,9 +225,24 @@ function LoginBox({ onLogin, onLoginWithGithub, handleKeypress, onChange, errorM
 					</ButtonGroup>
 					<OauthButtonsWrap>
 						<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
-						<OauthCircle isFacebook>
-							<TiSocialFacebook size="2.5rem" color="white" />
-						</OauthCircle>
+						{/* <OauthCircle isFacebook> */}
+						<FacebookLogin
+							appId="2111760498954706"
+							autoLoad={false}
+							callback={facebookLoginCallback}
+							icon={<TiSocialFacebookCircular size="3rem" />}
+							textButton=""
+							buttonStyle={{
+								borderRadius: '50%',
+								width: '3rem',
+								height: '3rem',
+								// background: 'none',
+								// display: 'flex',
+								// alignItems: 'center',
+								// justifyContent: 'center',
+							}}
+						/>
+						{/* </OauthCircle> */}
 						<OauthCircle>
 							<FcGoogle size="2.3rem" />
 						</OauthCircle>

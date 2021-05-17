@@ -33,7 +33,7 @@ type Props = {
 };
 
 function PostDetailLayout({ post }: Props) {
-	const { id, like, commentList, memberId, commentCount } = post;
+	const { id, like, commentList, memberId, commentCount, url } = post;
 	// const [theme, toggleTheme, componentMounted] = useDarkMode();
 
 	const [state, , dispatchForUpdateState] = useForm({
@@ -206,19 +206,19 @@ function PostDetailLayout({ post }: Props) {
 
 	const sharePostToFacebook = useCallback(() => {
 		window.open(
-			`https://www.facebook.com/sharer/sharer.php?u=${server.client_url}`,
+			`https://www.facebook.com/sharer/sharer.php?u=${server.client_url}${url}`,
 			'new',
 			'width=600, height=700, left=0, top=0 '
 		);
-	}, []);
+	}, [url]);
 
 	const sharePostToTwitter = useCallback(() => {
 		window.open(
-			`https://www.twitter.com/intent/tweet?&url=${server.client_url}`,
+			`https://www.twitter.com/intent/tweet?&url=${server.client_url}${url}`,
 			'new',
 			'width=600, height=700, left=0, top=0 '
 		);
-	}, []);
+	}, [url]);
 
 	useEffect(() => {
 		dispatch({

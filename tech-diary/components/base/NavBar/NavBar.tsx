@@ -108,7 +108,7 @@ const ProfileWrap = styled.div`
 	width: 2rem;
 	height: 2rem;
 
-	/* margin-right: 5rem; */
+	margin-right: 5rem;
 	${mediaQuery(767)} {
 		margin: auto 1rem auto auto;
 	}
@@ -163,7 +163,7 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 	width: 2rem;
 	height: 2rem;
 
-	margin: auto 5rem auto auto;s
+	margin: auto 5rem auto auto;
 
 	& > * {
 		cursor: pointer;

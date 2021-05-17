@@ -17,7 +17,7 @@ function MobilePage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Work-it (mobile)</title>
+				<title>work-it (mobile)</title>
 				<meta name="description" content="블로그 category mobile 페이지입니다." />
 			</Head>
 			<MainTemplate>
