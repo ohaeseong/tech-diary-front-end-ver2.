@@ -16,7 +16,7 @@ function OtherPage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Work-it (other)</title>
+				<title>work-it (other)</title>
 				<meta name="description" content="블로그 category other 페이지입니다." />
 			</Head>
 			<MainTemplate>

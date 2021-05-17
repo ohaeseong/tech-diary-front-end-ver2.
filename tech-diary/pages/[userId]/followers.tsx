@@ -27,6 +27,7 @@ function FollowersPage({ followers, userInfo }: Props) {
 		<>
 			<Head>
 				<title>{userId} (팔로우) </title>
+				<meta name="description" content={`${userInfo.memberId}님의 팔로워 목록`} />
 			</Head>
 			<UserProfileContainer userInfo={userInfo} posts={[]} isSocial memberList={followers.memberList} isFollowers />
 		</>

@@ -6,8 +6,8 @@ function Login() {
 	return (
 		<>
 			<Head>
-				<title>Work-It (로그인)</title>
-				<meta name="description" content="Work-It 로그인 페이지" />
+				<title>work-it (로그인)</title>
+				<meta name="description" content="work-it 로그인 페이지" />
 			</Head>
 			<LoginLayout />
 		</>
