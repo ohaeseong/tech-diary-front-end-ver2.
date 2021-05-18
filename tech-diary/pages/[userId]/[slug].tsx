@@ -18,7 +18,7 @@ function DetailPage({ post }: Props) {
 	}
 
 	const url = `${server.client_url}${post.url}`;
-
+asdfasdf
 	return (
 		<>
 			<Head>
