@@ -13,6 +13,7 @@ import { fadein } from 'styles/animation';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import AccountInput from 'components/account/AccountInput';
+import { id } from 'config/config';
 
 const LoginBoxWrap = styled.div`
 	display: flex;
@@ -166,7 +167,7 @@ type Props = {
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 	openModal: () => void;
-	facebookLoginCallback: () => void;
+	facebookLoginCallback: (response: any) => void;
 
 	errorMsg: string;
 	form: loginForm;
@@ -227,7 +228,7 @@ function LoginBox({
 						<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
 						{/* <OauthCircle isFacebook> */}
 						<FacebookLogin
-							appId="2111760498954706"
+							appId={id.facebookAppId}
 							autoLoad={false}
 							callback={facebookLoginCallback}
 							icon={<TiSocialFacebookCircular size="3rem" />}
