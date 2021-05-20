@@ -10,7 +10,7 @@ import { RootState } from 'store/modules';
 import useForm from 'libs/hooks/useForm';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import isEmail from 'libs/regEx';
-import { server } from 'config/config';
+import { id, server } from 'config/config';
 import ModalBox from 'components/common/ModalBox';
 import LabelInput from 'components/common/LabelInput';
 import useToggle from 'libs/hooks/useToggle';
@@ -20,6 +20,7 @@ import ButtonGroup from 'components/common/ButtonGroup';
 import useRequest from 'libs/hooks/useRequest';
 import { reqeustSignUpEmailSend } from 'libs/repository';
 import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
+import Loading from 'components/common/Loading';
 
 type LoginForm = {
 	memberId: string;
@@ -34,6 +35,7 @@ function LoginLayout() {
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
 	const [email, setEmail] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	const [modalMsg, setModalMsg] = useState({
 		isError: false,
 		message: '',
@@ -112,14 +114,16 @@ function LoginLayout() {
 		});
 	}, [dispatch, form, router]);
 
-	const facebookLoginCallback = useCallback(() => {
+	const facebookLoginCallback = useCallback((response: any) => {
+		console.log(response);
 		// window.location.href = `https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0&appId=2111760498954706&autoLogAppEvents=1`;
 	}, []);
 
 	const onLoginWithGithub = useCallback(() => {
 		const GIT_HUB_LOGIN_URL = 'https://github.com/login/oauth/authorize?';
-		const CLIENT_ID = '38450a3f2fd57007603a';
+		const CLIENT_ID = id.githubClientId;
 		const REDIRECT_URI = `${server.client_url}/login`;
+		setIsLoading(true);
 
 		window.location.href = `${GIT_HUB_LOGIN_URL}client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
 	}, []);
@@ -137,9 +141,11 @@ function LoginLayout() {
 				payload: {
 					code: router.query.code,
 					successCB: () => {
+						setIsLoading(false);
 						router.push(`${server.client_url}`);
 					},
 					failCB: (memberName: string, memberId: string, githubId: string, profileImage: string) => {
+						setIsLoading(false);
 						router.push({
 							pathname: `${server.client_url}/register/${memberId}`,
 							query: {
@@ -156,6 +162,7 @@ function LoginLayout() {
 
 	return (
 		<AccountPageTemplate>
+			{isLoading ? <Loading /> : <></>}
 			{modalIsOpenValue ? (
 				<ModalBox msg={modalMsg}>
 					<LabelInput
