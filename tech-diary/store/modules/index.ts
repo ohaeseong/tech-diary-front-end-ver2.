@@ -7,6 +7,7 @@ import theme from './theme.state';
 import toast from './toast';
 import modal from './modal';
 import registerWithGithub from './register.github.auth';
+import facebookAuth from './facebook.auth';
 import registerAuth from './register.auth';
 import postComment from './post.comment.count';
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
 	modal,
 	registerWithGithub,
 	write,
+	facebookAuth,
 	registerAuth,
 });
 

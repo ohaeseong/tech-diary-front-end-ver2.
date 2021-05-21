@@ -101,7 +101,7 @@ type Props = {
 	memberName: string;
 	introduce: string;
 	errorMsg: string;
-	isGithub?: boolean;
+	isSocial?: boolean;
 };
 
 function SignUpTemplate({
@@ -111,7 +111,7 @@ function SignUpTemplate({
 	memberId,
 	memberName,
 	introduce,
-	isGithub,
+	isSocial,
 	memberPw,
 	handleIntroduce,
 	handleMemberPw,
@@ -126,7 +126,7 @@ function SignUpTemplate({
 			</Haed>
 			<Body>
 				<HalfOfBody>
-					{isGithub ? (
+					{isSocial ? (
 						<>
 							<LabelInput label="이름" margin="2rem 0 0 0" value={memberName} onChange={handleMemberName} />
 							<LabelInput label="아이디" margin="2rem 0 0 0" value={memberId} onChange={handleMemberId} />
