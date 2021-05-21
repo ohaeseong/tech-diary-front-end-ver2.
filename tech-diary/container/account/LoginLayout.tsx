@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import AccountPageTemplate from 'components/account/AccountPageTemplate';
@@ -21,10 +22,26 @@ import useRequest from 'libs/hooks/useRequest';
 import { reqeustSignUpEmailSend } from 'libs/repository';
 import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
 import Loading from 'components/common/Loading';
+// import { FacebookLoginResponse } from 'store/types/auth.types';
+// import { FACEBOOK_AUTH_LOGIN_REQUEST } from 'store/modules/facebook.auth';
 
 type LoginForm = {
 	memberId: string;
 	pw: string;
+};
+
+type AuthResponse = {
+	accessToken: string;
+	expiresIn: number;
+	signedRequest: string;
+	userId: string;
+	data_access_expiration_time: number;
+	graphDomain: string;
+};
+
+type Response = {
+	status: 'connected' | 'not_authorized' | 'unknown';
+	authResponse: null | AuthResponse;
 };
 
 function LoginLayout() {
@@ -114,25 +131,100 @@ function LoginLayout() {
 		});
 	}, [dispatch, form, router]);
 
-	const facebookLoginCallback = useCallback((response: any) => {
-		console.log(response);
-		// window.location.href = `https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0&appId=2111760498954706&autoLogAppEvents=1`;
+	const checkFacebookLoginState = (checkResponse: Response) => {
+		if (checkResponse.status === 'connected') {
+			// 로그인 돼있을 때 작업
+		} else {
+			// 로그인이 되어있지 않다면 ('not_authorized' | 'unknown')
+			(window as any).FB.login((response: Response) => {
+				// 로그인 하거나 회원가입 할 수 있는 팝업을 띄웁니다.
+				console.log(response);
+			});
+		}
+	};
+
+	const checkLogin = useCallback(() => {
+		(window as any).FB.getLoginStatus((checkResponse: Response) => {
+			checkFacebookLoginState(checkResponse);
+		});
 	}, []);
 
-	const onLoginWithGithub = useCallback(() => {
+	const setFBAsyncInit = useCallback(() => {
+		(window as any).fbAsyncInit = () => {
+			(window as any).FB.init({
+				version: `v6.0`, // 작성일 기준 버전이 v6.0 입니다.
+				appId: id, // 발급받은 App ID 를 넣어줍니다.
+				xfbml: true,
+				cookie: true,
+			});
+		};
+	}, []);
+
+	const loadFacebookSdk = useCallback(() => {
+		((d, s, uid) => {
+			// 이런것 까지 타입을...잡아야 하는지는 잘 모르겠습니다 ;ㅅ;
+			const element = d.getElementsByTagName(s)[0];
+			const fjs = element as Element;
+			let js = element as any;
+			if (d.getElementById(uid)) {
+				return;
+			}
+			js = d.createElement(s);
+			js.id = uid;
+			js.src = `https://connect.facebook.net/en_US/sdk.js`;
+			fjs.parentNode!.insertBefore(js, fjs);
+		})(document, 'script', 'facebook-jssdk');
+	}, []);
+
+	// const facebookLoginCallback = useCallback(
+	// 	(response: FacebookLoginResponse) => {
+	// 		const { name, userID, accessToken } = response;
+	// 		dispatch({
+	// 			type: FACEBOOK_AUTH_LOGIN_REQUEST,
+	// 			payload: {
+	// 				accessToken,
+	// 				userId: userID,
+	// 				userName: name,
+	// 				successCB: () => {
+	// 					setIsLoading(false);
+	// 					router.push(`${server.client_url}`);
+	// 				},
+	// 				failCB: (userId: string, memberName: string, profileImage: string) => {
+	// 					setIsLoading(false);
+	// 					router.push({
+	// 						pathname: `${server.client_url}/register/${userId}`,
+	// 						query: {
+	// 							member_name: memberName,
+	// 							social_id: userId,
+	// 							profile_image: profileImage,
+	// 						},
+	// 					});
+	// 				},
+	// 			},
+	// 		});
+	// 	},
+	// 	[dispatch, router]
+	// );
+
+	const onLoginWithGithub = useCallback(async () => {
 		const GIT_HUB_LOGIN_URL = 'https://github.com/login/oauth/authorize?';
 		const CLIENT_ID = id.githubClientId;
 		const REDIRECT_URI = `${server.client_url}/login`;
 		setIsLoading(true);
 
-		window.location.href = `${GIT_HUB_LOGIN_URL}client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
-	}, []);
+		router.push(`${GIT_HUB_LOGIN_URL}client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`);
+	}, [router]);
 
 	const handleKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			onLogin();
 		}
 	};
+
+	useEffect(() => {
+		loadFacebookSdk();
+		setFBAsyncInit();
+	}, [loadFacebookSdk, setFBAsyncInit]);
 
 	useEffect(() => {
 		if (router.query.code) {
@@ -150,7 +242,7 @@ function LoginLayout() {
 							pathname: `${server.client_url}/register/${memberId}`,
 							query: {
 								member_name: memberName,
-								github_id: githubId,
+								social_id: githubId,
 								profile_image: profileImage,
 							},
 						});
@@ -197,7 +289,8 @@ function LoginLayout() {
 				onLoginWithGithub={onLoginWithGithub}
 				handleKeypress={handleKeypress}
 				onChange={onChange}
-				facebookLoginCallback={facebookLoginCallback}
+				// facebookLoginCallback={facebookLoginCallback}
+				checkLogin={checkLogin}
 				errorMsg={errorMsg}
 				form={form}
 			/>

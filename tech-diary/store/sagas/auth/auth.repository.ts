@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { AuthLogin, GitHubLoginRequest, UserRegisterRequest, UserRegisterWithGithubRequest } from 'store/types/auth.types';
+import { AuthLogin, FacebookLoginRequest, GitHubLoginRequest, UserRegisterRequest, UserRegisterWithSocialRequest } from 'store/types/auth.types';
 // import {  } from 'store/'
 
 class authRepository {
@@ -21,13 +21,23 @@ class authRepository {
 			.catch((error) => error.response);
 	}
 
-	public async registerWithGithub(req: UserRegisterWithGithubRequest) {
+	public async loginWithFacebook(req: FacebookLoginRequest) {
 		return axios
-			.post(`${server.host}/auth/register/with-github`, {
+			.post(`${server.host}/auth/login/with-facebook`, {
+				userID: req.userId,
+				accessToken: req.accessToken,
+				userName: req.userName,
+			})
+			.catch((error) => error.response);
+	}
+
+	public async registerWithSocial(req: UserRegisterWithSocialRequest) {
+		return axios
+			.post(`${server.host}/auth/register/with-social`, {
 				memberId: req.memberId,
 				memberName: req.memberName,
-				githubId: req.githubId,
-				avatarUrl: req.avatarUrl,
+				socialId: req.socialId,
+				profileImage: req.profileImage,
 			})
 			.catch((error) => error.response);
 	}

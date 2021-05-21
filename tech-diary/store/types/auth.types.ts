@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export type AuthLogin = {
 	memberId: string;
 	pw: string;
@@ -12,6 +13,14 @@ export type GitHubLoginRequest = {
 	code: string;
 	successCB?: () => null;
 	failCB?: (memberName: string, memberId: string, githubId: string, avatarUrl: string) => any;
+};
+
+export type FacebookLoginRequest = {
+	userId: string;
+	userName: string;
+	accessToken: string;
+	successCB?: () => null;
+	failCB?: (id: string, name: string, profileImage: string) => any;
 };
 
 export type TypeDecoded = {
@@ -32,12 +41,12 @@ export type UserInfo = {
 	followings: number;
 };
 
-export type UserRegisterWithGithubRequest = {
+export type UserRegisterWithSocialRequest = {
 	memberId: string;
 	memberName: string;
 	introduce?: string;
-	githubId: string;
-	avatarUrl?: string;
+	socialId: string;
+	profileImage?: string;
 	successCB?: () => null;
 	failCB?: () => void;
 };
@@ -50,4 +59,15 @@ export type UserRegisterRequest = {
 	pw: string;
 	successCB?: () => null;
 	failCB?: () => void;
+};
+
+export type FacebookLoginResponse = {
+	name: string;
+	accessToken: string;
+	data_access_expiration_time: number;
+	expiresIn: number;
+	graphDomain: string;
+	id: string;
+	signedRequest: string;
+	userID: string;
 };

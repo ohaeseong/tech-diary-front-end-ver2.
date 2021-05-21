@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import SignUpWithGithubContainer from 'container/account/SignUpWithGithubContainer';
+import SignUpWithSocialContainer from 'container/account/SignUpWithSocialContainer';
 
 function RegisterGithubPage() {
 	return (
@@ -10,7 +10,7 @@ function RegisterGithubPage() {
 				<meta name="description" content="회원 정보 저장 페이지" />
 				<meta name="robots" content="noindex" />
 			</Head>
-			<SignUpWithGithubContainer />
+			<SignUpWithSocialContainer />
 		</>
 	);
 }

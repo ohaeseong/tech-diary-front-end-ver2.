@@ -4,16 +4,15 @@ import styled from '@emotion/styled';
 // import Image from 'next/image';
 import Link from 'next/link';
 import { AiFillGithub } from 'react-icons/ai';
-import { TiSocialFacebookCircular } from 'react-icons/ti';
+import { TiSocialFacebook } from 'react-icons/ti';
 import { FcGoogle } from 'react-icons/fc';
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 import { color } from 'styles/color';
 import { fadein } from 'styles/animation';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import AccountInput from 'components/account/AccountInput';
-import { id } from 'config/config';
 
 const LoginBoxWrap = styled.div`
 	display: flex;
@@ -167,7 +166,8 @@ type Props = {
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 	openModal: () => void;
-	facebookLoginCallback: (response: any) => void;
+	// facebookLoginCallback: (response: any) => void;
+	checkLogin: () => void;
 
 	errorMsg: string;
 	form: loginForm;
@@ -176,18 +176,19 @@ type Props = {
 function LoginBox({
 	onLogin,
 	onLoginWithGithub,
+	checkLogin,
 	handleKeypress,
 	onChange,
 	errorMsg,
 	form,
 	openModal,
-	facebookLoginCallback,
-}: Props) {
+}: // facebookLoginCallback,
+Props) {
 	return (
 		<LoginBoxWrap>
 			<LoginHalfWrap isImage>
 				<LoginTextWrap>
-					<LoginText fontSize="title">Welcom to Tech-Blog!</LoginText>
+					<LoginText fontSize="title">Welcom to Work-It!</LoginText>
 					<LoginText fontSize="description">당신의 지식을 공유해 주세요!</LoginText>
 				</LoginTextWrap>
 				<WrapForAnimation>
@@ -203,14 +204,14 @@ function LoginBox({
 				</LoginTextWrap>
 				<WrapForAnimation>
 					<AccountInput
-						explanation="input your ID!"
+						explanation="아이디를 적어주세요!"
 						onChange={onChange}
 						name="memberId"
 						value={form.memberId}
 						handleKeyPress={handleKeypress}
 					/>
 					<AccountInput
-						explanation="input your PW!"
+						explanation="비밀번호를 적어주세요!"
 						isPw
 						onChange={onChange}
 						name="pw"
@@ -226,24 +227,18 @@ function LoginBox({
 					</ButtonGroup>
 					<OauthButtonsWrap>
 						<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
-						{/* <OauthCircle isFacebook> */}
-						<FacebookLogin
+						<OauthCircle isFacebook onClick={checkLogin}>
+							<TiSocialFacebook size="2.3rem" color="white" />
+						</OauthCircle>
+						{/* <FacebookLogin
 							appId={id.facebookAppId}
-							autoLoad={false}
 							callback={facebookLoginCallback}
-							icon={<TiSocialFacebookCircular size="3rem" />}
-							textButton=""
-							buttonStyle={{
-								borderRadius: '50%',
-								width: '3rem',
-								height: '3rem',
-								// background: 'none',
-								// display: 'flex',
-								// alignItems: 'center',
-								// justifyContent: 'center',
-							}}
-						/>
-						{/* </OauthCircle> */}
+							render={(renderProps: any) => (
+								<OauthCircle isFacebook onClick={renderProps.onClick}>
+									<TiSocialFacebook size="2.3rem" color="white" />
+								</OauthCircle>
+							)}
+						/> */}
 						<OauthCircle>
 							<FcGoogle size="2.3rem" />
 						</OauthCircle>

@@ -3,10 +3,10 @@ import SignUpWithGithubTemplate from 'components/account/signup/SignUpTemplate';
 import { useRouter } from 'next/router';
 // import useRequest from 'libs/hooks/useRequest';
 import { useDispatch, useSelector } from 'react-redux';
-import { GITHUB_REGISTER_REQUEST } from 'store/modules/register.github.auth';
+import { SOCIAL_REGISTER_REQUEST } from 'store/modules/register.github.auth';
 import { RootState } from 'store/modules';
 
-function SignUpWithGithubContainer() {
+function SignUpWithSocialContainer() {
 	const router = useRouter();
 
 	const [memberId, setMemberId] = useState('');
@@ -30,13 +30,13 @@ function SignUpWithGithubContainer() {
 
 	const onSubmit = useCallback(() => {
 		dispatch({
-			type: GITHUB_REGISTER_REQUEST,
+			type: SOCIAL_REGISTER_REQUEST,
 			payload: {
 				memberId,
 				memberName,
 				introduce,
-				githubId: router.query.github_id,
-				avatarUrl: router.query.profile_image,
+				socialId: router.query.social_id,
+				profileImage: router.query.profile_image,
 				successCB: () => {
 					router.push('/');
 				},
@@ -62,7 +62,7 @@ function SignUpWithGithubContainer() {
 	return (
 		<SignUpWithGithubTemplate
 			cancleRegister={cancleRegister}
-			isGithub
+			isSocial
 			memberId={memberId}
 			memberName={memberName}
 			introduce={introduce}
@@ -75,4 +75,4 @@ function SignUpWithGithubContainer() {
 	);
 }
 
-export default SignUpWithGithubContainer;
+export default SignUpWithSocialContainer;
