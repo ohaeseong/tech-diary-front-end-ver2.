@@ -9,8 +9,9 @@ export type LoginSuccess = {
 	token: string;
 };
 
-export type GitHubLoginRequest = {
-	code: string;
+export type SocialLoginRequest = {
+	social: string;
+	redirectUri: string;
 	successCB?: () => null;
 	failCB?: (memberName: string, memberId: string, githubId: string, avatarUrl: string) => any;
 };

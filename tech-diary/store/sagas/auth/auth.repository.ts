@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { server } from 'config/config';
-import { AuthLogin, FacebookLoginRequest, GitHubLoginRequest, UserRegisterRequest, UserRegisterWithSocialRequest } from 'store/types/auth.types';
+import {
+	AuthLogin,
+	FacebookLoginRequest,
+	SocialLoginRequest,
+	UserRegisterRequest,
+	UserRegisterWithSocialRequest,
+} from 'store/types/auth.types';
 // import {  } from 'store/'
 
 class authRepository {
@@ -13,10 +19,16 @@ class authRepository {
 			.catch((error) => error.response);
 	}
 
-	public async loginWithGithub(req: GitHubLoginRequest) {
+	public async socialLogin(req: SocialLoginRequest) {
 		return axios
-			.post(`${server.host}/auth/login/with-github`, {
-				code: req.code,
+			.get(`${server.host}/auth/redirect/social`, {
+				params: {
+					social: req.social,
+					redirectUri: req.redirectUri
+				},
+				headers: {
+					'Access-Control-Allow-Origin': '*'
+				}
 			})
 			.catch((error) => error.response);
 	}
