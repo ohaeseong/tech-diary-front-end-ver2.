@@ -50,10 +50,11 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 }
 
 function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.request>) {
-	const { code, successCB, failCB } = action.payload;
+	const { redirectUri, social, successCB, failCB } = action.payload;
 
-	const { status, data } = yield call(authRepo.loginWithGithub, {
-		code,
+	const { status, data } = yield call(authRepo.socialLogin, {
+		social,
+		redirectUri,
 	});
 
 	if (status === 400) {

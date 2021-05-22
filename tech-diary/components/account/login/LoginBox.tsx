@@ -6,13 +6,14 @@ import Link from 'next/link';
 import { AiFillGithub } from 'react-icons/ai';
 import { TiSocialFacebook } from 'react-icons/ti';
 import { FcGoogle } from 'react-icons/fc';
-// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 import { color } from 'styles/color';
 import { fadein } from 'styles/animation';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import AccountInput from 'components/account/AccountInput';
+import { id } from 'config/config';
 
 const LoginBoxWrap = styled.div`
 	display: flex;
@@ -166,8 +167,7 @@ type Props = {
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 	openModal: () => void;
-	// facebookLoginCallback: (response: any) => void;
-	checkLogin: () => void;
+	facebookLoginCallback: (response: any) => void;
 
 	errorMsg: string;
 	form: loginForm;
@@ -176,14 +176,13 @@ type Props = {
 function LoginBox({
 	onLogin,
 	onLoginWithGithub,
-	checkLogin,
 	handleKeypress,
 	onChange,
 	errorMsg,
 	form,
+	facebookLoginCallback,
 	openModal,
-}: // facebookLoginCallback,
-Props) {
+}: Props) {
 	return (
 		<LoginBoxWrap>
 			<LoginHalfWrap isImage>
@@ -227,10 +226,7 @@ Props) {
 					</ButtonGroup>
 					<OauthButtonsWrap>
 						<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
-						<OauthCircle isFacebook onClick={checkLogin}>
-							<TiSocialFacebook size="2.3rem" color="white" />
-						</OauthCircle>
-						{/* <FacebookLogin
+						<FacebookLogin
 							appId={id.facebookAppId}
 							callback={facebookLoginCallback}
 							render={(renderProps: any) => (
@@ -238,7 +234,7 @@ Props) {
 									<TiSocialFacebook size="2.3rem" color="white" />
 								</OauthCircle>
 							)}
-						/> */}
+						/>
 						<OauthCircle>
 							<FcGoogle size="2.3rem" />
 						</OauthCircle>
