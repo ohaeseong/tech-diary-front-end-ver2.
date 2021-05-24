@@ -225,6 +225,7 @@ function LoginBox({
 						</Button>
 					</ButtonGroup>
 					<OauthButtonsWrap>
+						<a href="http://localhost:8888/api/auth/redirect/social?social=github&redirectUri=http://localhost:8888/api/auth/callback/github">test</a>
 						<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
 						<FacebookLogin
 							appId={id.facebookAppId}

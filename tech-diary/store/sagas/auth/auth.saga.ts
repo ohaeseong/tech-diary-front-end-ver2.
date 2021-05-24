@@ -1,5 +1,5 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
-import { setStorage } from 'libs/storage';
+import { getStorage, setStorage } from 'libs/storage';
 import { AUTH_REGISTER_REQUEST, onAuthRegister, setRegisterErrorMsg } from 'store/modules/register.auth';
 import { FACEBOOK_AUTH_LOGIN_REQUEST, onFacebookAuthLogin } from 'store/modules/facebook.auth';
 import authRepo from './auth.repository';
@@ -147,6 +147,38 @@ function* onRegisterWithSocial(action: ReturnType<typeof onSocialAuthRegister.re
 	yield executeCallback(successCB);
 }
 
+export const GET_USER_INFO = 'auth/GET_USER_INFO';
+
+function* getUserInfoById(action: { payload: { token: string } }) {	
+	const { token } = action.payload;
+	const { status, data } = yield call(authRepo.registerWithSocial, {
+		socialId,
+		memberId,
+		memberName,
+		profileImage,
+		introduce,
+	});
+
+	if (status === 400) {
+		return;
+	}
+
+	if (status === 500) {
+		return;
+	}
+
+	const payload = {
+		token: data.data.token,
+		member: data.data.member,
+	};
+
+	setStorage('user-info', payload.member);
+	setStorage('tech-token', payload.token);
+	yield put(onSocialAuthRegister.success());
+	yield executeCallback(successCB);
+	console.log(action);
+}
+
 function* onRegisterAuth(action: ReturnType<typeof onAuthRegister.request>) {
 	const { memberId, memberName, pw, introduce, code, successCB, failCB } = action.payload;
 
@@ -209,6 +241,9 @@ function* watchOnRegister() {
 	yield takeLatest(AUTH_REGISTER_REQUEST, onRegisterAuth);
 }
 
+function* watchOnGetUserInfo() {
+	yield takeLatest(GET_USER_INFO, getUserInfoById);
+}
 export default function* authSagas() {
 	yield all([
 		fork(watchOnLogin),
@@ -216,5 +251,6 @@ export default function* authSagas() {
 		fork(watchOnRegisterWithGitHub),
 		fork(watchOnRegister),
 		fork(watchOnLoginWithFacebook),
+		fork(watchOnGetUserInfo),
 	]);
 }
