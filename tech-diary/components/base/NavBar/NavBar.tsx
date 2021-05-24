@@ -314,7 +314,6 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;
 		const userStorageInfo = getStorage('user-info') as UserInfo;
-
 		if (token && userStorageInfo) {
 			setIsToken(true);
 			if (userStorageInfo.profileImage) {

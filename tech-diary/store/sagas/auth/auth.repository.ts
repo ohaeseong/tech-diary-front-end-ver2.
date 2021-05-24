@@ -26,9 +26,7 @@ class authRepository {
 					social: req.social,
 					redirectUri: req.redirectUri
 				},
-				headers: {
-					'Access-Control-Allow-Origin': '*'
-				}
+				headers: { 'Access-Control-Allow-Origin': '*' },
 			})
 			.catch((error) => error.response);
 	}

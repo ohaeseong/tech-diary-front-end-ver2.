@@ -10,16 +10,25 @@ import { ThemeProvider } from '@emotion/react';
 import { color, dark } from 'styles/color';
 import { NavBar } from 'components/base/NavBar';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import { Context } from 'node:vm';
+import { getStorage, setStorage } from 'libs/storage';
+import { GET_USER_INFO } from 'store/sagas/auth/auth.saga';
+import { useDispatch } from 'react-redux';
+import { UserInfo } from 'store/types/auth.types';
 
 type Props = {
 	Component: any;
 	pageProps: any;
+	cookie: any;
 };
 
-function MyApp({ Component, pageProps }: Props) {
+function MyApp({ Component, pageProps, cookie }: Props) {
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
 	const [isMain, setIsMain] = useState(false);
 	const [isNotNav, setIsNotNav] = useState(false);
+
+	const dispatch = useDispatch();
 	const router = useRouter();
 
 	const themeMode = theme === 'light';
@@ -49,6 +58,22 @@ function MyApp({ Component, pageProps }: Props) {
 			setIsNotNav(false);
 		}
 	}, [router.pathname]);
+
+	useEffect(() => {
+		if (cookie) {
+			setStorage('tech-token', cookie.split('=')[1].split('refresh_token')[0]);
+			const userStorageInfo = getStorage('user-info') as UserInfo;
+
+			if (!userStorageInfo) {
+				dispatch({
+					type: GET_USER_INFO,
+					payload: {
+						token: cookie.split('=')[1].split('refresh_token')[0],
+					},
+				});
+			}
+		}
+	}, [cookie, dispatch]);
 
 	if (!componentMounted) return <></>;
 
@@ -94,5 +119,21 @@ function MyApp({ Component, pageProps }: Props) {
 		</>
 	);
 }
+
+MyApp.getInitialProps = async (context: Context) => {
+	const { ctx, Component } = context;
+	let pageProps = {};
+	const cookie = ctx.req.headers.cookie || '';
+
+	if (ctx.isServer && cookie) {
+		axios.defaults.headers.Cookie = cookie;
+	}
+
+	if (Component.getInitialProps) {
+		pageProps = await Component.getInitialProps(ctx);
+	}
+
+	return { pageProps, cookie };
+};
 
 export default wrapper.withRedux(MyApp);
