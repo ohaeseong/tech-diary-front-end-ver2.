@@ -8,11 +8,10 @@ import Image from 'next/image';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { color } from 'styles/color';
-import { getStorage, removeStorage } from 'libs/storage';
+import { getStorage } from 'libs/storage';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
 import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
-import { UserInfo } from 'store/types/auth.types';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 import useMenuSliderHeight from 'libs/hooks/useMenuSliderHeight';
@@ -25,9 +24,10 @@ import ButtonGroup from 'components/common/ButtonGroup';
 import LabelInput from 'components/common/LabelInput';
 import ModalBox from 'components/common/ModalBox';
 import Button from 'components/common/Button';
-import { reqeustSignUpEmailSend } from 'libs/repository';
+import { logout, reqeustSignUpEmailSend } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import isEmail from 'libs/regEx';
+import useHeader from 'libs/hooks/useHeader';
 // import { useSelector } from 'react-redux';
 // import { RootState } from 'store/modules';
 
@@ -216,6 +216,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		isError: false,
 		message: '',
 	});
+	const [userInfo, onLogout] = useHeader();
 	const { profileImage } = useSelector((state: RootState) => state.auth);
 
 	const router = useRouter();
@@ -237,11 +238,10 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	}, [isMain]);
 
 	const goToProfile = useCallback(() => {
-		const userStorageInfo = getStorage('user-info') as UserInfo;
-		const userPageUrl = `${userStorageInfo.memberId}`;
+		const userPageUrl = `${userInfo.memberId}`;
 
 		router.push(`/${userPageUrl}`);
-	}, [router]);
+	}, [router, userInfo]);
 
 	const closeModalBox = useCallback(() => {
 		setModalMsg({
@@ -292,17 +292,6 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		});
 	}, [closeModalBox, email, onRequestSendEmail]);
 
-	const onLogout = useCallback(() => {
-		removeStorage('tech-token');
-		removeStorage('user-info');
-
-		if (router.pathname === '/') {
-			router.reload();
-		} else {
-			router.push('/');
-		}
-	}, [router]);
-
 	useEffect(() => {
 		window.addEventListener('scroll', handleIsScrollEvent);
 
@@ -313,18 +302,18 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;
-		const userStorageInfo = getStorage('user-info') as UserInfo;
-		if (token && userStorageInfo) {
+
+		if (token && userInfo) {
 			setIsToken(true);
-			if (userStorageInfo.profileImage) {
-				setUserProfileImage(userStorageInfo.profileImage);
+			if (userInfo.profileImage) {
+				setUserProfileImage(userInfo.profileImage);
 			}
 
-			setMemberId(userStorageInfo.memberId);
+			setMemberId(userInfo.memberId);
 		} else {
 			setIsToken(false);
 		}
-	}, [isToken, router]);
+	}, [isToken, router, userInfo]);
 
 	useEffect(() => {
 		if (profileImage) {
