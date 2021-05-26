@@ -16,6 +16,7 @@ import { getStorage, setStorage } from 'libs/storage';
 import { GET_USER_INFO } from 'store/sagas/auth/auth.saga';
 import { useDispatch } from 'react-redux';
 import { UserInfo } from 'store/types/auth.types';
+import { setUserInfoState, SET_USER_INFO_STATE } from 'store/modules/auth';
 
 type Props = {
 	Component: any;
@@ -60,20 +61,19 @@ function MyApp({ Component, pageProps, cookie }: Props) {
 	}, [router.pathname]);
 
 	useEffect(() => {
-		if (cookie) {
-			setStorage('tech-token', cookie.split('=')[1].split('refresh_token')[0]);
-			const userStorageInfo = getStorage('user-info') as UserInfo;
+		const user = getStorage('user-info');
+		if (!user) return;
+		dispatch({
+			type: SET_USER_INFO_STATE,
+			payload: user,
+		});
+	}, [dispatch]);
 
-			if (!userStorageInfo) {
-				dispatch({
-					type: GET_USER_INFO,
-					payload: {
-						token: cookie.split('=')[1].split('refresh_token')[0],
-					},
-				});
-			}
-		}
-	}, [cookie, dispatch]);
+	// const loadUser = () => {
+	// 	const user = getStorage('user-info');
+	// 	if (!user) return;
+	// 	setUserInfoState(user);
+	// };
 
 	if (!componentMounted) return <></>;
 
@@ -123,7 +123,7 @@ function MyApp({ Component, pageProps, cookie }: Props) {
 MyApp.getInitialProps = async (context: Context) => {
 	const { ctx, Component } = context;
 	let pageProps = {};
-	const cookie = ctx.req.headers.cookie || '';
+	const cookie = ctx.req?.headers.cookie || '';
 
 	if (ctx.isServer && cookie) {
 		axios.defaults.headers.Cookie = cookie;

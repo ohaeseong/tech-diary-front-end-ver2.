@@ -63,6 +63,12 @@ class authRepository {
 			})
 			.catch((error) => error.response);
 	}
+
+	public async getUserInfo(req: { memberId: string }) {
+		return axios
+			.get(`${server.host}/auth/user-info?memberId=${req.memberId}`)
+			.catch((error) => error.response);
+	}
 }
 
 export default new authRepository();

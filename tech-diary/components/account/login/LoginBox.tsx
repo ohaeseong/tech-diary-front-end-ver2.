@@ -167,7 +167,7 @@ type Props = {
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 	openModal: () => void;
-	facebookLoginCallback: (response: any) => void;
+	// facebookLoginCallback: (response: any) => void;
 
 	errorMsg: string;
 	form: loginForm;
@@ -180,7 +180,7 @@ function LoginBox({
 	onChange,
 	errorMsg,
 	form,
-	facebookLoginCallback,
+	// facebookLoginCallback,
 	openModal,
 }: Props) {
 	return (
@@ -225,9 +225,10 @@ function LoginBox({
 						</Button>
 					</ButtonGroup>
 					<OauthButtonsWrap>
-						<a href="http://localhost:8888/api/auth/redirect/social?social=github&redirectUri=http://localhost:8888/api/auth/callback/github">test</a>
-						<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
-						<FacebookLogin
+						<a href="http://localhost:8888/api/auth/redirect/social?social=github&redirectUri=http://localhost:8888/api/auth/callback/github">
+							<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
+						</a>
+						{/* <FacebookLogin
 							appId={id.facebookAppId}
 							callback={facebookLoginCallback}
 							render={(renderProps: any) => (
@@ -235,7 +236,7 @@ function LoginBox({
 									<TiSocialFacebook size="2.3rem" color="white" />
 								</OauthCircle>
 							)}
-						/>
+						/> */}
 						<OauthCircle>
 							<FcGoogle size="2.3rem" />
 						</OauthCircle>

@@ -403,3 +403,8 @@ export const requestGetFollowInfo = (req: { type: string; memberId: string }) =>
 		.catch((error) => {
 			throw error;
 		});
+
+export const logout = () =>
+	axios.post(`${server.host}/auth/logout`).catch((error) => {
+		throw error;
+	});

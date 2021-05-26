@@ -1,11 +1,8 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
-import { getStorage, setStorage } from 'libs/storage';
+import { setStorage } from 'libs/storage';
 import { AUTH_REGISTER_REQUEST, onAuthRegister, setRegisterErrorMsg } from 'store/modules/register.auth';
-import { FACEBOOK_AUTH_LOGIN_REQUEST, onFacebookAuthLogin } from 'store/modules/facebook.auth';
 import authRepo from './auth.repository';
-import { AUTH_LOGIN_REQUEST, onAuthLogin, setLoginErrorMsg } from '../../modules/auth';
-import { onSocialAuthRegister, SOCIAL_REGISTER_REQUEST } from '../../modules/register.github.auth';
-import { GITHUB_AUTH_LOGIN_REQUEST, onGithubAuthLogin } from '../../modules/github.auth';
+import { AUTH_LOGIN_REQUEST, onAuthLogin, setLoginErrorMsg, setUserInfoState } from '../../modules/auth';
 
 function* executeCallback(cb?: () => void) {
 	if (cb) {
@@ -46,24 +43,117 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 	setStorage('tech-token', payload.token);
 	yield put(onAuthLogin.success());
 	yield put(setLoginErrorMsg(''));
+	yield put(setUserInfoState(payload.member));
 	yield executeCallback(successCB);
 }
 
-function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.request>) {
-	const { redirectUri, social, successCB, failCB } = action.payload;
+// function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.request>) {
+// 	const { redirectUri, social, successCB, failCB } = action.payload;
 
-	const { status, data } = yield call(authRepo.socialLogin, {
-		social,
-		redirectUri,
+// 	const { status, data } = yield call(authRepo.socialLogin, {
+// 		social,
+// 		redirectUri,
+// 	});
+
+// 	if (status === 400) {
+// 		return;
+// 	}
+
+// 	if (status === 404) {
+// 		const { login, name, id, avatarUrl } = data.data;
+// 		yield executeCallback(failCB ? failCB(name, login, id, avatarUrl) : null);
+// 		return;
+// 	}
+
+// 	if (status === 500) {
+// 		return;
+// 	}
+
+// 	const payload = {
+// 		token: data.data.token,
+// 		member: data.data.member,
+// 	};
+
+// 	setStorage('user-info', payload.member);
+// 	setStorage('tech-token', payload.token);
+// 	yield put(onAuthLogin.success());
+// 	yield executeCallback(successCB);
+// }
+
+// function* onLoginWithFacebookSaga(action: ReturnType<typeof onFacebookAuthLogin.request>) {
+// 	const { accessToken, userId, userName, successCB, failCB } = action.payload;
+
+// 	const { status, data } = yield call(authRepo.loginWithFacebook, {
+// 		accessToken,
+// 		userId,
+// 		userName,
+// 	});
+
+// 	if (status === 400) {
+// 		return;
+// 	}
+
+// 	if (status === 404) {
+// 		const { id, name, profileImage } = data.data;
+
+// 		yield executeCallback(failCB ? failCB(id, name, profileImage) : null);
+// 		return;
+// 	}
+
+// 	if (status === 500) {
+// 		return;
+// 	}
+
+// 	const payload = {
+// 		token: data.data.token,
+// 		member: data.data.member,
+// 	};
+
+// 	setStorage('user-info', payload.member);
+// 	setStorage('tech-token', payload.token);
+// 	yield put(onAuthLogin.success());
+// 	yield executeCallback(successCB);
+// }
+
+// function* onRegisterWithSocial(action: ReturnType<typeof onSocialAuthRegister.request>) {
+// 	const { socialId, memberId, memberName, profileImage, introduce, successCB } = action.payload;
+
+// 	const { status, data } = yield call(authRepo.registerWithSocial, {
+// 		socialId,
+// 		memberId,
+// 		memberName,
+// 		profileImage,
+// 		introduce,
+// 	});
+
+// 	if (status === 400) {
+// 		return;
+// 	}
+
+// 	if (status === 500) {
+// 		return;
+// 	}
+
+// 	const payload = {
+// 		token: data.data.token,
+// 		member: data.data.member,
+// 	};
+
+// 	setStorage('user-info', payload.member);
+// 	setStorage('tech-token', payload.token);
+// 	yield put(onSocialAuthRegister.success());
+// 	yield executeCallback(successCB);
+// }
+
+export const GET_USER_INFO = 'auth/GET_USER_INFO' as string;
+
+function* getUserInfoById(action: { payload: { userId: string } }) {
+	const { userId } = action.payload;
+	const { status, data } = yield call(authRepo.getUserInfo, {
+		memberId: userId,
 	});
 
 	if (status === 400) {
-		return;
-	}
-
-	if (status === 404) {
-		const { login, name, id, avatarUrl } = data.data;
-		yield executeCallback(failCB ? failCB(name, login, id, avatarUrl) : null);
 		return;
 	}
 
@@ -72,111 +162,10 @@ function* onLoginWithGitHubSaga(action: ReturnType<typeof onGithubAuthLogin.requ
 	}
 
 	const payload = {
-		token: data.data.token,
-		member: data.data.member,
+		member: data.data,
 	};
 
 	setStorage('user-info', payload.member);
-	setStorage('tech-token', payload.token);
-	yield put(onAuthLogin.success());
-	yield executeCallback(successCB);
-}
-
-function* onLoginWithFacebookSaga(action: ReturnType<typeof onFacebookAuthLogin.request>) {
-	const { accessToken, userId, userName, successCB, failCB } = action.payload;
-
-	const { status, data } = yield call(authRepo.loginWithFacebook, {
-		accessToken,
-		userId,
-		userName,
-	});
-
-	if (status === 400) {
-		return;
-	}
-
-	if (status === 404) {
-		const { id, name, profileImage } = data.data;
-
-		yield executeCallback(failCB ? failCB(id, name, profileImage) : null);
-		return;
-	}
-
-	if (status === 500) {
-		return;
-	}
-
-	const payload = {
-		token: data.data.token,
-		member: data.data.member,
-	};
-
-	setStorage('user-info', payload.member);
-	setStorage('tech-token', payload.token);
-	yield put(onAuthLogin.success());
-	yield executeCallback(successCB);
-}
-
-function* onRegisterWithSocial(action: ReturnType<typeof onSocialAuthRegister.request>) {
-	const { socialId, memberId, memberName, profileImage, introduce, successCB } = action.payload;
-
-	const { status, data } = yield call(authRepo.registerWithSocial, {
-		socialId,
-		memberId,
-		memberName,
-		profileImage,
-		introduce,
-	});
-
-	if (status === 400) {
-		return;
-	}
-
-	if (status === 500) {
-		return;
-	}
-
-	const payload = {
-		token: data.data.token,
-		member: data.data.member,
-	};
-
-	setStorage('user-info', payload.member);
-	setStorage('tech-token', payload.token);
-	yield put(onSocialAuthRegister.success());
-	yield executeCallback(successCB);
-}
-
-export const GET_USER_INFO = 'auth/GET_USER_INFO';
-
-function* getUserInfoById(action: { payload: { token: string } }) {	
-	const { token } = action.payload;
-	const { status, data } = yield call(authRepo.registerWithSocial, {
-		socialId,
-		memberId,
-		memberName,
-		profileImage,
-		introduce,
-	});
-
-	if (status === 400) {
-		return;
-	}
-
-	if (status === 500) {
-		return;
-	}
-
-	const payload = {
-		token: data.data.token,
-		member: data.data.member,
-	};
-
-	setStorage('user-info', payload.member);
-	setStorage('tech-token', payload.token);
-	yield put(onSocialAuthRegister.success());
-	yield executeCallback(successCB);
-	console.log(action);
 }
 
 function* onRegisterAuth(action: ReturnType<typeof onAuthRegister.request>) {
@@ -225,32 +214,32 @@ function* watchOnLogin() {
 	yield takeLatest(AUTH_LOGIN_REQUEST, onLoginSaga);
 }
 
-function* watchOnLoginWithGitHub() {
-	yield takeLatest(GITHUB_AUTH_LOGIN_REQUEST, onLoginWithGitHubSaga);
-}
+// function* watchOnLoginWithGitHub() {
+// 	yield takeLatest(GITHUB_AUTH_LOGIN_REQUEST, onLoginWithGitHubSaga);
+// }
 
-function* watchOnLoginWithFacebook() {
-	yield takeLatest(FACEBOOK_AUTH_LOGIN_REQUEST, onLoginWithFacebookSaga);
-}
+// function* watchOnLoginWithFacebook() {
+// 	yield takeLatest(FACEBOOK_AUTH_LOGIN_REQUEST, onLoginWithFacebookSaga);
+// }
 
-function* watchOnRegisterWithGitHub() {
-	yield takeLatest(SOCIAL_REGISTER_REQUEST, onRegisterWithSocial);
-}
+// function* watchOnRegisterWithGitHub() {
+// 	yield takeLatest(SOCIAL_REGISTER_REQUEST, onRegisterWithSocial);
+// }
 
 function* watchOnRegister() {
 	yield takeLatest(AUTH_REGISTER_REQUEST, onRegisterAuth);
 }
 
-function* watchOnGetUserInfo() {
-	yield takeLatest(GET_USER_INFO, getUserInfoById);
-}
+// function* watchOnGetUserInfo() {
+// 	yield takeLatest(GET_USER_INFO, getUserInfoById);
+// }
 export default function* authSagas() {
 	yield all([
 		fork(watchOnLogin),
-		fork(watchOnLoginWithGitHub),
-		fork(watchOnRegisterWithGitHub),
+		// fork(watchOnLoginWithGitHub),
+		// fork(watchOnRegisterWithGitHub),
 		fork(watchOnRegister),
-		fork(watchOnLoginWithFacebook),
-		fork(watchOnGetUserInfo),
+		// fork(watchOnLoginWithFacebook),
+		// fork(watchOnGetUserInfo),
 	]);
 }

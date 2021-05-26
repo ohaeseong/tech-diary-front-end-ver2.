@@ -21,9 +21,7 @@ import ButtonGroup from 'components/common/ButtonGroup';
 import useRequest from 'libs/hooks/useRequest';
 import { reqeustSignUpEmailSend } from 'libs/repository';
 import Loading from 'components/common/Loading';
-import { FACEBOOK_AUTH_LOGIN_REQUEST } from 'store/modules/facebook.auth';
 import { FacebookLoginResponse } from 'store/types/auth.types';
-import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
 
 type LoginForm = {
 	memberId: string;
@@ -117,58 +115,58 @@ function LoginLayout() {
 		});
 	}, [dispatch, form, router]);
 
-	const facebookLoginCallback = useCallback(
-		(response: FacebookLoginResponse) => {
-			const { name, userID, accessToken } = response;
-			dispatch({
-				type: FACEBOOK_AUTH_LOGIN_REQUEST,
-				payload: {
-					accessToken,
-					userId: userID,
-					userName: name,
-					successCB: () => {
-						setIsLoading(false);
-						router.push(`${server.client_url}`);
-					},
-					failCB: (userId: string, memberName: string, profileImage: string) => {
-						setIsLoading(false);
-						router.push({
-							pathname: `${server.client_url}/register/${userId}`,
-							query: {
-								member_name: memberName,
-								social_id: userId,
-								profile_image: profileImage,
-							},
-						});
-					},
-				},
-			});
-		},
-		[dispatch, router]
-	);
+	// const facebookLoginCallback = useCallback(
+	// 	(response: FacebookLoginResponse) => {
+	// 		const { name, userID, accessToken } = response;
+	// 		dispatch({
+	// 			type: FACEBOOK_AUTH_LOGIN_REQUEST,
+	// 			payload: {
+	// 				accessToken,
+	// 				userId: userID,
+	// 				userName: name,
+	// 				successCB: () => {
+	// 					setIsLoading(false);
+	// 					router.push(`${server.client_url}`);
+	// 				},
+	// 				failCB: (userId: string, memberName: string, profileImage: string) => {
+	// 					setIsLoading(false);
+	// 					router.push({
+	// 						pathname: `${server.client_url}/register/${userId}`,
+	// 						query: {
+	// 							member_name: memberName,
+	// 							social_id: userId,
+	// 							profile_image: profileImage,
+	// 						},
+	// 					});
+	// 				},
+	// 			},
+	// 		});
+	// 	},
+	// 	[dispatch, router]
+	// );
 
 	const onLoginWithGithub = useCallback(async () => {
-		dispatch({
-			type: GITHUB_AUTH_LOGIN_REQUEST,
-			payload: {
-				social: 'github',
-				redirectUri: 'http://localhost:8888/api/auth/callback/github',
-				successCB: () => {
-					router.push(`${server.client_url}`);
-				},
-				failCB: (memberName: string, memberId: string, githubId: string, profileImage: string) => {
-					router.push({
-						pathname: `${server.client_url}/register/${memberId}`,
-						query: {
-							member_name: memberName,
-							social_id: githubId,
-							profile_image: profileImage,
-						},
-					});
-				},
-			},
-		});
-	}, [dispatch, router]);
+		// dispatch({
+		// 	type: GITHUB_AUTH_LOGIN_REQUEST,
+		// 	payload: {
+		// 		social: 'github',
+		// 		redirectUri: 'http://localhost:8888/api/auth/callback/github',
+		// 		successCB: () => {
+		// 			router.push(`${server.client_url}`);
+		// 		},
+		// 		failCB: (memberName: string, memberId: string, githubId: string, profileImage: string) => {
+		// 			router.push({
+		// 				pathname: `${server.client_url}/register/${memberId}`,
+		// 				query: {
+		// 					member_name: memberName,
+		// 					social_id: githubId,
+		// 					profile_image: profileImage,
+		// 				},
+		// 			});
+		// 		},
+		// 	},
+		// });
+	}, []);
 
 	const handleKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
@@ -218,7 +216,7 @@ function LoginLayout() {
 				onLoginWithGithub={onLoginWithGithub}
 				handleKeypress={handleKeypress}
 				onChange={onChange}
-				facebookLoginCallback={facebookLoginCallback}
+				// facebookLoginCallback={facebookLoginCallback}
 				errorMsg={errorMsg}
 				form={form}
 			/>
