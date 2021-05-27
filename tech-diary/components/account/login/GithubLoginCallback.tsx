@@ -3,8 +3,9 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
 import { server } from 'config/config';
-import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
+// import { GITHUB_AUTH_LOGIN_REQUEST } from 'store/modules/github.auth';
 import Loading from 'components/common/Loading';
+import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 
 function GithubLoginCallback() {
 	const router = useRouter();
@@ -13,7 +14,7 @@ function GithubLoginCallback() {
 	useEffect(() => {
 		if (router.query.code) {
 			dispatch({
-				type: GITHUB_AUTH_LOGIN_REQUEST,
+				type: AUTH_LOGIN_REQUEST,
 				payload: {
 					code: router.query.code,
 					successCB: () => {

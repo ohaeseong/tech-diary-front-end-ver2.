@@ -23,11 +23,11 @@ function useHeader() {
 			type: SET_USER_INFO_STATE,
 			payload: null,
 		});
-		if (router.pathname === '/') {
-			router.reload();
-		} else {
-			router.push('/');
-		}
+		// if (router.pathname === '/') {
+		// 	router.reload();
+		// } else {
+		// 	router.push('/');
+		// }
 	}, [dispatch, router]);
 
 	return [userInfo, onLogout] as [UserInfo, () => void];

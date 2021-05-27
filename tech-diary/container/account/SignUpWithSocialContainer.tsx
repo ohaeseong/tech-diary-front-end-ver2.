@@ -2,9 +2,10 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import SignUpWithGithubTemplate from 'components/account/signup/SignUpTemplate';
 import { useRouter } from 'next/router';
 // import useRequest from 'libs/hooks/useRequest';
-import { useDispatch, useSelector } from 'react-redux';
-import { SOCIAL_REGISTER_REQUEST } from 'store/modules/register.github.auth';
-import { RootState } from 'store/modules';
+import { useDispatch } from 'react-redux';
+import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
+// import { SOCIAL_REGISTER_REQUEST } from 'store/modules/register.github.auth';
+// import { RootState } from 'store/modules';
 
 function SignUpWithSocialContainer() {
 	const router = useRouter();
@@ -13,7 +14,7 @@ function SignUpWithSocialContainer() {
 	const [memberName, setMemberName] = useState('');
 	const [introduce, setIntroduce] = useState('');
 
-	const errorMsg = useSelector((state: RootState) => state.registerWithGithub.authRegisterErrorMsg);
+	// const errorMsg = useSelector((state: RootState) => state.registerWithGithub.authRegisterErrorMsg);
 	const dispatch = useDispatch();
 
 	const handleMemberId = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ function SignUpWithSocialContainer() {
 
 	const onSubmit = useCallback(() => {
 		dispatch({
-			type: SOCIAL_REGISTER_REQUEST,
+			type: AUTH_LOGIN_REQUEST,
 			payload: {
 				memberId,
 				memberName,
@@ -66,7 +67,7 @@ function SignUpWithSocialContainer() {
 			memberId={memberId}
 			memberName={memberName}
 			introduce={introduce}
-			errorMsg={errorMsg}
+			errorMsg=""
 			handleMemberId={handleMemberId}
 			handleIntroduce={handleIntroduce}
 			handleMemberName={handleMemberName}

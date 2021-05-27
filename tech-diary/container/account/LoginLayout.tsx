@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import AccountPageTemplate from 'components/account/AccountPageTemplate';
 import LoginBox from 'components/account/login/LoginBox';
@@ -11,7 +11,7 @@ import { RootState } from 'store/modules';
 import useForm from 'libs/hooks/useForm';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import isEmail from 'libs/regEx';
-import { id, server } from 'config/config';
+import { server } from 'config/config';
 import ModalBox from 'components/common/ModalBox';
 import LabelInput from 'components/common/LabelInput';
 import useToggle from 'libs/hooks/useToggle';
@@ -21,7 +21,7 @@ import ButtonGroup from 'components/common/ButtonGroup';
 import useRequest from 'libs/hooks/useRequest';
 import { reqeustSignUpEmailSend } from 'libs/repository';
 import Loading from 'components/common/Loading';
-import { FacebookLoginResponse } from 'store/types/auth.types';
+// import { FacebookLoginResponse } from 'store/types/auth.types';
 
 type LoginForm = {
 	memberId: string;
@@ -32,11 +32,12 @@ function LoginLayout() {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
+	const loginLinkWithGithub = `${server.host}/auth/redirect/social?social=github&redirectUri=${server.host}/auth/callback/github`;
 
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
 	const [email, setEmail] = useState('');
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading] = useState(false);
 	const [modalMsg, setModalMsg] = useState({
 		isError: false,
 		message: '',
@@ -174,11 +175,6 @@ function LoginLayout() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (router.query.code) {
-	// 	}
-	// }, [dispatch, router, router.query.code]);
-
 	return (
 		<AccountPageTemplate>
 			{isLoading ? <Loading /> : <></>}
@@ -216,6 +212,7 @@ function LoginLayout() {
 				onLoginWithGithub={onLoginWithGithub}
 				handleKeypress={handleKeypress}
 				onChange={onChange}
+				loginLinkWithGithub={loginLinkWithGithub}
 				// facebookLoginCallback={facebookLoginCallback}
 				errorMsg={errorMsg}
 				form={form}

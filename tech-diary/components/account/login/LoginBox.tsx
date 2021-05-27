@@ -4,16 +4,16 @@ import styled from '@emotion/styled';
 // import Image from 'next/image';
 import Link from 'next/link';
 import { AiFillGithub } from 'react-icons/ai';
-import { TiSocialFacebook } from 'react-icons/ti';
+// import { TiSocialFacebook } from 'react-icons/ti';
 import { FcGoogle } from 'react-icons/fc';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 import { color } from 'styles/color';
 import { fadein } from 'styles/animation';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import AccountInput from 'components/account/AccountInput';
-import { id } from 'config/config';
+// import { id } from 'config/config';
 
 const LoginBoxWrap = styled.div`
 	display: flex;
@@ -167,6 +167,7 @@ type Props = {
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 	openModal: () => void;
+	loginLinkWithGithub: string;
 	// facebookLoginCallback: (response: any) => void;
 
 	errorMsg: string;
@@ -180,6 +181,7 @@ function LoginBox({
 	onChange,
 	errorMsg,
 	form,
+	loginLinkWithGithub,
 	// facebookLoginCallback,
 	openModal,
 }: Props) {
@@ -225,7 +227,7 @@ function LoginBox({
 						</Button>
 					</ButtonGroup>
 					<OauthButtonsWrap>
-						<a href="http://localhost:8888/api/auth/redirect/social?social=github&redirectUri=http://localhost:8888/api/auth/callback/github">
+						<a href={loginLinkWithGithub}>
 							<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
 						</a>
 						{/* <FacebookLogin
