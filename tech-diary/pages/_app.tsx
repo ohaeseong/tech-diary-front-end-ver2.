@@ -10,22 +10,26 @@ import { ThemeProvider } from '@emotion/react';
 import { color, dark } from 'styles/color';
 import { NavBar } from 'components/base/NavBar';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import { Context } from 'node:vm';
 import { getStorage, setStorage } from 'libs/storage';
 import { GET_USER_INFO } from 'store/sagas/auth/auth.saga';
 import { useDispatch } from 'react-redux';
-import { UserInfo } from 'store/types/auth.types';
-import { setUserInfoState, SET_USER_INFO_STATE } from 'store/modules/auth';
+import { SET_USER_INFO_STATE } from 'store/modules/auth';
+import useHeader from 'libs/hooks/useHeader';
 
 type Props = {
 	Component: any;
 	pageProps: any;
-	cookie: any;
+	cookies: {
+		token: string;
+		refreshToken: string;
+		userId: string;
+	};
 };
 
-function MyApp({ Component, pageProps, cookie }: Props) {
+function MyApp({ Component, pageProps, cookies }: Props) {
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
+	const [userInfo] = useHeader();
 	const [isMain, setIsMain] = useState(false);
 	const [isNotNav, setIsNotNav] = useState(false);
 
@@ -61,19 +65,38 @@ function MyApp({ Component, pageProps, cookie }: Props) {
 	}, [router.pathname]);
 
 	useEffect(() => {
+		console.log(cookies);
+		
+		if (cookies && cookies.token) {
+			// console.log( cookie.split('access_token=').length >= 2);
+
+			setStorage('tech-token', cookies.token);
+		}
 		const user = getStorage('user-info');
+		if (cookies && cookies.token && !userInfo) {
+			dispatch({
+				type: GET_USER_INFO,
+				payload: {
+					userId: cookies.userId,
+					successCB: (payload: any) => {
+						dispatch({
+							type: SET_USER_INFO_STATE,
+							payload: payload.member,
+						});
+
+						setStorage('user-info', payload.member);
+					},
+				},
+			});
+
+			return;
+		}
 		if (!user) return;
 		dispatch({
 			type: SET_USER_INFO_STATE,
 			payload: user,
 		});
-	}, [dispatch]);
-
-	// const loadUser = () => {
-	// 	const user = getStorage('user-info');
-	// 	if (!user) return;
-	// 	setUserInfoState(user);
-	// };
+	}, [cookies, dispatch]);
 
 	if (!componentMounted) return <></>;
 
@@ -123,17 +146,22 @@ function MyApp({ Component, pageProps, cookie }: Props) {
 MyApp.getInitialProps = async (context: Context) => {
 	const { ctx, Component } = context;
 	let pageProps = {};
-	const cookie = ctx.req?.headers.cookie || '';
-
-	if (ctx.isServer && cookie) {
-		axios.defaults.headers.Cookie = cookie;
-	}
+	const { req } = ctx;
+	let cookies;
 
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 	}
 
-	return { pageProps, cookie };
+	if (req) {
+		cookies = {
+			token: ctx.req.cookies.access_token,
+			refreshToken: ctx.req.cookies.refresh_token,
+			userId: ctx.req.cookies.user_id,
+		};
+	}
+
+	return { pageProps, cookies };
 };
 
 export default wrapper.withRedux(MyApp);

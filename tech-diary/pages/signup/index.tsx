@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import SignUpContainer from 'container/account/SignUpWithSocialContainer';
+import SignUpContainer from 'container/account/SignUpContainer';
 
 function SignUpPage() {
 	return (

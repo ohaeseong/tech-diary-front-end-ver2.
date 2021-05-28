@@ -53,7 +53,7 @@ export default createReducer<AuthState, AuthAction>(initialState, {
 		loading: true,
 	}),
 
-	[AUTH_LOGIN_SUCCESS]: (state, action) => ({
+	[AUTH_LOGIN_SUCCESS]: (state) => ({
 		...state,
 		loading: false,
 		isLoginSucces: true,

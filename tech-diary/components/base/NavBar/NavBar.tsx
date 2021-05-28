@@ -24,7 +24,7 @@ import ButtonGroup from 'components/common/ButtonGroup';
 import LabelInput from 'components/common/LabelInput';
 import ModalBox from 'components/common/ModalBox';
 import Button from 'components/common/Button';
-import { logout, reqeustSignUpEmailSend } from 'libs/repository';
+import { reqeustSignUpEmailSend } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import isEmail from 'libs/regEx';
 import useHeader from 'libs/hooks/useHeader';
@@ -302,7 +302,6 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 
 	useEffect(() => {
 		const token = getStorage('tech-token') as string;
-
 		if (token && userInfo) {
 			setIsToken(true);
 			if (userInfo.profileImage) {

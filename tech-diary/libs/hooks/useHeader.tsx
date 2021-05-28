@@ -14,21 +14,22 @@ function useHeader() {
 
 	const onLogout = useCallback(async () => {
 		try {
-			await logout();
+			window.location.href = 'http://localhost:8888/api/auth/logout';
 		} catch (error) {
 			console.log(error);
 		}
 		removeStorage('user-info');
+		removeStorage('tech-token');
 		dispatch({
 			type: SET_USER_INFO_STATE,
 			payload: null,
 		});
-		if (router.pathname === '/') {
-			router.reload();
-		} else {
-			router.push('/');
-		}
-	}, [dispatch, router]);
+		// if (router.pathname === '/') {
+		// 	router.reload();
+		// } else {
+		// 	router.push('/');
+		// }
+	}, [dispatch]);
 
 	return [userInfo, onLogout] as [UserInfo, () => void];
 }

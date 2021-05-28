@@ -145,10 +145,10 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 // 	yield executeCallback(successCB);
 // }
 
-export const GET_USER_INFO = 'auth/GET_USER_INFO' as string;
+export const GET_USER_INFO = 'auth/GET_USER_INFO' as any;
 
-function* getUserInfoById(action: { payload: { userId: string } }) {
-	const { userId } = action.payload;
+function* getUserInfoById(action: { payload: { userId: string; successCB: any } }) {
+	const { userId, successCB } = action.payload;
 	const { status, data } = yield call(authRepo.getUserInfo, {
 		memberId: userId,
 	});
@@ -165,7 +165,8 @@ function* getUserInfoById(action: { payload: { userId: string } }) {
 		member: data.data,
 	};
 
-	setStorage('user-info', payload.member);
+	yield executeCallback(successCB(payload));
+	// setStorage('user-info', payload.member);
 }
 
 function* onRegisterAuth(action: ReturnType<typeof onAuthRegister.request>) {
@@ -230,9 +231,9 @@ function* watchOnRegister() {
 	yield takeLatest(AUTH_REGISTER_REQUEST, onRegisterAuth);
 }
 
-// function* watchOnGetUserInfo() {
-// 	yield takeLatest(GET_USER_INFO, getUserInfoById);
-// }
+function* watchOnGetUserInfo() {
+	yield takeLatest(GET_USER_INFO, getUserInfoById);
+}
 export default function* authSagas() {
 	yield all([
 		fork(watchOnLogin),
@@ -240,6 +241,6 @@ export default function* authSagas() {
 		// fork(watchOnRegisterWithGitHub),
 		fork(watchOnRegister),
 		// fork(watchOnLoginWithFacebook),
-		// fork(watchOnGetUserInfo),
+		fork(watchOnGetUserInfo),
 	]);
 }
