@@ -20,10 +20,14 @@ import useHeader from 'libs/hooks/useHeader';
 type Props = {
 	Component: any;
 	pageProps: any;
-	cookie: any;
+	cookies: {
+		token: string;
+		refreshToken: string;
+		userId: string;
+	};
 };
 
-function MyApp({ Component, pageProps, cookie }: Props) {
+function MyApp({ Component, pageProps, cookies }: Props) {
 	const [theme, toggleTheme, componentMounted] = useDarkMode();
 	const [userInfo] = useHeader();
 	const [isMain, setIsMain] = useState(false);
@@ -61,15 +65,19 @@ function MyApp({ Component, pageProps, cookie }: Props) {
 	}, [router.pathname]);
 
 	useEffect(() => {
-		if (cookie) {
-			setStorage('tech-token', cookie.split('; ')[0].split('access_token=')[1]);
+		console.log(cookies);
+		
+		if (cookies && cookies.token) {
+			// console.log( cookie.split('access_token=').length >= 2);
+
+			setStorage('tech-token', cookies.token);
 		}
 		const user = getStorage('user-info');
-		if (cookie && !userInfo) {
+		if (cookies && cookies.token && !userInfo) {
 			dispatch({
 				type: GET_USER_INFO,
 				payload: {
-					userId: cookie.split('; ')[2].split('user_id=')[1],
+					userId: cookies.userId,
 					successCB: (payload: any) => {
 						dispatch({
 							type: SET_USER_INFO_STATE,
@@ -88,7 +96,7 @@ function MyApp({ Component, pageProps, cookie }: Props) {
 			type: SET_USER_INFO_STATE,
 			payload: user,
 		});
-	}, [cookie, dispatch]);
+	}, [cookies, dispatch]);
 
 	if (!componentMounted) return <></>;
 
@@ -138,13 +146,22 @@ function MyApp({ Component, pageProps, cookie }: Props) {
 MyApp.getInitialProps = async (context: Context) => {
 	const { ctx, Component } = context;
 	let pageProps = {};
-	const cookie = ctx.req?.headers.cookie || '';
+	const { req } = ctx;
+	let cookies;
 
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 	}
 
-	return { pageProps, cookie };
+	if (req) {
+		cookies = {
+			token: ctx.req.cookies.access_token,
+			refreshToken: ctx.req.cookies.refresh_token,
+			userId: ctx.req.cookies.user_id,
+		};
+	}
+
+	return { pageProps, cookies };
 };
 
 export default wrapper.withRedux(MyApp);

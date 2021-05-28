@@ -4,10 +4,15 @@ import { useRouter } from 'next/router';
 // import useRequest from 'libs/hooks/useRequest';
 import { useDispatch } from 'react-redux';
 import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
+import { SocialProfile } from 'store/types/auth.types';
 // import { SOCIAL_REGISTER_REQUEST } from 'store/modules/register.github.auth';
 // import { RootState } from 'store/modules';
 
-function SignUpWithSocialContainer() {
+type Props = {
+	userInfo: SocialProfile;
+};
+
+function SignUpWithSocialContainer({ userInfo }: Props) {
 	const router = useRouter();
 
 	const [memberId, setMemberId] = useState('');
@@ -36,29 +41,25 @@ function SignUpWithSocialContainer() {
 				memberId,
 				memberName,
 				introduce,
-				socialId: router.query.social_id,
-				profileImage: router.query.profile_image,
+				socialId: userInfo.socialId,
+				profileImage: userInfo.profileImage,
 				successCB: () => {
 					router.push('/');
 				},
 			},
 		});
-	}, [dispatch, introduce, memberId, memberName, router]);
+	}, [dispatch, introduce, memberId, memberName, router, userInfo.profileImage, userInfo.socialId]);
 
 	const cancleRegister = useCallback(() => {
 		router.push('/');
 	}, [router]);
 
 	useEffect(() => {
-		if (router.query) {
-			setMemberId(router.query.memberId as string);
-			setMemberName(router.query.member_name as string);
+		if (userInfo) {
+			setMemberId(userInfo.memberId as string);
+			setMemberName(userInfo.memberName as string);
 		}
-	}, [router.query]);
-
-	useEffect(() => {
-		// window.history.replaceState(null, '', '/register');
-	}, []);
+	}, [userInfo, userInfo.memberId, userInfo.memberName]);
 
 	return (
 		<SignUpWithGithubTemplate

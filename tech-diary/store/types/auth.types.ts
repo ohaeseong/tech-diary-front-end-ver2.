@@ -42,6 +42,13 @@ export type UserInfo = {
 	followings: number;
 };
 
+export type SocialProfile = {
+	memberName: string;
+	socialId: string;
+	profileImage: string;
+	memberId: string;
+}
+
 export type UserRegisterWithSocialRequest = {
 	memberId: string;
 	memberName: string;

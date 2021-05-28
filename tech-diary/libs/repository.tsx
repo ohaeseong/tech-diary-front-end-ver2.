@@ -405,6 +405,6 @@ export const requestGetFollowInfo = (req: { type: string; memberId: string }) =>
 		});
 
 export const logout = () =>
-	axios.post(`${server.host}/auth/logout`).catch((error) => {
+	axios.get(`${server.host}/auth/logout`).catch((error) => {
 		throw error;
 	});
