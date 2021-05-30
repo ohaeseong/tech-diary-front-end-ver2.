@@ -25,20 +25,21 @@ function RegisterGithubPage({ profile }: Props) {
 
 RegisterGithubPage.getInitialProps = async (context: Context) => {
 	const { req } = context;
-
-	const registerToken = req?.cookies.register_token;
 	let response;
 
-	if (registerToken) {
-		response = await axios.get(`${server.host}/auth/social-profile`, {
-			headers: {
-				token: registerToken,
-			},
-		});
+	if (req) {
+		if (req.cookies) {
+			const registerToken = req?.cookies.register_token;
+			response = await axios.get(`${server.host}/auth/social-profile`, {
+				headers: {
+					token: registerToken,
+				},
+			});
 
-		const { data } = response.data;
+			const { data } = response.data;
 
-		return { profile: data };
+			return { profile: data };
+		}
 	}
 
 	return { profile: null };

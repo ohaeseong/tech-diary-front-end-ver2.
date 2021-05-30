@@ -143,18 +143,24 @@ MyApp.getInitialProps = async (context: Context) => {
 	const { ctx, Component } = context;
 	let pageProps = {};
 	const { req } = ctx;
-	let cookies;
+	let cookies = {
+		token: '',
+		refreshToken: '',
+		userId: '',
+	};
 
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 	}
 
 	if (req) {
-		cookies = {
-			token: ctx.req.cookies.access_token,
-			refreshToken: ctx.req.cookies.refresh_token,
-			userId: ctx.req.cookies.user_id,
-		};
+		if (req.cookies) {
+			cookies = {
+				token: req.cookies.access_token,
+				refreshToken: req.cookies.refresh_token,
+				userId: req.cookies.user_id,
+			};
+		}
 	}
 
 	return { pageProps, cookies };
