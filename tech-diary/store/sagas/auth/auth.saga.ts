@@ -1,6 +1,7 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import { setStorage } from 'libs/storage';
 import { AUTH_REGISTER_REQUEST, onAuthRegister, setRegisterErrorMsg } from 'store/modules/register.auth';
+import { AUTH_REGISTER_SOCIAL_REQUEST, onSocialAuthRegister } from 'store/modules/register.with.social';
 import authRepo from './auth.repository';
 import { AUTH_LOGIN_REQUEST, onAuthLogin, setLoginErrorMsg, setUserInfoState } from '../../modules/auth';
 
@@ -115,35 +116,35 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 // 	yield executeCallback(successCB);
 // }
 
-// function* onRegisterWithSocial(action: ReturnType<typeof onSocialAuthRegister.request>) {
-// 	const { socialId, memberId, memberName, profileImage, introduce, successCB } = action.payload;
+function* onRegisterWithSocial(action: ReturnType<typeof onSocialAuthRegister.request>) {
+	const { socialId, memberId, memberName, profileImage, introduce, successCB } = action.payload;
 
-// 	const { status, data } = yield call(authRepo.registerWithSocial, {
-// 		socialId,
-// 		memberId,
-// 		memberName,
-// 		profileImage,
-// 		introduce,
-// 	});
+	const { status, data } = yield call(authRepo.registerWithSocial, {
+		socialId,
+		memberId,
+		memberName,
+		profileImage,
+		introduce,
+	});
 
-// 	if (status === 400) {
-// 		return;
-// 	}
+	if (status === 400) {
+		return;
+	}
 
-// 	if (status === 500) {
-// 		return;
-// 	}
+	if (status === 500) {
+		return;
+	}
 
-// 	const payload = {
-// 		token: data.data.token,
-// 		member: data.data.member,
-// 	};
+	const payload = {
+		token: data.data.token,
+		member: data.data.member,
+	};
 
-// 	setStorage('user-info', payload.member);
-// 	setStorage('tech-token', payload.token);
-// 	yield put(onSocialAuthRegister.success());
-// 	yield executeCallback(successCB);
-// }
+	setStorage('user-info', payload.member);
+	setStorage('tech-token', payload.token);
+	yield put(onSocialAuthRegister.success());
+	yield executeCallback(successCB);
+}
 
 export const GET_USER_INFO = 'auth/GET_USER_INFO' as any;
 
@@ -223,9 +224,9 @@ function* watchOnLogin() {
 // 	yield takeLatest(FACEBOOK_AUTH_LOGIN_REQUEST, onLoginWithFacebookSaga);
 // }
 
-// function* watchOnRegisterWithGitHub() {
-// 	yield takeLatest(SOCIAL_REGISTER_REQUEST, onRegisterWithSocial);
-// }
+function* watchOnRegisterWithSocial() {
+	yield takeLatest(AUTH_REGISTER_SOCIAL_REQUEST, onRegisterWithSocial);
+}
 
 function* watchOnRegister() {
 	yield takeLatest(AUTH_REGISTER_REQUEST, onRegisterAuth);
@@ -238,7 +239,7 @@ export default function* authSagas() {
 	yield all([
 		fork(watchOnLogin),
 		// fork(watchOnLoginWithGitHub),
-		// fork(watchOnRegisterWithGitHub),
+		fork(watchOnRegisterWithSocial),
 		fork(watchOnRegister),
 		// fork(watchOnLoginWithFacebook),
 		fork(watchOnGetUserInfo),

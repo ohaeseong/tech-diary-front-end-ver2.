@@ -3,8 +3,10 @@ import SignUpWithGithubTemplate from 'components/account/signup/SignUpTemplate';
 import { useRouter } from 'next/router';
 // import useRequest from 'libs/hooks/useRequest';
 import { useDispatch } from 'react-redux';
-import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
+// import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
 import { SocialProfile } from 'store/types/auth.types';
+import { AUTH_REGISTER_SOCIAL_REQUEST } from 'store/modules/register.with.social';
+import { server } from 'config/config';
 // import { SOCIAL_REGISTER_REQUEST } from 'store/modules/register.github.auth';
 // import { RootState } from 'store/modules';
 
@@ -36,7 +38,7 @@ function SignUpWithSocialContainer({ userInfo }: Props) {
 
 	const onSubmit = useCallback(() => {
 		dispatch({
-			type: AUTH_LOGIN_REQUEST,
+			type: AUTH_REGISTER_SOCIAL_REQUEST,
 			payload: {
 				memberId,
 				memberName,
@@ -44,11 +46,11 @@ function SignUpWithSocialContainer({ userInfo }: Props) {
 				socialId: userInfo.socialId,
 				profileImage: userInfo.profileImage,
 				successCB: () => {
-					router.push('/');
+					window.location.href = `${server.host}/auth/delete/register_token`;
 				},
 			},
 		});
-	}, [dispatch, introduce, memberId, memberName, router, userInfo.profileImage, userInfo.socialId]);
+	}, [dispatch, introduce, memberId, memberName, userInfo]);
 
 	const cancleRegister = useCallback(() => {
 		router.push('/');

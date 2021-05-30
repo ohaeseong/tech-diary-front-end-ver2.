@@ -1,6 +1,7 @@
-import { logout } from 'libs/repository';
+// import { logout } from 'libs/repository';
+import { server } from 'config/config';
 import { removeStorage } from 'libs/storage';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/modules';
@@ -10,11 +11,11 @@ import { UserInfo } from 'store/types/auth.types';
 function useHeader() {
 	const { userInfo } = useSelector((state: RootState) => state.auth);
 	const dispatch = useDispatch();
-	const router = useRouter();
+	// const router = useRouter();
 
 	const onLogout = useCallback(async () => {
 		try {
-			window.location.href = 'http://localhost:8888/api/auth/logout';
+			window.location.href = `${server.host}/auth/logout`;
 		} catch (error) {
 			console.log(error);
 		}
