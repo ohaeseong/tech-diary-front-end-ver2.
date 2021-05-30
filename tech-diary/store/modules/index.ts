@@ -5,6 +5,7 @@ import write from './write';
 import theme from './theme.state';
 import modal from './modal';
 import registerAuth from './register.auth';
+import socialAuth from './register.with.social';
 import postComment from './post.comment.count';
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
 	postComment,
 	modal,
 	write,
+	socialAuth,
 	registerAuth,
 });
 

@@ -65,11 +65,7 @@ function MyApp({ Component, pageProps, cookies }: Props) {
 	}, [router.pathname]);
 
 	useEffect(() => {
-		console.log(cookies);
-		
 		if (cookies && cookies.token) {
-			// console.log( cookie.split('access_token=').length >= 2);
-
 			setStorage('tech-token', cookies.token);
 		}
 		const user = getStorage('user-info');

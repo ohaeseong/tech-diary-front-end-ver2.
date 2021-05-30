@@ -33,6 +33,7 @@ function LoginLayout() {
 	const router = useRouter();
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
 	const loginLinkWithGithub = `${server.host}/auth/redirect/social?social=github&redirectUri=${server.host}/auth/callback/github`;
+	const loginLinkWithFacebook = `${server.host}/auth/redirect/social?social=facebook&redirectUri=${server.host}/auth/callback/facebook`;
 
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
@@ -213,6 +214,7 @@ function LoginLayout() {
 				handleKeypress={handleKeypress}
 				onChange={onChange}
 				loginLinkWithGithub={loginLinkWithGithub}
+				loginLinkWithFacebook={loginLinkWithFacebook}
 				// facebookLoginCallback={facebookLoginCallback}
 				errorMsg={errorMsg}
 				form={form}

@@ -167,6 +167,7 @@ type Props = {
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 	openModal: () => void;
+	loginLinkWithFacebook: string;
 	loginLinkWithGithub: string;
 	// facebookLoginCallback: (response: any) => void;
 
@@ -179,6 +180,7 @@ function LoginBox({
 	onLoginWithGithub,
 	handleKeypress,
 	onChange,
+	loginLinkWithFacebook,
 	errorMsg,
 	form,
 	loginLinkWithGithub,
@@ -229,6 +231,9 @@ function LoginBox({
 					<OauthButtonsWrap>
 						<a href={loginLinkWithGithub}>
 							<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
+						</a>
+						<a href={loginLinkWithFacebook}>
+							facebook
 						</a>
 						{/* <FacebookLogin
 							appId={id.facebookAppId}
