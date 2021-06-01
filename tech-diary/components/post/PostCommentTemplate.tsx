@@ -6,6 +6,7 @@ import { requestGetComment, requestWriteComment } from 'libs/repository';
 import { RootState } from 'store/modules';
 import { useSelector } from 'react-redux';
 import PostCommentContainer from 'container/postDetail/PostCommentContainer';
+import { mediaQuery } from 'components/layout/responsive';
 
 const PostCommentTemplate = styled.div`
 	display: flex;
@@ -14,6 +15,12 @@ const PostCommentTemplate = styled.div`
 	min-height: 30rem;
 	margin-left: 1rem;
 	margin-bottom: 7rem;
+	margin-top: 7rem;
+
+	${mediaQuery(768)} {
+		margin: 0rem;
+		margin-top: 5rem;
+	}
 `;
 
 const Header = styled.div`
@@ -21,6 +28,12 @@ const Header = styled.div`
 	padding-left: 1rem;
 	font-size: 1.4rem;
 	color: ${(props) => props.theme.gray_5};
+
+	${mediaQuery(768)} {
+		padding: 0rem;
+		padding-top: 1rem;
+		font-size: 1rem;
+	}
 `;
 
 type Props = {

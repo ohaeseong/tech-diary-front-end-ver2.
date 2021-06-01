@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { mediaQuery } from 'components/layout/responsive';
 import React, { ReactNode } from 'react';
 
 const AccountTemplateBackground = styled.div`
@@ -8,6 +9,11 @@ const AccountTemplateBackground = styled.div`
 	align-items: center;
 	justify-content: center;
 	${(props) => props.theme.gradation};
+
+	${mediaQuery(768)} {
+		background-color: white;
+		background: white;
+	}
 `;
 
 type Props = {

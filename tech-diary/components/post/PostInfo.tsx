@@ -4,6 +4,7 @@ import { FollowInfo, Member, Tag } from 'store/types/post.types';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 import Link from 'next/link';
+import { mediaQuery } from 'components/layout/responsive';
 
 const PostInfoWrap = styled.div`
 	display: flex;
@@ -12,6 +13,10 @@ const PostInfoWrap = styled.div`
 	width: 100%;
 	margin-bottom: 1rem;
 
+	${mediaQuery(768)} {
+		padding: 0;
+		padding-top: 1rem;
+	}
 	/* border: 1px solid black; */
 `;
 

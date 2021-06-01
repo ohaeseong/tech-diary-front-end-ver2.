@@ -21,24 +21,6 @@ const SearchPageTemplate = styled.div`
 	margin-top: 5rem;
 	background-color: ${(props) => props.theme.white};
 
-	${mediaQuery(1919)} {
-		/* & > * {
-			width: 25rem;
-		} */
-	}
-
-	${mediaQuery(1440)} {
-		/* & > * {
-			width: 25rem;
-		} */
-	}
-
-	${mediaQuery(1056)} {
-		& > * {
-			width: calc(100% - 2rem);
-		}
-	}
-
 	& > * {
 		margin-top: 3rem;
 	}
@@ -49,11 +31,15 @@ const SearchInputWrap = styled.div`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
+
+	${mediaQuery(768)} {
+		width: 80%;
+	}
 `;
 
 const IconWrap = styled.div`
 	margin-right: 1rem;
-	${mediaQuery(1056)} {
+	${mediaQuery(768)} {
 		width: 2rem;
 		& > * {
 			width: 2rem;
@@ -65,6 +51,11 @@ const IconWrap = styled.div`
 const PostCount = styled.div`
 	width: 55%;
 
+	${mediaQuery(768)} {
+		width: 90%;
+		padding-left: 1rem;
+		font-size: 0.8rem;
+	}
 	& > * {
 		font-family: 'Spoqa Han Sans Thin';
 		color: ${(props) => props.theme.gray_4};

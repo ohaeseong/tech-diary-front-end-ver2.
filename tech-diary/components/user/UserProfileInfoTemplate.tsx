@@ -7,6 +7,7 @@ import { MdEmail } from 'react-icons/md';
 import { css } from '@emotion/react';
 import { FiUpload, FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
+import { mediaQuery } from 'components/layout/responsive';
 // import Image from 'next/image';
 
 const UserProfileInfoWrap = styled.div`
@@ -15,6 +16,12 @@ const UserProfileInfoWrap = styled.div`
 	width: 17rem;
 	min-height: 100vh;
 	margin-right: 2rem;
+
+	${mediaQuery(768)} {
+		flex-direction: row;
+		width: 100%;
+		min-height: 15rem;
+	}
 `;
 
 const ProfileImageWrap = styled.div`
@@ -28,6 +35,18 @@ const UserProfileImage = styled.img`
 	border: 1px solid ${color.gray_1};
 	margin-top: 5rem;
 	object-fit: cover;
+
+	${mediaQuery(768)} {
+		width: 5rem;
+		height: 5rem;
+		margin-left: 2rem;
+	}
+`;
+
+const ButtonWrap = styled.div`
+	${mediaQuery(768)} {
+		display: none;
+	}
 `;
 
 const UserProfileImageUploadInput = styled.input`
@@ -48,8 +67,26 @@ const UserProfileImageLabel = styled.label`
 	margin-left: 12rem;
 	cursor: pointer;
 
+	${mediaQuery(768)} {
+		width: 1.5rem;
+		height: 1.5rem;
+		margin-top: 9rem;
+		margin-left: 5.5rem;
+	}
+
 	& > * {
 		color: ${color.gray_5};
+	}
+`;
+
+const NameWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+
+	${mediaQuery(768)} {
+		margin-top: 2rem;
+		margin-left: 1rem;
+		height: 5rem;
 	}
 `;
 
@@ -79,6 +116,10 @@ const InfoWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 3rem;
+
+	${mediaQuery(768)} {
+		display: none;
+	}
 `;
 
 const EmailInputWrap = styled.div`
@@ -190,30 +231,18 @@ function UserProfileInfoTemplate({
 				) : (
 					<></>
 				)}
-				<UserProfileImage
-					src={userProfileImage}
-					alt="profile_image"
-					// width={500}
-					// height={500}
-					// objectFit="cover"
-					// className="profileImageInPage"
-				/>
-				{/* <style>{`
-						.profileImageInPage {
-							margin-top: 5rem !important;
-							border-radius: 50%;
-							border: 1px solid ${color.gray_1};
-						}
-				`}</style> */}
+				<UserProfileImage src={userProfileImage} alt="profile_image" />
 			</ProfileImageWrap>
-			<Link href={`/${userInfo.memberId}`}>
-				<UserName>{userInfo.memberId}</UserName>
-			</Link>
-			{isEdit ? (
-				<InfoUpdateInput onChange={handleUserName} value={userName} type="name" />
-			) : (
-				<UserSubName>{userName}</UserSubName>
-			)}
+			<NameWrap>
+				<Link href={`/${userInfo.memberId}`}>
+					<UserName>{userInfo.memberId}</UserName>
+				</Link>
+				{isEdit ? (
+					<InfoUpdateInput onChange={handleUserName} value={userName} type="name" />
+				) : (
+					<UserSubName>{userName}</UserSubName>
+				)}
+			</NameWrap>
 			<InfoWrap>
 				<FollowWrap>
 					<FiUsers size="1rem" />
@@ -238,33 +267,35 @@ function UserProfileInfoTemplate({
 					<></>
 				)}
 			</InfoWrap>
-			{isMine ? (
-				<>
-					{isEdit ? (
-						<Button
-							width="70%"
-							height="2.5rem"
-							margin="3rem 0rem 0rem 0rem"
-							btnColor={color.gray_4}
-							onClick={onSubmitUserInfoUpdate}
-						>
-							프로필 저장
-						</Button>
-					) : (
-						<Button
-							width="70%"
-							height="2.5rem"
-							margin="3rem 0rem 0rem 0rem"
-							btnColor={color.gray_4}
-							onClick={isEditToggle}
-						>
-							프로필 수정
-						</Button>
-					)}
-				</>
-			) : (
-				<></>
-			)}
+			<ButtonWrap>
+				{isMine ? (
+					<>
+						{isEdit ? (
+							<Button
+								width="70%"
+								height="2.5rem"
+								margin="3rem 0rem 0rem 0rem"
+								btnColor={color.gray_4}
+								onClick={onSubmitUserInfoUpdate}
+							>
+								프로필 저장
+							</Button>
+						) : (
+							<Button
+								width="70%"
+								height="2.5rem"
+								margin="3rem 0rem 0rem 0rem"
+								btnColor={color.gray_4}
+								onClick={isEditToggle}
+							>
+								프로필 수정
+							</Button>
+						)}
+					</>
+				) : (
+					<></>
+				)}
+			</ButtonWrap>
 		</UserProfileInfoWrap>
 	);
 }

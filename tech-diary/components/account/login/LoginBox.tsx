@@ -13,6 +13,7 @@ import { fadein } from 'styles/animation';
 import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import AccountInput from 'components/account/AccountInput';
+import { mediaQuery } from 'components/layout/responsive';
 // import { id } from 'config/config';
 
 const LoginBoxWrap = styled.div`
@@ -22,7 +23,19 @@ const LoginBoxWrap = styled.div`
 	height: 40rem;
 	background-color: ${(props) => props.theme.white};
 	box-shadow: 0 2px 6px 0 ${color.shadow};
+
+	${mediaQuery(768)} {
+		width: 100%;
+		height: 100vh;
+		box-shadow: none;
+	}
 	animation: ${fadein} 2s;
+`;
+
+const LoginWelcomeImageTemplate = styled.div`
+	${mediaQuery(768)} {
+		display: none;
+	}
 `;
 
 const LoginHalfWrap = styled.div<{ isImage: boolean }>`
@@ -33,6 +46,11 @@ const LoginHalfWrap = styled.div<{ isImage: boolean }>`
 	background-color: white;
 	width: 35rem;
 	height: 100%;
+
+	${mediaQuery(768)} {
+		width: 100%;
+		padding: 4rem;
+	}
 
 	${(props) =>
 		props.isImage &&
@@ -49,6 +67,10 @@ const LoginTextWrap = styled.div`
 	& > * {
 		margin-top: 1rem;
 	}
+
+	${mediaQuery(768)} {
+		margin-bottom: 2rem;
+	}
 `;
 
 const LoginText = styled.div<{ fontSize: string; color?: string }>`
@@ -63,6 +85,10 @@ const LoginText = styled.div<{ fontSize: string; color?: string }>`
 			return css`
 				font-size: 2rem;
 				color: ${color.gray_5};
+
+				${mediaQuery(768)} {
+					font-size: 1.125rem;
+				}
 			`;
 		}
 
@@ -85,10 +111,7 @@ const LoginText = styled.div<{ fontSize: string; color?: string }>`
 const OauthButtonsWrap = styled.div`
 	display: flex;
 	justify-content: space-around;
-	/* width: 100%; */
 	margin: 0.5rem 0rem 3rem 0rem;
-	/* padding: 0rem 1rem; */
-	/* border: 1px solid black; */
 
 	& > * {
 		cursor: pointer;
@@ -145,6 +168,10 @@ const LinkWrap = styled.div`
 		margin-right: 0.1rem;
 		margin-bottom: 1rem;
 	}
+
+	${mediaQuery(768)} {
+		margin-right: 5rem;
+	}
 `;
 
 const LinkText = styled.a`
@@ -189,15 +216,17 @@ function LoginBox({
 }: Props) {
 	return (
 		<LoginBoxWrap>
-			<LoginHalfWrap isImage>
-				<LoginTextWrap>
-					<LoginText fontSize="title">Welcom to Work-It!</LoginText>
-					<LoginText fontSize="description">당신의 지식을 공유해 주세요!</LoginText>
-				</LoginTextWrap>
-				<WrapForAnimation>
-					<LoginTemplateImg src="/static/loginTemplateImage.png" alt="login_template_image.png" />
-				</WrapForAnimation>
-			</LoginHalfWrap>
+			<LoginWelcomeImageTemplate>
+				<LoginHalfWrap isImage>
+					<LoginTextWrap>
+						<LoginText fontSize="title">Welcom to Work-It!</LoginText>
+						<LoginText fontSize="description">당신의 지식을 공유해 주세요!</LoginText>
+					</LoginTextWrap>
+					<WrapForAnimation>
+						<LoginTemplateImg src="/static/loginTemplateImage.png" alt="login_template_image.png" />
+					</WrapForAnimation>
+				</LoginHalfWrap>
+			</LoginWelcomeImageTemplate>
 			<LoginHalfWrap isImage={false}>
 				<LoginTextWrap>
 					<LoginText fontSize="title">로그인을 해주세요!</LoginText>
@@ -232,9 +261,7 @@ function LoginBox({
 						<a href={loginLinkWithGithub}>
 							<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
 						</a>
-						<a href={loginLinkWithFacebook}>
-							facebook
-						</a>
+						<a href={loginLinkWithFacebook}>facebook</a>
 						{/* <FacebookLogin
 							appId={id.facebookAppId}
 							callback={facebookLoginCallback}

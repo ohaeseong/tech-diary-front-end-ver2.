@@ -86,7 +86,7 @@ function PostCommentEditor({
 				<EditorTextarea value={commentText} onChange={handleCommentTextState} placeholder="댓글을 작성 해보세요!" />
 			</TextareaWrap>
 			<Bottom>
-				<ButtonGroup sortDirection="row" margin="1rem 0 0 0">
+				<ButtonGroup sortDirection="row" margin="2rem 0 0 0">
 					<Button height="2.5rem" btnColor={color.neon_2} onClick={onCommentFunction}>
 						{isUpdateMode ? '댓글 수정' : '댓글 작성'}
 					</Button>

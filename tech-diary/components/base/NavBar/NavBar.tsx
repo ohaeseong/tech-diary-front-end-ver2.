@@ -62,7 +62,7 @@ const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 		box-shadow: 0 2px 6px 0 ${color.shadow};
     `}
 
-	${mediaQuery(767)} {
+	${mediaQuery(768)} {
 		z-index: 100;
 		background-color: ${(props) => props.theme.white};
 		box-shadow: 0 2px 6px 0 ${color.shadow};
@@ -72,8 +72,9 @@ const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 const AccountButtonWrap = styled.div`
 	display: flex;
 	flex-direction: row;
-	margin-right: 5rem;
-	${mediaQuery(767)} {
+	margin-right: 1rem;
+	/* margin-left: 3rem; */
+	${mediaQuery(768)} {
 		margin-right: 1rem;
 	}
 	/* margin: 0rem 5rem auto auto; */
@@ -86,7 +87,7 @@ const SwitchWrap = styled.div`
 	width: 5rem;
 	height: 100%;
 	margin-right: 2.5rem;
-	${mediaQuery(767)} {
+	${mediaQuery(768)} {
 		/* margin-right: 1rem; */
 		display: none;
 		/* & > * {
@@ -105,11 +106,13 @@ const IconWrap = styled.div`
 `;
 
 const ProfileWrap = styled.div`
+	position: relative;
 	width: 2rem;
 	height: 2rem;
 
-	margin-right: 5rem;
-	${mediaQuery(767)} {
+	/* margin-right: 5rem; */
+	margin: 0 2rem;
+	${mediaQuery(768)} {
 		margin: auto 1rem auto auto;
 	}
 
@@ -152,7 +155,7 @@ const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
         color: ${props.theme.black};
 	`}
 
-	${mediaQuery(767)} {
+	${mediaQuery(768)} {
 		margin-left: 2rem;
 		font-size: 1rem;
 		color: ${(props) => props.theme.black};
@@ -163,7 +166,7 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 	width: 2rem;
 	height: 2rem;
 
-	margin: auto 5rem auto auto;
+	margin: auto 1rem auto auto;
 
 	& > * {
 		cursor: pointer;
@@ -187,7 +190,7 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 	`}
 
 
-	${mediaQuery(767)} {
+	${mediaQuery(768)} {
 		& > * {
 			color: ${(props) => props.theme.gray_4};
 			width: 1.1rem;

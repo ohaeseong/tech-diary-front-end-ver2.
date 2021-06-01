@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { mediaQuery } from 'components/layout/responsive';
 
 export function CodeBlock(children: { value: string; language: string }) {
 	if (!children.value) {
@@ -24,6 +25,10 @@ const BlockQuoteStyle = styled.div`
 	padding: 1rem;
 	margin: 2rem auto;
 	background-color: ${(props) => props.theme.info};
+
+	${mediaQuery(768)} {
+		font-size: 0.8rem;
+	}
 
 	& > * {
 		color: ${(props) => props.theme.black};
@@ -89,6 +94,10 @@ const UlStyle = styled.ul`
 	list-style-type: disc;
 	color: ${(props) => props.theme.black};
 
+	${mediaQuery(768)} {
+		font-size: 0.8rem;
+	}
+
 	& > * {
 		font-family: 'Spoqa Han Sans Thin';
 	}
@@ -114,6 +123,40 @@ export function OlMarkdownRender(children: { children: string; ordered: boolean;
 
 const HeadingStyled = styled.div`
 	margin: 1rem 0;
+
+	& > h1 {
+		${mediaQuery(768)} {
+			font-size: 2rem;
+		}
+	}
+
+	& > h2 {
+		${mediaQuery(768)} {
+			font-size: 1.5rem;
+		}
+	}
+
+	& > h3 {
+		${mediaQuery(768)} {
+			font-size: 1rem;
+		}
+	}
+	& > h4 {
+		${mediaQuery(768)} {
+			font-size: 1rem;
+		}
+	}
+	& > h5 {
+		${mediaQuery(768)} {
+			font-size: 1rem;
+		}
+	}
+
+	& > h6 {
+		${mediaQuery(768)} {
+			font-size: 1rem;
+		}
+	}
 `;
 
 export function HeadingMarkdownRender(children: { level: number; children: string }) {
@@ -151,6 +194,11 @@ export function HeadingMarkdownRender(children: { level: number; children: strin
 
 const ParagraphTagStyled = styled.p`
 	margin: 1.2rem 0;
+
+	${mediaQuery(768)} {
+		margin: 1rem 0;
+		font-size: 0.8rem;
+	}
 `;
 
 export function ParagraphMarkdownRender(children: { children: React.ReactNode }) {
