@@ -82,6 +82,10 @@ const NonePostTemplate = styled.div`
 	padding-top: 20rem;
 	color: ${(props) => props.theme.gray_4};
 	text-align: center;
+
+	${mediaQuery(767)} {
+		width: 80%;
+	}
 `;
 
 type Props = {

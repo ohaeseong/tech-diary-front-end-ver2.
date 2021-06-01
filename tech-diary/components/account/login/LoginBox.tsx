@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 // import Image from 'next/image';
 import Link from 'next/link';
 import { AiFillGithub } from 'react-icons/ai';
-// import { TiSocialFacebook } from 'react-icons/ti';
+import { TiSocialFacebook } from 'react-icons/ti';
 import { FcGoogle } from 'react-icons/fc';
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
@@ -115,6 +115,7 @@ const OauthButtonsWrap = styled.div`
 
 	& > * {
 		cursor: pointer;
+		color: black;
 	}
 `;
 
@@ -261,19 +262,16 @@ function LoginBox({
 						<a href={loginLinkWithGithub}>
 							<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
 						</a>
-						<a href={loginLinkWithFacebook}>facebook</a>
-						{/* <FacebookLogin
-							appId={id.facebookAppId}
-							callback={facebookLoginCallback}
-							render={(renderProps: any) => (
-								<OauthCircle isFacebook onClick={renderProps.onClick}>
-									<TiSocialFacebook size="2.3rem" color="white" />
-								</OauthCircle>
-							)}
-						/> */}
-						<OauthCircle>
-							<FcGoogle size="2.3rem" />
-						</OauthCircle>
+						<a href={loginLinkWithFacebook}>
+							<OauthCircle isFacebook>
+								<TiSocialFacebook size="2.3rem" color="white" />
+							</OauthCircle>
+						</a>
+						<a href={loginLinkWithFacebook}>
+							<OauthCircle>
+								<FcGoogle size="2.3rem" />
+							</OauthCircle>
+						</a>
 					</OauthButtonsWrap>
 				</WrapForAnimation>
 				<WrapForAnimation>
