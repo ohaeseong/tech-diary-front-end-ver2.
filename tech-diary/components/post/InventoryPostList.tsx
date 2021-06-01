@@ -1,15 +1,17 @@
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
-// import { color } from 'styles/color';
+import { mediaQuery } from 'components/layout/responsive';
 
 const InventoryPostListWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 50rem;
 	min-height: 100vh;
-	/* margin-top: 3rem; */
 	margin-bottom: 5rem;
-	/* border: 1px solid black; */
+
+	${mediaQuery(768)} {
+		width: 90%;
+	}
 `;
 
 type Props = {

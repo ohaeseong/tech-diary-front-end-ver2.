@@ -1,9 +1,14 @@
 import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
+import { mediaQuery } from 'components/layout/responsive';
 
 const UserNavBarTemplate = styled.div`
 	max-width: 100%;
 	margin-top: 6em;
+
+	${mediaQuery(768)} {
+		display: none;
+	}
 `;
 
 const UserNavBarWrap = styled.div`
@@ -14,6 +19,8 @@ const UserNavBarWrap = styled.div`
 	width: 100%;
 	border-bottom: 1px solid ${(props) => props.theme.gray_1};
 	margin-bottom: 4rem;
+
+	flex-wrap: wrap;
 `;
 
 type Props = {

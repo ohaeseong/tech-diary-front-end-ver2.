@@ -1,15 +1,11 @@
-// import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import jwt from 'jsonwebtoken';
 import isEmail from 'libs/regEx';
-// import { NavBar } from 'components/base/NavBar';
 import UserProfileInfoTemplate from 'components/user/UserProfileInfoTemplate';
-// import useDarkMode from 'libs/hooks/useDarkMode';
 import { getStorage, setStorage } from 'libs/storage';
 import { AiOutlineSearch } from 'react-icons/ai';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-// import { color, dark } from 'styles/color';
 import { TypeDecoded, UserInfo } from 'store/types/auth.types';
 import { FollowInfo, Post } from 'store/types/post.types';
 import UserNabBar from 'components/user/UserNavBar';
@@ -37,6 +33,7 @@ import Input from 'components/common/Input';
 import { color } from 'styles/color';
 import FollowList from 'components/user/FollowList';
 import FollowItem from 'components/user/FollowItem';
+import { mediaQuery } from 'components/layout/responsive';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -47,6 +44,10 @@ const UserPageTemplate = styled.div`
 	margin-top: 5rem;
 
 	background-color: ${(props) => props.theme.white_1};
+
+	${mediaQuery(768)} {
+		flex-direction: column;
+	}
 `;
 
 const SearchInputTemplate = styled.div`
@@ -58,11 +59,20 @@ const SearchInputTemplate = styled.div`
 	& > * {
 		margin-left: 0.5rem;
 	}
+	${mediaQuery(768)} {
+		& > * {
+			margin-right: 1rem;
+		}
+	}
 `;
 
 const InventoryPostListTemplate = styled.div`
 	max-width: 60rem;
 	min-height: 100vh;
+
+	${mediaQuery(768)} {
+		margin-left: 1.5rem;
+	}
 `;
 
 const NonePostTemplate = styled.div`

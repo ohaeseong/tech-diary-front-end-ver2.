@@ -10,6 +10,7 @@ import PostContents from 'components/post/PostContents';
 import { getStorage } from 'libs/storage';
 import PostComment from 'components/post/PostCommentTemplate';
 import { TypeDecoded } from 'store/types/auth.types';
+import { mediaQuery } from 'components/layout/responsive';
 // import PostBottom from 'components/post/PostBottom';
 const SinglePostTemplate = styled.div`
 	display: flex;
@@ -20,14 +21,24 @@ const SinglePostTemplate = styled.div`
 	margin-top: 5rem;
 `;
 
+const OptionWrap = styled.div`
+	${mediaQuery(768)} {
+		display: none;
+	}
+	margin-right: 3rem;
+`;
+
 const SinglePostContentsWrap = styled.div`
 	display: flex;
 	width: 50rem;
 	min-height: 100vh;
 	flex-direction: column;
-	margin-left: 3rem;
 	background-color: ${(props) => props.theme.white_1};
 	margin-top: 5rem;
+
+	${mediaQuery(768)} {
+		width: 90%;
+	}
 `;
 
 const Title = styled.div`
@@ -38,6 +49,10 @@ const Title = styled.div`
 	margin-bottom: 1rem;
 
 	color: ${(props) => props.theme.black};
+
+	${mediaQuery(768)} {
+		font-size: 1.5rem;
+	}
 `;
 
 type OptionState = {
@@ -113,24 +128,26 @@ function SinglePost({
 
 	return (
 		<SinglePostTemplate>
-			<PostLikeOption
-				userIsLike={userIsLike}
-				optionState={optionState}
-				shareItemOpenToggleValue={shareItemOpenToggleValue}
-				toggleLike={toggleLike}
-				isFollowMember={isFollowMember}
-				toggleBookMark={toggleBookMark}
-				toggleShareItemOpen={toggleShareItemOpen}
-				bookMarkToggleValue={bookMarkToggleValue}
-				closeShareItem={closeShareItem}
-				userIsFollow={userIsFollow}
-				copyUrl={copyUrl}
-				sharePostToTwitter={sharePostToTwitter}
-				isMine={isMine}
-				sharePostToFacebook={sharePostToFacebook}
-				moveToComment={moveToComment}
-				dispatchForUpdateState={dispatchForUpdateState}
-			/>
+			<OptionWrap>
+				<PostLikeOption
+					userIsLike={userIsLike}
+					optionState={optionState}
+					shareItemOpenToggleValue={shareItemOpenToggleValue}
+					toggleLike={toggleLike}
+					isFollowMember={isFollowMember}
+					toggleBookMark={toggleBookMark}
+					toggleShareItemOpen={toggleShareItemOpen}
+					bookMarkToggleValue={bookMarkToggleValue}
+					closeShareItem={closeShareItem}
+					userIsFollow={userIsFollow}
+					copyUrl={copyUrl}
+					sharePostToTwitter={sharePostToTwitter}
+					isMine={isMine}
+					sharePostToFacebook={sharePostToFacebook}
+					moveToComment={moveToComment}
+					dispatchForUpdateState={dispatchForUpdateState}
+				/>
+			</OptionWrap>
 			<SinglePostContentsWrap>
 				{thumbnailAddress ? (
 					<Image

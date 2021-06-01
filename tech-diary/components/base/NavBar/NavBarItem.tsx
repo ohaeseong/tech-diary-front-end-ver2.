@@ -40,7 +40,7 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }
         color: ${props.theme.black};
 	`}
 
-	${mediaQuery(767)} {
+	${mediaQuery(768)} {
 		/* margin-right: 1rem; */
 		padding: 0rem;
 		font-size: 0.6rem;
