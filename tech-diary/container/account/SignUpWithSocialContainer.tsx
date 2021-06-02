@@ -1,14 +1,11 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import SignUpWithGithubTemplate from 'components/account/signup/SignUpTemplate';
+import SignUpWithSocialTemplate from 'components/account/signup/SignUpTemplate';
 import { useRouter } from 'next/router';
-// import useRequest from 'libs/hooks/useRequest';
-import { useDispatch } from 'react-redux';
-// import { AUTH_LOGIN_REQUEST } from 'store/modules/auth';
+import { useDispatch, useSelector } from 'react-redux';
 import { SocialProfile } from 'store/types/auth.types';
 import { AUTH_REGISTER_SOCIAL_REQUEST } from 'store/modules/register.with.social';
 import { server } from 'config/config';
-// import { SOCIAL_REGISTER_REQUEST } from 'store/modules/register.github.auth';
-// import { RootState } from 'store/modules';
+import { RootState } from 'store/modules';
 
 type Props = {
 	userInfo: SocialProfile;
@@ -21,7 +18,7 @@ function SignUpWithSocialContainer({ userInfo }: Props) {
 	const [memberName, setMemberName] = useState('');
 	const [introduce, setIntroduce] = useState('');
 
-	// const errorMsg = useSelector((state: RootState) => state.registerWithGithub.authRegisterErrorMsg);
+	const errorMsg = useSelector((state: RootState) => state.socialAuth.authRegisterErrorMsg);
 	const dispatch = useDispatch();
 
 	const handleMemberId = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -64,13 +61,13 @@ function SignUpWithSocialContainer({ userInfo }: Props) {
 	}, [userInfo, userInfo.memberId, userInfo.memberName]);
 
 	return (
-		<SignUpWithGithubTemplate
+		<SignUpWithSocialTemplate
 			cancleRegister={cancleRegister}
 			isSocial
 			memberId={memberId}
 			memberName={memberName}
 			introduce={introduce}
-			errorMsg=""
+			errorMsg={errorMsg}
 			handleMemberId={handleMemberId}
 			handleIntroduce={handleIntroduce}
 			handleMemberName={handleMemberName}

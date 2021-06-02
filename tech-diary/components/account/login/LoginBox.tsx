@@ -191,12 +191,12 @@ type loginForm = {
 
 type Props = {
 	onLogin: () => void;
-	onLoginWithGithub: () => void;
 	handleKeypress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 	onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
 	openModal: () => void;
 	loginLinkWithFacebook: string;
 	loginLinkWithGithub: string;
+	loginLinkWithGoogle: string;
 	// facebookLoginCallback: (response: any) => void;
 
 	errorMsg: string;
@@ -205,10 +205,10 @@ type Props = {
 
 function LoginBox({
 	onLogin,
-	onLoginWithGithub,
 	handleKeypress,
 	onChange,
 	loginLinkWithFacebook,
+	loginLinkWithGoogle,
 	errorMsg,
 	form,
 	loginLinkWithGithub,
@@ -260,14 +260,14 @@ function LoginBox({
 					</ButtonGroup>
 					<OauthButtonsWrap>
 						<a href={loginLinkWithGithub}>
-							<AiFillGithub size="3.2rem" onClick={onLoginWithGithub} />
+							<AiFillGithub size="3.2rem" />
 						</a>
 						<a href={loginLinkWithFacebook}>
 							<OauthCircle isFacebook>
 								<TiSocialFacebook size="2.3rem" color="white" />
 							</OauthCircle>
 						</a>
-						<a href={loginLinkWithFacebook}>
+						<a href={loginLinkWithGoogle}>
 							<OauthCircle>
 								<FcGoogle size="2.3rem" />
 							</OauthCircle>
