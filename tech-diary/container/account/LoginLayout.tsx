@@ -134,7 +134,6 @@ function LoginLayout() {
 						margin="1rem 0 2rem 0"
 						value={email}
 						onChange={handleEmail}
-						placeholder="이미 가입된 이메일로 요청할 경우 해당 계정으로 로그인 링크가 전송됩니다."
 						size="regular"
 						justifyContent="center"
 					/>
@@ -163,7 +162,6 @@ function LoginLayout() {
 				loginLinkWithGithub={loginLinkWithGithub}
 				loginLinkWithFacebook={loginLinkWithFacebook}
 				loginLinkWithGoogle={loginLinkWithGoogle}
-				// facebookLoginCallback={facebookLoginCallback}
 				errorMsg={errorMsg}
 				form={form}
 			/>
