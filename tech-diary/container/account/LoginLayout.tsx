@@ -34,6 +34,7 @@ function LoginLayout() {
 	const errorMsg = useSelector((state: RootState) => state.auth.authLoginErrorMsg);
 	const loginLinkWithGithub = `${server.host}/auth/redirect/social?social=github&redirectUri=${server.host}/auth/callback/github`;
 	const loginLinkWithFacebook = `${server.host}/auth/redirect/social?social=facebook&redirectUri=${server.host}/auth/callback/facebook`;
+	const loginLinkWithGoogle = `${server.host}/auth/redirect/social?social=google&redirectUri=${server.host}/auth/callback/google`;
 
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
@@ -117,59 +118,6 @@ function LoginLayout() {
 		});
 	}, [dispatch, form, router]);
 
-	// const facebookLoginCallback = useCallback(
-	// 	(response: FacebookLoginResponse) => {
-	// 		const { name, userID, accessToken } = response;
-	// 		dispatch({
-	// 			type: FACEBOOK_AUTH_LOGIN_REQUEST,
-	// 			payload: {
-	// 				accessToken,
-	// 				userId: userID,
-	// 				userName: name,
-	// 				successCB: () => {
-	// 					setIsLoading(false);
-	// 					router.push(`${server.client_url}`);
-	// 				},
-	// 				failCB: (userId: string, memberName: string, profileImage: string) => {
-	// 					setIsLoading(false);
-	// 					router.push({
-	// 						pathname: `${server.client_url}/register/${userId}`,
-	// 						query: {
-	// 							member_name: memberName,
-	// 							social_id: userId,
-	// 							profile_image: profileImage,
-	// 						},
-	// 					});
-	// 				},
-	// 			},
-	// 		});
-	// 	},
-	// 	[dispatch, router]
-	// );
-
-	const onLoginWithGithub = useCallback(async () => {
-		// dispatch({
-		// 	type: GITHUB_AUTH_LOGIN_REQUEST,
-		// 	payload: {
-		// 		social: 'github',
-		// 		redirectUri: 'http://localhost:8888/api/auth/callback/github',
-		// 		successCB: () => {
-		// 			router.push(`${server.client_url}`);
-		// 		},
-		// 		failCB: (memberName: string, memberId: string, githubId: string, profileImage: string) => {
-		// 			router.push({
-		// 				pathname: `${server.client_url}/register/${memberId}`,
-		// 				query: {
-		// 					member_name: memberName,
-		// 					social_id: githubId,
-		// 					profile_image: profileImage,
-		// 				},
-		// 			});
-		// 		},
-		// 	},
-		// });
-	}, []);
-
 	const handleKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			onLogin();
@@ -210,11 +158,11 @@ function LoginLayout() {
 			<LoginBox
 				onLogin={onLogin}
 				openModal={modalOpenToggle}
-				onLoginWithGithub={onLoginWithGithub}
 				handleKeypress={handleKeypress}
 				onChange={onChange}
 				loginLinkWithGithub={loginLinkWithGithub}
 				loginLinkWithFacebook={loginLinkWithFacebook}
+				loginLinkWithGoogle={loginLinkWithGoogle}
 				// facebookLoginCallback={facebookLoginCallback}
 				errorMsg={errorMsg}
 				form={form}
