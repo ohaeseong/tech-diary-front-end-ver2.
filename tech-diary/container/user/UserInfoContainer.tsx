@@ -114,11 +114,9 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 	const [introText, setIntroText] = useState(userInfo.introduce || '소개글을 작성해 보세요!');
 	const [userEmail, setUserEmail] = useState(userInfo.displayEmail);
 	const [userName, setUserName] = useState(userInfo.memberName);
-	const [profileImage, setProfileImage] = useState(userInfo.profileImage || '/static/user.png');
+	const [profileImage, setProfileImage] = useState(userInfo.profileImage);
 	const [userPosts, setUserPosts] = useState(posts || []);
 	const iconSize = '1.5rem';
-
-	// const themeMode = theme === 'light';
 
 	const onSaveUserInfo = useCallback(async () => {
 		const token = getStorage('tech-token') as string;
@@ -286,8 +284,10 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 	}, [router, userInfo.memberId]);
 
 	useEffect(() => {
-		if (userInfo) {
+		if (userInfo.profileImage) {
 			setProfileImage(userInfo.profileImage as string);
+		} else {
+			setProfileImage('/static/user.png');
 		}
 	}, [userInfo]);
 

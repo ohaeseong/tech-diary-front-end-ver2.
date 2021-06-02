@@ -26,7 +26,13 @@ const LoginBoxWrap = styled.div`
 
 	${mediaQuery(768)} {
 		width: 100%;
-		height: 100vh;
+		height: 100%;
+		box-shadow: none;
+	}
+
+	${mediaQuery(1024)} {
+		width: 100%;
+		height: 100%;
 		box-shadow: none;
 	}
 	animation: ${fadein} 2s;
@@ -49,7 +55,7 @@ const LoginHalfWrap = styled.div<{ isImage: boolean }>`
 
 	${mediaQuery(768)} {
 		width: 100%;
-		padding: 4rem;
+		padding: 1rem;
 	}
 
 	${(props) =>

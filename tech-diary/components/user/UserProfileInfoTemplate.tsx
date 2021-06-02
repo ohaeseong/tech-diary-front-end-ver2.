@@ -191,7 +191,7 @@ type Props = {
 	userEmail: string;
 	userName: string;
 	isMine: boolean;
-	userProfileImage: string;
+	userProfileImage?: string;
 	isEditToggle: () => void;
 	handleUserEmail: (event: ChangeEvent<HTMLInputElement>) => void;
 	handleUserName: (event: ChangeEvent<HTMLInputElement>) => void;
