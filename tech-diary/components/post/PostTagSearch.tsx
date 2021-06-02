@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import InventoryPostList from 'components/post/InventoryPostList';
 import InventoryPostItem from 'components/post/InventoryPostItem';
 import { Post } from 'store/types/post.types';
+import { mediaQuery } from 'components/layout/responsive';
 
 const SearchPageTemplate = styled.div`
 	display: flex;
@@ -24,13 +25,21 @@ const PostCount = styled.div`
 	font-family: 'Spoqa Han Sans Thin';
 	margin-top: 3rem;
 	color: ${(props) => props.theme.gray_4};
+
+	${mediaQuery(768)} {
+		width: 90%;
+		font-size: 0.8rem;
+	}
 `;
 
 const Head = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 56%;
-	/* border: 1px solid black; */
+
+	${mediaQuery(768)} {
+		width: 90%;
+	}
 `;
 
 const TagName = styled.div`
@@ -38,6 +47,10 @@ const TagName = styled.div`
 	font-family: 'Spoqa Han Sans Medium';
 	margin-top: 3rem;
 	color: ${(props) => props.theme.black};
+
+	${mediaQuery(768)} {
+		font-size: 2rem;
+	}
 `;
 
 interface TagPost extends Post {
