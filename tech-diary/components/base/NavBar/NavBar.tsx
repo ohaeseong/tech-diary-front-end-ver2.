@@ -138,10 +138,8 @@ const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 	color: ${color.gray_0};
 	margin-left: 10rem;
 	font-size: 1.3rem;
-	/* padding: 2rem 1rem; */
 	cursor: pointer;
 	transition: 0.3s ease-in-out;
-	/* border: 1px solid black; */
 
 	${(props) =>
 		props.isScroll &&

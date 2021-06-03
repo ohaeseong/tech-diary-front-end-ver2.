@@ -20,7 +20,7 @@ import { color } from 'styles/color';
 import ButtonGroup from 'components/common/ButtonGroup';
 import useRequest from 'libs/hooks/useRequest';
 import { reqeustSignUpEmailSend } from 'libs/repository';
-import Loading from 'components/common/Loading';
+// import Loading from 'components/common/Loading';
 // import { FacebookLoginResponse } from 'store/types/auth.types';
 
 type LoginForm = {
@@ -39,7 +39,7 @@ function LoginLayout() {
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
 	const [email, setEmail] = useState('');
-	const [isLoading] = useState(false);
+	// const [isLoading] = useState(false);
 	const [modalMsg, setModalMsg] = useState({
 		isError: false,
 		message: '',
@@ -126,7 +126,7 @@ function LoginLayout() {
 
 	return (
 		<AccountPageTemplate>
-			{isLoading ? <Loading /> : <></>}
+			{/* {isLoading ? <Loading /> : <></>} */}
 			{modalIsOpenValue ? (
 				<ModalBox msg={modalMsg}>
 					<LabelInput
