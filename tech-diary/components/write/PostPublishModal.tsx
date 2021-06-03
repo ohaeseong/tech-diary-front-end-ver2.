@@ -326,7 +326,7 @@ function PostPublishModal({
 										<KindsSelect onChange={handleKindsValue}>
 											<option value="front-end">front-end</option>
 											<option value="back-end">back-end</option>
-											<option value="database">mobile</option>
+											<option value="mobile">mobile</option>
 											<option value="other">other</option>
 										</KindsSelect>
 										<ButtonGroup sortDirection="row" margin="7rem 0 0 0">

@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { toBig } from 'styles/animation';
 import { color } from 'styles/color';
+import { mediaQuery } from 'components/layout/responsive';
 
 const ModalTemplate = styled.div`
 	position: fixed;
@@ -21,6 +22,10 @@ const ModalOver = styled.div`
 	width: 100%;
 	height: 100%;
 	background-color: ${(props) => props.theme.gray_0};
+
+	${mediaQuery(768)} {
+		display: none;
+	}
 `;
 
 const BoxWrap = styled.div`
