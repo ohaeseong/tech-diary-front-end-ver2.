@@ -81,7 +81,6 @@ function MarkdownEditorWrite({
 	});
 
 	const [addLinkIsDisplay, setAddLinkIsDisplay] = useState(false);
-	// const editorElement = React.createRef<HTMLTextAreaElement>();
 
 	const handdleLinkUrl = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		setLinkUrl(event.target.value);
@@ -321,14 +320,6 @@ function MarkdownEditorWrite({
 			case 'BOLD':
 				if (!doc.getSelection()) {
 					doc.replaceSelection(`**text**`);
-
-					// setTimeout(() => {
-					// 	codemirror.focus();
-					// 	codemirror.setCursor({
-					// 		line: cursor.line,
-					// 		ch: cursor.ch + 1,
-					// 	});
-					// }, 0);
 				} else {
 					doc.replaceSelection(`**${doc.getSelection()}**`);
 				}
@@ -365,7 +356,6 @@ function MarkdownEditorWrite({
 						doc.replaceSelection('> ');
 					}
 				} else {
-					// const text = doc.getSelection().split('\n');
 					doc.replaceSelection(`> ${doc.getSelection()}`);
 				}
 				break;
@@ -392,12 +382,6 @@ function MarkdownEditorWrite({
 			}, 0);
 		}
 	};
-
-	// useEffect(() => {
-	// 	document.body.addEventListener('click', closeAddLink);
-
-	// 	return () => document.body.removeEventListener('click', closeAddLink);
-	// }, [closeAddLink]);
 
 	return (
 		<>

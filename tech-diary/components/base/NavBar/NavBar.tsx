@@ -28,8 +28,6 @@ import { reqeustSignUpEmailSend } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import isEmail from 'libs/regEx';
 import useHeader from 'libs/hooks/useHeader';
-// import { useSelector } from 'react-redux';
-// import { RootState } from 'store/modules';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -73,11 +71,10 @@ const AccountButtonWrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-right: 1rem;
-	/* margin-left: 3rem; */
+
 	${mediaQuery(768)} {
 		margin-right: 1rem;
 	}
-	/* margin: 0rem 5rem auto auto; */
 `;
 
 const SwitchWrap = styled.div`
@@ -88,11 +85,7 @@ const SwitchWrap = styled.div`
 	height: 100%;
 	margin-right: 2.5rem;
 	${mediaQuery(768)} {
-		/* margin-right: 1rem; */
 		display: none;
-		/* & > * {
-			width: 1rem;
-		} */
 	}
 `;
 
@@ -109,8 +102,6 @@ const ProfileWrap = styled.div`
 	position: relative;
 	width: 2rem;
 	height: 2rem;
-
-	/* margin-right: 5rem; */
 	margin: 0 2rem;
 	${mediaQuery(768)} {
 		margin: auto 1rem auto auto;
@@ -120,18 +111,6 @@ const ProfileWrap = styled.div`
 		border-radius: 50%;
 	}
 `;
-
-// const ProfileImage = styled.img`
-// 	width: 100%;
-// 	height: 100%;
-
-// 	border-radius: 50%;
-// 	object-fit: cover;
-
-// 	&:hover {
-// 		cursor: pointer;
-// 	}
-// `;
 
 const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 	display: block;
@@ -155,7 +134,7 @@ const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 
 	${mediaQuery(768)} {
 		margin-left: 2rem;
-		font-size: 1rem;
+		font-size: 1.125rem;
 		color: ${(props) => props.theme.black};
 	}
 `;
@@ -359,7 +338,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 			<NavBarContent isScroll={isScroll} isMain={isMain}>
 				<Link href="/">
 					<Logo isScroll={isScroll} isMain={isMain}>
-						Work-It
+						work-it
 					</Logo>
 				</Link>
 				<Link href="/search">
@@ -395,11 +374,11 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 				) : (
 					<AccountButtonWrap>
 						<NavBarItem url="/login" isScroll={isScroll} isMain={isMain}>
-							Log in
+							로그인
 						</NavBarItem>
 						<LinkWrap onClick={modalOpenToggle}>
 							<NavBarItem url="" isScroll={isScroll} isMain={isMain}>
-								Sign up
+								회원가입
 							</NavBarItem>
 						</LinkWrap>
 					</AccountButtonWrap>
