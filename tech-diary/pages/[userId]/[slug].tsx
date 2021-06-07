@@ -22,17 +22,17 @@ function DetailPage({ post }: Props) {
 	return (
 		<>
 			<Head>
-				<title>{post.title}</title>
-				<meta name="description" content={post.intro || post.contents} />
+				<title>{post.title} - (work-it)</title>
+				{post.intro ? <meta name="description" content={post.intro} /> : <></>}
 				<link rel="canonical" href={url} />
 				<meta property="og:url" content={url} />
 				<meta property="og:type" content="article" />
 				<meta property="og:title" content={post.title} />
-				<meta property="og:description" content={post.intro || post.contents} />
+				<meta property="og:description" content={post.intro} />
 				{post.thumbnailAddress && <meta property="og:image" content={post.thumbnailAddress} />}
 				<meta name="twitter:card" content="summary_large_image" />
 				<meta name="twitter:title" content={post.title} />
-				<meta name="twitter:description" content={post.intro || post.contents} />
+				<meta name="twitter:description" content={post.intro} />
 				{post.thumbnailAddress && <meta name="twitter:image" content={post.thumbnailAddress} />}
 			</Head>
 			<PostDetailLayout post={post} />

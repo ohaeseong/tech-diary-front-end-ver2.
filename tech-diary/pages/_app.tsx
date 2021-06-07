@@ -98,11 +98,8 @@ function MyApp({ Component, pageProps, cookies }: Props) {
 
 	return (
 		<>
-			<Head>
-				<meta charSet="utf-8" />
-				<title>work it</title>
-				<meta name="description" content="당신의 지식을 공유해 주세요! 지식욕을 작동시켜줄 개발 블로그입니다." />
-				<meta property="fb:app_id" content="2111760498954706" />
+			<Head>x
+				<meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
 				<style>{`
 						@font-face {
 							font-family: 'Spoqa Han Sans Regular';
