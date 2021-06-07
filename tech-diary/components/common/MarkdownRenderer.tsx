@@ -21,7 +21,7 @@ import {
 } from 'libs/markdownCustomRender';
 import { css } from '@emotion/react';
 
-const MarkDownStyle = styled.div<{ type?: string }>`
+const MarkDownStyle = styled.div<{ type?: string; mode?: string }>`
 	color: ${(props) => props.theme.white};
 
 	line-height: 1.8rem;
@@ -90,11 +90,12 @@ const MarkDownStyle = styled.div<{ type?: string }>`
 type Props = {
 	markdown: string;
 	type?: string;
+	mode?: string;
 };
 
-function MarkdwonRenderer({ markdown, type }: Props) {
+function MarkdwonRenderer({ markdown, type, mode }: Props) {
 	return (
-		<MarkDownStyle type={type}>
+		<MarkDownStyle type={type} mode={mode}>
 			<ReactMarkdown
 				children={markdown}
 				plugins={[gfm]}

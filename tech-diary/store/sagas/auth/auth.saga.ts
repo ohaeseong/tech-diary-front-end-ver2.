@@ -24,8 +24,13 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 		return;
 	}
 
-	if (status === 404) {
+	if (status === 403) {
 		yield put(setLoginErrorMsg('아이디 혹은 비밀번호가 맞지 않습니다.'));
+		return;
+	}
+
+	if (status === 404) {
+		yield put(setLoginErrorMsg('가입되지 않은 회원입니다.'));
 		return;
 	}
 

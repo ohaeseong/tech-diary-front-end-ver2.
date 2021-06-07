@@ -28,6 +28,10 @@ const NonePost = styled.div`
 	text-align: center;
 
 	color: ${(props) => props.theme.gray_6};
+
+	${mediaQuery(768)} {
+		font-size: 1.2rem;
+	}
 `;
 
 type Props = {

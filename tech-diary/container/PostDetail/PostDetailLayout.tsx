@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
-// import { ThemeProvider } from '@emotion/react';
-// import jwt from 'jsonwebtoken';
-
 import SinglePost from 'components/post/SinglePost';
 import { FollowInfo, PostDetail } from 'store/types/post.types';
-// import { NavBar } from 'components/base/NavBar';
-// import useDarkMode from 'libs/hooks/useDarkMode';
-// import { color, dark } from 'styles/color';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import {
@@ -34,7 +28,6 @@ type Props = {
 
 function PostDetailLayout({ post }: Props) {
 	const { id, like, commentList, memberId, commentCount, url } = post;
-	// const [theme, toggleTheme, componentMounted] = useDarkMode();
 
 	const [state, , dispatchForUpdateState] = useForm({
 		isLike: false,
@@ -42,8 +35,6 @@ function PostDetailLayout({ post }: Props) {
 	});
 
 	const [commentListData, setCommentListData] = useState(commentList.commentData);
-
-	// const [isMine, setIsMine] = useState(false);
 
 	const [shareItemOpenToggleValue, shareItemToggle] = useToggle(false);
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
@@ -60,8 +51,6 @@ function PostDetailLayout({ post }: Props) {
 	const dispatch = useDispatch();
 
 	const [, , onRequestIsFollow, ,] = useRequest(requestIsFollow);
-
-	// const themeMode = theme === 'light';
 
 	const onDeletePost = useCallback(async () => {
 		const token = getStorage('tech-token') as string;
@@ -198,10 +187,6 @@ function PostDetailLayout({ post }: Props) {
 		await onRequestIsFollow(req);
 
 		setUserIsFollow(!userIsFollow);
-
-		// toast.success(`${memberId} 팔로우!`, {
-		// 	position: toast.POSITION.TOP_RIGHT,
-		// });
 	}, [memberId, onRequestIsFollow, userIsFollow]);
 
 	const sharePostToFacebook = useCallback(() => {
@@ -273,10 +258,6 @@ function PostDetailLayout({ post }: Props) {
 		bookMarkToggle(isCheckBookmark);
 	}, [isCheckBookmark]);
 
-	// if (!componentMounted) {
-	// 	return <div />;
-	// }
-
 	return (
 		<>
 			{modalIsOpenValue ? (
@@ -284,7 +265,6 @@ function PostDetailLayout({ post }: Props) {
 			) : (
 				<></>
 			)}
-			{/* <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={false} /> */}
 			<SinglePost
 				toggleLike={toggleLike}
 				toggleBookMark={toggleBookMark}

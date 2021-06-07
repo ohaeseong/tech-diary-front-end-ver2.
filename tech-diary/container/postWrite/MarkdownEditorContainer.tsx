@@ -2,7 +2,9 @@
 import React, { ChangeEvent, useCallback, useState, useEffect } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-// import MarkdownEditor from 'components/write/MarkdownEditor';
+
+import remark from 'remark';
+import strip from 'strip-markdown';
 import styled from '@emotion/styled';
 import TitleEditor from 'components/write/TitleEditor';
 import MarkdownRenderer from 'components/common/MarkdownRenderer';
@@ -27,6 +29,7 @@ import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 import { escapeForUrl } from 'libs/utils';
 import { UserInfo } from 'store/types/auth.types';
+import { mediaQuery } from 'components/layout/responsive';
 
 const MarkdownEditorWrite = dynamic(() => import('components/write/MarkdownEditorWrite'), { ssr: false });
 
@@ -52,6 +55,10 @@ const RendererWrap = styled.div`
 	width: 100%;
 	height: 100%;
 	border-left: 1px solid ${(props) => props.theme.gray_1};
+
+	${mediaQuery(768)} {
+		display: none;
+	}
 `;
 
 const TitlePreview = styled.span`
@@ -205,6 +212,19 @@ function MarkdownEditorContainer() {
 		[addTag]
 	);
 
+	const settingDefaultIntro = useCallback(() => {
+		let sliced;
+		remark()
+			.use(strip)
+			.process(markdownText.replace(/#(.*?)\n/g, ''), (err: any, file: any) => {
+				if (err) return;
+				const text = String(file);
+				sliced = text.replace(/\n/g, '').slice(0, 150);
+			});
+
+		return sliced;
+	}, [markdownText]);
+
 	const onTemporaryStorage = useCallback(async () => {
 		let toastMassege = '';
 		const qsId = router.query.id;
@@ -323,17 +343,35 @@ function MarkdownEditorContainer() {
 			await onUpdatePost(req);
 		}
 
-		const publishReq = {
-			id,
-			kinds,
-			slugUrl: reqSlugUrl,
-			category: 'blog',
-			thumbnailAddress: thumbnailImage,
-			intro: postIntro,
-			tags,
-			token,
-			publishType,
-		};
+		let publishReq;
+
+		if (!postIntro) {
+			const intro = await settingDefaultIntro();
+
+			publishReq = {
+				id,
+				kinds,
+				slugUrl: reqSlugUrl,
+				category: 'blog',
+				thumbnailAddress: thumbnailImage,
+				intro,
+				tags,
+				token,
+				publishType,
+			};
+		} else {
+			publishReq = {
+				id,
+				kinds,
+				slugUrl: reqSlugUrl,
+				category: 'blog',
+				thumbnailAddress: thumbnailImage,
+				intro: postIntro,
+				tags,
+				token,
+				publishType,
+			};
+		}
 
 		await onPublishPost(publishReq);
 		dispatch(setWritePostId(''));
@@ -346,6 +384,7 @@ function MarkdownEditorContainer() {
 		markdownText,
 		onCreatePost,
 		onPublishPost,
+		setPostIntro,
 		postIntro,
 		router,
 		slugUrl,
@@ -442,13 +481,6 @@ function MarkdownEditorContainer() {
 		}
 	}, [markdownText, onTemporaryStorage, title]);
 
-	// useEffect(() => {
-	// 	if (!lastPostData) {
-	// 		const slugUrlDefault = `/${title}`;
-	// 		setSlugUrl(slugUrlDefault);
-	// 	}
-	// }, [lastPostData, title]);
-
 	useEffect(() => {
 		const token = getStorage('tech-token');
 
@@ -499,7 +531,7 @@ function MarkdownEditorContainer() {
 				</EditorWrap>
 				<RendererWrap>
 					<TitlePreview>{title}</TitlePreview>
-					<MarkdownRenderer markdown={markdownText} />
+					<MarkdownRenderer markdown={markdownText} mode="write" />
 				</RendererWrap>
 			</MarkdownEditorTemplate>
 		</>

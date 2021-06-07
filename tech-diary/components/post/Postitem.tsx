@@ -10,7 +10,6 @@ import { css } from '@emotion/react';
 import Link from 'next/link';
 import { color } from 'styles/color';
 import { mediaQuery } from 'components/layout/responsive';
-// import { useRouter } from 'next/router';
 
 const PostItemWrap = styled.div`
 	width: 20rem;
@@ -63,31 +62,11 @@ const ThumbnailWrap = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
-	/* 
-	${mediaQuery(1408)} {
-		height: calc(25% - 2rem);
-	}
-	${mediaQuery(1312)} {
-		height: calc(33% - 1.8125rem);
-	} */
 
 	${mediaQuery(1024)} {
 		height: 12rem;
 	}
-	/* ${mediaQuery(767)} {
-		height: 15rem;
-	} */
 `;
-
-// const Thumbnail = styled.img`
-// 	position: absolute;
-// 	top: 0px;
-// 	left: 0px;
-// 	width: 100%;
-// 	height: 100%;
-
-// 	object-fit: cover;
-// `;
 
 const PostContentsWrap = styled.div`
 	display: flex;
@@ -130,6 +109,10 @@ const PostContent = styled.div<{ type: string }>`
 
 				&:hover {
 					cursor: pointer;
+				}
+
+				${mediaQuery(768)} {
+					line-height: 1rem;
 				}
 			`;
 		}

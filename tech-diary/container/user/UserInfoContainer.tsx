@@ -76,7 +76,7 @@ const InventoryPostListTemplate = styled.div`
 `;
 
 const NonePostTemplate = styled.div`
-	width: 50rem;
+	width: 100%;
 
 	font-size: 1.825rem;
 	padding-top: 20rem;
@@ -84,7 +84,9 @@ const NonePostTemplate = styled.div`
 	text-align: center;
 
 	${mediaQuery(767)} {
-		width: 80%;
+		width: 100%;
+		margin-left: 0;
+		font-size: 1.125rem;
 	}
 `;
 

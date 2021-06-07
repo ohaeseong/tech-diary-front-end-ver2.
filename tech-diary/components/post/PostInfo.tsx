@@ -17,7 +17,6 @@ const PostInfoWrap = styled.div`
 		padding: 0;
 		padding-top: 1rem;
 	}
-	/* border: 1px solid black; */
 `;
 
 const PostInfoHeader = styled.div`
