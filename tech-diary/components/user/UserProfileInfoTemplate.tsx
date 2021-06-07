@@ -8,7 +8,6 @@ import { css } from '@emotion/react';
 import { FiUpload, FiUsers } from 'react-icons/fi';
 import Link from 'next/link';
 import { mediaQuery } from 'components/layout/responsive';
-// import Image from 'next/image';
 
 const UserProfileInfoWrap = styled.div`
 	display: flex;
@@ -68,10 +67,7 @@ const UserProfileImageLabel = styled.label`
 	cursor: pointer;
 
 	${mediaQuery(768)} {
-		width: 1.5rem;
-		height: 1.5rem;
-		margin-top: 9rem;
-		margin-left: 5.5rem;
+		display: none;
 	}
 
 	& > * {

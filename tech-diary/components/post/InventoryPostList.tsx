@@ -5,7 +5,7 @@ import { mediaQuery } from 'components/layout/responsive';
 const InventoryPostListWrap = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 50rem;
+	width: 100%;
 	min-height: 100vh;
 	margin-bottom: 5rem;
 

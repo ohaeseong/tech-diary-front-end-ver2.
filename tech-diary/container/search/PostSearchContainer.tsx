@@ -62,6 +62,14 @@ const PostCount = styled.div`
 	}
 `;
 
+const InventoryPostListWrap = styled.div`
+	width: 55%;
+
+	${mediaQuery(768)} {
+		width: 90%;
+	}
+`;
+
 function PostSearchContainer() {
 	const [searchPosts, setSearchPosts] = useState([]);
 	const [searchWord, setSearchWord] = useState('');
@@ -113,11 +121,13 @@ function PostSearchContainer() {
 			) : (
 				<></>
 			)}
+			<InventoryPostListWrap>
 			<InventoryPostList>
 				{searchPosts.map((item: Post) => {
 					return <InventoryPostItem key={item.id} item={item} />;
 				})}
 			</InventoryPostList>
+			</InventoryPostListWrap>
 		</SearchPageTemplate>
 	);
 }

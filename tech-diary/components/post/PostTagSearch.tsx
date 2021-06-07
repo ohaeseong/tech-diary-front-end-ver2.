@@ -53,6 +53,14 @@ const TagName = styled.div`
 	}
 `;
 
+const InventoryPostListWrap = styled.div`
+	width: 56%;
+
+	${mediaQuery(768)} {
+		width: 90%;
+	}
+`;
+
 interface TagPost extends Post {
 	tagName: string;
 }
@@ -68,15 +76,17 @@ function PostTagSearch({ posts }: Props) {
 				<TagName># {posts[0].tagName}</TagName>
 			</Head>
 			{posts.length !== 0 ? <PostCount>총 {posts.length}개의 포스트</PostCount> : <></>}
-			<InventoryPostList>
-				{posts.map((item: any) => {
-					const postItem = {
-						tagList: item.tagList,
-						...item.post,
-					};
-					return <InventoryPostItem key={item.postId} item={postItem} />;
-				})}
-			</InventoryPostList>
+			<InventoryPostListWrap>
+				<InventoryPostList>
+					{posts.map((item: any) => {
+						const postItem = {
+							tagList: item.tagList,
+							...item.post,
+						};
+						return <InventoryPostItem key={item.postId} item={postItem} />;
+					})}
+				</InventoryPostList>
+			</InventoryPostListWrap>
 		</SearchPageTemplate>
 	);
 }

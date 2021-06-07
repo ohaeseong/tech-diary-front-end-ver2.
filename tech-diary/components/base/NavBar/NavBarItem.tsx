@@ -7,7 +7,6 @@ import { color } from 'styles/color';
 
 const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }>`
 	display: block;
-	/* font-size: 1rem; */
 	padding: 2rem 1rem;
 	color: ${color.gray_0};
 	cursor: pointer;
@@ -41,10 +40,9 @@ const LinkWrap = styled.a<{ isScroll: boolean; isMain?: boolean; type?: string }
 	`}
 
 	${mediaQuery(768)} {
-		/* margin-right: 1rem; */
 		padding: 0rem;
-		font-size: 0.6rem;
-		color: ${(props) => props.theme.black}
+		font-size: 0.8rem;
+		color: ${(props) => props.theme.black};
 	}
 `;
 
