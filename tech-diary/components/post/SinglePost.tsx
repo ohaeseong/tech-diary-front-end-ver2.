@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import Image from 'next/image';
-import jwt from 'jsonwebtoken';
 
-import { Comment, PostDetail } from 'store/types/post.types';
+import { Comment, PostDetail, PostLink } from 'store/types/post.types';
 import PostLikeOption from 'components/post/PostLikeOption';
 import PostInfo from 'components/post/PostInfo';
 import PostContents from 'components/post/PostContents';
-import { getStorage } from 'libs/storage';
 import PostComment from 'components/post/PostCommentTemplate';
-import { TypeDecoded } from 'store/types/auth.types';
 import { mediaQuery } from 'components/layout/responsive';
-// import PostBottom from 'components/post/PostBottom';
+import PostHeadingLinkList from 'components/post/PostHeadingLinkList';
+
 const SinglePostTemplate = styled.div`
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	width: 100%;
 	min-height: 100vh;
 	background-color: ${(props) => props.theme.white_1};
 	margin-top: 5rem;
-`;
-
-const OptionWrap = styled.div`
-	${mediaQuery(768)} {
-		display: none;
-	}
-	margin-right: 3rem;
 `;
 
 const SinglePostContentsWrap = styled.div`
@@ -81,6 +73,9 @@ type Props = {
 	commentList: Comment[];
 	bookMarkToggleValue: boolean;
 	shareItemOpenToggleValue: boolean;
+	linkList: PostLink[];
+	isMine: boolean;
+	userIsLike: boolean;
 };
 
 function SinglePost({
@@ -95,40 +90,24 @@ function SinglePost({
 	moveToComment,
 	goEditPostPage,
 	isFollowMember,
-	userIsFollow,
 	dispatchForUpdateState,
 	setCommentList,
 
+	userIsFollow,
+	linkList,
 	optionState,
 	commentList,
 	data,
 	bookMarkToggleValue,
 	shareItemOpenToggleValue,
+	userIsLike,
+	isMine,
 }: Props) {
-	const { title, tagList, createTime, member, contents, thumbnailAddress, like, id, memberId, followers } = data;
-	const [userIsLike, setUserIsLike] = useState(false);
-	const [isMine, setIsMine] = useState(false);
-
-	useEffect(() => {
-		const token = getStorage('tech-token') as string;
-		const tokenDecoded = jwt.decode(token) as TypeDecoded;
-
-		if (tokenDecoded) {
-			like.forEach((likeData) => {
-				if (likeData.memberId === tokenDecoded.memberId.toString()) {
-					setUserIsLike(true);
-				}
-			});
-
-			if (tokenDecoded.memberId === memberId) {
-				setIsMine(true);
-			}
-		}
-	}, [like, memberId]);
+	const { title, tagList, createTime, member, contents, thumbnailAddress, id, followers } = data;
 
 	return (
-		<SinglePostTemplate>
-			<OptionWrap>
+		<>
+			<SinglePostTemplate>
 				<PostLikeOption
 					userIsLike={userIsLike}
 					optionState={optionState}
@@ -147,35 +126,38 @@ function SinglePost({
 					moveToComment={moveToComment}
 					dispatchForUpdateState={dispatchForUpdateState}
 				/>
-			</OptionWrap>
-			<SinglePostContentsWrap>
-				{thumbnailAddress ? (
-					<Image
-						src={thumbnailAddress}
-						alt="sigle_post_thumbnail"
-						width={500}
-						height={400}
-						objectFit="contain"
-						loading="eager"
+				<SinglePostContentsWrap>
+					{thumbnailAddress ? (
+						<Image
+							src={thumbnailAddress}
+							alt="sigle_post_thumbnail"
+							width={500}
+							height={400}
+							objectFit="contain"
+							loading="eager"
+						/>
+					) : (
+						<></>
+					)}
+					<Title>{title}</Title>
+					<PostInfo
+						tagData={tagList.tagData}
+						member={member}
+						createTime={createTime}
+						isMine={isMine}
+						followers={followers}
+						openConfirmModal={openConfirmModal}
+						goEditPostPage={goEditPostPage}
 					/>
-				) : (
-					<></>
-				)}
-				<Title>{title}</Title>
-				<PostInfo
-					tagData={tagList.tagData}
-					member={member}
-					createTime={createTime}
-					isMine={isMine}
-					followers={followers}
-					openConfirmModal={openConfirmModal}
-					goEditPostPage={goEditPostPage}
-				/>
-				<PostContents markdown={contents} />
-				{/* <PostBottom /> */}
-				<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
-			</SinglePostContentsWrap>
-		</SinglePostTemplate>
+					<PostContents markdown={contents} />
+					{/* <PostBottom /> */}
+					<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
+				</SinglePostContentsWrap>
+				<div>
+					<PostHeadingLinkList linkList={linkList} />
+				</div>
+			</SinglePostTemplate>
+		</>
 	);
 }
 

@@ -113,6 +113,7 @@ const PostContent = styled.div<{ type: string }>`
 
 				${mediaQuery(768)} {
 					line-height: 1rem;
+					height: 5rem;
 				}
 			`;
 		}

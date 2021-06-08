@@ -18,3 +18,4 @@ module.exports = {
 		// imageSizes: [300, 300, 300, 300, 300, 300, 300, 400],
 	},
 };
+// module.exports = compose([

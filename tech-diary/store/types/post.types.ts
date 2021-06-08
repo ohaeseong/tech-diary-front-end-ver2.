@@ -108,3 +108,8 @@ export type FollowInfo = {
 	member: Member;
 	isFollow?: boolean;
 };
+
+export type PostLink = {
+	id: string;
+	title: string;
+};

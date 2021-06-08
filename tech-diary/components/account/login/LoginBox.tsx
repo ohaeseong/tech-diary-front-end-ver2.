@@ -1,12 +1,10 @@
 import React, { ChangeEvent } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-// import Image from 'next/image';
 import Link from 'next/link';
 import { AiFillGithub } from 'react-icons/ai';
 import { TiSocialFacebook } from 'react-icons/ti';
 import { FcGoogle } from 'react-icons/fc';
-// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 import { color } from 'styles/color';
 import { fadein } from 'styles/animation';
@@ -14,7 +12,6 @@ import Button from 'components/common/Button';
 import ButtonGroup from 'components/common/ButtonGroup';
 import AccountInput from 'components/account/AccountInput';
 import { mediaQuery } from 'components/layout/responsive';
-// import { id } from 'config/config';
 
 const LoginBoxWrap = styled.div`
 	display: flex;

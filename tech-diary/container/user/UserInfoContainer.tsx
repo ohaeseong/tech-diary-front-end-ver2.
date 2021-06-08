@@ -34,6 +34,7 @@ import { color } from 'styles/color';
 import FollowList from 'components/user/FollowList';
 import FollowItem from 'components/user/FollowItem';
 import { mediaQuery } from 'components/layout/responsive';
+import Link from 'next/link';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -52,10 +53,21 @@ const UserPageTemplate = styled.div`
 
 const SearchInputTemplate = styled.div`
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+`;
 
+const StatisticsLinkText = styled.a`
+	color: ${(props) => props.theme.gray_4};
+	cursor: pointer;
+	font-family: 'Spoqa Han Sans Thin';
+	border-bottom: 1px solid ${(props) => props.theme.gray_3};
+`;
+
+const SearchInputWrap = styled.div`
+	display: flex;
+	align-items: center;
 	& > * {
 		margin-left: 0.5rem;
 	}
@@ -101,7 +113,6 @@ type Props = {
 
 function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, isFollowers }: Props) {
 	const router = useRouter();
-	// const [theme, toggleTheme] = useDarkMode();
 	const [isMine, setIsMine] = useState(false);
 	const [searchWord, setSearchWord] = useState('');
 	const [isReadOnly, isReadOnlyToggle] = useToggle(true);
@@ -367,15 +378,20 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 								<>
 									{router.pathname === '/[userId]' ? (
 										<SearchInputTemplate>
-											<AiOutlineSearch size="1.5rem" color={color.gray_3} />
-											<Input
-												value={searchWord}
-												onChange={handleSearchWord}
-												fontSize="sm"
-												width="10rem"
-												height="1rem"
-												placeholder="게시글 검색.."
-											/>
+											<Link href={`/${userInfo.memberId}/statistics`}>
+												<StatisticsLinkText>통계</StatisticsLinkText>
+											</Link>
+											<SearchInputWrap>
+												<AiOutlineSearch size="1.5rem" color={color.gray_3} />
+												<Input
+													value={searchWord}
+													onChange={handleSearchWord}
+													fontSize="sm"
+													width="10rem"
+													height="1rem"
+													placeholder="게시글 검색.."
+												/>
+											</SearchInputWrap>
 										</SearchInputTemplate>
 									) : (
 										<></>
