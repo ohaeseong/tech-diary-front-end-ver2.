@@ -22,7 +22,7 @@ function DetailPage({ post }: Props) {
 	return (
 		<>
 			<Head>
-				<title>{post.title} - (work-it)</title>
+				<title>{post.title}</title>
 				{post.intro ? <meta name="description" content={post.intro} /> : <></>}
 				<link rel="canonical" href={url} />
 				<meta property="og:url" content={url} />

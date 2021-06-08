@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SinglePost from 'components/post/SinglePost';
-import { FollowInfo, PostDetail } from 'store/types/post.types';
+import { FollowInfo, PostDetail, PostLink } from 'store/types/post.types';
+import jwt from 'jsonwebtoken';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import {
@@ -11,6 +12,10 @@ import {
 	requestIsFollow,
 	requestGetFollowInfo,
 } from 'libs/repository';
+
+import remark from 'remark';
+import htmlPlugin from 'remark-html';
+import { parseHeading } from 'libs/heading';
 import useRequest from 'libs/hooks/useRequest';
 import { getStorage } from 'libs/storage';
 import { toast } from 'react-toastify';
@@ -18,7 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { server } from 'config/config';
 import useForm from 'libs/hooks/useForm';
 import useToggle from 'libs/hooks/useToggle';
-import { UserInfo } from 'store/types/auth.types';
+import { TypeDecoded, UserInfo } from 'store/types/auth.types';
 import { SET_POST_COMMENT_COUNT } from 'store/modules/post.comment.count';
 import ConfirmModal from 'components/common/ConfirmModal';
 
@@ -40,7 +45,10 @@ function PostDetailLayout({ post }: Props) {
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [bookMarkToggleValue, bookMarkToggle] = useState(false);
 	const [isCheckBookmark, setIsCheckBookmark] = useState(false);
+	const [userIsLike, setUserIsLike] = useState(false);
+	const [isMine, setIsMine] = useState(false);
 	const [userIsFollow, setUserIsFollow] = useState(false);
+	const [headingLinks, setHeadingLinks] = useState([] as PostLink[]);
 
 	const [, , onLikePost] = useRequest(requestPostLike);
 	const [, , onDeleteRequest] = useRequest(requestDeletePost);
@@ -214,7 +222,7 @@ function PostDetailLayout({ post }: Props) {
 		});
 	}, [commentCount, dispatch]);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const userInfo = getStorage('user-info') as UserInfo;
 		if (userInfo) {
 			const req = {
@@ -233,6 +241,23 @@ function PostDetailLayout({ post }: Props) {
 			}
 		}
 	}, [commentCount, memberId, onGetFollowInfo, userIsFollow]);
+
+	useEffect(() => {
+		const token = getStorage('tech-token') as string;
+		const tokenDecoded = jwt.decode(token) as TypeDecoded;
+
+		if (tokenDecoded) {
+			like.forEach((likeData) => {
+				if (likeData.memberId === tokenDecoded.memberId.toString()) {
+					setUserIsLike(true);
+				}
+			});
+
+			if (tokenDecoded.memberId === memberId) {
+				setIsMine(true);
+			}
+		}
+	}, [like, memberId]);
 
 	useEffect(() => {
 		window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -257,6 +282,19 @@ function PostDetailLayout({ post }: Props) {
 	useEffect(() => {
 		bookMarkToggle(isCheckBookmark);
 	}, [isCheckBookmark]);
+
+	useEffect(() => {
+		if (post.contents) {
+			let html = '';
+			remark()
+				.use(htmlPlugin)
+				.process(post.contents, (err: any, file: any) => {
+					html = String(file);
+				});
+			const headingLinkList: PostLink[] = parseHeading(html);
+			setHeadingLinks(headingLinkList);
+		}
+	}, [post.contents]);
 
 	return (
 		<>
@@ -284,7 +322,10 @@ function PostDetailLayout({ post }: Props) {
 				userIsFollow={userIsFollow}
 				isFollowMember={isFollowMember}
 				commentList={commentListData}
+				linkList={headingLinks}
 				data={post}
+				isMine={isMine}
+				userIsLike={userIsLike}
 			/>
 		</>
 	);

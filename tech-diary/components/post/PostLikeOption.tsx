@@ -11,6 +11,7 @@ import { moveLeft, moveDown, moveAngle } from 'styles/animation';
 import Button from 'components/common/Button';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/modules';
+import { mediaQuery } from 'components/layout/responsive';
 
 const PostLikeOptionBlock = styled.div`
 	position: sticky;
@@ -18,11 +19,16 @@ const PostLikeOptionBlock = styled.div`
 	height: 12rem;
 	margin-top: 25rem;
 	margin-left: -5rem;
+	margin-right: 3rem;
 	top: 9rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
+	${mediaQuery(1365)} {
+		display: none;
+	}
 `;
 
 const MainIconWrap = styled.div`
@@ -46,7 +52,6 @@ const SubIconWrap = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
-	/* padding-top: 1rem; */
 
 	& > * {
 		color: ${(props) => props.theme.gray_4};
@@ -83,20 +88,6 @@ const ShareIconWrap = styled.div`
 	padding: 0.01rem;
 	background-color: ${(props) => props.theme.white_1};
 `;
-
-// const EditText = styled.span`
-// 	padding-top: 1rem;
-// 	color: ${(props) => props.theme.gray_5};
-// 	font-family: 'Spoqa Han Sans Thin';
-// 	cursor: pointer;
-
-// 	&:after {
-// 		content: '';
-// 		display: block;
-// 		width: 100%;
-// 		border-bottom: 1px solid #bcbcbc;
-// 	}
-// `;
 
 const ShareItem = styled.span`
 	position: absolute;
