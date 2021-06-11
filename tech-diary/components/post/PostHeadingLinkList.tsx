@@ -12,7 +12,7 @@ const ListWrap = styled.div<{ isSticky: boolean }>`
 	margin-left: 3rem;
 	overflow: auto;
 	padding-top: 0.5rem;
-    padding-left: 0.5rem;
+	padding-left: 0.5rem;
 
 	display: flex;
 	flex-direction: column;
@@ -36,6 +36,17 @@ type Props = {
 function PostHeadingLinkList({ linkList }: Props) {
 	const [isSticky, setIsSticky] = useState(false);
 
+	const updateScrollTop = useCallback(() => {
+		const headingTops = linkList.map(({ id }) => {
+			const element = document.getElementById(id);
+			const top = element?.getBoundingClientRect().top;
+			return {
+				id,
+				top,
+			};
+		});
+	}, [linkList]);
+
 	const handleListPosttion = useCallback(() => {
 		const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
 
@@ -45,6 +56,18 @@ function PostHeadingLinkList({ linkList }: Props) {
 			setIsSticky(false);
 		}
 	}, []);
+
+	const changeScrollForLinkItem = (id: string) => {
+		const element = document.getElementById(id);
+		console.log(element);
+		
+		const top = element?.getBoundingClientRect().top as number;
+		window.scrollTo(0, top);
+	};
+
+	useEffect(() => {
+		updateScrollTop();
+	}, [updateScrollTop]);
 
 	// scroll 이벤트 리스너
 	useEffect(() => {
@@ -58,7 +81,7 @@ function PostHeadingLinkList({ linkList }: Props) {
 	return (
 		<ListWrap isSticky={isSticky}>
 			{linkList.map((item: PostLink) => {
-				return <PostHeadingLinkItem linkItem={item} />;
+				return <PostHeadingLinkItem key={item.id} linkItem={item} onClick={changeScrollForLinkItem} />;
 			})}
 		</ListWrap>
 	);
