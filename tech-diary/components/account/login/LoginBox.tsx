@@ -200,7 +200,6 @@ type Props = {
 	loginLinkWithFacebook: string;
 	loginLinkWithGithub: string;
 	loginLinkWithGoogle: string;
-	// facebookLoginCallback: (response: any) => void;
 
 	errorMsg: string;
 	form: loginForm;
@@ -215,7 +214,6 @@ function LoginBox({
 	errorMsg,
 	form,
 	loginLinkWithGithub,
-	// facebookLoginCallback,
 	openModal,
 }: Props) {
 	return (

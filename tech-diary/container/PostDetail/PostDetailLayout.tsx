@@ -49,6 +49,7 @@ function PostDetailLayout({ post }: Props) {
 	const [isMine, setIsMine] = useState(false);
 	const [userIsFollow, setUserIsFollow] = useState(false);
 	const [headingLinks, setHeadingLinks] = useState([] as PostLink[]);
+	const [headingElements, setHeadingElements] = useState([] as any);
 
 	const [, , onLikePost] = useRequest(requestPostLike);
 	const [, , onDeleteRequest] = useRequest(requestDeletePost);
@@ -291,10 +292,20 @@ function PostDetailLayout({ post }: Props) {
 				.process(post.contents, (err: any, file: any) => {
 					html = String(file);
 				});
-			const headingLinkList: PostLink[] = parseHeading(html);
-			setHeadingLinks(headingLinkList);
+			const headingLinkList = parseHeading(html, post.url);
+			setHeadingLinks(headingLinkList.headings);
+			setHeadingElements(headingLinkList.headingElements);
 		}
-	}, [post.contents]);
+	}, [post.contents, post.url]);
+
+	useEffect(() => {
+		if (headingElements.length !== 0) {
+			const headings = document.querySelectorAll('h1, h2, h3');
+			headings.forEach((element, index) => {
+				element.id = headingElements[index].id;
+			});
+		}
+	}, [headingElements]);
 
 	return (
 		<>

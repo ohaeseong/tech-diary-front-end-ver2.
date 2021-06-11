@@ -112,4 +112,5 @@ export type FollowInfo = {
 export type PostLink = {
 	id: string;
 	title: string;
+	url: string;
 };

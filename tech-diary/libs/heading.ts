@@ -1,8 +1,7 @@
-import { v4 as uuid4 } from 'uuid';
 import { escapeForUrl } from 'libs/utils';
 import { PostLink } from 'store/types/post.types';
 
-export function formatHeadingTagForUrl(html: Element[]) {
+export function formatHeadingTagForUrl(html: Element[], slug: string) {
 	// console.log(html);
 
 	const h1 = html.filter((element) => element.tagName === 'H1');
@@ -16,20 +15,21 @@ export function formatHeadingTagForUrl(html: Element[]) {
 		const id = escapeForUrl(element.innerHTML);
 		const exists = idList.filter((existingId) => existingId.indexOf(id) !== -1);
 		const uniqueId = `${id}${exists.length === 0 ? '' : `-${exists.length}`}`;
+		const url = `${slug}/#${id}${exists.length === 0 ? '' : `-${exists.length}`}`;
 		element.id = uniqueId;
 		idList.push(uniqueId);
 		headings.push({
-			id,
+			id: uniqueId,
 			title: element.innerHTML,
+			url,
 		});
 	};
 
 	[h1, h2, h3].forEach((elements) => elements.forEach(setElementInfo));
-
-	return headings;
+	return { headings, hElements: [...h1, ...h2, ...h3] };
 }
 
-export function parseHeading(html: string) {
+export function parseHeading(html: string, slug: string) {
 	const div = document.createElement('div');
 	div.innerHTML = html;
 
@@ -38,9 +38,11 @@ export function parseHeading(html: string) {
 		if (element.tagName === 'H1' || element.tagName === 'H2' || element.tagName === 'H3') {
 			return element;
 		}
+
+		return null;
 	});
 
-	const headingList = formatHeadingTagForUrl(headings);
+	const headingList = formatHeadingTagForUrl(headings, slug);
 
-	return headingList;
+	return { headings: headingList.headings, headingElements: headingList.hElements };
 }

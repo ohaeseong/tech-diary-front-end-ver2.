@@ -28,6 +28,7 @@ import { reqeustSignUpEmailSend } from 'libs/repository';
 import useRequest from 'libs/hooks/useRequest';
 import isEmail from 'libs/regEx';
 import useHeader from 'libs/hooks/useHeader';
+import { server } from 'config/config';
 
 const NavBarWrap = styled.div`
 	width: 100%;
@@ -186,7 +187,7 @@ type Props = {
 function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
-	const [userProfileImage, setUserProfileImage] = useState('/static/user.png');
+	const [userProfileImage, setUserProfileImage] = useState(`${server.client_url}/static/user.png`);
 	const [memberId, setMemberId] = useState('');
 	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
