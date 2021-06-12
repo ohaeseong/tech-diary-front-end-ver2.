@@ -35,7 +35,8 @@ type Props = {
 
 function PostHeadingLinkList({ linkList }: Props) {
 	const [isSticky, setIsSticky] = useState(false);
-
+	console.log(document);
+	
 	const updateScrollTop = useCallback(() => {
 		const headingTops = linkList.map(({ id }) => {
 			const element = document.getElementById(id);
