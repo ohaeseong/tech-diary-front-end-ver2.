@@ -17,6 +17,7 @@
         "@typescript-eslint/no-use-before-define": ["error"],
         "import/no-unresolved": "off",
         "react/require-default-props": "off",
+        "no-param-reassign": [2, { "props": false }],
         "@typescript-eslint/explicit-function-return-type": "off",
         "import/extensions": ["error", "ignorePackages", {
             "js": "never",
