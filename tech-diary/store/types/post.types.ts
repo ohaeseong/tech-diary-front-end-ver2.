@@ -113,4 +113,5 @@ export type PostLink = {
 	id: string;
 	title: string;
 	url: string;
+	level: number;
 };

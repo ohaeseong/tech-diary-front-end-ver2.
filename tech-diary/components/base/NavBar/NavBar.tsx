@@ -207,11 +207,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	}, []);
 
 	const handleIsScrollEvent = useCallback(() => {
-		if (!isMain) {
-			return;
-		}
-
-		if (window.scrollY > 100) {
+		if (isMain && window.scrollY > 100) {
 			setIsScroll(true);
 		} else {
 			setIsScroll(false);

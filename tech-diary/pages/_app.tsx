@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 
 import '../styles/reset.css';
@@ -98,7 +99,7 @@ function MyApp({ Component, pageProps, cookies }: Props) {
 
 	return (
 		<>
-			<Head>x
+			<Head>
 				<meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
 				<style>{`
 						@font-face {
@@ -128,7 +129,7 @@ function MyApp({ Component, pageProps, cookies }: Props) {
 				`}</style>
 			</Head>
 			<ThemeProvider theme={themeMode ? dark : color}>
-				{isNotNav ? <></> : <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={isMain} />}
+				{/* {isNotNav ? <></> : <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={isMain} />} */}
 				<Component {...pageProps} />
 			</ThemeProvider>
 		</>
