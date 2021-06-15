@@ -1,4 +1,13 @@
-# 서비스 Work-It의 Repository입니다. 
+# work-it front-end repository
+work-it is blog platform for the developer.
+
+version => demo
+
+### infra
+AWS-EC2
+Nginx
+letsencrypt
+docker
 
 ### 🛠 stack
 - typescript
