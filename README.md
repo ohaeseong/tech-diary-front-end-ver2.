@@ -1,7 +1,7 @@
 # work-it front-end repository
 work-it is blog platform for the developer.
 
-version => demo
+version => demo (doing test)
 
 ### infra
 AWS-EC2
