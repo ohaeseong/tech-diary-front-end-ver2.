@@ -270,6 +270,14 @@ const TheadStyled = styled.thead`
 		font-family: 'Spoqa Han Sans Thin';
 		font-size: 0.9rem;
 	}
+
+	${mediaQuery(768)} {
+		& > * tr,
+		th {
+			padding: 0.5rem 1rem;
+			font-size: 0.7rem;
+		}
+	}
 `;
 
 export function TheadMarkdownRender(children: { children: React.ReactNode }) {
@@ -284,6 +292,13 @@ const TbodyStyled = styled.tbody`
 		border: 1px solid ${(props) => props.theme.gray_1};
 		font-family: 'Spoqa Han Sans Thin';
 		font-size: 0.9rem;
+	}
+
+	${mediaQuery(768)} {
+		& > * tr,
+		td {
+			font-size: 0.7rem;
+		}
 	}
 `;
 

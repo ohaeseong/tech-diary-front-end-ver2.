@@ -153,9 +153,13 @@ function SinglePost({
 					{/* <PostBottom /> */}
 					<PostComment commentList={commentList} postId={id} setCommentList={setCommentList} />
 				</SinglePostContentsWrap>
-				<div>
-					<PostHeadingLinkList linkList={linkList} />
-				</div>
+				{linkList.length !== 0 ? (
+					<div>
+						<PostHeadingLinkList linkList={linkList} />
+					</div>
+				) : (
+					<></>
+				)}
 			</SinglePostTemplate>
 		</>
 	);

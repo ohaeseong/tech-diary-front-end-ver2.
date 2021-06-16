@@ -376,7 +376,8 @@ function MarkdownEditorContainer() {
 		await onPublishPost(publishReq);
 		dispatch(setWritePostId(''));
 
-		router.push('/');
+		if (isEdit) router.back();
+		else router.push('/');
 	}, [
 		dispatch,
 		isPublic,

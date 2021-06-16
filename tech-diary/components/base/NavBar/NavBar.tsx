@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback, ChangeEvent, useRef } from 're
 import Switch from 'react-switch';
 import { RiMoonClearFill } from 'react-icons/ri';
 import { FaSun } from 'react-icons/fa';
+import { HiOutlinePencilAlt } from 'react-icons/hi';
 import Image from 'next/image';
 
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -119,6 +120,41 @@ const ProfileWrap = styled.div`
 	}
 `;
 
+const GoToWritePageIconWrap = styled.div<{ isScroll: boolean; isMain?: boolean }>`
+	margin-left: 1rem;
+	width: 2rem;
+	height: 2rem;
+
+	& > * {
+		cursor: pointer;
+		color: ${color.gray_0};
+	}
+
+	${(props) =>
+		props.isScroll &&
+		`
+		& > * {
+			color: ${props.theme.gray_4};	
+		}
+	`}
+
+	${(props) =>
+		props.isMain === false &&
+		`
+			& > * {
+				color: ${props.theme.gray_4};	
+			}
+	`}
+
+
+	${mediaQuery(768)} {
+		& > * {
+			color: ${(props) => props.theme.gray_4};
+			width: 1.1rem;
+		}
+	}
+`;
+
 const Logo = styled.span<{ isScroll: boolean; isMain?: boolean }>`
 	display: block;
 	color: ${color.gray_0};
@@ -179,6 +215,8 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 			color: ${(props) => props.theme.gray_4};
 			width: 1.1rem;
 		}
+
+		margin: auto 0rem auto 9rem;
 	}
 `;
 
@@ -360,6 +398,11 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 					<SearchIconWrap isScroll={isScroll} isMain={isMain}>
 						<AiOutlineSearch size="1.8rem" />
 					</SearchIconWrap>
+				</Link>
+				<Link href="/write">
+					<GoToWritePageIconWrap isScroll={isScroll} isMain={isMain}>
+						<HiOutlinePencilAlt size="1.8rem" />
+					</GoToWritePageIconWrap>
 				</Link>
 				{isToken ? (
 					<ProfileWrap>
