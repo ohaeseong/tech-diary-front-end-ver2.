@@ -17,7 +17,7 @@ const SinglePostTemplate = styled.div`
 	width: 100%;
 	min-height: 100vh;
 	background-color: ${(props) => props.theme.white_1};
-	margin-top: 5rem;
+	margin-top: 2rem;
 `;
 
 const SinglePostContentsWrap = styled.div`
@@ -64,10 +64,10 @@ type Props = {
 	sharePostToFacebook: () => void;
 	sharePostToTwitter: () => void;
 	isFollowMember: () => void;
-	dispatchForUpdateState: any;
-	userIsFollow: boolean;
 	setCommentList: (dispatch: Comment[]) => void;
 
+	dispatchForUpdateState: any;
+	userIsFollow: boolean;
 	optionState: OptionState;
 	data: PostDetail;
 	commentList: Comment[];
@@ -90,8 +90,8 @@ function SinglePost({
 	moveToComment,
 	goEditPostPage,
 	isFollowMember,
-	dispatchForUpdateState,
 	setCommentList,
+	dispatchForUpdateState,
 
 	userIsFollow,
 	linkList,

@@ -48,6 +48,7 @@ class authRepository {
 				memberName: req.memberName,
 				socialId: req.socialId,
 				profileImage: req.profileImage,
+				email: req.email,
 			})
 			.catch((error) => error.response);
 	}

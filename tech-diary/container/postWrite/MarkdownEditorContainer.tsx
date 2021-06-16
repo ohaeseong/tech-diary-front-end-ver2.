@@ -2,7 +2,7 @@
 import React, { ChangeEvent, useCallback, useState, useEffect } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import htmlPlugin from 'remark-html';
+// import htmlPlugin from 'remark-html';
 import remark from 'remark';
 import strip from 'strip-markdown';
 import styled from '@emotion/styled';

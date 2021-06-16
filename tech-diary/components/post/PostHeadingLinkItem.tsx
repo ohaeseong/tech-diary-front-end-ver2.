@@ -4,8 +4,7 @@ import { PostLink } from 'store/types/post.types';
 import Link from 'next/link';
 
 const LinkItemWrap = styled.div<{ marginLeft: number }>`
-	margin-top: 0.8rem;
-	/* margin-left: 1rem; */
+	margin-top: 0.7rem;
 	${(props) =>
 		props.marginLeft &&
 		`
@@ -17,11 +16,15 @@ const LinkItem = styled.a<{ isActive: boolean }>`
 	font-size: 0.9rem;
 	color: ${(props) => props.theme.gray_3};
 	cursor: pointer;
-	/* font-family: 'Spoqa Han Sans Thin'; */
+	font-family: 'Spoqa Han Sans Thin';
+	word-break: break-all;
+	overflow: hidden;
+	transition: all 0.125s ease-in 0s;
 	${(props) =>
 		props.isActive &&
 		`
 		color: black;
+		font-size: 0.9rem;
     `}
 	&:hover {
 		color: black;

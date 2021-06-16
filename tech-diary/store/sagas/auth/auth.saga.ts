@@ -1,9 +1,13 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import { setStorage } from 'libs/storage';
 import { AUTH_REGISTER_REQUEST, onAuthRegister, setRegisterErrorMsg } from 'store/modules/register.auth';
-import { AUTH_REGISTER_SOCIAL_REQUEST, onSocialAuthRegister, setSocialAuthRegisterErrorMsg } from 'store/modules/register.with.social';
+import {
+	AUTH_REGISTER_SOCIAL_REQUEST,
+	onSocialAuthRegister,
+	setSocialAuthRegisterErrorMsg,
+} from 'store/modules/register.with.social';
+import { AUTH_LOGIN_REQUEST, onAuthLogin, setLoginErrorMsg, setUserInfoState } from 'store/modules/auth';
 import authRepo from './auth.repository';
-import { AUTH_LOGIN_REQUEST, onAuthLogin, setLoginErrorMsg, setUserInfoState } from '../../modules/auth';
 
 function* executeCallback(cb?: () => void) {
 	if (cb) {
@@ -54,7 +58,7 @@ function* onLoginSaga(action: ReturnType<typeof onAuthLogin.request>) {
 }
 
 function* onRegisterWithSocial(action: ReturnType<typeof onSocialAuthRegister.request>) {
-	const { socialId, memberId, memberName, profileImage, introduce, successCB } = action.payload;
+	const { socialId, memberId, memberName, profileImage, introduce, email, successCB } = action.payload;
 
 	const { status, data } = yield call(authRepo.registerWithSocial, {
 		socialId,
@@ -62,6 +66,7 @@ function* onRegisterWithSocial(action: ReturnType<typeof onSocialAuthRegister.re
 		memberName,
 		profileImage,
 		introduce,
+		email,
 	});
 
 	if (status === 400) {

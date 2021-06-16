@@ -16,6 +16,7 @@ function SignUpWithSocialContainer({ userInfo }: Props) {
 
 	const [memberId, setMemberId] = useState('');
 	const [memberName, setMemberName] = useState('');
+	const [email, setEmail] = useState(userInfo.email);
 	const [introduce, setIntroduce] = useState('');
 
 	const errorMsg = useSelector((state: RootState) => state.socialAuth.authRegisterErrorMsg);
@@ -40,6 +41,7 @@ function SignUpWithSocialContainer({ userInfo }: Props) {
 				memberId,
 				memberName,
 				introduce,
+				email,
 				socialId: userInfo.socialId,
 				profileImage: userInfo.profileImage,
 				successCB: () => {
@@ -47,7 +49,7 @@ function SignUpWithSocialContainer({ userInfo }: Props) {
 				},
 			},
 		});
-	}, [dispatch, introduce, memberId, memberName, userInfo]);
+	}, [dispatch, email, introduce, memberId, memberName, userInfo.profileImage, userInfo.socialId]);
 
 	const cancleRegister = useCallback(() => {
 		router.push('/');
@@ -55,8 +57,9 @@ function SignUpWithSocialContainer({ userInfo }: Props) {
 
 	useEffect(() => {
 		if (userInfo) {
-			setMemberId(userInfo.memberId as string);
-			setMemberName(userInfo.memberName as string);
+			setMemberId(userInfo.memberId);
+			setMemberName(userInfo.memberName);
+			setEmail(userInfo.email);
 		}
 	}, [userInfo, userInfo.memberId, userInfo.memberName]);
 

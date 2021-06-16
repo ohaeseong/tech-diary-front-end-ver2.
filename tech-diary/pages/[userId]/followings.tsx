@@ -8,7 +8,6 @@ import UserProfileContainer from 'container/user/UserInfoContainer';
 import NotFoundPage from 'pages/404';
 import { FollowInfo } from 'store/types/post.types';
 import { UserInfo } from 'store/types/auth.types';
-// import { Post } from 'store/types/post.types';
 
 type Props = {
 	followings: { memberList: FollowInfo[] };

@@ -6,7 +6,8 @@ import PostHeadingLinkItem from 'components/post/PostHeadingLinkItem';
 
 const ListWrap = styled.div<{ isSticky: boolean }>`
 	position: absolute;
-	width: 12rem;
+	min-width: 10rem;
+	max-width: 12rem;
 	height: 35rem;
 	margin-top: 27rem;
 	margin-left: 3rem;
@@ -52,7 +53,7 @@ function PostHeadingLinkList({ linkList }: Props) {
 				setRerenderTrigger(1);
 				return null;
 			}
-			const top = element?.getBoundingClientRect().top;
+			const top = element?.offsetTop - 10;
 			return {
 				id,
 				top,
@@ -83,12 +84,11 @@ function PostHeadingLinkList({ linkList }: Props) {
 	}, [headingTops]);
 
 	const changeScrollForLinkItem = (id: string) => {
-		const bodyRect = document.body.getBoundingClientRect().top;
 		const element = document.getElementById(id);
 
 		const top = element?.offsetTop as number;
 
-		window.scrollTo(0, top);
+		window.scrollTo(0, top - 10);
 	};
 
 	useEffect(() => {

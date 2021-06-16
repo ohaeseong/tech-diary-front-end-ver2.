@@ -129,7 +129,7 @@ function MyApp({ Component, pageProps, cookies }: Props) {
 				`}</style>
 			</Head>
 			<ThemeProvider theme={themeMode ? dark : color}>
-				{/* {isNotNav ? <></> : <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={isMain} />} */}
+				{isNotNav ? <></> : <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={isMain} />}
 				<Component {...pageProps} />
 			</ThemeProvider>
 		</>

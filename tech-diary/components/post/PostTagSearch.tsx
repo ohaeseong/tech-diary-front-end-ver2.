@@ -12,7 +12,7 @@ const SearchPageTemplate = styled.div`
 	align-items: center;
 	width: 100%;
 	min-height: 100vh;
-	margin-top: 5rem;
+	margin-top: 2rem;
 	background-color: ${(props) => props.theme.white};
 
 	& > * {

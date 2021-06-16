@@ -42,7 +42,7 @@ const UserPageTemplate = styled.div`
 	justify-content: center;
 	width: 100%;
 	min-height: 100vh;
-	margin-top: 5rem;
+	margin-top: 2rem;
 
 	background-color: ${(props) => props.theme.white_1};
 
@@ -397,13 +397,13 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 										<></>
 									)}
 									{userPosts.length !== 0 ? (
-										<>
+										<div style={{ width: '50rem' }}>
 											<InventoryPostList>
 												{userPosts.map((item: Post) => {
 													return <InventoryPostItem key={item.id} item={item} />;
 												})}
 											</InventoryPostList>
-										</>
+										</div>
 									) : (
 										<NonePostTemplate>게시글이 없어요!</NonePostTemplate>
 									)}
