@@ -34,7 +34,7 @@ import { color } from 'styles/color';
 import FollowList from 'components/user/FollowList';
 import FollowItem from 'components/user/FollowItem';
 import { mediaQuery } from 'components/layout/responsive';
-import Link from 'next/link';
+// import Link from 'next/link';
 
 const UserPageTemplate = styled.div`
 	display: flex;
@@ -58,11 +58,18 @@ const SearchInputTemplate = styled.div`
 	width: 100%;
 `;
 
-const StatisticsLinkText = styled.a`
-	color: ${(props) => props.theme.gray_4};
-	cursor: pointer;
-	font-family: 'Spoqa Han Sans Thin';
-	border-bottom: 1px solid ${(props) => props.theme.gray_3};
+// const StatisticsLinkText = styled.a`
+// 	color: ${(props) => props.theme.gray_4};
+// 	cursor: pointer;
+// 	font-family: 'Spoqa Han Sans Thin';
+// 	border-bottom: 1px solid ${(props) => props.theme.gray_3};
+// `;
+
+const InventoryPostListWrap = styled.div`
+	width: 50rem;
+	${mediaQuery(768)} {
+		width: 90%;
+	}
 `;
 
 const SearchInputWrap = styled.div`
@@ -124,7 +131,7 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 	const [, , updateUserIntro, ,] = useRequest(requestUserIntroduceUpdate);
 	const [searchPosts, , searchMemberPosts, ,] = useRequest(requestSearchMemberPosts, true);
 	const [, , onUploadImage, ,] = useRequest(uploadImage, true);
-	const [introText, setIntroText] = useState(userInfo.introduce || '소개글을 작성해 보세요!');
+	const [introText, setIntroText] = useState(userInfo.introduce || '...');
 	const [userEmail, setUserEmail] = useState(userInfo.displayEmail);
 	const [userName, setUserName] = useState(userInfo.memberName);
 	const [profileImage, setProfileImage] = useState(userInfo.profileImage);
@@ -188,6 +195,8 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 
 	const handleUserIntroText = useCallback(
 		(value: string) => {
+			console.log(introText.length, value);
+
 			if (introText.length > 1000 || value.length > 1000) {
 				return;
 			}
@@ -369,7 +378,7 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 									})}
 								</>
 							) : (
-								<NonePostTemplate>팔로우 활동을 시작해보세요!</NonePostTemplate>
+								<NonePostTemplate>팔로우 활동이 없어요!</NonePostTemplate>
 							)}
 						</FollowList>
 					) : (
@@ -378,9 +387,10 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 								<>
 									{router.pathname === '/[userId]' ? (
 										<SearchInputTemplate>
-											<Link href={`/${userInfo.memberId}/statistics`}>
+											{/* <Link href={`/${userInfo.memberId}/statistics`}>
 												<StatisticsLinkText>통계</StatisticsLinkText>
-											</Link>
+											</Link> */}
+											<div />
 											<SearchInputWrap>
 												<AiOutlineSearch size="1.5rem" color={color.gray_3} />
 												<Input
@@ -397,13 +407,13 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 										<></>
 									)}
 									{userPosts.length !== 0 ? (
-										<div style={{ width: '50rem' }}>
+										<InventoryPostListWrap>
 											<InventoryPostList>
 												{userPosts.map((item: Post) => {
 													return <InventoryPostItem key={item.id} item={item} />;
 												})}
 											</InventoryPostList>
-										</div>
+										</InventoryPostListWrap>
 									) : (
 										<NonePostTemplate>게시글이 없어요!</NonePostTemplate>
 									)}

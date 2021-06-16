@@ -7,6 +7,7 @@ import Image from 'next/image';
 import TagGroup from 'components/common/TagGroup';
 import TagItem from 'components/common/TagItem';
 import { server } from 'config/config';
+import { mediaQuery } from 'components/layout/responsive';
 
 const InventoryPostItemWrap = styled.div`
 	display: flex;
@@ -25,6 +26,11 @@ const Head = styled.div`
 	font-size: 1.5rem;
 
 	color: ${(props) => props.theme.neon_2};
+
+	${mediaQuery(768)} {
+		line-height: 2rem;
+		font-size: 1.125rem;
+	}
 `;
 
 const BodyWrap = styled.div`
@@ -53,6 +59,7 @@ const Bottom = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	margin-top: 0.5rem;
 `;
 
 const BottomInfo = styled.span`

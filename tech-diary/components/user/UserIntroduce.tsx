@@ -10,7 +10,6 @@ const UserIntroduceWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 46rem;
-	min-height: 30rem;
 	border-radius: 7px;
 	border: 1px solid ${color.gray_1};
 	margin-top: 0.5rem;

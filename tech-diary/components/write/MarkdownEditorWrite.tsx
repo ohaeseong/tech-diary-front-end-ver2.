@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import PostEditorTool from 'components/write/PostEditorTool';
 import MarkdownEditor from 'components/write/MarkdownEditor';
 import LinkEditor from 'components/write/LinkEditor';
+import { useRouter } from 'next/router';
 
 const TagInput = styled.input`
 	padding: 0.5rem 0.5rem;
@@ -72,6 +73,7 @@ function MarkdownEditorWrite({
 	const [codemirror, setCodemirror] = useState<any>();
 	const [linkUrl, setLinkUrl] = useState('');
 	const [linkText, setLinkText] = useState('');
+	const router = useRouter();
 
 	const [addLinkPos, setAddLinkPos] = useState({
 		top: '0rem',
@@ -124,6 +126,10 @@ function MarkdownEditorWrite({
 		setLinkUrl('');
 		setAddLinkIsDisplay(false);
 	}, []);
+
+	const goBack = useCallback(() => {
+		router.back();
+	}, [router]);
 
 	const handleToolbarClick = (mode: string) => {
 		if (!codemirror) return;
@@ -407,6 +413,7 @@ function MarkdownEditorWrite({
 						openModal={openModal}
 						requestSave={requestSave}
 						handleImage={handleImage}
+						goBack={goBack}
 					/>
 					<TagInput
 						placeholder="Enter를 눌러 tag를 추가해 보세요!"

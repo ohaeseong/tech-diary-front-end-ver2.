@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Button from 'components/common/Button';
 import { color } from 'styles/color';
 import { BsTypeBold } from 'react-icons/bs';
-import { BiItalic, BiLinkAlt } from 'react-icons/bi';
+import { BiItalic, BiLinkAlt, BiArrowBack } from 'react-icons/bi';
 import { HiCode } from 'react-icons/hi';
 import { MdFormatStrikethrough, MdImage, MdFormatQuote } from 'react-icons/md';
 import { ToastContainer } from 'react-toastify';
@@ -67,8 +67,19 @@ const ButtonWrapForMobile = styled.div`
 	${mediaQuery(768)} {
 		display: flex;
 		align-items: center;
-		justify-content: flex-end;
+		justify-content: space-between;
 		width: 100%;
+	}
+`;
+
+const GoBackIconWrap = styled.div`
+	/* display: flex;
+	width: 2rem;
+	height: 100%; */
+	margin-left: 0.8rem;
+
+	& > * {
+		color: ${(props) => props.theme.gray_5};
 	}
 `;
 
@@ -77,9 +88,10 @@ type Props = {
 	handleImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	openModal: () => void;
 	requestSave: () => void;
+	goBack: () => void;
 };
 
-function PostEditorTool({ onClick, openModal, requestSave, handleImage }: Props) {
+function PostEditorTool({ onClick, openModal, requestSave, handleImage, goBack }: Props) {
 	const ICON_SIZE = '1.5rem';
 	return (
 		<>
@@ -136,6 +148,9 @@ function PostEditorTool({ onClick, openModal, requestSave, handleImage }: Props)
 					</Button>
 				</ToolItemWrap>
 				<ButtonWrapForMobile>
+					<GoBackIconWrap onClick={goBack}>
+						<BiArrowBack size="1.5rem" />
+					</GoBackIconWrap>
 					<Button btnColor={color.gray_3} margin="0 1.2rem 0 0" onClick={requestSave}>
 						임시 저장
 					</Button>

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { toBig } from 'styles/animation';
+import { mediaQuery } from 'components/layout/responsive';
 
 const TagItemWrap = styled.a`
 	padding: 0.5rem 1rem;
@@ -16,6 +17,11 @@ const TagItemWrap = styled.a`
 
 	&:hover {
 		cursor: pointer;
+	}
+
+	${mediaQuery(768)} {
+		padding: 0.3rem 0.6rem;
+		font-size: 0.6rem;
 	}
 `;
 
