@@ -18,7 +18,7 @@ const SearchPageTemplate = styled.div`
 	align-items: center;
 	width: 100%;
 	min-height: 100vh;
-	margin-top: 5rem;
+	margin-top: 2rem;
 	background-color: ${(props) => props.theme.white};
 
 	& > * {
@@ -122,11 +122,11 @@ function PostSearchContainer() {
 				<></>
 			)}
 			<InventoryPostListWrap>
-			<InventoryPostList>
-				{searchPosts.map((item: Post) => {
-					return <InventoryPostItem key={item.id} item={item} />;
-				})}
-			</InventoryPostList>
+				<InventoryPostList>
+					{searchPosts.map((item: Post) => {
+						return <InventoryPostItem key={item.id} item={item} />;
+					})}
+				</InventoryPostList>
 			</InventoryPostListWrap>
 		</SearchPageTemplate>
 	);

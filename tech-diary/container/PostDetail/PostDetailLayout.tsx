@@ -290,6 +290,7 @@ function PostDetailLayout({ post }: Props) {
 			remark()
 				.use(htmlPlugin)
 				.process(post.contents, (err: any, file: any) => {
+					if (err) console.log(err);
 					html = String(file);
 				});
 			const headingLinkList = parseHeading(html, post.url);
@@ -315,28 +316,28 @@ function PostDetailLayout({ post }: Props) {
 				<></>
 			)}
 			<SinglePost
-				toggleLike={toggleLike}
-				toggleBookMark={toggleBookMark}
-				toggleShareItemOpen={toggleShareItemOpen}
-				moveToComment={moveToComment}
 				copyUrl={copyUrl}
-				sharePostToFacebook={sharePostToFacebook}
-				sharePostToTwitter={sharePostToTwitter}
-				dispatchForUpdateState={dispatchForUpdateState}
-				openConfirmModal={modalOpenToggle}
+				toggleLike={toggleLike}
+				moveToComment={moveToComment}
 				goEditPostPage={goEditPostPage}
-				bookMarkToggleValue={bookMarkToggleValue}
 				closeShareItem={closeShareItem}
-				shareItemOpenToggleValue={shareItemOpenToggleValue}
-				optionState={state}
-				setCommentList={setCommentListData}
-				userIsFollow={userIsFollow}
 				isFollowMember={isFollowMember}
+				toggleBookMark={toggleBookMark}
+				openConfirmModal={modalOpenToggle}
+				setCommentList={setCommentListData}
+				sharePostToTwitter={sharePostToTwitter}
+				toggleShareItemOpen={toggleShareItemOpen}
+				sharePostToFacebook={sharePostToFacebook}
+				dispatchForUpdateState={dispatchForUpdateState}
+				shareItemOpenToggleValue={shareItemOpenToggleValue}
+				bookMarkToggleValue={bookMarkToggleValue}
 				commentList={commentListData}
-				linkList={headingLinks}
-				data={post}
-				isMine={isMine}
+				userIsFollow={userIsFollow}
 				userIsLike={userIsLike}
+				linkList={headingLinks}
+				optionState={state}
+				isMine={isMine}
+				data={post}
 			/>
 		</>
 	);

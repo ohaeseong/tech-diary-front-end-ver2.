@@ -47,7 +47,8 @@ export type SocialProfile = {
 	socialId: string;
 	profileImage: string;
 	memberId: string;
-}
+	email?: string;
+};
 
 export type UserRegisterWithSocialRequest = {
 	memberId: string;
@@ -55,6 +56,7 @@ export type UserRegisterWithSocialRequest = {
 	introduce?: string;
 	socialId: string;
 	profileImage?: string;
+	email?: string;
 	successCB?: () => null;
 	failCB?: () => void;
 };

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import React, { useEffect, useState, useCallback, ChangeEvent } from 'react';
+import React, { useEffect, useState, useCallback, ChangeEvent, useRef } from 'react';
 import Switch from 'react-switch';
 import { RiMoonClearFill } from 'react-icons/ri';
 import { FaSun } from 'react-icons/fa';
@@ -30,16 +30,22 @@ import isEmail from 'libs/regEx';
 import useHeader from 'libs/hooks/useHeader';
 import { server } from 'config/config';
 
-const NavBarWrap = styled.div`
+const NavBarWrap = styled.div<{ isDown: boolean }>`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	${(props) =>
+		props.isDown &&
+		`
+		position: absolute;
+		top: -100px;
+    `}
 `;
 
 const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 	position: fixed;
 	width: 100%;
-	height: 5rem;
+	height: 4rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -187,6 +193,7 @@ type Props = {
 function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isScroll, setIsScroll] = useState(false);
 	const [isToken, setIsToken] = useState(false);
+	const [isDown, setIsDown] = useState(false);
 	const [userProfileImage, setUserProfileImage] = useState(`${server.client_url}/static/user.png`);
 	const [memberId, setMemberId] = useState('');
 	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
@@ -205,8 +212,19 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const handleEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
 	}, []);
-
+	const prevScrollTop = useRef(0);
 	const handleIsScrollEvent = useCallback(() => {
+		const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+		const nextDirection = prevScrollTop.current > scrollTop ? 'UP' : 'DOWN';
+
+		if (nextDirection === 'UP') {
+			setIsDown(false);
+		} else if (nextDirection === 'DOWN' && !isMain) {
+			setIsDown(true);
+		}
+
+		prevScrollTop.current = scrollTop;
+
 		if (isMain && window.scrollY > 100) {
 			setIsScroll(true);
 		} else {
@@ -304,7 +322,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	}, [closeMenu]);
 
 	return (
-		<NavBarWrap>
+		<NavBarWrap isDown={isDown}>
 			{modalIsOpenValue ? (
 				<ModalBox msg={modalMsg}>
 					<LabelInput

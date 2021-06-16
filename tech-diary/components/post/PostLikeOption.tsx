@@ -18,8 +18,8 @@ const PostLikeOptionBlock = styled.div`
 	width: 5rem;
 	height: 12rem;
 	margin-top: 25rem;
-	margin-left: -5rem;
-	margin-right: 3rem;
+	margin-left: -8rem;
+	margin-right: 2rem;
 	top: 9rem;
 	display: flex;
 	flex-direction: column;
