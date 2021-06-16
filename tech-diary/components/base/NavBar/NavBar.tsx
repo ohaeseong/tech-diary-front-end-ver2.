@@ -399,11 +399,15 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 						<AiOutlineSearch size="1.8rem" />
 					</SearchIconWrap>
 				</Link>
-				<Link href="/write">
-					<GoToWritePageIconWrap isScroll={isScroll} isMain={isMain}>
-						<HiOutlinePencilAlt size="1.8rem" />
-					</GoToWritePageIconWrap>
-				</Link>
+				{isToken ? (
+					<Link href="/write">
+						<GoToWritePageIconWrap isScroll={isScroll} isMain={isMain}>
+							<HiOutlinePencilAlt size="1.8rem" />
+						</GoToWritePageIconWrap>
+					</Link>
+				) : (
+					<></>
+				)}
 				{isToken ? (
 					<ProfileWrap>
 						<Image
