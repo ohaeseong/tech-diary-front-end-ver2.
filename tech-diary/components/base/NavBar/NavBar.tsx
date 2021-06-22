@@ -50,6 +50,7 @@ const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: space-between;
 	transition: 0.3s ease-in-out;
 
 	${(props) =>
@@ -73,6 +74,13 @@ const NavBarContent = styled.div<{ isScroll: boolean; isMain?: boolean }>`
 		background-color: ${(props) => props.theme.white};
 		box-shadow: 0 2px 6px 0 ${color.shadow};
 	}
+`;
+
+const ContentWrap = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
 `;
 
 const AccountButtonWrap = styled.div`
@@ -112,7 +120,7 @@ const ProfileWrap = styled.div`
 	height: 2rem;
 	margin: 0 2rem;
 	${mediaQuery(768)} {
-		margin: auto 1rem auto auto;
+		/* margin: auto 1rem auto auto; */
 	}
 
 	& > img {
@@ -121,7 +129,7 @@ const ProfileWrap = styled.div`
 `;
 
 const GoToWritePageIconWrap = styled.div<{ isScroll: boolean; isMain?: boolean }>`
-	margin-left: 1rem;
+	margin-left: 2rem;
 	width: 2rem;
 	height: 2rem;
 
@@ -186,7 +194,7 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 	width: 2rem;
 	height: 2rem;
 
-	margin: auto 1rem auto auto;
+	/* margin: auto 1rem auto auto; */
 
 	& > * {
 		cursor: pointer;
@@ -215,8 +223,6 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 			color: ${(props) => props.theme.gray_4};
 			width: 1.1rem;
 		}
-
-		margin: auto 0rem auto 9rem;
 	}
 `;
 
@@ -234,7 +240,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isDown, setIsDown] = useState(false);
 	const [userProfileImage, setUserProfileImage] = useState(`${server.client_url}/static/user.png`);
 	const [memberId, setMemberId] = useState('');
-	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
+	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(180);
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
 	const [email, setEmail] = useState('');
@@ -259,6 +265,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 			setIsDown(false);
 		} else if (nextDirection === 'DOWN' && !isMain) {
 			setIsDown(true);
+			closeMenu();
 		}
 
 		prevScrollTop.current = scrollTop;
@@ -268,7 +275,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 		} else {
 			setIsScroll(false);
 		}
-	}, [isMain]);
+	}, [closeMenu, isMain]);
 
 	const goToProfile = useCallback(() => {
 		const userPageUrl = `${userInfo.memberId}`;
@@ -394,75 +401,78 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 						work-it
 					</Logo>
 				</Link>
-				<Link href="/search">
-					<SearchIconWrap isScroll={isScroll} isMain={isMain}>
-						<AiOutlineSearch size="1.8rem" />
-					</SearchIconWrap>
-				</Link>
-				{isToken ? (
-					<Link href="/write">
-						<GoToWritePageIconWrap isScroll={isScroll} isMain={isMain}>
-							<HiOutlinePencilAlt size="1.8rem" />
-						</GoToWritePageIconWrap>
+				<ContentWrap>
+					<Link href="/search">
+						<SearchIconWrap isScroll={isScroll} isMain={isMain}>
+							<AiOutlineSearch size="1.8rem" />
+						</SearchIconWrap>
 					</Link>
-				) : (
-					<></>
-				)}
-				{isToken ? (
-					<ProfileWrap>
-						<Image
-							src={userProfileImage}
-							onClick={menuToggle}
-							alt="profile_image"
-							width={60}
-							height={60}
-							objectFit="cover"
-							className="profileImage"
-						/>
-						<style>{`
+					{isToken ? (
+						<Link href="/write">
+							<GoToWritePageIconWrap isScroll={isScroll} isMain={isMain}>
+								<HiOutlinePencilAlt size="1.8rem" />
+							</GoToWritePageIconWrap>
+						</Link>
+					) : (
+						<></>
+					)}
+					{isToken ? (
+						<ProfileWrap>
+							<Image
+								src={userProfileImage}
+								onClick={menuToggle}
+								alt="profile_image"
+								width={60}
+								height={60}
+								objectFit="cover"
+								className="profileImage"
+							/>
+							<style>{`
 							.profileImage {
 								border-radius: 50%;
 								cursor: pointer;
 							}
 						`}</style>
-						<MenuSlider height={menuHeight}>
-							<MenuItem onClick={goToProfile}>내 정보</MenuItem>
-							<MenuItem onClick={() => router.push('/write')}>글 쓰러 가기</MenuItem>
-							<MenuItem onClick={() => router.push(`/${memberId}/save`)}>임시글 보러가기</MenuItem>
-							<MenuItem onClick={() => router.push(`/${memberId}/bookmark`)}>북마크한 글 보러가기</MenuItem>
-							<MenuItem onClick={onLogout}>로그아웃</MenuItem>
-						</MenuSlider>
-					</ProfileWrap>
-				) : (
-					<AccountButtonWrap>
-						<NavBarItem url="/login" isScroll={isScroll} isMain={isMain}>
-							로그인
-						</NavBarItem>
-						<LinkWrap onClick={modalOpenToggle}>
-							<NavBarItem url="" isScroll={isScroll} isMain={isMain}>
-								회원가입
+							<MenuSlider height={menuHeight}>
+								<MenuItem onClick={goToProfile}>내 정보</MenuItem>
+								<MenuItem onClick={() => router.push('/write')}>글 쓰러 가기</MenuItem>
+								<MenuItem onClick={() => router.push(`/${memberId}/save`)}>임시글 보러가기</MenuItem>
+								<MenuItem onClick={() => router.push(`/${memberId}/bookmark`)}>북마크한 글 보러가기</MenuItem>
+								<MenuItem onClick={() => router.push(`/${memberId}/setting`)}>설정</MenuItem>
+								<MenuItem onClick={onLogout}>로그아웃</MenuItem>
+							</MenuSlider>
+						</ProfileWrap>
+					) : (
+						<AccountButtonWrap>
+							<NavBarItem url="/login" isScroll={isScroll} isMain={isMain}>
+								로그인
 							</NavBarItem>
-						</LinkWrap>
-					</AccountButtonWrap>
-				)}
-				<SwitchWrap>
-					<Switch
-						checked={isDark}
-						onChange={() => handleIsDarkState()}
-						checkedIcon={
-							<IconWrap>
-								<FaSun color="#F5B7B1" />
-							</IconWrap>
-						}
-						uncheckedIcon={
-							<IconWrap>
-								<RiMoonClearFill color="#F4D03F" />
-							</IconWrap>
-						}
-						onColor={color.neon_0}
-						offColor={color.black}
-					/>
-				</SwitchWrap>
+							<LinkWrap onClick={modalOpenToggle}>
+								<NavBarItem url="" isScroll={isScroll} isMain={isMain}>
+									회원가입
+								</NavBarItem>
+							</LinkWrap>
+						</AccountButtonWrap>
+					)}
+					<SwitchWrap>
+						<Switch
+							checked={isDark}
+							onChange={() => handleIsDarkState()}
+							checkedIcon={
+								<IconWrap>
+									<FaSun color="#F5B7B1" />
+								</IconWrap>
+							}
+							uncheckedIcon={
+								<IconWrap>
+									<RiMoonClearFill color="#F4D03F" />
+								</IconWrap>
+							}
+							onColor={color.neon_0}
+							offColor={color.black}
+						/>
+					</SwitchWrap>
+				</ContentWrap>
 			</NavBarContent>
 			<ToastContainer autoClose={1500} />
 		</NavBarWrap>
