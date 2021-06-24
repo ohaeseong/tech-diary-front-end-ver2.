@@ -54,7 +54,7 @@ function PostLayout({ posts }: Props) {
 	}, [limit, postData, setLimit]);
 
 	useEffect(() => {
-		if (postData.length !== 0 && limit !== 30) {
+		if (postData.length !== 0 && limit !== 10) {
 			setPostList(postData);
 		}
 	}, [limit, postData]);

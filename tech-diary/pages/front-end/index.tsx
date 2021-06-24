@@ -17,7 +17,7 @@ function FrontEndPage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Work-it (front-end)</title>
+				<title>work-it (front-end)</title>
 				<meta name="description" content="블로그 category front-end 페이지입니다." />
 			</Head>
 			<MainTemplate>
@@ -28,7 +28,7 @@ function FrontEndPage({ data }: Props) {
 }
 
 FrontEndPage.getInitialProps = async () => {
-	const response = await axios.get(`${server.host}/post/?limit=30&category=blog&kinds=front-end`);
+	const response = await axios.get(`${server.host}/post/?limit=10&category=blog&kinds=front-end`);
 	const posts = response.data.data;
 
 	return {

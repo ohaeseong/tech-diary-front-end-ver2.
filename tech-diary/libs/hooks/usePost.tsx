@@ -6,7 +6,7 @@ import { GET_POST_LIST_REQUEST } from 'store/modules/post';
 const usePost = (category: string, kinds: string) => {
 	const dispatch = useDispatch();
 	const { postData, loading } = useSelector((state: RootState) => state.post);
-	const [limit, setLimit] = useState(30);
+	const [limit, setLimit] = useState(10);
 
 	const fetchBlogData = useCallback(() => {
 		dispatch({

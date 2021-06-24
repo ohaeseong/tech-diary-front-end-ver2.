@@ -34,6 +34,7 @@ function DetailPage({ post }: Props) {
 				<meta name="twitter:title" content={post.title} />
 				<meta name="twitter:description" content={post.intro} />
 				{post.thumbnailAddress && <meta name="twitter:image" content={post.thumbnailAddress} />}
+				{post.thumbnailAddress && <meta name="og:image" content={post.thumbnailAddress} />}
 			</Head>
 			<PostDetailLayout post={post} />
 		</>
