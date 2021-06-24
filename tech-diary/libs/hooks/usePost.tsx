@@ -20,7 +20,9 @@ const usePost = (category: string, kinds: string) => {
 	}, [category, dispatch, kinds, limit]);
 
 	useEffect(() => {
-		fetchBlogData();
+		if (limit !== 10) {
+			fetchBlogData();
+		}
 	}, [fetchBlogData, limit]);
 
 	return { postData, loading, limit, setLimit };

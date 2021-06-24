@@ -33,7 +33,7 @@ function IndexPage({ data }: Props) {
 }
 
 IndexPage.getInitialProps = async () => {
-	const response = await axios.get(`${server.host}/post/?limit=30&category=blog`);
+	const response = await axios.get(`${server.host}/post/?limit=10&category=blog`);
 	const posts = response.data.data;
 
 	return {
