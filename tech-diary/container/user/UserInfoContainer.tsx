@@ -68,7 +68,7 @@ const SearchInputTemplate = styled.div`
 const InventoryPostListWrap = styled.div`
 	width: 50rem;
 	${mediaQuery(768)} {
-		width: 90%;
+		width: 100%;
 	}
 `;
 
@@ -195,8 +195,6 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 
 	const handleUserIntroText = useCallback(
 		(value: string) => {
-			console.log(introText.length, value);
-
 			if (introText.length > 1000 || value.length > 1000) {
 				return;
 			}

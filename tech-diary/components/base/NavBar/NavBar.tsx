@@ -240,7 +240,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 	const [isDown, setIsDown] = useState(false);
 	const [userProfileImage, setUserProfileImage] = useState(`${server.client_url}/static/user.png`);
 	const [memberId, setMemberId] = useState('');
-	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(180);
+	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
 	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
 	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
 	const [email, setEmail] = useState('');
@@ -438,7 +438,7 @@ function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
 								<MenuItem onClick={() => router.push('/write')}>글 쓰러 가기</MenuItem>
 								<MenuItem onClick={() => router.push(`/${memberId}/save`)}>임시글 보러가기</MenuItem>
 								<MenuItem onClick={() => router.push(`/${memberId}/bookmark`)}>북마크한 글 보러가기</MenuItem>
-								<MenuItem onClick={() => router.push(`/${memberId}/setting`)}>설정</MenuItem>
+								{/* <MenuItem onClick={() => router.push(`/${memberId}/setting`)}>설정</MenuItem> */}
 								<MenuItem onClick={onLogout}>로그아웃</MenuItem>
 							</MenuSlider>
 						</ProfileWrap>

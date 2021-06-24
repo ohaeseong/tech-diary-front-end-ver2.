@@ -103,6 +103,11 @@ const UserSubName = styled.div`
 	font-size: 1rem;
 	word-break: break-all;
 	color: ${(props) => props.theme.black};
+	line-height: 1.2rem;
+
+	${mediaQuery(768)} {
+		width: 100%;
+	}
 
 	font-family: 'Spoqa Han Sans Thin';
 `;

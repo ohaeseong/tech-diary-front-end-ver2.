@@ -28,7 +28,7 @@ function MobilePage({ data }: Props) {
 }
 
 MobilePage.getInitialProps = async () => {
-	const response = await axios.get(`${server.host}/post/?limit=30&category=blog&kinds=mobile`);
+	const response = await axios.get(`${server.host}/post/?limit=10&category=blog&kinds=mobile`);
 	const posts = response.data.data;
 
 	return {

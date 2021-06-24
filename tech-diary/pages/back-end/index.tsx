@@ -17,7 +17,7 @@ function BackEndPage({ data }: Props) {
 	return (
 		<>
 			<Head>
-				<title>Work-it (back-end)</title>
+				<title>work-it (back-end)</title>
 				<meta name="description" content="블로그 category back-end 페이지입니다." />
 			</Head>
 			<MainTemplate>
@@ -28,7 +28,7 @@ function BackEndPage({ data }: Props) {
 }
 
 BackEndPage.getInitialProps = async () => {
-	const response = await axios.get(`${server.host}/post/?limit=30&category=blog&kinds=back-end`);
+	const response = await axios.get(`${server.host}/post/?limit=10&category=blog&kinds=back-end`);
 	const posts = response.data.data;
 
 	return {
