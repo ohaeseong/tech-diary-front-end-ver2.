@@ -57,7 +57,7 @@ function PostLayout({ posts }: Props) {
 		if (postData.length !== 0 && limit !== 30) {
 			setPostList(postData);
 		}
-	}, [postData]);
+	}, [limit, postData]);
 
 	// scroll 이벤트 리스너
 	useEffect(() => {
