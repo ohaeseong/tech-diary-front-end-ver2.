@@ -29,7 +29,6 @@ function PostLayout({ posts }: Props) {
 		case '/other':
 			headName = 'Other';
 			break;
-
 		default:
 			headName = 'All';
 			break;
@@ -45,16 +44,20 @@ function PostLayout({ posts }: Props) {
 		const { scrollHeight } = document.body;
 
 		const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-
 		if (scrollHeight - innerHeight - scrollTop < 300) {
 			if (postData.length + 10 < limit) {
 				return;
 			}
-			setLimit(limit + 10);
 
-			setPostList(postData);
+			setLimit(limit + 10);
 		}
 	}, [limit, postData, setLimit]);
+
+	useEffect(() => {
+		if (postData.length !== 0 && limit !== 30) {
+			setPostList(postData);
+		}
+	}, [postData]);
 
 	// scroll 이벤트 리스너
 	useEffect(() => {
