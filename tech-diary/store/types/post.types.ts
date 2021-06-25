@@ -26,7 +26,7 @@ export type Post = {
 	category: string;
 	createTime: string;
 	comments: Comment[];
-	like: number;
+	likes: Like[];
 	member: Member;
 	commentCount: number;
 	url: string;

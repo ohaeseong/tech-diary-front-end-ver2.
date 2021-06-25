@@ -156,6 +156,7 @@ const Text = styled.div`
 	color: ${color.gray_4};
 	cursor: pointer;
 	transition: 0.2s ease-in-out;
+	margin-right: 7rem;
 
 	&:hover {
 		color: ${color.gray_2};
@@ -276,16 +277,16 @@ function LoginBox({
 					</OauthButtonsWrap>
 				</WrapForAnimation>
 				<WrapForAnimation>
-					<LinkWrap>
+					{/* <LinkWrap>
 						<Link href="/">
 							<LinkText>Home</LinkText>
 						</Link>
-					</LinkWrap>
+					</LinkWrap> */}
 					<LinkWrap>
-						<Text onClick={openModal}>Sign up/</Text>
 						<Link href="/signup">
-							<LinkText>Forgot the password?</LinkText>
+							<LinkText>Home/</LinkText>
 						</Link>
+						<Text onClick={openModal}>Sign up</Text>
 					</LinkWrap>
 				</WrapForAnimation>
 			</LoginHalfWrap>

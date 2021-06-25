@@ -200,7 +200,7 @@ type Props = {
 };
 
 function PostItem({ item }: Props) {
-	const { title, contents, createTime, thumbnailAddress, memberId, like, member, commentCount, intro, url } = item;
+	const { title, contents, createTime, thumbnailAddress, memberId, likes, member, commentCount, intro, url } = item;
 
 	const date = new Date(createTime);
 	const dateFormat = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -242,7 +242,7 @@ function PostItem({ item }: Props) {
 					</IconWrap>
 					<IconWrap>
 						<AiTwotoneStar size="15" color={color.black} />
-						{like}
+						{likes.length}
 					</IconWrap>
 				</PostBottomWrap>
 			</PostContentsWrap>
