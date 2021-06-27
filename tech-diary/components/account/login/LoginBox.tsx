@@ -283,7 +283,7 @@ function LoginBox({
 						</Link>
 					</LinkWrap> */}
 					<LinkWrap>
-						<Link href="/signup">
+						<Link href="/">
 							<LinkText>Home/</LinkText>
 						</Link>
 						<Text onClick={openModal}>Sign up</Text>
