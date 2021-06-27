@@ -23,11 +23,11 @@ const LinkItem = styled.a<{ isActive: boolean }>`
 	${(props) =>
 		props.isActive &&
 		`
-		color: black;
+		color:  ${props.theme.black};
 		font-size: 1rem;
     `}
 	&:hover {
-		color: black;
+		color: ${(props) => props.theme.black};
 	}
 `;
 

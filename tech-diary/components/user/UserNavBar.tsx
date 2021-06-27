@@ -5,6 +5,7 @@ import { mediaQuery } from 'components/layout/responsive';
 const UserNavBarTemplate = styled.div`
 	max-width: 100%;
 	margin-top: 6em;
+	min-width: 51rem;
 
 	${mediaQuery(768)} {
 		display: none;
