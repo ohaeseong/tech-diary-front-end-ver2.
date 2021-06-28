@@ -3,10 +3,11 @@ import PostCommentEdit from 'components/post/PostCommentEditor';
 import useRequest from 'libs/hooks/useRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStorage } from 'libs/storage';
-import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
+// import { DROP_TOAST, SHOW_TOAST } from 'store/modules/toast';
 import { SET_POST_COMMENT_COUNT } from 'store/modules/post.comment.count';
 import { Comment } from 'store/types/post.types';
 import { RootState } from 'store/modules';
+import { toast } from 'react-toastify';
 
 type Props = {
 	postId: string;
@@ -43,18 +44,10 @@ function PostCommentWriteContainer({
 	const applyComment = useCallback(async () => {
 		const token = getStorage('tech-token');
 		if (!token) {
-			dispatch({
-				type: SHOW_TOAST,
-				payload: {
-					text: '로그인 후 이용해 주세요!',
-				},
+			const toastMassege = '로그인 후에 사용해주세요.';
+			toast.warning(toastMassege, {
+				position: toast.POSITION.TOP_RIGHT,
 			});
-
-			setTimeout(() => {
-				dispatch({
-					type: DROP_TOAST,
-				});
-			}, 2000);
 
 			return;
 		}

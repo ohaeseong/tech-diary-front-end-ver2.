@@ -27,14 +27,21 @@ function DetailPage({ post }: Props) {
 				<link rel="canonical" href={url} />
 				<meta property="og:url" content={url} />
 				<meta property="og:type" content="article" />
-				<meta property="og:title" content={post.title} />
-				<meta property="og:description" content={post.intro} />
-				{post.thumbnailAddress && <meta property="og:image" content={post.thumbnailAddress} />}
+				<meta property="og:title" content={post.title} key="title" />
+				{post.intro ? <meta name="og:description" content={post.intro} /> : <></>}
 				<meta name="twitter:card" content="summary_large_image" />
 				<meta name="twitter:title" content={post.title} />
 				<meta name="twitter:description" content={post.intro} />
-				{post.thumbnailAddress && <meta name="twitter:image" content={post.thumbnailAddress} />}
-				{post.thumbnailAddress && <meta name="og:image" content={post.thumbnailAddress} />}
+				{post.thumbnailAddress ? (
+					<meta name="twitter:image" content={post.thumbnailAddress} />
+				) : (
+					<meta property="twitter:image" content={`${server.client_url}/static/logo_template.png`} />
+				)}
+				{post.thumbnailAddress ? (
+					<meta name="og:image" content={post.thumbnailAddress} />
+				) : (
+					<meta property="og:image" content={`${server.client_url}/static/logo_template.png`} />
+				)}
 			</Head>
 			<PostDetailLayout post={post} />
 		</>
