@@ -15,6 +15,7 @@ const UserProfileInfoWrap = styled.div`
 	width: 17rem;
 	min-height: 100vh;
 	margin-right: 2rem;
+	margin-top: 2rem;
 
 	${mediaQuery(768)} {
 		flex-direction: row;

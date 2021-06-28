@@ -42,7 +42,7 @@ const UserPageTemplate = styled.div`
 	justify-content: center;
 	width: 100%;
 	min-height: 100vh;
-	margin-top: 2rem;
+	margin-bottom: 2rem;
 
 	background-color: ${(props) => props.theme.white_1};
 
@@ -88,6 +88,7 @@ const SearchInputWrap = styled.div`
 const InventoryPostListTemplate = styled.div`
 	max-width: 60rem;
 	min-height: 100vh;
+	margin-top: 2rem;
 
 	${mediaQuery(768)} {
 		margin-left: 1.5rem;
