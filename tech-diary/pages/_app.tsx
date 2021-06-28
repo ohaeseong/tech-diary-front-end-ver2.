@@ -104,7 +104,7 @@ function MyApp({ Component, pageProps, cookies }: Props) {
 			<Head>
 				<meta httpEquiv="content-type" content="text/html; charset=UTF-8" />
 				<meta property="fb:app_id" content="2111760498954706" />
-				<link rel="shortcut icon" href="/static/favicon.png" />
+				{/* <link rel="shortcut icon" href="/static/favicon.png" /> */}
 				<meta property="og:image" content={`${server.client_url}/static/logo_template.png`} />
 				<style>{`
 						@font-face {

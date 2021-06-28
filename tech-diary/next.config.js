@@ -13,7 +13,7 @@ module.exports = {
 		},
 	],
 	images: {
-		domains: ['localhost', 'avatars.githubusercontent.com'],
+		domains: ['work-it.co.kr', 'avatars.githubusercontent.com', 'lh3.googleusercontent.com', 'graph.facebook.com'],
 		loader: 'imgix',
 		path: '',
 		// deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
