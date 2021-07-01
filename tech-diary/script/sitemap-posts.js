@@ -17,14 +17,14 @@ const formatted = (sitemap) => prettier.format(sitemap, { parser: 'html' });
 		.catch((err) => console.log(err));
 
 	const postList = [];
-	fetchPosts.data.posts.forEach((post) => postList.push({ id: post.id, userId: post.memberId }));
+	fetchPosts.data.posts.forEach((post) => postList.push({ url: post.url }));
 
 	const postListSitemap = `
     ${postList
 			.map((item) => {
 				return `
           <url>
-            <loc>${`${YOUR_AWESOME_DOMAIN}/${item.userId}/${item.id}`}</loc>
+            <loc>${`${YOUR_AWESOME_DOMAIN}${item.url}`}</loc>
             <lastmod>${getDate}</lastmod>
           </url>`;
 			})
