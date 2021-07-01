@@ -10,9 +10,9 @@ COPY tsconfig.json ./
 
 COPY . .
 
-RUN create:sitemap
-RUN sitemap:gz
-RUN sitemap:google
+RUN yarn create:sitemap
+RUN yarn sitemap:gz
+RUN yarn sitemap:google
 
 RUN yarn build
 
