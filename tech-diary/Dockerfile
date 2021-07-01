@@ -10,6 +10,10 @@ COPY tsconfig.json ./
 
 COPY . .
 
+RUN create:sitemap
+RUN sitemap:gz
+RUN sitemap:google
+
 RUN yarn build
 
 FROM node:12.18.3-alpine3.11
