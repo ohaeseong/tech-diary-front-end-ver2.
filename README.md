@@ -1,6 +1,4 @@
 
-work-it is blog platform for the developer.
-
 # 👨‍💻  Work-it
 
 
