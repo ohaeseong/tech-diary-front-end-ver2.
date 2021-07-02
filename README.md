@@ -24,11 +24,4 @@ Back: Typescript, Express, JWT, Mysql, AWS EC2, Mocha
 - mocha 모듈을 활용한 백엔드 API 테스트 자동화
 - 기획 - 디자인 - 개발 - 서비스 배포 - 유지보수 순으로 전체적인 프로젝트 개발을 주도적으로 진행
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/81254659-9539-4aa6-9dd2-779d899ef968/_2021-06-06__6.43.25.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/81254659-9539-4aa6-9dd2-779d899ef968/_2021-06-06__6.43.25.png)
-
-main page
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d609d039-3554-41b4-9f6b-f6a4000c0ef0/_2021-06-06__6.44.01.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d609d039-3554-41b4-9f6b-f6a4000c0ef0/_2021-06-06__6.44.01.png)
-
-mobile page
 
