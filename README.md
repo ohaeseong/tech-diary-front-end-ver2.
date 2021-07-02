@@ -6,8 +6,6 @@ work-it is blog platform for the developer.
 
 개발자를 위한 블로그 플랫폼입니다. Markdown 기반의 블로그 작성 방식을 가지고 있으며 간단한 소셜 기능(팔로우/소개글/댓글)등을 지원하며, 사용자 접근성을 높이기 위해 [모바일 웹/소셜 로그인/다크모드] 등을 지원하고 있습니다. 현재 해당 프로젝트는 서비스 배포 중에 있으며 베타 테스트를 진행 중 입니다.
 
----
-
 ### Service
 
 주소:  **[https://work-it.co.kr](https://work-it.co.kr)** 
