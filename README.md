@@ -8,13 +8,13 @@
 
 주소:  **[https://work-it.co.kr](https://work-it.co.kr)** 
 
-### ⚒️ Used
+### ⚒️  Used
 
 Front: Typescript, Next.js, Redux, Redux-saga, Emotion
 
 Back: Typescript, Express, JWT, Mysql, AWS EC2, Mocha
 
-### experience
+### 🕶️ experience
 
 - Next.js Head 태그를 활용한 SEO 최적화 작업 진행
 - SSR을 활용한 웹 개발 진행
