@@ -1,23 +1,7 @@
-# work-it front-end repository
+
 work-it is blog platform for the developer.
 
 version => demo (doing test)
-
-### infra
-AWS-EC2
-Nginx
-letsencrypt
-docker
-
-### 🛠 stack
-- typescript
-- next.js
-- redux
-- redux-saga
-- emotion
-
-
-기술 블로그 플랫폼 
 
 ## 👨‍💻  Work-it
 
@@ -27,17 +11,17 @@ docker
 
 ---
 
-### 서비스 보러가기
+### Service
 
 주소:  **[https://work-it.co.kr](https://work-it.co.kr)** 
 
-### 사용 기술
+### Used
 
 Front: Typescript, Next.js, Redux, Redux-saga, Emotion
 
 Back: Typescript, Express, JWT, Mysql, AWS EC2, Mocha
 
-### 프로젝트를 통해 얻은 경험
+### experience
 
 - Next.js Head 태그를 활용한 SEO 최적화 작업 진행
 - SSR을 활용한 웹 개발 진행
@@ -49,9 +33,9 @@ Back: Typescript, Express, JWT, Mysql, AWS EC2, Mocha
 
 ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/81254659-9539-4aa6-9dd2-779d899ef968/_2021-06-06__6.43.25.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/81254659-9539-4aa6-9dd2-779d899ef968/_2021-06-06__6.43.25.png)
 
-메인 페이지
+main page
 
 ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d609d039-3554-41b4-9f6b-f6a4000c0ef0/_2021-06-06__6.44.01.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d609d039-3554-41b4-9f6b-f6a4000c0ef0/_2021-06-06__6.44.01.png)
 
-모바일 반응형 화면
+mobile page
 
