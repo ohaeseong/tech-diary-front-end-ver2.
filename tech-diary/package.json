@@ -20,7 +20,6 @@
     "@emotion/jest": "^11.1.0",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
-    "@ohaeseong/react-progress-bar": "^1.1.12",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@types/js-cookie": "^2.2.6",
