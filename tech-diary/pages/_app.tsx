@@ -10,7 +10,6 @@ import Head from 'next/head';
 import useDarkMode from 'libs/hooks/useDarkMode';
 import { ThemeProvider } from '@emotion/react';
 import { color, dark } from 'styles/color';
-import { NavBar } from 'components/base/NavBar';
 import { useRouter } from 'next/router';
 import { Context } from 'node:vm';
 import { getStorage, setStorage } from 'libs/storage';
@@ -18,6 +17,7 @@ import { GET_USER_INFO } from 'store/sagas/auth/auth.saga';
 import { useDispatch } from 'react-redux';
 import { SET_USER_INFO_STATE } from 'store/modules/auth';
 import useHeader from 'libs/hooks/useHeader';
+import NavBarContainer from 'container/base/navBarContainer';
 
 type Props = {
 	Component: any;
@@ -132,7 +132,7 @@ function MyApp({ Component, pageProps, cookies }: Props) {
 				`}</style>
 			</Head>
 			<ThemeProvider theme={themeMode ? dark : color}>
-				{isNotNav ? <></> : <NavBar isDark={themeMode} handleIsDarkState={toggleTheme} isMain={isMain} />}
+				{isNotNav ? <></> : <NavBarContainer isDark={themeMode} handleIsDarkState={toggleTheme} isMain={isMain} />}
 				<Component {...pageProps} />
 			</ThemeProvider>
 		</>

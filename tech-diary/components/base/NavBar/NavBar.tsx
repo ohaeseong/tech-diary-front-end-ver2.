@@ -1,6 +1,6 @@
+import React, { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import React, { useEffect, useState, useCallback, ChangeEvent, useRef } from 'react';
 import Switch from 'react-switch';
 import { RiMoonClearFill } from 'react-icons/ri';
 import { FaSun } from 'react-icons/fa';
@@ -9,27 +9,18 @@ import Image from 'next/image';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { color } from 'styles/color';
-import { getStorage } from 'libs/storage';
 import NavBarItem from 'components/base/NavBar/NavBarItem';
 import MenuSlider from 'components/common/MenuSlider';
 import MenuItem from 'components/common/MenuItem';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/router';
-import useMenuSliderHeight from 'libs/hooks/useMenuSliderHeight';
-import { toast, ToastContainer } from 'react-toastify';
-import { RootState } from 'store/modules';
-import { useSelector } from 'react-redux';
+import router from 'next/router';
+import { ToastContainer } from 'react-toastify';
 import { mediaQuery } from 'components/layout/responsive';
-import useToggle from 'libs/hooks/useToggle';
 import ButtonGroup from 'components/common/ButtonGroup';
 import LabelInput from 'components/common/LabelInput';
 import ModalBox from 'components/common/ModalBox';
 import Button from 'components/common/Button';
-import { reqeustSignUpEmailSend } from 'libs/repository';
-import useRequest from 'libs/hooks/useRequest';
-import isEmail from 'libs/regEx';
-import useHeader from 'libs/hooks/useHeader';
-import { server } from 'config/config';
+
 
 const NavBarWrap = styled.div<{ isDown: boolean }>`
 	width: 100%;
@@ -194,8 +185,6 @@ const SearchIconWrap = styled.div<{ isMain?: boolean; isScroll: boolean }>`
 	width: 2rem;
 	height: 2rem;
 
-	/* margin: auto 1rem auto auto; */
-
 	& > * {
 		cursor: pointer;
 		color: ${color.gray_0};
@@ -232,140 +221,47 @@ type Props = {
 	isDark: boolean;
 	handleIsDarkState: any;
 	isMain?: boolean;
+	isDown: boolean;
+	modalIsOpenValue: boolean;
+	isScroll: boolean;
+	modalMsg: {
+		isError: boolean;
+		message: string;
+	};
+	isToken: boolean;
+	email: string;
+	menuHeight: number;
+	userProfileImage: string;
+	memberId: string;
+	goToProfile: () => void;
+	onSendEmail: () => void;
+	handleEmail: (e: ChangeEvent<HTMLInputElement>) => void;
+	onLogout: () => void;
+	closeModalBox: () => void;
+	menuToggle: () => void;
+	modalOpenToggle: () => void;
 };
 
-function NavBar({ isDark, handleIsDarkState, isMain }: Props) {
-	const [isScroll, setIsScroll] = useState(false);
-	const [isToken, setIsToken] = useState(false);
-	const [isDown, setIsDown] = useState(false);
-	const [userProfileImage, setUserProfileImage] = useState(`${server.client_url}/static/user.png`);
-	const [memberId, setMemberId] = useState('');
-	const [menuHeight, menuToggle, closeMenu] = useMenuSliderHeight(150);
-	const [modalIsOpenValue, modalOpenToggle] = useToggle(false);
-	const [, , onRequestSendEmail] = useRequest(reqeustSignUpEmailSend, true);
-	const [email, setEmail] = useState('');
-	const [modalMsg, setModalMsg] = useState({
-		isError: false,
-		message: '',
-	});
-	const [userInfo, onLogout] = useHeader();
-	const { profileImage } = useSelector((state: RootState) => state.auth);
-
-	const router = useRouter();
-
-	const handleEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
-	}, []);
-	const prevScrollTop = useRef(0);
-	const handleIsScrollEvent = useCallback(() => {
-		const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-		const nextDirection = prevScrollTop.current > scrollTop ? 'UP' : 'DOWN';
-
-		if (nextDirection === 'UP') {
-			setIsDown(false);
-		} else if (nextDirection === 'DOWN' && !isMain) {
-			setIsDown(true);
-			closeMenu();
-		}
-
-		prevScrollTop.current = scrollTop;
-
-		if (isMain && window.scrollY > 100) {
-			setIsScroll(true);
-		} else {
-			setIsScroll(false);
-		}
-	}, [closeMenu, isMain]);
-
-	const goToProfile = useCallback(() => {
-		const userPageUrl = `${userInfo.memberId}`;
-
-		router.push(`/${userPageUrl}`);
-	}, [router, userInfo]);
-
-	const closeModalBox = useCallback(() => {
-		setModalMsg({
-			isError: false,
-			message: '',
-		});
-		setEmail('');
-		modalOpenToggle();
-	}, [modalOpenToggle]);
-
-	const onSendEmail = useCallback(async () => {
-		if (!email) {
-			setModalMsg({
-				isError: true,
-				message: '이메일을 작성해 주세요.',
-			});
-
-			return;
-		}
-
-		if (!isEmail(email)) {
-			setModalMsg({
-				isError: true,
-				message: '이메일 형식이 아니에요.',
-			});
-
-			return;
-		}
-
-		const req = {
-			email,
-		};
-
-		const response = await onRequestSendEmail(req);
-
-		if (response.status === 403) {
-			setModalMsg({
-				isError: true,
-				message: '이미 가입된 이메일 입니다.',
-			});
-
-			return;
-		}
-
-		closeModalBox();
-		toast.success('메일함을 확인해 주세요!', {
-			position: toast.POSITION.TOP_RIGHT,
-		});
-	}, [closeModalBox, email, onRequestSendEmail]);
-
-	useEffect(() => {
-		window.addEventListener('scroll', handleIsScrollEvent);
-
-		return () => {
-			window.removeEventListener('scroll', handleIsScrollEvent);
-		};
-	}, [handleIsScrollEvent]);
-
-	useEffect(() => {
-		const token = getStorage('tech-token') as string;
-		if (token && userInfo) {
-			setIsToken(true);
-			if (userInfo.profileImage) {
-				setUserProfileImage(userInfo.profileImage);
-			}
-
-			setMemberId(userInfo.memberId);
-		} else {
-			setIsToken(false);
-		}
-	}, [isToken, router, userInfo]);
-
-	useEffect(() => {
-		if (profileImage) {
-			setUserProfileImage(profileImage);
-		}
-	}, [profileImage]);
-
-	useEffect(() => {
-		document.body.addEventListener('click', closeMenu);
-
-		return () => document.body.removeEventListener('click', closeMenu);
-	}, [closeMenu]);
-
+function NavBar({ 
+	isDark,
+	handleIsDarkState,
+	isMain,
+	isDown,
+	modalMsg,
+	email,
+	isScroll,
+	isToken,
+	modalIsOpenValue,
+	menuHeight,
+	userProfileImage,
+	memberId,
+	onSendEmail,
+	goToProfile,
+	handleEmail,
+	menuToggle,
+	onLogout,
+	modalOpenToggle,
+	closeModalBox }: Props) {
 	return (
 		<NavBarWrap isDown={isDown}>
 			{modalIsOpenValue ? (
