@@ -7,11 +7,9 @@ import rootReducer, { RootState } from './modules';
 import rootSaga from './sagas';
 
 const makeStore: MakeStore<RootState> = (_: Context) => {
-	const middleware = [sagaMiddleWare];
-
 	const enhance = env.isProduction
-		? compose(applyMiddleware(...middleware))
-		: composeWithDevTools(applyMiddleware(...middleware));
+		? compose(applyMiddleware(sagaMiddleWare))
+		: composeWithDevTools(applyMiddleware(sagaMiddleWare));
 
 	const store = createStore(rootReducer, enhance);
 
