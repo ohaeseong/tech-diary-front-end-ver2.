@@ -125,6 +125,7 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 	const [searchWord, setSearchWord] = useState('');
 	const [isReadOnly, isReadOnlyToggle] = useToggle(true);
 	const [isProfileEdit, isProfileEditToggle] = useToggle(false);
+	const [timer, setTimer] = useState(0); // 디바운싱 타이머
 	const [followList, setFollowList] = useState(memberList);
 	const dispatch = useDispatch();
 
@@ -160,13 +161,23 @@ function UserProfileContainer({ userInfo, posts, isIntro, memberList, isSocial, 
 		async (event: ChangeEvent<HTMLInputElement>) => {
 			setSearchWord(event.target.value);
 
-			const req = {
-				memberId: userInfo.memberId,
-				searchWord: event.target.value,
-			};
-			await searchMemberPosts(req);
+			if (timer) {
+				clearTimeout(timer);
+			}
+			const newTimer = setTimeout(async () => {
+				try {
+					const req = {
+						memberId: userInfo.memberId,
+						searchWord: event.target.value,
+					};
+					await searchMemberPosts(req);
+				} catch (e) {
+					console.error('error', e);
+				}
+			}, 800);
+			setTimer(newTimer as any);
 		},
-		[searchMemberPosts, userInfo.memberId]
+		[searchMemberPosts, timer, userInfo.memberId]
 	);
 
 	const uploadImageUtil = useCallback(
