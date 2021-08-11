@@ -73,6 +73,7 @@ const InventoryPostListWrap = styled.div`
 function PostSearchContainer() {
 	const [searchPosts, setSearchPosts] = useState([]);
 	const [searchWord, setSearchWord] = useState('');
+	const [timer, setTimer] = useState(0); // 디바운싱 타이머
 
 	const [searchPostsData, , onSearchPosts, ,] = useRequest(requestSearchPosts, true);
 
@@ -81,17 +82,32 @@ function PostSearchContainer() {
 			setSearchWord(event.target.value);
 
 			if (event.target.value) {
-				const req = {
-					searchWord: event.target.value,
-				};
-				await onSearchPosts(req);
+				if (timer) {
+					clearTimeout(timer);
+				}
+
+				const newTimer = setTimeout(async () => {
+					try {
+						const req = {
+							searchWord: event.target.value,
+						};
+						await onSearchPosts(req);
+					} catch (e) {
+						console.error('error', e);
+					}
+				}, 800);
+
+				console.log(newTimer);
+				
+
+				setTimer(newTimer as any);
 			}
 
 			if (!event.target.value) {
 				setSearchPosts([]);
 			}
 		},
-		[onSearchPosts]
+		[onSearchPosts, timer]
 	);
 
 	useEffect(() => {

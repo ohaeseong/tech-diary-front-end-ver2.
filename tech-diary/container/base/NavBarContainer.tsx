@@ -170,7 +170,6 @@ function NavBarContainer({ isDark, handleIsDarkState, isMain }: Props) {
 			onSendEmail={onSendEmail}
 			handleEmail={handleEmail}
 			onLogout={onLogout}
-			closeModalBox={closeModalBox}
 			menuToggle={menuToggle}
 			modalOpenToggle={modalOpenToggle}
 		/>
