@@ -22,6 +22,5 @@ Back: Typescript, Express, JWT, Mysql, AWS EC2, Mocha
 - AWS EC2를 이용한 서비스 배포 및 관리
 - React Hooks를 이용한 렌더링 최적화 작업 진행 (useMemo, useCallback)
 - mocha 모듈을 활용한 백엔드 API 테스트 자동화
-- 기획 - 디자인 - 개발 - 서비스 배포 - 유지보수 순으로 전체적인 프로젝트 개발을 주도적으로 진행
 
 
