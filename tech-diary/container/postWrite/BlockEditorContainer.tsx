@@ -1,49 +1,49 @@
 import React from 'react';
-// import styled from '@emotion/styled';
-// import BlockEditor from 'components/write/BlockEditor';
-// import TitleEditor from 'components/write/TitleEditor';
+import styled from '@emotion/styled';
+import BlockEditor from 'components/write/BlockEditor';
+import TitleEditor from 'components/write/TitleEditor';
 
-// const EditorWrap = styled.div`
-// 	display: flex;
-// 	width: 50rem;
-// 	padding: 0 5rem;
-// 	min-height: 100vh;
-// 	flex-direction: column;
-// 	margin-left: 3rem;
-// 	background-color: ${(props) => props.theme.white_1};
-// 	box-shadow: 0 2px 6px 0 ${(props) => props.theme.shadow};
+const EditorWrap = styled.div`
+	display: flex;
+	width: 50rem;
+	padding: 0 5rem;
+	min-height: 100vh;
+	flex-direction: column;
+	margin-left: 3rem;
+	background-color: ${(props) => props.theme.white_1};
+	box-shadow: 0 2px 6px 0 ${(props) => props.theme.shadow};
 
-// 	& > * h1,
-// 	h2,
-// 	h3 {
-// 		font-family: 'Spoqa Han Sans Regular';
-// 	}
+	& > * h1,
+	h2,
+	h3 {
+		font-family: 'Spoqa Han Sans Regular';
+	}
 
-// 	& > * strong {
-// 		width: 100%;
-// 	}
-// `;
+	& > * strong {
+		width: 100%;
+	}
+`;
 
-// const uid = () => {
-// 	return Date.now().toString(36) + Math.random().toString(36).substr(2);
-// };
+const uid = () => {
+	return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
 
-// const initialBlock = {
-// 	id: uid(),
-// 	html: '',
-// 	tag: 'p',
-// };
+const initialBlock = {
+	id: uid(),
+	html: '',
+	tag: 'p',
+};
 
-// type InitialBlockType = {
-// 	id: string;
-// 	html: string;
-// 	tag: string;
-// };
+type InitialBlockType = {
+	id: string;
+	html: string;
+	tag: string;
+};
 
-// type CurrentBlockType = {
-// 	id: string;
-// 	ref: RefObject<HTMLElement>;
-// };
+type CurrentBlockType = {
+	id: string;
+	ref: RefObject<HTMLElement>;
+};
 
 function BlockEditorContainer() {
 	// const [title, setTitle] = useState('');
