@@ -18,7 +18,7 @@ Back: Typescript, Express, JWT, Mysql, AWS EC2, Mocha
 
 - Next.js Head 태그를 활용한 SEO 최적화 작업 진행
 - SSR을 활용한 웹 개발 진행
-- media query를 통한 모바일 웹 (반응형) 구현
+- media query를 통한 모바일 웹 (반응형) 구현 
 - AWS EC2를 이용한 서비스 배포 및 관리
 - React Hooks를 이용한 렌더링 최적화 작업 진행 (useMemo, useCallback)
 - mocha 모듈을 활용한 백엔드 API 테스트 자동화
